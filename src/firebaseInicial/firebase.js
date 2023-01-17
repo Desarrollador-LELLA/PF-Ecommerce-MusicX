@@ -7,7 +7,7 @@ const app = initializeApp(fireConfig);
 
 const auth = allAuth.getAuth(app);
 const db = allDb.getFirestore(app);
-//store
+//storage falta agregar
 
 export default app;
 export { db, allDb, auth, allAuth };

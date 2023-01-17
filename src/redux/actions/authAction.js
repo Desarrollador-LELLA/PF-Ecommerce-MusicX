@@ -47,34 +47,37 @@ const registraAction = ({ pnombre, papellido, correo, telefono, clave }, onError
 
 // SETEO DE ERRORES ENVIADAS DESDE FIREBASE O ERRORES CREDOS
 const errorAction = (msg) => (dispatch) => {
-    dispatch({
-        type: AUTH_SET_ERROR,
-        payload: msg,
-      });
+  dispatch({
+    type: AUTH_SET_ERROR,
+    payload: msg,
+  });
 };
 
 // SETEO DE CORREO DE VERIFICACION DEL USUARIO
 const needVerificationAction = () => (dispatch) => {
-    dispatch({
-        type: AUTH_NEED_VERIFICATION,
-      });
+  dispatch({
+    type: AUTH_NEED_VERIFICATION,
+  });
 };
 
 // SETEO DE LOADING O CARGA DE PROCESOS
 const loadingAction = (valueBoleano) => (dispatch) => {
-    dispatch({
-        type: AUTH_SET_LOADING,
-        payload: valueBoleano,
-      });
+  dispatch({
+    type: AUTH_SET_LOADING,
+    payload: valueBoleano,
+  });
 };
 
 // SETEO LOS MENSAJES SUCCESS
 const successAction = (msg) => (dispatch) => {
-    dispatch({
-        type: AUTH_SET_SUCCESS,
-        payload: msg,
-      });
-  };
+  dispatch({
+    type: AUTH_SET_SUCCESS,
+    payload: msg,
+  });
+};
+
+
+// ACTION QUE PODRIA USAR EN EL FUTURO
 
 // const getUserById = (id) => {
 //   return async (dispatch) => {

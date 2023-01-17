@@ -1,33 +1,16 @@
-import { allAuth, allDb, auth, db } from './firebaseInicial/firebase';
+import { Route, Routes } from 'react-router-dom';
+import Layout from './componets/pages/Layout';
+import Home from './componets/pages/Home';
+import Registro from './componets/pages/Registro';
 
 function App() {
-
-  const algo = async () => {
-    try { 
-      const res = await allAuth.createUserWithEmailAndPassword(auth, 'lella.soporte@gmail.com', '123456')
-
-      console.log(res)
-      if (res.user) {
-        const userData = {
-          id: res.user.uid,
-          pnombre: 'Luis',
-          correo: 'luis.llancamil.a@gmail.com',
-          fechaCreacion: allDb.serverTimestamp(),
-        };
-        await allDb.setDoc(allDb.doc(db, 'usuarios', res.user.uid), userData);
-        await allAuth.sendEmailVerification(res.user);
-      }
-    } catch(error){
-      console.log(error)
-    }
-    
-  };
-
   return (
-    <div className="App">
-      <h1>PENE RICO</h1>
-      <button onClick={algo}>PENE GRANDE Y RICO</button>
-    </div>
+    <Routes>
+      <Route path='/' element={<Layout />} >
+        <Route index element={<Home />} />
+        <Route path='registro' element={<Registro />} />
+      </Route>
+    </Routes>
   );
 }
 
