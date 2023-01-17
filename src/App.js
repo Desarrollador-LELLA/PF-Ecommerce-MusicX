@@ -1,5 +1,3 @@
-import logo from './logo.svg';
-import './App.css';
 import { allAuth, allDb, auth, db } from './firebaseInicial/firebase';
 
 function App() {
