@@ -1,23 +1,34 @@
 import logo from './logo.svg';
 import './App.css';
+import { allAuth, allDb, auth, db } from './firebaseInicial/firebase';
 
 function App() {
+
+  const algo = async () => {
+    try { 
+      const res = await allAuth.createUserWithEmailAndPassword(auth, 'lella.soporte@gmail.com', '123456')
+
+      console.log(res)
+      if (res.user) {
+        const userData = {
+          id: res.user.uid,
+          pnombre: 'Luis',
+          correo: 'luis.llancamil.a@gmail.com',
+          fechaCreacion: allDb.serverTimestamp(),
+        };
+        await allDb.setDoc(allDb.doc(db, 'usuarios', res.user.uid), userData);
+        await allAuth.sendEmailVerification(res.user);
+      }
+    } catch(error){
+      console.log(error)
+    }
+    
+  };
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <h1>PENE RICO</h1>
+      <button onClick={algo}>PENE GRANDE Y RICO</button>
     </div>
   );
 }
