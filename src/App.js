@@ -2,6 +2,7 @@ import { Route, Routes } from 'react-router-dom';
 import Layout from './componets/pages/Layout';
 import Home from './componets/pages/Home';
 import Registro from './componets/pages/Registro';
+import Generos from './componets/pages/Generos';
 import ProductoLista from './componets/pages/ProductoLista';
 import ProductoCreate from './componets/pages/ProductoCreate';
 import PerfilUS from './componets/pages/PerfilU';
@@ -16,6 +17,7 @@ function App() {
       <Route path='/' element={<Layout />} >
         <Route index element={<Home />} />
         <Route path='registro' element={<Registro />} />
+        <Route path='generos' element={<Generos />} />
         <Route path='producto_lista' element={<ProductoLista />} />
         <Route path='producto_create' element={<ProductoCreate />} />
         <Route path='PerfilUsuario' element={<PerfilUS />} />
