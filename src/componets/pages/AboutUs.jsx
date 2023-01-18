@@ -4,13 +4,16 @@ import { Link } from 'react-router-dom'
 
 
 export default function AboutUs() {
+  const style = {
+    background : "#3456"
+  }
   return (
     <div className='text-center my-3' >
-      <Link to="/"><button class="btn btn-primary" type="submit">Back</button></Link>
+      <Link to="/" className="btn btn-primary">Back</Link>
       <h1 >sobre nosotros </h1>
       <p>info sobre la pagina </p>
 
-      <footer className="page-footer font-small blue pt-4 back" >
+      <footer className="page-footer font-small blue pt-4 back" style={style}  >
         <div className="container-fluid text-center text-md-left">
           <div className="row">
             <div className="col-md-6 mt-md-0 mt-3">
