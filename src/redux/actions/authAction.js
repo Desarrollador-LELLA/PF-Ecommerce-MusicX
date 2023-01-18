@@ -1,50 +1,39 @@
-import { allAuth, allDb, auth, db } from "../../firebaseInicial/firebase";
-import {
-  AUTH_NEED_VERIFICATION,
-  AUTH_SET_ERROR,
-  AUTH_SET_LOADING,
-  AUTH_SET_SUCCESS,
-  AUTH_SET_USER,
-  AUTH_SIGN_OUT,
-} from "../types/authTypes";
+import { allAuth, allDb, auth, db } from '../../firebaseInicial/firebase';
+import { erroresList } from '../../utils/libreria';
+import { AUTH_NEED_VERIFICATION, AUTH_SET_ERROR, AUTH_SET_LOADING, AUTH_SET_SUCCESS, AUTH_SET_USER, AUTH_SIGN_OUT } from '../types/authTypes';
 
 // RESGISTRO DE USUARIOS
-// const registraAction =
-//   ({ pnombre, papellido, correo, telefono, clave }, onError) =>
-//   async (dispatch) => {
-//     try {
-//       const res = await allAuth.createUserWithEmailAndPassword(
-//         auth,
-//         correo,
-//         clave
-//       );
-//       if (res.user) {
-//         const userData = {
-//           id: res.user.uid,
-//           pnombre: pnombre,
-//           papellido: papellido,
-//           correo: correo,
-//           telefono: telefono,
-//           fechaCreacion: allDb.serverTimestamp(),
-//         };
-//         await allDb.setDoc(allDb.doc(db, "usuarios", res.user.uid), userData);
-//         await allAuth.sendEmailVerification(res.user);
-//         dispatch({
-//           type: NEED_VERIFICATION,
-//         });
-//         dispatch({
-//           type: SET_USER,
-//           payload: userData,
-//         });
-//       }
-//     } catch (err) {
-//       onError();
-//       dispatch({
-//         type: SET_ERROR,
-//         payload: err.message,
-//       });
-//     }
-//   };
+const registraAction = ({ nombre, apellido, correo, clave }, onError) => async (dispatch) => {
+  console.log(nombre, apellido, correo, clave)
+  try {
+    const res = await allAuth.createUserWithEmailAndPassword(auth, correo, clave);
+    if (res.user) {
+      const userData = {
+        id: res.user.uid,
+        nombre,
+        apellido,
+        correo,
+        rol: 'Cliente',
+        fechaCreacion: allDb.serverTimestamp(),
+      };
+      await allDb.setDoc(allDb.doc(db, 'usuarios', res.user.uid), userData);
+      await allAuth.sendEmailVerification(res.user);
+      dispatch({
+        type: AUTH_NEED_VERIFICATION,
+      });
+      dispatch({
+        type: AUTH_SET_USER,
+        payload: { nombre, apellido },
+      });
+    }
+  } catch (err) {
+    onError();
+    dispatch({
+      type: AUTH_SET_ERROR,
+      payload: erroresList(err),
+    });
+  }
+};
 
 //INICIO DE SESION DE USUARIOS
 const signInAction =
