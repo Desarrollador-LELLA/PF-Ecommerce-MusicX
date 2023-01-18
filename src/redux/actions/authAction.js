@@ -48,10 +48,10 @@ import {
 
 //INICIO DE SESION DE USUARIOS
 const signInAction =
-  ({ correo, clave }, onError) =>
+  ({ correo, contraseña }, onError) =>
   async (dispatch) => {
     try {
-      await allAuth.signInWithEmailAndPassword(auth, correo, clave);
+      await allAuth.signInWithEmailAndPassword(auth, correo, contraseña);
     } catch (err) {
       onError();
       dispatch(errorAction(err.message));
@@ -115,19 +115,19 @@ const successAction = (msg) => (dispatch) => {
 // };
 
 // Log out
-// const SignOutAction = () => {
-//   return async (dispatch) => {
-//     try {
-//       dispatch(setLoading(true));
-//       await auth.signOut();
-//       dispatch({
-//         type: SIGN_OUT,
-//       });
-//     } catch (err) {
-//       dispatch(setLoading(false));
-//     }
-//   };
-// };
+const signOutAction = () => {
+  return async (dispatch) => {
+    try {
+      dispatch(loadingAction(true));
+      await auth.signOut();
+      dispatch({
+        type: AUTH_SIGN_OUT,
+      });
+    } catch (err) {
+      dispatch(loadingAction(false));
+    }
+  };
+};
 
 // Send password reset email
 // const sendPasswordResetEmail = ({ correo }, successMsg) => {
@@ -198,4 +198,5 @@ export {
   loadingAction,
   successAction,
   signInAction,
+  signOutAction,
 };

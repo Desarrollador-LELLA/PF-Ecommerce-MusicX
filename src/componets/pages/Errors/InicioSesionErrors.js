@@ -18,8 +18,8 @@ export const validateMail=(input)=> {
 export const validatePass=(input)=> {
     let errors= {}
 
-    if(input.password.length < 6){
-        errors.contraseña = "Debe tener 6 cáracteres o mas"
+    if(input.password.length < 6 || input.password.length > 40){
+        errors.contraseña = "Debe tener de 6 a 40 caracteres"
     }
 
     return errors;

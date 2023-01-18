@@ -1,6 +1,6 @@
 import React from 'react';
 import { Navbar, Container } from 'react-bootstrap';
-import icLogo from '../images/ic_logo_tester.svg';
+import icLogo from '../images/ic_logo_tester.png';
 import {Link} from "react-router-dom"
 
 const NavHeader = () => {
