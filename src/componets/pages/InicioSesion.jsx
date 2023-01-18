@@ -2,8 +2,8 @@ import React, { useState } from 'react'
 import { Link } from 'react-router-dom';
 import { Button, Card, Container, FloatingLabel, Form, Image } from 'react-bootstrap';
 import s from '../../css/registro.module.css';
-import icLogo from '../images/ic_logo_tester.svg';
-import {loadingAction, signInAction} from "../../redux/actions/authAction"
+import icLogo from '../images/ic_logo_tester.png';
+import { loadingAction, signInAction, signOutAction} from "../../redux/actions/authAction"
 import { useDispatch } from 'react-redux';
 import {validateMail,validatePass} from './Errors/InicioSesionErrors';
 
@@ -27,8 +27,12 @@ export default function InicioSesion() {
     }
     const handleSubmit = (event) =>{
         event.preventDefault();
-        dispatch(signInAction(correo,contraseña))
-        dispatch(loadingAction(true))
+        dispatch(signInAction({correo,contraseña},()=>{}))
+    }
+    
+    const handleSubminOut = event=>{
+        event.preventDefault();
+        dispatch(signOutAction())
     }
   return (
 
@@ -58,6 +62,7 @@ export default function InicioSesion() {
                           }>
                             Iniciar Sesión
                         </Button>
+                        <Button onClick={handleSubminOut}>Cerrar</Button>
                     </Form>
                     <Link className='navbar-brand text-success' to='/registro'>
                         Quiero Registrarme

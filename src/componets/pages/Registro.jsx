@@ -2,7 +2,7 @@ import React from 'react';
 import { Button, Card, Container, FloatingLabel, Form, Image } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import s from '../../css/registro.module.css';
-import icLogo from '../images/ic_logo_tester.svg';
+import icLogo from '../images/ic_logo_tester.png';
 
 const Registro = () => {
     return (
@@ -31,7 +31,7 @@ const Registro = () => {
                             Registrarme
                         </Button>
                     </Form>
-                    <Link className='navbar-brand text-success' to='#'>
+                    <Link className='navbar-brand text-success' to='/iniciarsesion'>
                         Ya tengo una Cuenta
                     </Link>
                 </Card.Body>
