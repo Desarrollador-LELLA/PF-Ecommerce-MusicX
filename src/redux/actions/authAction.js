@@ -35,17 +35,17 @@ const registraAction = ({ nombre, apellido, correo, clave }, onError) => async (
   }
 };
 
-// INICIO DE SESION DE USUARIOS
-// const SignInAction = ({ correo, clave }, onError) => {
-//   return async (dispatch) => {
-//     try {
-//       await allAuth.signInWithEmailAndPassword(auth, correo, clave);
-//     } catch (err) {
-//       onError();
-//       dispatch(setError(err.message));
-//     }
-//   };
-// };
+//INICIO DE SESION DE USUARIOS
+const signInAction =
+  ({ correo, contraseña }, onError) =>
+  async (dispatch) => {
+    try {
+      await allAuth.signInWithEmailAndPassword(auth, correo, contraseña);
+    } catch (err) {
+      onError();
+      dispatch(errorAction(err.message));
+    }
+  };
 
 // SETEO DE ERRORES ENVIADAS DESDE FIREBASE O ERRORES CREDOS
 const errorAction = (msg) => (dispatch) => {
@@ -78,7 +78,6 @@ const successAction = (msg) => (dispatch) => {
   });
 };
 
-
 // ACTION QUE PODRIA USAR EN EL FUTURO
 
 // const getUserById = (id) => {
@@ -105,19 +104,19 @@ const successAction = (msg) => (dispatch) => {
 // };
 
 // Log out
-// const SignOutAction = () => {
-//   return async (dispatch) => {
-//     try {
-//       dispatch(setLoading(true));
-//       await auth.signOut();
-//       dispatch({
-//         type: SIGN_OUT,
-//       });
-//     } catch (err) {
-//       dispatch(setLoading(false));
-//     }
-//   };
-// };
+const signOutAction = () => {
+  return async (dispatch) => {
+    try {
+      dispatch(loadingAction(true));
+      await auth.signOut();
+      dispatch({
+        type: AUTH_SIGN_OUT,
+      });
+    } catch (err) {
+      dispatch(loadingAction(false));
+    }
+  };
+};
 
 // Send password reset email
 // const sendPasswordResetEmail = ({ correo }, successMsg) => {
@@ -182,9 +181,11 @@ const successAction = (msg) => (dispatch) => {
 // };
 
 export {
-  registraAction,
+//  registraAction,
   errorAction,
   needVerificationAction,
   loadingAction,
   successAction,
+  signInAction,
+  signOutAction,
 };
