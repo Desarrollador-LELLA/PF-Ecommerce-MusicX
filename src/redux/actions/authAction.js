@@ -1,49 +1,62 @@
-import { allAuth, allDb, auth, db } from '../../firebaseInicial/firebase';
-import { AUTH_NEED_VERIFICATION, AUTH_SET_ERROR, AUTH_SET_LOADING, AUTH_SET_SUCCESS, AUTH_SET_USER, AUTH_SIGN_OUT } from '../types/authTypes';
+import { allAuth, allDb, auth, db } from "../../firebaseInicial/firebase";
+import {
+  AUTH_NEED_VERIFICATION,
+  AUTH_SET_ERROR,
+  AUTH_SET_LOADING,
+  AUTH_SET_SUCCESS,
+  AUTH_SET_USER,
+  AUTH_SIGN_OUT,
+} from "../types/authTypes";
 
 // RESGISTRO DE USUARIOS
-const registraAction = ({ pnombre, papellido, correo, telefono, clave }, onError) => async (dispatch) => {
-  try {
-    const res = await allAuth.createUserWithEmailAndPassword(auth, correo, clave);
-    if (res.user) {
-      const userData = {
-        id: res.user.uid,
-        pnombre: pnombre,
-        papellido: papellido,
-        correo: correo,
-        telefono: telefono,
-        fechaCreacion: allDb.serverTimestamp(),
-      };
-      await allDb.setDoc(allDb.doc(db, 'usuarios', res.user.uid), userData);
-      await allAuth.sendEmailVerification(res.user);
-      dispatch({
-        type: NEED_VERIFICATION,
-      });
-      dispatch({
-        type: SET_USER,
-        payload: userData,
-      });
-    }
-  } catch (err) {
-    onError();
-    dispatch({
-      type: SET_ERROR,
-      payload: err.message,
-    });
-  }
-};
-
-// INICIO DE SESION DE USUARIOS
-// const SignInAction = ({ correo, clave }, onError) => {
-//   return async (dispatch) => {
+// const registraAction =
+//   ({ pnombre, papellido, correo, telefono, clave }, onError) =>
+//   async (dispatch) => {
 //     try {
-//       await allAuth.signInWithEmailAndPassword(auth, correo, clave);
+//       const res = await allAuth.createUserWithEmailAndPassword(
+//         auth,
+//         correo,
+//         clave
+//       );
+//       if (res.user) {
+//         const userData = {
+//           id: res.user.uid,
+//           pnombre: pnombre,
+//           papellido: papellido,
+//           correo: correo,
+//           telefono: telefono,
+//           fechaCreacion: allDb.serverTimestamp(),
+//         };
+//         await allDb.setDoc(allDb.doc(db, "usuarios", res.user.uid), userData);
+//         await allAuth.sendEmailVerification(res.user);
+//         dispatch({
+//           type: NEED_VERIFICATION,
+//         });
+//         dispatch({
+//           type: SET_USER,
+//           payload: userData,
+//         });
+//       }
 //     } catch (err) {
 //       onError();
-//       dispatch(setError(err.message));
+//       dispatch({
+//         type: SET_ERROR,
+//         payload: err.message,
+//       });
 //     }
 //   };
-// };
+
+//INICIO DE SESION DE USUARIOS
+const signInAction =
+  ({ correo, clave }, onError) =>
+  async (dispatch) => {
+    try {
+      await allAuth.signInWithEmailAndPassword(auth, correo, clave);
+    } catch (err) {
+      onError();
+      dispatch(errorAction(err.message));
+    }
+  };
 
 // SETEO DE ERRORES ENVIADAS DESDE FIREBASE O ERRORES CREDOS
 const errorAction = (msg) => (dispatch) => {
@@ -75,7 +88,6 @@ const successAction = (msg) => (dispatch) => {
     payload: msg,
   });
 };
-
 
 // ACTION QUE PODRIA USAR EN EL FUTURO
 
@@ -180,9 +192,10 @@ const successAction = (msg) => (dispatch) => {
 // };
 
 export {
-  registraAction,
+//  registraAction,
   errorAction,
   needVerificationAction,
   loadingAction,
   successAction,
+  signInAction,
 };
