@@ -59,6 +59,7 @@ const errorAction = (msg) => (dispatch) => {
 const needVerificationAction = () => (dispatch) => {
   dispatch({
     type: AUTH_NEED_VERIFICATION,
+
   });
 };
 
@@ -181,7 +182,7 @@ const signOutAction = () => {
 // };
 
 export {
-//  registraAction,
+  registraAction,
   errorAction,
   needVerificationAction,
   loadingAction,
