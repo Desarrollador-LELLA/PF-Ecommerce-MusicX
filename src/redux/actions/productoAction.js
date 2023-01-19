@@ -2,6 +2,10 @@ import { allAuth, allDb, auth, db } from "../../firebaseInicial/firebase";
 
 const getProductos = async () => {
 
+lista_Productos.forEach((doc) => {
+  console.log(doc.id, " => ", doc.data());
+});
+
 //   Query the first page of docs
   const first =  await allDb.query(
     allDb.collection(db, "productos"),
