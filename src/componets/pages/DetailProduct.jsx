@@ -6,8 +6,41 @@ import css from "../../css/detailproducto.module.css";
 import ListGroup from "react-bootstrap/ListGroup";
 import Card from "react-bootstrap/Card";
 import Button from "react-bootstrap/Button";
+import { useState } from "react";
+import { object } from "prop-types";
 
 export default function DetailProduct() {
+  const [presioProducto, setPresioProducto] = useState("");
+  const arryAux = [
+    { nombre: "Licencia 1", id: "akshdsad3568", valor: 100 },
+    { nombre: "Licencia 2", id: "aks1hd8", valor: 200 },
+    { nombre: "Licencia 3", id: "aks3hd8", valor: 300 },
+    { nombre: "Licencia 4", id: "aksh4d8", valor: 400 },
+    { nombre: "Licencia 5", id: "aksh2d8", valor: 500 },
+  ];
+
+  function handlerLicencia(e) {
+    let btnSelec = document.getElementById(e.target.id).parentNode;
+    let boton = document.getElementById(e.target.id).childNodes;
+    boton[1].style.display = "block";
+    btnSelec.setAttribute(
+      "Class",
+      `card ${css.cardProducto} ${css.cardSelect}`
+    );
+    precioTotal(e.target.id);
+    for (let i = 0; i < arryAux.length; i++) {
+      if (i != e.target.id) {
+        let btnNoSelect = document.getElementById(i).parentNode;
+        let botonNoSelect = document.getElementById(i).childNodes;
+        botonNoSelect[1].style.display = "none";
+        btnNoSelect.setAttribute("Class", `card ${css.cardProducto}`);
+      }
+    }
+  }
+  function precioTotal(i) {
+    setPresioProducto(arryAux[i].valor);
+  }
+
   return (
     <div>
       <div>
@@ -37,36 +70,29 @@ export default function DetailProduct() {
             </Col>
             <Col>
               <Row>
-                <Col>
+                <Col Style="padding-left: 30px;">
                   <h1>NombreProducto</h1>
-                </Col>
-                <Col>
-                  <h1>$ 1000 </h1>
+                  valor: $100 + licencia ${presioProducto}
                 </Col>
               </Row>
-              <div Style="overflow-y: scroll; height: 250px ; margin-top:100px">
+              <div className={`${css.divLicencias} shadow-sm `}>
                 <ListGroup>
-                  <Card Style="margin: 5px">
-                    <Card.Body>
-                      Licencia 1. con esta licencia obtienes uno malo{" "}
-                      <Button variant="success">$10</Button>
-                    </Card.Body>
-                  </Card>
-                  <Card>
-                    <Card.Body>
-                      Licencia 2. con esta licencia obtienes uno no tan malo{" "}
-                    </Card.Body>
-                  </Card>
-                  <Card>
-                    <Card.Body>
-                      Licencia 3 . con esta licencia obtienes uno bueno{" "}
-                    </Card.Body>
-                  </Card>
-                  <Card>
-                    <Card.Body>
-                      Licencia 4. con esta licencia obtienes el PRO
-                    </Card.Body>
-                  </Card>
+                  {arryAux.map((obj, indx) => (
+                    <div key={indx} onClick={(e) => handlerLicencia(e)}>
+                      <Card className={`${css.cardProducto}`}>
+                        <Card.Body id={indx} value={obj.valor}>
+                          {`${obj.nombre} detalle de la licencia' `}
+                          <Button
+                            name="boton"
+                            className="float-end"
+                            variant="success"
+                          >
+                            ${obj.valor}
+                          </Button>
+                        </Card.Body>
+                      </Card>
+                    </div>
+                  ))}
                 </ListGroup>
               </div>
             </Col>
