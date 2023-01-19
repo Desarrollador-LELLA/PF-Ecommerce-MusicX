@@ -1,49 +1,51 @@
 import { allAuth, allDb, auth, db } from '../../firebaseInicial/firebase';
+import { erroresList } from '../../utils/libreria';
 import { AUTH_NEED_VERIFICATION, AUTH_SET_ERROR, AUTH_SET_LOADING, AUTH_SET_SUCCESS, AUTH_SET_USER, AUTH_SIGN_OUT } from '../types/authTypes';
 
 // RESGISTRO DE USUARIOS
-const registraAction = ({ pnombre, papellido, correo, telefono, clave }, onError) => async (dispatch) => {
+const registraAction = ({ nombre, apellido, correo, clave }, onError) => async (dispatch) => {
+  console.log(nombre, apellido, correo, clave)
   try {
     const res = await allAuth.createUserWithEmailAndPassword(auth, correo, clave);
     if (res.user) {
       const userData = {
         id: res.user.uid,
-        pnombre: pnombre,
-        papellido: papellido,
-        correo: correo,
-        telefono: telefono,
+        nombre,
+        apellido,
+        correo,
+        rol: 'Cliente',
         fechaCreacion: allDb.serverTimestamp(),
       };
       await allDb.setDoc(allDb.doc(db, 'usuarios', res.user.uid), userData);
       await allAuth.sendEmailVerification(res.user);
       dispatch({
-        type: NEED_VERIFICATION,
+        type: AUTH_NEED_VERIFICATION,
       });
       dispatch({
-        type: SET_USER,
-        payload: userData,
+        type: AUTH_SET_USER,
+        payload: { nombre, apellido },
       });
     }
   } catch (err) {
     onError();
     dispatch({
-      type: SET_ERROR,
-      payload: err.message,
+      type: AUTH_SET_ERROR,
+      payload: erroresList(err),
     });
   }
 };
 
-// INICIO DE SESION DE USUARIOS
-// const SignInAction = ({ correo, clave }, onError) => {
-//   return async (dispatch) => {
-//     try {
-//       await allAuth.signInWithEmailAndPassword(auth, correo, clave);
-//     } catch (err) {
-//       onError();
-//       dispatch(setError(err.message));
-//     }
-//   };
-// };
+//INICIO DE SESION DE USUARIOS
+const signInAction =
+  ({ correo, contraseña }, onError) =>
+  async (dispatch) => {
+    try {
+      await allAuth.signInWithEmailAndPassword(auth, correo, contraseña);
+    } catch (err) {
+      onError();
+      dispatch(errorAction(err.message));
+    }
+  };
 
 // SETEO DE ERRORES ENVIADAS DESDE FIREBASE O ERRORES CREDOS
 const errorAction = (msg) => (dispatch) => {
@@ -57,6 +59,7 @@ const errorAction = (msg) => (dispatch) => {
 const needVerificationAction = () => (dispatch) => {
   dispatch({
     type: AUTH_NEED_VERIFICATION,
+
   });
 };
 
@@ -75,7 +78,6 @@ const successAction = (msg) => (dispatch) => {
     payload: msg,
   });
 };
-
 
 // ACTION QUE PODRIA USAR EN EL FUTURO
 
@@ -103,19 +105,19 @@ const successAction = (msg) => (dispatch) => {
 // };
 
 // Log out
-// const SignOutAction = () => {
-//   return async (dispatch) => {
-//     try {
-//       dispatch(setLoading(true));
-//       await auth.signOut();
-//       dispatch({
-//         type: SIGN_OUT,
-//       });
-//     } catch (err) {
-//       dispatch(setLoading(false));
-//     }
-//   };
-// };
+const signOutAction = () => {
+  return async (dispatch) => {
+    try {
+      dispatch(loadingAction(true));
+      await auth.signOut();
+      dispatch({
+        type: AUTH_SIGN_OUT,
+      });
+    } catch (err) {
+      dispatch(loadingAction(false));
+    }
+  };
+};
 
 // Send password reset email
 // const sendPasswordResetEmail = ({ correo }, successMsg) => {
@@ -185,4 +187,6 @@ export {
   needVerificationAction,
   loadingAction,
   successAction,
+  signInAction,
+  signOutAction,
 };
