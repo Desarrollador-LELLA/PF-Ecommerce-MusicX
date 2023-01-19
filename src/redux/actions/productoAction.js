@@ -1,6 +1,15 @@
 import { allAuth, allDb, auth, db } from "../../firebaseInicial/firebase";
 
 const getProductos = async () => {
+
+
+  //omitir
+  // const lista_Productos = await allDb.getDocs(allDb.collection(db, "producto"));
+  // lista_Productos.forEach((doc) => {
+  //   console.log(doc.id, " => ", doc.data());
+  // });
+
+
   //   Query the first page of docs
   const first = await allDb.query(
     allDb.collection(db, "productos"),
@@ -9,6 +18,7 @@ const getProductos = async () => {
   );
   const documentSnapshots = await allDb.getDocs(first);
   const todo = await documentSnapshots.docs;
+
 
   // Get the last visible document
   const lastVisible = await documentSnapshots.docs[
@@ -24,8 +34,10 @@ const getProductos = async () => {
     // startAfter(lastVisible),
     allDb.limit(25)
   );
+
   return todo;
 };
 
 export { getProductos };
+
 //pa ver si yaxd
