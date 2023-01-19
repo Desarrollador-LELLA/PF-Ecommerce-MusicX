@@ -26,7 +26,6 @@ const getProductos = async () => {
   ];
   // console.log("last", lastVisible);
 
-  
   // Construct a new query starting at this document,
   // get the next 25 cities.
   const next = await allDb.query(
