@@ -1,0 +1,22 @@
+.carrusel{
+    margin: auto;
+    align-items: center;
+    width: 70%;
+}
+
+.carrusel div{
+    padding: 100px;
+}
+
+.carrusel h3{
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    color: rgb(255, 255, 255);
+    font-size: 50px;    
+}
+.carrusel p{
+    color: green;
+}
+.carrusel img{
+    width: 90%;
+    padding: 2%;
+}
