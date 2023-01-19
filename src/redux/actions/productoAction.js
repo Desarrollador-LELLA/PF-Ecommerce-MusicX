@@ -32,3 +32,6 @@ const getProductos = async () => {
 };
 
 export { getProductos };
+
+
+//pa ver si yaxd
