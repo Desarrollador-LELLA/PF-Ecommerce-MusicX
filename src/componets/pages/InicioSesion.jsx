@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { Button, Card, Container, FloatingLabel, Form, Image } from 'react-bootstrap';
 import s from '../../css/registro.module.css';
 import icLogo from '../images/ic_logo_tester.png';
-import { loadingAction, signInAction, signOutAction} from "../../redux/actions/authAction"
+import { signInAction, signOutAction} from "../../redux/actions/authAction"
 import { useDispatch } from 'react-redux';
 import {validateMail,validatePass} from './Errors/InicioSesionErrors';
 
