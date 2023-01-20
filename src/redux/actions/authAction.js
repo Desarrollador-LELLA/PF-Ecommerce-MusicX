@@ -4,7 +4,7 @@ import { AUTH_NEED_VERIFICATION, AUTH_SET_ERROR, AUTH_SET_LOADING, AUTH_SET_SUCC
 
 // RESGISTRO DE USUARIOS
 const registraAction = ({ nombre, apellido, correo, clave }, onError) => async (dispatch) => {
-  console.log(nombre, apellido, correo, clave)
+  console.log(nombre, apellido, correo, clave);
   try {
     const res = await allAuth.createUserWithEmailAndPassword(auth, correo, clave);
     if (res.user) {
@@ -38,14 +38,14 @@ const registraAction = ({ nombre, apellido, correo, clave }, onError) => async (
 //INICIO DE SESION DE USUARIOS
 const signInAction =
   ({ correo, contraseña }, onError) =>
-  async (dispatch) => {
-    try {
-      await allAuth.signInWithEmailAndPassword(auth, correo, contraseña);
-    } catch (err) {
-      onError();
-      dispatch(errorAction(err.message));
-    }
-  };
+    async (dispatch) => {
+      try {
+        await allAuth.signInWithEmailAndPassword(auth, correo, contraseña);
+      } catch (err) {
+        onError();
+        dispatch(errorAction(err.message));
+      }
+    };
 
 // SETEO DE ERRORES ENVIADAS DESDE FIREBASE O ERRORES CREDOS
 const errorAction = (msg) => (dispatch) => {
@@ -63,11 +63,11 @@ const needVerificationAction = () => (dispatch) => {
 };
 
 // SETEO DE LOADING O CARGA DE PROCESOS
-const loadingAction = (valueBoleano) => (dispatch) => {
-  dispatch({
+const loadingAction = (valueBoleano) => {
+  return {
     type: AUTH_SET_LOADING,
     payload: valueBoleano,
-  });
+  };
 };
 
 // SETEO LOS MENSAJES SUCCESS
@@ -79,29 +79,35 @@ const successAction = (msg) => (dispatch) => {
 };
 
 // ACTION QUE PODRIA USAR EN EL FUTURO
+const getUserById = (id) => async (dispatch) => {
+  try {
+    const docRef = allDb.doc(db, 'usuarios', id);
+    const user = await allDb.getDoc(docRef);
+    if (user.exists()) {
+      const userData = {
+        id: user.get('id'),
+        pnombre: user.get('pnombre'),
+        papellido: user.get('papellido'),
+      };
+      dispatch({
+        type: AUTH_SET_USER,
+        payload: userData,
+      });
+    } else {
+    }
+  } catch (err) {
+    // console.log(err);
+  } finally {
+    dispatch({
+      type: AUTH_SET_LOADING,
+      payload: false,
+    });
+  }
+};
 
-// const getUserById = (id) => {
-//   return async (dispatch) => {
-//     try {
-//       const docRef = allDb.doc(db, 'usuarios', id);
-//       const user = await allDb.getDoc(docRef);
-//       if (user.exists()) {
-//         const userData = {
-//           id: user.get('id'),
-//           pnombre: user.get('pnombre'),
-//           papellido: user.get('papellido'),
-//         };
-//         dispatch({
-//           type: SET_USER,
-//           payload: userData,
-//         });
-//       } else {
-//       }
-//     } catch (err) {
-//       // console.log(err);
-//     }
-//   };
-// };
+const buscarSesionIniciada = () => (dispatch) => {
+
+}
 
 // Log out
 const signOutAction = () => {
@@ -181,11 +187,12 @@ const signOutAction = () => {
 // };
 
 export {
-//  registraAction,
+  registraAction,
   errorAction,
   needVerificationAction,
   loadingAction,
   successAction,
   signInAction,
   signOutAction,
+  getUserById
 };
