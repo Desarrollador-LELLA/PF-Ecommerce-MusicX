@@ -15,7 +15,7 @@ import Carrito from "./componets/pages/Carrito";
 function App() {
   return (
     <Routes>
-      <Route path="/" element={<Layout />}>
+      <Route path='/' element={<Layout />} >
         <Route index element={<Home />} />
         <Route path="registro" element={<Registro />} />
         <Route path="detalleProducto" element={<DetailProduct />} />
@@ -30,6 +30,7 @@ function App() {
       </Route>
       <Route path="/carrito" element={<Carrito />} />
     </Routes>
+    
   );
 }
 
