@@ -3,7 +3,7 @@ import { AUTH_NEED_VERIFICATION, AUTH_SET_ERROR, AUTH_SET_LOADING, AUTH_SET_SUCC
 const initialState = {
   usuarioAuth: null,
   authenticatedAuth: false,
-  loadingAuth: false,
+  loadingAuth: true,
   errorAuth: '',
   needVerificationAuth: false,
   successAuth: '',
