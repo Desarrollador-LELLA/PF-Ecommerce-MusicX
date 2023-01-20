@@ -6,8 +6,8 @@ import css from "../../css/detailproducto.module.css";
 import ListGroup from "react-bootstrap/ListGroup";
 import Card from "react-bootstrap/Card";
 import Button from "react-bootstrap/Button";
-import { useState } from "react";
-import { object } from "prop-types";
+import { useState, useEffect } from "react";
+import { getProducto } from "../../redux/actions/detailProductAction";
 
 export default function DetailProduct() {
   const [presioProducto, setPresioProducto] = useState("");
@@ -18,6 +18,10 @@ export default function DetailProduct() {
     { nombre: "Licencia 4", id: "aksh4d8", valor: 400 },
     { nombre: "Licencia 5", id: "aksh2d8", valor: 500 },
   ];
+
+  useEffect(() => {
+    console.log(getProducto());
+  });
 
   function handlerLicencia(e) {
     let btnSelec = document.getElementById(e.target.id).parentNode;
