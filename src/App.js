@@ -10,6 +10,7 @@ import PerfilUS from "./componets/pages/PerfilU";
 import PerfilAd from "./componets/pages/PerfilAd";
 import InicioSesion from "./componets/pages/InicioSesion";
 import AboutUs from "./componets/pages/AboutUs";
+import Carrito from "./componets/pages/Carrito";
 
 function App() {
   return (
@@ -25,8 +26,9 @@ function App() {
         <Route path="PerfilUsuario" element={<PerfilUS />} />
         <Route path="PerfilAdmin" element={<PerfilAd />} />
         <Route path="iniciarsesion" element={<InicioSesion />} />
-        <Route path="AboutUs" element={<AboutUs />} />
+        <Route path="AboutUs" element={<AboutUs />} />  
       </Route>
+      <Route path="/carrito" element={<Carrito />} />
     </Routes>
   );
 }
