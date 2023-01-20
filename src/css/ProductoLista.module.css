@@ -1,0 +1,27 @@
+.tr
+{
+    background-color: black;
+    color: white;
+    height: 50px;
+    line-height: 50px;
+    border-top-left-radius: 30px;
+}
+
+.td_centrdo
+{
+    text-align: center;
+}
+
+.imagen
+{
+    width: 80px;
+    height: 80px;
+}
+
+.boton
+{
+    width: 100px;
+    height: 30px;
+    line-height: 30px;
+    border-radius: 10px;
+}
