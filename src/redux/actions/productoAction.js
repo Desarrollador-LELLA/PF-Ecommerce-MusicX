@@ -108,10 +108,6 @@ export const detalle_producto_admin = async (id) => {
     return docSnap.data()
 };
 
-
-
-import { allAuth, allDb, auth, db } from "../../firebaseInicial/firebase";
-
 const getProductos = async () => {
 
 

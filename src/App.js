@@ -1,15 +1,3 @@
-import { Route, Routes } from 'react-router-dom';
-import Layout from './componets/pages/Layout';
-import Home from './componets/pages/Home';
-import Registro from './componets/pages/Registro';
-import ProductoLista from './componets/pages/ProductoLista';
-import ProductoCreate from './componets/pages/ProductoCreate';
-import ProductoDetalle from './componets/pages/ProductoDetalle';
-import PerfilUS from './componets/pages/PerfilU';
-import PerfilAd from './componets/pages/PerfilAd'
-import InicioSesion from './componets/pages/InicioSesion';
-import AboutUs from './componets/pages/AboutUs';
-
 import { Route, Routes } from "react-router-dom";
 import Layout from "./componets/pages/Layout";
 import Home from "./componets/pages/Home";
@@ -23,6 +11,7 @@ import PerfilAd from "./componets/pages/PerfilAd";
 import InicioSesion from "./componets/pages/InicioSesion";
 import AboutUs from "./componets/pages/AboutUs";
 import Carrito from "./componets/pages/Carrito";
+import ProductoDetalle from './componets/pages/ProductoDetalle';
 
 
 function App() {
