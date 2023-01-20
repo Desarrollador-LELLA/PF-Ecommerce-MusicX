@@ -1,10 +1,33 @@
-.imagenportada {
+.box {
+  overflow: hidden;
+  position: relative;
+}
+.box .imagenportada {
   border-radius: 25px;
+  object-fit: cover;
+  height: 500px;
+}
+
+.box .hover {
+  width: 0%;
+  height: 500px;
+  background-color: rgba(0, 0, 0, 0.466);
+  position: absolute;
+  top: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  border-radius: 25px;
+}
+
+.box:hover .hover {
+  width: 500px;
 }
 .divLicencias {
   border-top: solid 1px;
   border-color: black;
-  margin-top: 30px;
+  margin-top: 1px;
   overflow-y: scroll;
   height: 250px;
 }
@@ -16,4 +39,7 @@
 .cardSelect {
   border-color: blue;
   margin: 10px;
+}
+.espaciado {
+  padding: 50px;
 }

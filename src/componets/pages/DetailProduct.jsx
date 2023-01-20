@@ -7,10 +7,15 @@ import ListGroup from "react-bootstrap/ListGroup";
 import Card from "react-bootstrap/Card";
 import Button from "react-bootstrap/Button";
 import { useState, useEffect } from "react";
-import { getProducto } from "../../redux/actions/detailProductAction";
+import { getProducto } from "../../redux/actions/carritoAction";
+import { useSelector, useDispatch } from "react-redux";
+import { useParams } from "react-router-dom";
 
 export default function DetailProduct() {
+  const dispatch = useDispatch();
+  const { id } = useParams();
   const [presioProducto, setPresioProducto] = useState("");
+  const { productoUnoDetalle } = useSelector((state) => state.carrito);
   const arryAux = [
     { nombre: "Licencia 1", id: "akshdsad3568", valor: 100 },
     { nombre: "Licencia 2", id: "aks1hd8", valor: 200 },
@@ -20,8 +25,8 @@ export default function DetailProduct() {
   ];
 
   useEffect(() => {
-    console.log(getProducto());
-  });
+    dispatch(getProducto(id));
+  }, [dispatch]);
 
   function handlerLicencia(e) {
     let btnSelec = document.getElementById(e.target.id).parentNode;
@@ -47,38 +52,41 @@ export default function DetailProduct() {
 
   return (
     <div>
+      {console.log(productoUnoDetalle)}
       <div>
         <Container>
           <div Style="margin-top: 50px"></div>
           <Row>
             <Col>
-              <img
-                className={`${css.imagenportada} img-fluid`}
-                src="https://media.istockphoto.com/id/1352152504/es/vector/papel-negro-oscuro-abstracto-fondo-geom%C3%A9trico-cortado-fondo-futurista-moderno-se-puede-usar.jpg?s=612x612&w=0&k=20&c=WcJQBCdFP2jUSRtvxJcnuwa5PO3OjGJcvLM6Tvkox7Q="
-                alt=""
-              />
-              <p Style="margin-top: 20px" className="text-break ">
-                Aqui va el genero y la descripcion del NombreProducto y
-                contenido basura para rellenar el formato y ahcer dle mundo un
-                mejor lugar para codear y contenido basura para rellenar el
-                formato y ahcer dle mundo un mejor lugar para codear
-              </p>
-              <div Style="display:flex; justify-content: center; aling-items: center;">
-                <audio controls controlslist="nodownload">
-                  <source
-                    src="https://firebasestorage.googleapis.com/v0/b/orion-proyect.appspot.com/o/BOM%20BAP%20TYPE%201%2FBASE%20BOMBAP%20TYPE.wav?alt=media&token=cde04954-46db-44aa-bbd6-1f7e1a97e3d0"
-                    type="audio/wav"
-                  />
-                </audio>
+              <div className={css.box}>
+                <img
+                  className={`${css.imagenportada} img-fluid`}
+                  src={productoUnoDetalle.imagen}
+                  alt=""
+                />
+                <div className={css.hover}>
+                  <audio controls controlslist="nodownload">
+                    <source
+                      src="https://firebasestorage.googleapis.com/v0/b/orion-proyect.appspot.com/o/BOM%20BAP%20TYPE%201%2FBASE%20BOMBAP%20TYPE.wav?alt=media&token=cde04954-46db-44aa-bbd6-1f7e1a97e3d0"
+                      type="audio/wav"
+                    />
+                  </audio>
+                </div>
               </div>
             </Col>
             <Col>
               <Row>
                 <Col Style="padding-left: 30px;">
-                  <h1>NombreProducto</h1>
+                  <h1>
+                    {`${productoUnoDetalle.nombre} - ${productoUnoDetalle.autor}`}
+                  </h1>
                   valor: $100 + licencia ${presioProducto}
+                  <p Style="margin-top: 10px" className="text-break ">
+                    {productoUnoDetalle.descripcion}
+                  </p>
                 </Col>
               </Row>
+              <p className="text-center">Lista Licencias</p>
               <div className={`${css.divLicencias} shadow-sm `}>
                 <ListGroup>
                   {arryAux.map((obj, indx) => (
@@ -88,8 +96,7 @@ export default function DetailProduct() {
                           {`${obj.nombre} detalle de la licencia' `}
                           <Button
                             name="boton"
-                            className="float-end"
-                            variant="success"
+                            className="float-end btn btn-primary"
                           >
                             ${obj.valor}
                           </Button>
@@ -102,6 +109,7 @@ export default function DetailProduct() {
             </Col>
           </Row>
         </Container>
+        <div className={css.espaciado}></div>
       </div>
     </div>
   );

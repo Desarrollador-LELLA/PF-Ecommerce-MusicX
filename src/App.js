@@ -18,6 +18,7 @@ import AboutUs from "./componets/pages/AboutUs";
 import Carrito from "./componets/pages/Carrito";
 import ProductoDetalle from './componets/pages/ProductoDetalle';
 
+
 function App() {
 
   const dispatch = useDispatch();
@@ -44,8 +45,8 @@ function App() {
     <Routes>
       <Route path='/' element={<Layout />} >
         {/* SIN AUTORIZACION */}
+        <Route path=":id" element={<DetailProduct />} />
         <Route index element={<Home />} />
-        <Route path="detalleProducto" element={<DetailProduct />} />
         <Route path="AboutUs" element={<AboutUs />} />  
         {/* CONDICIONALES CLIENTES */}
         <Route path="registro" element={!authenticatedAuth ? <Registro /> : <Navigate to="/" />} /> 
@@ -61,7 +62,6 @@ function App() {
       </Route>
       <Route path="/carrito" element={<Carrito />} />
     </Routes>
-
   );
 }
 
