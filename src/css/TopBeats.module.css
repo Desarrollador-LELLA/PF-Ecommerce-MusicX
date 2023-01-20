@@ -7,7 +7,12 @@
 .carrusel h3{
     color: rgb(235, 117, 117);
     font-family: Poppins,Roboto,"Helvetica Neue",sans-serif;
+
 }
+.carrusel a{
+    text-decoration: none;
+}
+
 .carrusel div{
     padding: 30px;
 }

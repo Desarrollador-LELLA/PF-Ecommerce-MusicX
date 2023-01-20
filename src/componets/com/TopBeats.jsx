@@ -3,6 +3,9 @@ import React, { useEffect, useState } from "react";
 import { getProductos } from "../../redux/actions/productoAction";
 import s from "../../css/TopBeats.module.css";
 import Image from 'react-bootstrap/Image'
+import { Link } from "react-router-dom";
+
+
 export default function TopBeats() {
   const [productos, setProductos] = useState([]);
 
@@ -26,8 +29,10 @@ export default function TopBeats() {
                 alt="First slide"
               />
               <Carousel.Caption>
+                <Link to={productos[0].data().id}>
                 <h3 className="display-1">{productos[0].data().nombre}</h3>
                 <p className="display-4">BY:{productos[0].data().autor}</p>
+                </Link>
               </Carousel.Caption>
             </Carousel.Item>
             <Carousel.Item>
@@ -38,7 +43,9 @@ export default function TopBeats() {
               />
 
               <Carousel.Caption>
+              <Link to={productos[1].data().id}>
                 <h3 className="display-1">{productos[1].data().nombre}</h3>
+                </Link>
                 <p className="display-4">BY:{productos[1].data().autor}</p>
               </Carousel.Caption>
             </Carousel.Item>
@@ -51,7 +58,9 @@ export default function TopBeats() {
               />
 
               <Carousel.Caption>
+              <Link to={productos[2].data().id}>
                 <h3 className="display-1">{productos[2].data().nombre}</h3>
+                </Link>
                 <p className="display-4">BY:{productos[2].data().autor}</p>
               </Carousel.Caption>
             </Carousel.Item>
