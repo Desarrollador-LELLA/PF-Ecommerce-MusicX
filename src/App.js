@@ -11,8 +11,7 @@ import DetailProduct from "./componets/pages/DetailProduct";
 import Generos from "./componets/pages/Generos";
 import ProductoLista from "./componets/pages/ProductoLista";
 import ProductoCreate from "./componets/pages/ProductoCreate";
-import PerfilUS from "./componets/pages/PerfilU";
-import PerfilAd from "./componets/pages/PerfilAd";
+import Perfil from "./componets/pages/Perfil";
 import InicioSesion from "./componets/pages/InicioSesion";
 import AboutUs from "./componets/pages/AboutUs";
 import Carrito from "./componets/pages/Carrito";
@@ -59,6 +58,10 @@ function App() {
         {/* NO SE ESPESIFICA SI ES PUBLICA NI PRIVADA NI QUE COSA ES */}
         <Route path="producto_lista" element={<ProductoLista />} />
         <Route path='producto_detalle/:id' element={<ProductoDetalle />} />
+        <Route path='perfil' element={<Perfil />} />
+        <Route path="iniciarsesion" element={<InicioSesion />} />
+        <Route path="AboutUs" element={<AboutUs />} />  
+
       </Route>
       <Route path="/carrito" element={<Carrito />} />
     </Routes>

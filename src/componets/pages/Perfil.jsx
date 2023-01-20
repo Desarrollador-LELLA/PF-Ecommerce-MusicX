@@ -1,3 +1,4 @@
+import React from "react";
 import React, { useEffect, useState } from "react"
 import "../../css/perfil.css"
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
@@ -5,7 +6,7 @@ import {faUser, faPenToSquare, faImage, faEnvelope, faLock, faBook, faUserCheck,
 import {detalle_usuario_cliente} from "../../redux/actions/usuarioAction.js"
 
 
-const PerfilU = () => { 
+const Perfil = () => { 
     const [datosu, setDatosu] = useState({});
     useEffect(()=>{
         dU()
@@ -76,4 +77,4 @@ const PerfilU = () => {
     </section>
     );
 };
-export default PerfilU;
+export default Perfil;
