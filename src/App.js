@@ -1,9 +1,9 @@
 
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { needVerificationAction, getUserById, loadingAction, uno } from './redux/actions/authAction';
 import { useEffect } from 'react';
 import { auth } from './firebaseInicial/firebase';
-import { Route, Routes } from "react-router-dom";
+import { Navigate, Route, Routes } from "react-router-dom";
 import Layout from "./componets/pages/Layout";
 import Home from "./componets/pages/Home";
 import Registro from "./componets/pages/Registro";
@@ -21,6 +21,7 @@ import ProductoDetalle from './componets/pages/ProductoDetalle';
 function App() {
 
   const dispatch = useDispatch();
+  const { authenticatedAuth } = useSelector(state => state.auth)
 
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged((user) => {
@@ -42,18 +43,21 @@ function App() {
   return (
     <Routes>
       <Route path='/' element={<Layout />} >
+        {/* SIN AUTORIZACION */}
         <Route index element={<Home />} />
-        <Route path="registro" element={<Registro />} />
         <Route path="detalleProducto" element={<DetailProduct />} />
-        <Route path="registro" element={<Registro />} />
-        <Route path="generos" element={<Generos />} />
-        <Route path="producto_lista" element={<ProductoLista />} />
-        <Route path="producto_create" element={<ProductoCreate />} />
-        <Route path='producto_detalle/:id' element={<ProductoDetalle />} />
-        <Route path="PerfilUsuario" element={<PerfilUS />} />
-        <Route path="PerfilAdmin" element={<PerfilAd />} />
-        <Route path="iniciarsesion" element={<InicioSesion />} />
         <Route path="AboutUs" element={<AboutUs />} />  
+        {/* CONDICIONALES CLIENTES */}
+        <Route path="registro" element={!authenticatedAuth ? <Registro /> : <Navigate to="/" />} /> 
+        <Route path="iniciarsesion" element={!authenticatedAuth ? <InicioSesion /> : <Navigate to="/" />} />
+        <Route path="PerfilUsuario" element={authenticatedAuth ? <PerfilUS /> : <Navigate to="/" />} />
+        {/* CONDICIONALES ADMIN */}
+        <Route path="producto_create" element={authenticatedAuth ? <ProductoCreate /> : <Navigate to="/" />} />
+        <Route path="PerfilAdmin" element={authenticatedAuth ? <PerfilAd /> : <Navigate to="/" />} />
+        <Route path="generos" element={authenticatedAuth ? <Generos /> : <Navigate to="/" />} />
+        {/* NO SE ESPESIFICA SI ES PUBLICA NI PRIVADA NI QUE COSA ES */}
+        <Route path="producto_lista" element={<ProductoLista />} />
+        <Route path='producto_detalle/:id' element={<ProductoDetalle />} />
       </Route>
       <Route path="/carrito" element={<Carrito />} />
     </Routes>
