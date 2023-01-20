@@ -1,8 +1,7 @@
 import ProductCards from "../com/ProductCards";
 import TopBeats from "../com/TopBeats";
-import React, { useEffect, useState } from "react";
-import { getProductos } from "../../redux/actions/productoAction";
 import s from "../../css/Home.module.css";
+import Paginate from '../com/Paginate';
 
 const Home = () => {
   return (
@@ -21,6 +20,7 @@ const Home = () => {
       </p>
       <TopBeats />
       <ProductCards/>
+      <Paginate></Paginate>
     </div>
   );
 };

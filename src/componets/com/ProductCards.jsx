@@ -21,7 +21,7 @@ export default function ProductCards(props) {
       <Row xs={3} md={5} className="g-4">
         {productos?.map((ele) => (
           <Col key={ele.data().key}>
-            <Card>
+            <Card className="my-5">
               <div>
                 <Link to={ele.data().id}>
                   <Card.Img variant="top" src={ele.data().imagen} />
@@ -30,7 +30,7 @@ export default function ProductCards(props) {
               <Card.Body>
                 <Card.Title>{ele.data().nombre}</Card.Title>
                 <Card.Text>
-                  <strong> By:{ele.data().autor}</strong>
+                  <strong> By {ele.data().autor}</strong>
                 </Card.Text>
                 <Card.Text>BPM:{ele.data().tiempo}</Card.Text>
                 <Card.Text>{ele.data().descripcion}</Card.Text>
