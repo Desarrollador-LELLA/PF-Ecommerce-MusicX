@@ -1,0 +1,25 @@
+.detalleProducto
+{
+    max-width: 700px;
+}
+
+.productoDetail_title
+{
+    width: 50%;
+    height: 50px;
+    line-height: 50px;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    margin: 0 auto;
+    text-align: center;
+    background-color: black;
+    color: white;
+    font-size: 20px;
+    border-radius: 20px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+
+
