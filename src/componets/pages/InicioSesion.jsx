@@ -1,42 +1,38 @@
-import React, { useState } from 'react'
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Button, Card, Container, FloatingLabel, Form, Image } from 'react-bootstrap';
 import s from '../../css/registro.module.css';
 import icLogo from '../images/ic_logo_tester.png';
-import { signInAction, signOutAction} from "../../redux/actions/authAction"
+import { signInAction } from "../../redux/actions/authAction";
 import { useDispatch } from 'react-redux';
-import {validateMail,validatePass} from './Errors/InicioSesionErrors';
+import { validateMail, validatePass } from './Errors/InicioSesionErrors';
 
 export default function InicioSesion() {
 
     const dispatch = useDispatch();
 
-    const [correo,setCorreo] = useState();
-    const [contraseña,setContraseña] = useState();
+    const [correo, setCorreo] = useState();
+    const [contraseña, setContraseña] = useState();
     const [errors, setErrors] = useState({});
 
-    const handleChangeCorreo = (event)=>{
+    const handleChangeCorreo = (event) => {
         event.preventDefault();
         setCorreo(event.target.value);
-        setErrors(validateMail({ ...correo, [event.target.type]: event.target.value}));
-    }
-    const handleChangeContraseña = (event)=>{
+        setErrors(validateMail({ ...correo, [event.target.type]: event.target.value }));
+    };
+    const handleChangeContraseña = (event) => {
         event.preventDefault();
         setContraseña(event.target.value);
-        setErrors(validatePass({ ...contraseña, [event.target.type]: event.target.value}));
-    }
-    const handleSubmit = (event) =>{
+        setErrors(validatePass({ ...contraseña, [event.target.type]: event.target.value }));
+    };
+    const handleSubmit = (event) => {
         event.preventDefault();
-        dispatch(signInAction({correo,contraseña},()=>{}))
-    }
-    
-    const handleSubminOut = event=>{
-        event.preventDefault();
-        dispatch(signOutAction())
-    }
-  return (
+        dispatch(signInAction({ correo, contraseña }, () => { }));
+    };
 
-    <Container className='my-2'>
+    return (
+
+        <Container className='my-2'>
             <Card className={`${s.registrocard} m-auto`}>
                 <Card.Body>
                     <div className='text-center'>
@@ -54,15 +50,14 @@ export default function InicioSesion() {
                         </FloatingLabel>
                         {errors.contraseña ? <span>{errors.contraseña}</span> : <span></span>}
                         <Button onClick={(event) => handleSubmit(event)} className='float-end' variant='primary' type='submit'
-                        disabled={
-                            !correo ||
-                            !contraseña  ||
-                            errors.correo ||
-                            errors.contraseña
-                          }>
+                            disabled={
+                                !correo ||
+                                !contraseña ||
+                                errors.correo ||
+                                errors.contraseña
+                            }>
                             Iniciar Sesión
                         </Button>
-                        <Button onClick={handleSubminOut}>Cerrar</Button>
                     </Form>
                     <Link className='navbar-brand text-success' to='/registro'>
                         Quiero Registrarme
@@ -70,5 +65,5 @@ export default function InicioSesion() {
                 </Card.Body>
             </Card>
         </Container>
-  )
+    );
 }
