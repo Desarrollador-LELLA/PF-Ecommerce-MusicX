@@ -23,7 +23,9 @@ export default function ProductCards(props) {
       {productos?.map((ele) => (
         <Col key={ele.data().key}>
           <Card>
+          <div>
           <Card.Img variant="top" src={ele.data().imagen} />
+          </div>
             <Card.Body>
               <Card.Title>{ele.data().nombre}</Card.Title>
               <Card.Text>
