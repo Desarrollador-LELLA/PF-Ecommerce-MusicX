@@ -1,4 +1,5 @@
 import { allAuth, allDb, auth, db } from '../../firebaseInicial/firebase';
+import { catchInicio } from '../../utils/InicioSesionErrors';
 import { erroresList } from '../../utils/libreria';
 import { AUTH_NEED_VERIFICATION, AUTH_SET_ERROR, AUTH_SET_LOADING, AUTH_SET_SUCCESS, AUTH_SET_USER, AUTH_SIGN_OUT } from '../types/authTypes';
 
@@ -43,7 +44,9 @@ const signInAction =
         await allAuth.signInWithEmailAndPassword(auth, correo, contraseña);
       } catch (err) {
         onError();
-        dispatch(errorAction(err.message));
+        dispatch({type: AUTH_SET_ERROR,
+          payload: catchInicio(err)});
+        
       }
     };
 
