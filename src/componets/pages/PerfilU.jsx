@@ -1,12 +1,28 @@
-import React from "react"
+import React, { useEffect, useState } from "react"
 import "../../css/perfil.css"
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
-import {faUser, faPenToSquare, faImage, faEnvelope, faLock, faBook, faUserCheck} from '@fortawesome/free-solid-svg-icons'
+import {faUser, faPenToSquare, faImage, faEnvelope, faLock, faBook, faUserCheck, faCheck} from '@fortawesome/free-solid-svg-icons'
+import {detalle_usuario_cliente} from "../../redux/actions/usuarioAction.js"
 
-const perfilUS = () => { 
+
+const PerfilU = () => { 
+    const [datosu, setDatosu] = useState({});
+    useEffect(()=>{
+        dU()
+    
+    
+    }, [])
+    const dU = async () => {
+            setDatosu ( await detalle_usuario_cliente("1ksOKnusALXbuRmJkjYAcDS1H2E3"))
+        
+    
+    
+    }
+
     return (
         
         <section class="seccion-perfil-usuario">
+            {console.log(datosu.data())}
         <div class="perfil-usuario-header">
             <div class="perfil-usuario-portada">
                 <div class="perfil-usuario-avatar">
@@ -22,7 +38,7 @@ const perfilUS = () => {
         </div>
         <div class="perfil-usuario-body">
             <div class="perfil-usuario-bio">
-                <h3 class="titulo">SERGIO BLANCO</h3>
+                <h3 class="titulo">{datosu.data().nombre + datosu.data().apellido}</h3>
                 <p class="texto">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
                     tempor incididunt ut labore et dolore magna aliqua.</p>
             </div>
@@ -30,9 +46,9 @@ const perfilUS = () => {
                 <ul class="lista-datos">
                     
                     
-                    <li><i><FontAwesomeIcon icon={faUser} /></i> UsuarioID : </li>
-                    <li><i><FontAwesomeIcon icon={faEnvelope} /></i> Correo: </li>
-                    
+                    <li><i><FontAwesomeIcon icon={faUser} /></i> UsuarioID : {datosu.data().id} </li>
+                    <li><i><FontAwesomeIcon icon={faEnvelope} /></i> Correo: {datosu.data().correo}</li>
+                    <li><i><FontAwesomeIcon icon={faCheck} /></i> Rol: {datosu.data().rol}</li>
                   
                 </ul>
                 <ul class="lista-datos">
@@ -60,4 +76,4 @@ const perfilUS = () => {
     </section>
     );
 };
-export default perfilUS;
+export default PerfilU;
