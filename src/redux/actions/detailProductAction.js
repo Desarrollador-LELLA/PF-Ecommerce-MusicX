@@ -1,11 +1,11 @@
 import { allDb, db } from "../../firebaseInicial/firebase";
 
-const getProducto = async () => {
-  const docRef = allDb.doc(db, "productos", "UChyFCpBGWkVcMWpC2Qt");
+const getProducto = async (id) => {
+  const docRef = allDb.doc(db, "productos", `${id}`);
   const docSnap = await allDb.getDoc(docRef);
 
   console.log("Informacion", docSnap.data());
-  return docSnap;
+  return docSnap.data();
 };
 
 export { getProducto };

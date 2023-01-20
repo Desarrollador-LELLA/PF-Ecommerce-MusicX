@@ -1,3 +1,3 @@
 export const PAGAR = "PAGAR";
 export const ELIMINAR_PRODUCTO = "ELIMINAR_PRODUCTO";
-
+export const DETALLE_UN_PRODUCTO = "DETALLE_UN_PRODUCTO";

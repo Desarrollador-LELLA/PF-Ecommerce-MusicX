@@ -11,30 +11,28 @@ import PerfilAd from "./componets/pages/PerfilAd";
 import InicioSesion from "./componets/pages/InicioSesion";
 import AboutUs from "./componets/pages/AboutUs";
 import Carrito from "./componets/pages/Carrito";
-import ProductoDetalle from './componets/pages/ProductoDetalle';
-
+import ProductoDetalle from "./componets/pages/ProductoDetalle";
 
 function App() {
   return (
     <Routes>
-      <Route path='/' element={<Layout />} >
+      <Route path="/" element={<Layout />}>
         <Route index element={<Home />} />
         <Route path="registro" element={<Registro />} />
+        <Route path=":id" element={<DetailProduct />} />
         <Route path="detalleProducto" element={<DetailProduct />} />
         <Route path="registro" element={<Registro />} />
         <Route path="generos" element={<Generos />} />
         <Route path="producto_lista" element={<ProductoLista />} />
         <Route path="producto_create" element={<ProductoCreate />} />
-        <Route path='producto_detalle/:id' element={<ProductoDetalle />} />
+        <Route path="producto_detalle/:id" element={<ProductoDetalle />} />
         <Route path="PerfilUsuario" element={<PerfilUS />} />
         <Route path="PerfilAdmin" element={<PerfilAd />} />
         <Route path="iniciarsesion" element={<InicioSesion />} />
-        <Route path="AboutUs" element={<AboutUs />} />  
-
+        <Route path="AboutUs" element={<AboutUs />} />
       </Route>
       <Route path="/carrito" element={<Carrito />} />
     </Routes>
-    
   );
 }
 
