@@ -12,7 +12,6 @@ export default function TopBeats() {
   const ese = async () => {
     const xd = await getProductos();
     setProductos(xd);
-    console.log(productos)
   };
   useEffect(() => {
     ese();
