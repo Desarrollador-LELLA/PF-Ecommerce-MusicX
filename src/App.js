@@ -1,4 +1,3 @@
-
 import { useDispatch, useSelector } from 'react-redux';
 import { needVerificationAction, getUserById, loadingAction, uno } from './redux/actions/authAction';
 import { useEffect } from 'react';
@@ -16,7 +15,8 @@ import InicioSesion from "./componets/pages/InicioSesion";
 import AboutUs from "./componets/pages/AboutUs";
 import Carrito from "./componets/pages/Carrito";
 import ProductoDetalle from './componets/pages/ProductoDetalle';
-
+import PerfilU from "./componets/pages/PerfilU"
+import PerfilAd from './componets/pages/PerfilAd';
 
 function App() {
 
@@ -50,7 +50,7 @@ function App() {
         {/* CONDICIONALES CLIENTES */}
         <Route path="registro" element={!authenticatedAuth ? <Registro /> : <Navigate to="/" />} /> 
         <Route path="iniciarsesion" element={!authenticatedAuth ? <InicioSesion /> : <Navigate to="/" />} />
-        <Route path="PerfilUsuario" element={authenticatedAuth ? <PerfilUS /> : <Navigate to="/" />} />
+        <Route path="PerfilUsuario" element={authenticatedAuth ? <PerfilU /> : <Navigate to="/" />} />
         {/* CONDICIONALES ADMIN */}
         <Route path="producto_create" element={authenticatedAuth ? <ProductoCreate /> : <Navigate to="/" />} />
         <Route path="PerfilAdmin" element={authenticatedAuth ? <PerfilAd /> : <Navigate to="/" />} />
