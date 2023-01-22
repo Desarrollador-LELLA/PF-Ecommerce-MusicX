@@ -1,0 +1,43 @@
+.navbar {
+    background: rgb(23, 19, 22);
+    background: linear-gradient(0deg, rgba(23, 19, 22, 1) 0%, rgba(54, 19, 36, 1) 36%);
+}
+
+.navbar_brand {
+    height: 65px;
+    font-size: 35px;
+    font-weight: bold;
+    color: #DB7FA0;
+}
+
+.dropdown_menu {
+    width: 250px;
+    max-height: 386px;
+    /* overflow-y: scroll; */
+    /* height: 266px; */
+}
+
+.card_overlay {
+    padding: 0;
+}
+
+.dropdown_contenedor {
+    overflow-y: auto;
+    max-height: 266px;
+}
+
+.card_header {
+    height: 30%;
+    background: rgba(0, 0, 0, 0.582);
+    color: white;
+}
+
+.card_body {
+    height: 40%;
+}
+
+.card_fooster {
+    height: 30%;
+    background: rgba(0, 0, 0, 0.582);
+    color: white;
+}

@@ -1,70 +1,85 @@
+.contendor {
+  background: #171316;
+}
+
 .topbeats {
-    text-align: center;
-    color: rgb(59, 149, 154);
-    font-family: Avenir Next, Helvetica Neue, Helvetica, Tahoma, sans-serif;
-    font-size: 1em;
-    font-weight: 700;
-    
+  text-align: center;
+  color: rgb(59, 149, 154);
+  font-family: Avenir Next, Helvetica Neue, Helvetica, Tahoma, sans-serif;
+  font-size: 1em;
+  font-weight: 700;
+}
+
+.topbeats span {
+  width: 1.5%;
+  display: inline-block;
+  position: relative;
+  transform-style: preserve-3d;
+  perspective: 500;
+  -webkit-font-smoothing: antialiased;
+}
+
+.topbeats span::before,
+.topbeats span::after {
+  display: none;
+  position: absolute;
+  top: 0;
+  left: -1px;
+  transform-origin: left top;
+  transition: all ease-out 0.3s;
+  content: attr(data-text);
+}
+
+.topbeats span::before {
+  z-index: 1;
+  color: rgba(0, 0, 0, 0.2);
+  transform: scale(1.1, 1) skew(0deg, 20deg);
+}
+
+.topbeats span::after {
+  z-index: 2;
+  color: #383838;
+  text-shadow: -1px 0 1px #343232, 1px 0 1px rgba(0, 0, 0, 0.8);
+  transform: rotateY(-40deg);
+}
+
+.topbeats span:hover::before {
+  transform: scale(1.1, 1) skew(0deg, 5deg);
+}
+
+.topbeats span:hover::after {
+  transform: rotateY(-10deg);
+}
+
+.topbeats span+span {
+  margin-left: 0.3em;
+}
+
+@media (min-width: 20em) {
+  .topbeats {
+    font-size: 2em;
   }
-  .topbeats span {
-    width: 1.5%;
-    display: inline-block;
-    position: relative;
-    transform-style: preserve-3d;
-    perspective: 500;
-    -webkit-font-smoothing: antialiased;
-  }
+
   .topbeats span::before,
   .topbeats span::after {
-    display: none;
-    position: absolute;
-    top: 0;
-    left: -1px;
-    transform-origin: left top;
-    transition: all ease-out 0.3s;
-    content: attr(data-text);
+    display: block;
   }
-  .topbeats span::before {
-    z-index: 1;
-    color: rgba(0,0,0,0.2);
-    transform: scale(1.1, 1) skew(0deg, 20deg);
+}
+
+@media (min-width: 30em) {
+  .topbeats {
+    font-size: 3em;
   }
-  .topbeats span::after {
-    z-index: 2;
-    color: #383838;
-    text-shadow: -1px 0 1px #343232, 1px 0 1px rgba(0,0,0,0.8);
-    transform: rotateY(-40deg);
+}
+
+@media (min-width: 40em) {
+  .topbeats {
+    font-size: 5em;
   }
-  .topbeats span:hover::before {
-    transform: scale(1.1, 1) skew(0deg, 5deg);
+}
+
+@media (min-width: 60em) {
+  .topbeats {
+    font-size: 8em;
   }
-  .topbeats span:hover::after {
-    transform: rotateY(-10deg);
-  }
-  .topbeats span + span {
-    margin-left: 0.3em;
-  }
-  @media (min-width: 20em) {
-    .topbeats {
-      font-size: 2em;
-    }
-    .topbeats span::before,
-    .topbeats span::after {
-      display: block;
-    }
-  }
-  @media (min-width: 30em) {
-    .topbeats {
-      font-size: 3em;
-    }
-  }
-  @media (min-width: 40em) {
-    .topbeats {
-      font-size: 5em;
-    }
-  }
-  @media (min-width: 60em) {
-    .topbeats {
-      font-size: 8em;
-    }
-  }
+}
