@@ -101,6 +101,7 @@ export default function DetailProduct() {
                           {`${obj.nombre} detalle de la licencia' `}
                           <Button
                             name="boton"
+                            Style="display: none"
                             className="float-end btn btn-primary"
                             onClick={(e) =>
                               handleAddToCart(productoUnoDetalle, e)
