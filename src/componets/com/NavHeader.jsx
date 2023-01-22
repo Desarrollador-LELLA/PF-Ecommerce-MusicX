@@ -54,6 +54,9 @@ const NavHeader = () => {
                         <NavLink className='nav-link' to='/producto_detalle/xOu9LtSarGtxqXdILyxf'>
                             Prod ID
                         </NavLink>
+                         <NavLink className='nav-link' to='/Carrito'>
+                            Carrito
+                        </NavLink>
                     </Nav>
                     {
                         loadingAuth ? null : !authenticatedAuth &&

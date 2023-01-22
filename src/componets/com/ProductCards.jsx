@@ -23,7 +23,7 @@ export default function ProductCards(props) {
           <Col key={ele.data().key}>
             <Card className="my-5">
               <div>
-                <Link to={ele.data().id}>
+                <Link to={ele.id}>
                   <Card.Img variant="top" src={ele.data().imagen} />
                 </Link>
               </div>
