@@ -1,12 +1,11 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom'
 import { Button, Modal, FloatingLabel, Form } from 'react-bootstrap';
 import { clear } from '@testing-library/user-event/dist/clear';
-import { setLogLevel } from 'firebase/app';
 
 
 
-const lista = ["blues", "rock and roll", "Pop", "Hip hop/Rap", "Reggaetón", "rock nacional", "Música clásica", "salsa", "Disco", "Reggae", "Funk", "Techno"]
+const lista = ["blues", "rock and roll", "Pop", "Hip hop/Rap", "Reggaetón", "mesa", "Música clásica", "moto", "Disco", "Reggae", "Funk", "Techno"]
 
 
 
@@ -16,21 +15,9 @@ const Generos = () => {
 
   const [show, setShow] = useState(false);
   const [nombre, setNombre] = useState("");
-  const [buscarGenero, setBuscarGenero] = useState("");
-  const[ listaMostrar, setListaMostrar]= useState([])
-  useEffect(()=>{
-    setListaMostrar(lista)
-  },[])
 
 
-
-  const handleClose = () => { 
-    setNombre("")
-    setError(null)
-    setShow(false)
-    
-
-   };
+  const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
   function handleSort(e) {
     e.preventDefault();
@@ -52,24 +39,6 @@ const Generos = () => {
     e.preventDefault();
   };
 
-  function buscar (e){
-      setBuscarGenero(e.target.value)
-
-    
-  
-  }
-  const onClickBuscar = () => {
-    if (validar()){
-    setListaMostrar (lista.filter(x => x=== buscarGenero))
-    // if (validate()) {
-    //   lista.push(nombre)
-    //   setShow(false)
-    //   setNombre("")
-    // }
-    }
-  }
-
-
 
   const handleCreate = () => {
     if (validate()) {
@@ -86,8 +55,8 @@ const Generos = () => {
       return false
 
     }
-    if (nombre.length < 3 || nombre.length >= 20) {
-      setError("El nombre debe contener entre 3 y 20 caracteres")
+    if (nombre.length < 3 || nombre.length >= 15) {
+      setError("El nombre debe contener entre 3 y 15 caracteres")
       setNombre("")
 
       return false
@@ -95,23 +64,10 @@ const Generos = () => {
     return true
   }
 
-  const validar = () => {
-    if (listaMostrar === "") {
-      setError("Debe completar el campo")
-      return false
 
-    }
-    if (listaMostrar.length < 3 || listaMostrar.length >= 20) {
-      setError("El nombre debe contener entre 3 y 20 caracteres")
-      setNombre("")
 
-      return false
-    }
-    return true
-  }
 
   return (
-
     <>
       <Button variant="primary" onClick={handleShow}>
         Crear genero musical
@@ -151,9 +107,9 @@ const Generos = () => {
           <input
             type='text'
             placeholder="Buscar..."
-            onChange={(e) => buscar(e)}
+            onChange={(e) => handleInputChange(e)}
           />
-          <button type="submit" onClick={(e) => onClickBuscar(e)}>Buscar</button>
+          <button type="submit" onClick={(e) => handleSubmit(e)}>Buscar</button>
         </div>
         <div>
 
@@ -167,7 +123,7 @@ const Generos = () => {
         </div>
         <div className='row row-cols-6'>
           {
-           listaMostrar.map(i => (
+            lista.map(i => (
               <div className='col'>
                 <div className='card' onClick={e => { handleClick(e) }}>
                   <div className='card-body'>
@@ -184,7 +140,7 @@ const Generos = () => {
         <Link to='/create' className="btn btn-primary float-md-none">crear Genero</Link>
       </div> */}
     </>
-
+// hokla sasa
 
   );
 };
