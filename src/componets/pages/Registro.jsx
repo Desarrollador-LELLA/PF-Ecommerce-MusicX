@@ -16,7 +16,7 @@ const INIT_STATE = {
 };
 
 const Registro = () => {
-
+    //ALL
     const [registro, setRegistro] = useState(INIT_STATE);
     const [errores, setErrores] = useState({});
     const [loading, setLoading] = useState(false);
