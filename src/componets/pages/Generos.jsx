@@ -93,7 +93,7 @@ const Generos = () => {
               {error}
             </div>
             : null}
-
+{/* // hojo de putas   */}
           <Button variant="secondary" onClick={handleClose}>
             Close
           </Button>
