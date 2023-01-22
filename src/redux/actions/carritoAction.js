@@ -2,7 +2,8 @@ import {
   ELIMINAR_PRODUCTO,
   PAGAR,
   DETALLE_UN_PRODUCTO,
-  ADD_PRODUCTOS
+  ADD_PRODUCTOS,
+  ADD_PRODUCTO
 } from "../types/carritoTypes.js";
 
 import { allDb, db } from "../../firebaseInicial/firebase";
@@ -28,7 +29,7 @@ export const getProducto = (id) => {
     const docSnap = await allDb.getDoc(docRef);
     dispatch({
       type: DETALLE_UN_PRODUCTO,
-      payload: docSnap.data(),
+        payload: {...docSnap.data(), id: docSnap.id}
     });
   };
 };
@@ -38,7 +39,7 @@ export const getProductos = () => {
   return async (dispatch) => {
     const allProducts = []
     const firebaseProducts = await getDocs(collection(db, "productos"));
-    await firebaseProducts.forEach((doc) => {allProducts.push(doc.data())});
+      await firebaseProducts.forEach((doc) => {allProducts.push({...doc.data(), id: doc.id})});
     console.log(allProducts)
     dispatch({
       type:   ADD_PRODUCTOS,
@@ -46,3 +47,15 @@ export const getProductos = () => {
     });
   };
 };
+
+export const addProducto = (producto, valor) => {
+    return {
+        type: ADD_PRODUCTO,
+        payload: {
+            producto,
+            valor
+        }
+    }
+}
+
+

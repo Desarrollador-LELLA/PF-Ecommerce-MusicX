@@ -12,12 +12,6 @@ const Carrito = () => {
     const infoTotal = [];
     const productos = useSelector((store) => store.carrito.productos); 
     const dispatch = useDispatch();
-  
-   
-
-    useEffect(() => {
-        dispatch(actions.getProductos())
-    }, [dispatch])
     console.log(productos) 
 
     const handleQuitarProducto = (id) => {
@@ -45,8 +39,8 @@ const Carrito = () => {
                                     <h2>Autor:{data.autor}</h2>
                                     <h2>Tiempo:{data.tiempo}</h2>
                                 </div>
-                                <h2>{data.precio} USD</h2>
-                                <button onClick={() => handleQuitarProducto(data.nombre)}><strong>X</strong></button> 
+                                <h2>{data.valor} USD</h2>
+                                <button onClick={() => handleQuitarProducto(data.id)}><strong>X</strong></button> 
                                                             </div>
                         )
                     })}
@@ -54,7 +48,7 @@ const Carrito = () => {
             <div className={styleCarrito.navCount}>
                 <div>
                     <h1>TOTAL = {productos.reduce(
-                        (accumulator, currentValue) => accumulator + currentValue.precio,
+                        (accumulator, currentValue) => accumulator + Number(currentValue.valor),
                         total
                     )
                     } <strong>USD</strong></h1>

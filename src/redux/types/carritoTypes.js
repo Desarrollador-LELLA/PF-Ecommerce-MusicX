@@ -2,3 +2,5 @@ export const PAGAR = "PAGAR";
 export const ELIMINAR_PRODUCTO = "ELIMINAR_PRODUCTO";
 export const DETALLE_UN_PRODUCTO = "DETALLE_UN_PRODUCTO";
 export const ADD_PRODUCTOS = "ADD_PRODUCTOS";
+export const ADD_PRODUCTO = "ADD_PRODUCTO";
+

@@ -35,6 +35,33 @@ const NavHeader = () => {
                             About
                         </NavLink>
                         {/* AGREGAR MAS LINK SE LO DECENA COPY PASTE NavLink DE ARRIBA */}
+                        <NavLink className='nav-link' to='/iniciarsesion'>
+                            Entrar
+                        </NavLink>
+                        <NavLink className='nav-link' to='/registro'>
+                            Registro
+                        </NavLink>
+                        <NavLink className='nav-link' to='/PerfilUsuario'>
+                            Perfil Usu
+                        </NavLink>
+                        <NavLink className='nav-link' to='/producto_create'>
+                            Prod Add
+                        </NavLink>
+                        <NavLink className='nav-link' to='/perfiladmin'>
+                            Perfil Ad
+                        </NavLink>
+                        <NavLink className='nav-link' to='/generos'>
+                            Generos
+                        </NavLink>
+                        <NavLink className='nav-link' to='/producto_lista'>
+                            Prod Lista
+                        </NavLink>
+                        <NavLink className='nav-link' to='/producto_detalle/xOu9LtSarGtxqXdILyxf'>
+                            Prod ID
+                        </NavLink>
+                         <NavLink className='nav-link' to='/Carrito'>
+                            Carrito
+                        </NavLink>
                     </Nav>
                     {
                         loadingAuth ? null : !authenticatedAuth &&
