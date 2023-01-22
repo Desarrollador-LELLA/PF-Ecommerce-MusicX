@@ -20,6 +20,7 @@ text-align: center;
     transform-style: preserve-3d;
     perspective: 500;
     -webkit-font-smoothing: antialiased;
+    
   }
   .topbeats span::before,
   .topbeats span::after {
