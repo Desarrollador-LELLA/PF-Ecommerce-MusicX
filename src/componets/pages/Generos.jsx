@@ -93,7 +93,7 @@ const Generos = () => {
               {error}
             </div>
             : null}
-
+{/* // hojo de putas   */}
           <Button variant="secondary" onClick={handleClose}>
             Close
           </Button>
@@ -140,7 +140,7 @@ const Generos = () => {
         <Link to='/create' className="btn btn-primary float-md-none">crear Genero</Link>
       </div> */}
     </>
-
+// hokla sasa
 
   );
 };
