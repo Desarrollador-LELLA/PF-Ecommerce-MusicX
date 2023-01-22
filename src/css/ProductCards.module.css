@@ -1,3 +1,50 @@
-.productcards{
-    margin-left: 17%;
+ .productcards {
+  position: absolute;
+  width: 80%;
+  height: 80%;
+  left: 10%;
+  top: 20%px;
+  background: linear-gradient(
+    180deg,
+    rgba(39, 26, 41, 0.253) 1.04%,
+    rgba(76, 95, 99, 0.1056) 66.67%,
+    rgba(58, 37, 58, 0.066) 100%
+  );
+  border-radius: 28px;
+  padding: 2%;
 }
+
+.cardcont{
+
+    background: linear-gradient(180deg, rgba(213, 50, 233, 0.253) 1.04%, rgba(76, 95, 99, 0.1056) 66.67%, rgba(204, 34, 207, 0.066) 100%);
+    border-radius: 28px;
+
+}
+.cardimg{
+    border-radius: 100%;
+    
+    display: inline-block;
+} 
+
+.cardimg:hover{
+    animation-name: gixaxb;
+    animation-duration: 4s;
+    animation-iteration-count: infinite;
+    animation-timing-function: linear;
+}
+@keyframes gixaxb{
+    from{
+        transform: rotate(0deg);
+    }to{
+        transform: rotate(360deg);
+    }
+}
+
+/* .cardtitle{
+
+width: 100%;
+font-family: 'Dela Gothic One';
+font-size: 30px;
+
+color: #55CDD5;
+} */
