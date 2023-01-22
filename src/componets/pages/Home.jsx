@@ -6,7 +6,7 @@ import s from "../../css/Home.module.css";
 
 const Home = () => {
   return (
-    <div>
+    <div className={s.contendor}>
       <p className={s.topbeats}>
         <span data-text="T">T</span>
         <span data-text="O">O</span>
