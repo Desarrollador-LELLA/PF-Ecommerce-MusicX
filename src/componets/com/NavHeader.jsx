@@ -69,6 +69,7 @@ const NavHeader = () => {
                                     <Dropdown.Item onClick={cerrarSesion}><Image src={icSalir} width='24px' />{'   '}Cerrar Sesion</Dropdown.Item>
                                 </Dropdown.Menu>
                             </Dropdown>
+                            //
                     }
                     <Dropdown align="end">
                         <Dropdown.Toggle variant="none" id="dropdown-basic">
