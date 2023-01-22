@@ -2,6 +2,7 @@ import {
   PAGAR,
   ELIMINAR_PRODUCTO,
   DETALLE_UN_PRODUCTO,
+  ADD_PRODUCTOS
 } from "../types/carritoTypes.js";
 
 const initialState = {
@@ -14,12 +15,15 @@ const carritoReducer = (state = initialState, action) => {
     case PAGAR:
       return state;
     case ELIMINAR_PRODUCTO:
-      return {
-        ...state,
-        productos: state.productos.filter(
-          (producto) => producto.id !== action.payload
-        ),
-      };
+       return {
+            ...state,
+            productos: state.productos.filter((producto) => producto.nombre != action.payload)        
+       };
+    case ADD_PRODUCTOS: 
+          return {
+            ...state,
+            productos: action.payload
+          }
     case DETALLE_UN_PRODUCTO:
       return {
         ...state,
