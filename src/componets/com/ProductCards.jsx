@@ -25,6 +25,11 @@ export default function ProductCards(props) {
               <div className={s.contcards}>
                 <Link to={ele.data().id}>
                   <Card.Img className={s.cardimg} src={ele.data().imagen} />
+          <Col key={ele.data().key}>
+            <Card className="my-5">
+              <div>
+                <Link to={ele.id}>
+                  <Card.Img variant="top" src={ele.data().imagen} />
                 </Link>
               </div>
               <Card.Body>
