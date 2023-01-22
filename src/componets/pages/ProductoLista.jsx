@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 
 import { collection, getDocs } from "firebase/firestore"; 
 import { allAuth, allDb, auth, db } from "../../firebaseInicial/firebase";
-import { prueba_final } from '../../redux/actions/productoAction';
+import { listado_producto_by_admin } from '../../redux/actions/productoAction';
 import style from '../../css/ProductoLista.module.css';
 
 
@@ -13,6 +13,7 @@ const ProductoLista = () => {
     const [producto, setProducto] = useState({
         nombre: "",
         descripcion: "",
+        precio: 0,
         key: "",
         tiempo: 0,
         imagen: ""
@@ -21,7 +22,7 @@ const ProductoLista = () => {
     const [listado, setListado] = useState([]);
 
     const lista = async () => {
-        let ayuda = await prueba_final();
+        let ayuda = await listado_producto_by_admin();
         setListado(ayuda);
     }
 
@@ -34,40 +35,48 @@ const ProductoLista = () => {
         <div>
             <Container className='my-3'>
                 <Card className=''>
-                    <table>
-                        <tr className={ `${ style.tr }` }>
-                            <td>Nombre</td>
-                            <td>Descripcion</td>
-                            <td>Key</td>
-                            <td>Tiempo</td>
-                            <td>Imagen</td>
-                            <td colSpan="2" className={ `${ style.td_centrdo }` }>Acciones</td>
-                        </tr>
+                    <table className='table'>
+                        <thead className='thead-dark'>
+                            <tr className={ `${ style.tr } ` }>
+                                <td className='text-center'>Nombre</td>
+                                <td className='text-center'>Descripcion</td>
+                                <td className='text-center'>Precio</td>
+                                <td className='text-center'>Key</td>
+                                <td className='text-center'>Tiempo</td>
+                                <td className='text-center'>Habilitado</td>
+                                <td className='text-center'>Imagen</td>
+                                <td colSpan="2" className={ `${ style.td_centrado }` }>Acciones</td>
+                            </tr>
+                        </thead>
                         {
                             listado?.map( (e) => 
                                 (
-                                    <tr>
+                                    <tr className={ `${ style.tr_sombreado }` }>
                                         <td>{ e.data().nombre }</td>
                                         <td>{ e.data().descripcion }</td>
+                                        <td>{ e.data().precio }</td>
                                         <td>{ e.data().key }</td>
                                         <td>{ e.data().tiempo }</td>
+                                        <td>
+                                            { e.data().habilitado ? "Si" : "No" }
+                                        </td>
                                         <td>
                                             <img className={ `${ style.imagen }` } src={ e.data().imagen } alt='' />
                                         </td>
                                         <td>
-                                            <Link to={`/producto_detalle/${ e.data().id }`}>
-                                                <button className={ `${ style.boton }` }>Editar</button>
+                                            <Link to={`/producto_detalle/${ e._document.key.path.segments[6] }`}>
+                                                <Button className='btn btn-success'>Editar</Button>
                                             </Link>
                                         </td>
                                         <td>
-                                            <button className={ `${ style.boton }` }>Eliminar</button>
+                                            <Link>
+                                                <Button className='btn btn-danger'>Eliminar</Button>
+                                            </Link>
                                         </td>
-                                    </tr>                                    
+                                    </tr>
                                 )
                             )
                         }
-
-
                     </table>
                 </Card>
             </Container>
