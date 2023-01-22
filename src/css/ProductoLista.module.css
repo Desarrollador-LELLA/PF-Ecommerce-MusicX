@@ -1,27 +1,47 @@
+tr, td
+{
+    font-size: 14px;
+}
+
 .tr
 {
+    /*
     background-color: black;
     color: white;
+    */
     height: 50px;
     line-height: 50px;
     border-top-left-radius: 30px;
 }
 
-.td_centrdo
+.td_centrado
 {
     text-align: center;
 }
 
+.tr_sombreado:hover
+{
+    background-color: slategrey;
+    color: gold;
+}
+
 .imagen
 {
-    width: 80px;
-    height: 80px;
+    width: 70px;
+    height: 70px;
 }
 
 .boton
 {
-    width: 100px;
-    height: 30px;
-    line-height: 30px;
+    width: 80px;
+    height: 30px !important;
+    line-height: 30px !important;
     border-radius: 10px;
+    font-size: 14px;
 }
+
+
+
+
+
+
