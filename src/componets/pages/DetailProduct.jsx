@@ -7,7 +7,7 @@ import ListGroup from "react-bootstrap/ListGroup";
 import Card from "react-bootstrap/Card";
 import Button from "react-bootstrap/Button";
 import { useState, useEffect } from "react";
-import { getProducto , addProducto} from "../../redux/actions/carritoAction";
+import { getProducto, addProducto } from "../../redux/actions/carritoAction";
 import { useSelector, useDispatch } from "react-redux";
 import { useParams } from "react-router-dom";
 
@@ -29,7 +29,8 @@ export default function DetailProduct() {
   }, [dispatch]);
 
   function handleAddToCart(producto, e) {
-        dispatch(addProducto(producto, e.target.value))
+    dispatch(addProducto(producto, e.target.value));
+    alert("PRODUCTO AGREGADO AL CARRITO");
   }
 
   function handlerLicencia(e) {
@@ -101,26 +102,23 @@ export default function DetailProduct() {
                           <Button
                             name="boton"
                             className="float-end btn btn-primary"
-                            onClick={(e) => handleAddToCart(productoUnoDetalle, e)}
+                            onClick={(e) =>
+                              handleAddToCart(productoUnoDetalle, e)
+                            }
                             value={obj.valor}
                           >
                             ${obj.valor}
                           </Button>
-
                         </Card.Body>
                       </Card>
-                   
-
                     </div>
                   ))}
                 </ListGroup>
-                
               </div>
             </Col>
           </Row>
-                   
         </Container>
-         
+
         <div className={css.espaciado}></div>
       </div>
     </div>
