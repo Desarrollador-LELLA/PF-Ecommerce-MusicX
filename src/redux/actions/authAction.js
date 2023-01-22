@@ -1,11 +1,11 @@
 import { allAuth, allDb, auth, db } from '../../firebaseInicial/firebase';
 import { catchInicio } from '../../utils/InicioSesionErrors';
 import { erroresList } from '../../utils/libreria';
+import { unDocumento, whereDocumentos } from '../../utils/metodosFirebase';
 import { AUTH_NEED_VERIFICATION, AUTH_SET_ERROR, AUTH_SET_LOADING, AUTH_SET_SUCCESS, AUTH_SET_USER, AUTH_SIGN_OUT } from '../types/authTypes';
 
 // RESGISTRO DE USUARIOS
 const registraAction = ({ nombre, apellido, correo, clave }, onError) => async (dispatch) => {
-  console.log(nombre, apellido, correo, clave);
   try {
     const res = await allAuth.createUserWithEmailAndPassword(auth, correo, clave);
     if (res.user) {
@@ -37,8 +37,7 @@ const registraAction = ({ nombre, apellido, correo, clave }, onError) => async (
 };
 
 //INICIO DE SESION DE USUARIOS
-const signInAction =
-  ({ correo, contraseña }, onError) =>
+const signInAction = ({ correo, contraseña }, onError) =>
     async (dispatch) => {
       try {
         await allAuth.signInWithEmailAndPassword(auth, correo, contraseña);
