@@ -44,7 +44,7 @@ export default function InicioSesion() {
         
         <Container className='my-5'>
             <Card className={`${s.iniciosesioncard} m-auto`}>
-            {errors.contraseña ?  <Badge bg="danger">{errors.contraseña}</Badge> : <span></span>}
+            {errors.contraseña ?  <Badge bg="danger">{errors.contraseña}</Badge> : null}
             {errors.correo ? <Badge bg="danger">{errors.correo}</Badge> : <span></span>}
                 <Card.Body>
                     <div className='text-center'>
@@ -74,8 +74,8 @@ export default function InicioSesion() {
                         Quiero Registrarme
                     </Link>
                     </Button>
-                    {errorAuth && <Badge bg="danger">{errorAuth}</Badge>}
                 </Card.Body>
+                    {errorAuth && <Badge bg="danger">{errorAuth}</Badge>}
             </Card>
         </Container>
     );
