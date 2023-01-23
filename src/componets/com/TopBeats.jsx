@@ -32,10 +32,10 @@ export default function TopBeats() {
                   <h3 className={`display-1 ${s.title}`}>
                     {productos[0].data().nombre}
                   </h3>
+                </Link>
                   <span className={s.contby}>
                     <p className="display-4">BY:{productos[0].data().autor}</p>
                   </span>
-                </Link>
               </Carousel.Caption>
             </Carousel.Item>
             <Carousel.Item>
