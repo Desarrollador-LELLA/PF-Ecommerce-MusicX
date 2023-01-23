@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { Button, Card, Container, FloatingLabel, Form, Label, Image, Table } from 'react-bootstrap';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 import { collection, getDocs } from "firebase/firestore"; 
 import { allAuth, allDb, auth, db } from "../../firebaseInicial/firebase";
@@ -9,6 +9,7 @@ import style from '../../css/ProductoLista.module.css';
 
 
 const ProductoLista = () => {
+    const navegar = useNavigate()
 
     const [producto, setProducto] = useState({
         nombre: "",
@@ -34,6 +35,8 @@ const ProductoLista = () => {
     return (
         <div>
             <Container className='my-3'>
+                <Button onClick={() => navegar('/producto_create')}>Crear</Button>
+                <Button onClick={() => navegar(-1)}>Volver</Button>
                 <Card className=''>
                     <table className='table'>
                         <thead className='thead-dark'>

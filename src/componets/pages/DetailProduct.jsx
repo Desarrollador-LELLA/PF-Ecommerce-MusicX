@@ -9,10 +9,11 @@ import Button from "react-bootstrap/Button";
 import { useState, useEffect } from "react";
 import { getProducto, addProducto } from "../../redux/actions/carritoAction";
 import { useSelector, useDispatch } from "react-redux";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 export default function DetailProduct() {
   const dispatch = useDispatch();
+  const navegar = useNavigate();
   const { id } = useParams();
   const [presioProducto, setPresioProducto] = useState("");
   const { productoUnoDetalle } = useSelector((state) => state.carrito);
@@ -30,7 +31,7 @@ export default function DetailProduct() {
 
   function handleAddToCart(producto, e) {
     dispatch(addProducto(producto, e.target.value));
-    alert("PRODUCTO AGREGADO AL CARRITO");
+    // alert("PRODUCTO AGREGADO AL CARRITO");
   }
 
   function handlerLicencia(e) {
@@ -57,10 +58,9 @@ export default function DetailProduct() {
 
   return (
     <div>
-      {console.log(productoUnoDetalle)}
       <div>
         <Container>
-          <div Style="margin-top: 50px"></div>
+          <Button onClick={() => navegar('/')}>Volver</Button>
           <Row>
             <Col>
               <div className={css.box}>
@@ -70,7 +70,7 @@ export default function DetailProduct() {
                   alt=""
                 />
                 <div className={css.hover}>
-                  <audio controls controlslist="nodownload">
+                  <audio controls controlsList="nodownload">
                     <source
                       src="https://firebasestorage.googleapis.com/v0/b/orion-proyect.appspot.com/o/BOM%20BAP%20TYPE%201%2FBASE%20BOMBAP%20TYPE.wav?alt=media&token=cde04954-46db-44aa-bbd6-1f7e1a97e3d0"
                       type="audio/wav"
@@ -119,7 +119,6 @@ export default function DetailProduct() {
             </Col>
           </Row>
         </Container>
-
         <div className={css.espaciado}></div>
       </div>
     </div>

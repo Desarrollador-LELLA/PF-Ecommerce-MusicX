@@ -16,7 +16,6 @@ export const unDocumento = async (nombreCollecion, id) => {
     try {
         const docRef = allDb.doc(db, nombreCollecion, id);
         const docSnap = await allDb.getDoc(docRef);
-
         if (docSnap.exists()) {
             retorno.result = docSnap.data();
             retorno.result.id = docSnap.id;

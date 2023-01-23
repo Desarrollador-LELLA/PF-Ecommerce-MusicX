@@ -66,7 +66,7 @@ const Registro = () => {
                     <Card.Title className='text-center my-3'>Registrarme</Card.Title>
                     <Form onSubmit={onSubmit}>
                         <Placeholder as='p' animation='glow' >
-                            <Placeholder.Button  xs={12} size="lg" bg="dark" />
+                            <Placeholder.Button xs={12} size="lg" bg="dark" />
                         </Placeholder>
                         <FloatingLabel className='mb-3' controlId='floatingInput' label='Nombre'>
                             {loading ?
