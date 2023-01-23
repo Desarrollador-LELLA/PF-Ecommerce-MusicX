@@ -1,14 +1,15 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react';
 import { Button, Card, Container, Form, Label, Image } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
 import style from '../../css/productoCreate.module.css';
 import { db } from '../../firebaseInicial/firebase';
-import { collection, addDoc } from "firebase/firestore"; 
+import { collection, addDoc } from "firebase/firestore";
 
 
 const ProductoCreate = () => {
 
+    const navegar = useNavigate();
     const [producto, setProducto] = useState({
         nombre: "",
         autor: "",
@@ -28,13 +29,11 @@ const ProductoCreate = () => {
         let valido = true;
         const regex = /^[0-9].*$/;
 
-        if (nombre.toString().trim().length === 0)
-        {
+        if (nombre.toString().trim().length === 0) {
             e.nombre = 'El nombre esta Vacio';
             valido = false;
         }
-        else if (nombre.length > 30)
-        {
+        else if (nombre.length > 30) {
             e.nombre = 'El nombre no puede tener mas de 30 Caracteres';
             valido = false;
         }
@@ -55,52 +54,44 @@ const ProductoCreate = () => {
             e.descripcion = 'La descripcion esta vacio';
             valido = false;
         }
-        else if (descripcion.length > 30)
-        {
+        else if (descripcion.length > 30) {
             e.descripcion = 'La descripcion no puede tener mas de 30 Caracteres';
             valido = false;
         }
 
-        if (key.toString().trim().length === 0)
-        {
+        if (key.toString().trim().length === 0) {
             e.key = 'El Key esta vacio';
             valido = false;
         }
-        else if (key.length > 30)
-        {
+        else if (key.length > 30) {
             e.key = 'El Key no puede tener mas de 30 Caracteres';
             valido = false;
         }
 
-        if(regex.test(precio) !== true)
-        {
+        if (regex.test(precio) !== true) {
             e.precio = 'El precio debe ser un numero o decimal';
             valido = false;
         }
-        else if (precio.value === 0)
-        {
+        else if (precio.value === 0) {
             e.precio = 'El precio debe ser mayor a cero';
             valido = false;
         }
 
-        if (tiempo.toString().trim().length === 0)
-        {
+        if (tiempo.toString().trim().length === 0) {
             e.tiempo = 'El Tiempo esta Vacio';
             valido = false;
         }
-        else if(regex.test(tiempo) !== true)
-        {
+        else if (regex.test(tiempo) !== true) {
             e.tiempo = 'El Tiempo debe ser un numero';
             valido = false;
         }
-        else if (tiempo.value === 0)
-        {
+        else if (tiempo.value === 0) {
             e.tiempo = 'El Tiempo debe ser mayor a cero';
             valido = false;
         }
 
         return { ...e, valido };
-    }
+    };
 
 
     const handleInputChange = (e) => {
@@ -114,24 +105,21 @@ const ProductoCreate = () => {
             ...producto,
             [e.target.name]: e.target.value
         }));
-    }
+    };
 
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        try
-        {
-            if(errores.valido)
-            {
+        try {
+            if (errores.valido) {
                 await addDoc(collection(db, "productos"), { ...producto, deshabilitado: false });
                 navigate("/producto_lista");
             }
         }
-        catch(err)
-        {
+        catch (err) {
             console.log("Error generado :", err);
         }
-    }
+    };
 
     return (
         <div>
@@ -175,13 +163,13 @@ const ProductoCreate = () => {
                             <Form.Control.Feedback type={'invalid'}>{ errores.imagen }</Form.Control.Feedback>
                         </div>
                         <div className='form-group input-group input-group-text my-3'>
-                            <Button className={ `${ style.button } text-center btn btn-primary` } type='submit' variant='primary' >Registrar</Button>
+                            <Button className={`${style.button} text-center btn btn-primary`} type='submit' variant='primary' >Registrar</Button>
                         </div>
                     </Form>
                 </Card>
             </Container>
         </div>
-    )
-}
+    );
+};
 
 export default ProductoCreate;

@@ -17,6 +17,7 @@ const NavHeader = () => {
     const dispatch = useDispatch();
     const navegar = useNavigate();
     const { loadingAuth, authenticatedAuth } = useSelector((state) => state.auth);
+    const { productos } = useSelector((state) => state.carrito);
 
     const cerrarSesion = () => {
         dispatch(signOutAction());
@@ -25,43 +26,16 @@ const NavHeader = () => {
     return (
         <Navbar collapseOnSelect expand="lg" variant="dark" className={`${s.navbar}`}>
             <Container fluid>
-                <Navbar.Brand className={`${s.navbar_brand}`} href="/">
+                <Link to='/' className={`${s.navbar_brand} navbar-brand`}>
                     <img alt="" src={icLogo} width="50" height="50" className="d-inline-block align-top" />
                     riOn MusicX
-                </Navbar.Brand>
+                </Link>
                 <Navbar.Collapse id="responsive-navbar-nav">
                     <Nav className="me-auto">
                         <NavLink className='nav-link' to='/aboutus'>
                             About
                         </NavLink>
                         {/* AGREGAR MAS LINK SE LO DECENA COPY PASTE NavLink DE ARRIBA */}
-                        <NavLink className='nav-link' to='/iniciarsesion'>
-                            Entrar
-                        </NavLink>
-                        <NavLink className='nav-link' to='/registro'>
-                            Registro
-                        </NavLink>
-                        <NavLink className='nav-link' to='/PerfilUsuario'>
-                            Perfil Usu
-                        </NavLink>
-                        <NavLink className='nav-link' to='/producto_create'>
-                            Prod Add
-                        </NavLink>
-                        <NavLink className='nav-link' to='/perfiladmin'>
-                            Perfil Ad
-                        </NavLink>
-                        <NavLink className='nav-link' to='/generos'>
-                            Generos
-                        </NavLink>
-                        <NavLink className='nav-link' to='/producto_lista'>
-                            Prod Lista
-                        </NavLink>
-                        <NavLink className='nav-link' to='/producto_detalle/xOu9LtSarGtxqXdILyxf'>
-                            Prod ID
-                        </NavLink>
-                         <NavLink className='nav-link' to='/Carrito'>
-                            Carrito
-                        </NavLink>
                     </Nav>
                     {
                         loadingAuth ? null : !authenticatedAuth &&
@@ -96,95 +70,47 @@ const NavHeader = () => {
                                     <Dropdown.Item onClick={cerrarSesion}><Image src={icSalir} width='24px' />{'   '}Cerrar Sesion</Dropdown.Item>
                                 </Dropdown.Menu>
                             </Dropdown>
-                            //
                     }
                     <Dropdown align="end">
                         <Dropdown.Toggle variant="none" id="dropdown-basic">
                             <Image src={icCarro} />
                             <Badge bg="success position-absolute">
-                                0
+                                {productos.length}
                             </Badge>
                         </Dropdown.Toggle>
                         <Dropdown.Menu className={`position-absolute ${s.dropdown_menu}`}>
                             <Dropdown.Header>Mi Carro
-                            <Button className='float-sm-end' size='sm'>Carro</Button>
+                                <Button onClick={() => navegar('/carrito')} className='float-sm-end' size='sm'>Carro</Button>
                             </Dropdown.Header>
                             <Dropdown.Divider />
                             <div className={`${s.dropdown_contenedor}`}>
-                                <Dropdown.ItemText>
-                                    <Card>
-                                        <Card.Img alt="Card image" src='https://www.univision.com/proxy/api/cached/picture?href=https%3A%2F%2Fuvn-brightspot.s3.amazonaws.com%2Fassets%2Fvixes%2Fm%2Fmusica-amor-coracao-1016-1400x800.jpg&width=0&height=0&ratio_width=1240&ratio_height=698&format=webp' />
-                                        <Card.ImgOverlay className={`${s.card_overlay}`}>
-                                            <Card.Header className={`${s.card_header}`}>
-                                                <Card.Text>Nombre del Producto</Card.Text>
-                                            </Card.Header>
-                                            <Card.Body className={`${s.card_body}`}></Card.Body>
-                                            <Card.Footer className={`${s.card_fooster} text-end`}>
-                                                <Card.Text>$ 100.000</Card.Text>
-                                            </Card.Footer>
-                                        </Card.ImgOverlay>
-                                    </Card>
-                                </Dropdown.ItemText>
-                                <Dropdown.ItemText>
-                                    <Card>
-                                        <Card.Img alt="Card image" src='https://www.univision.com/proxy/api/cached/picture?href=https%3A%2F%2Fuvn-brightspot.s3.amazonaws.com%2Fassets%2Fvixes%2Fm%2Fmusica-amor-coracao-1016-1400x800.jpg&width=0&height=0&ratio_width=1240&ratio_height=698&format=webp' />
-                                        <Card.ImgOverlay className={`${s.card_overlay}`}>
-                                            <Card.Header className={`${s.card_header}`}>
-                                                <Card.Text>Nombre del Producto</Card.Text>
-                                            </Card.Header>
-                                            <Card.Body className={`${s.card_body}`}></Card.Body>
-                                            <Card.Footer className={`${s.card_fooster} text-end`}>
-                                                <Card.Text>$ 100.000</Card.Text>
-                                            </Card.Footer>
-                                        </Card.ImgOverlay>
-                                    </Card>
-                                </Dropdown.ItemText>
-                                <Dropdown.ItemText>
-                                    <Card>
-                                        <Card.Img alt="Card image" src='https://www.univision.com/proxy/api/cached/picture?href=https%3A%2F%2Fuvn-brightspot.s3.amazonaws.com%2Fassets%2Fvixes%2Fm%2Fmusica-amor-coracao-1016-1400x800.jpg&width=0&height=0&ratio_width=1240&ratio_height=698&format=webp' />
-                                        <Card.ImgOverlay className={`${s.card_overlay}`}>
-                                            <Card.Header className={`${s.card_header}`}>
-                                                <Card.Text>Nombre del Producto</Card.Text>
-                                            </Card.Header>
-                                            <Card.Body className={`${s.card_body}`}></Card.Body>
-                                            <Card.Footer className={`${s.card_fooster} text-end`}>
-                                                <Card.Text>$ 100.000</Card.Text>
-                                            </Card.Footer>
-                                        </Card.ImgOverlay>
-                                    </Card>
-                                </Dropdown.ItemText>
-                                <Dropdown.ItemText>
-                                    <Card>
-                                        <Card.Img alt="Card image" src='https://www.univision.com/proxy/api/cached/picture?href=https%3A%2F%2Fuvn-brightspot.s3.amazonaws.com%2Fassets%2Fvixes%2Fm%2Fmusica-amor-coracao-1016-1400x800.jpg&width=0&height=0&ratio_width=1240&ratio_height=698&format=webp' />
-                                        <Card.ImgOverlay className={`${s.card_overlay}`}>
-                                            <Card.Header className={`${s.card_header}`}>
-                                                <Card.Text>Nombre del Producto</Card.Text>
-                                            </Card.Header>
-                                            <Card.Body className={`${s.card_body}`}></Card.Body>
-                                            <Card.Footer className={`${s.card_fooster} text-end`}>
-                                                <Card.Text>$ 100.000</Card.Text>
-                                            </Card.Footer>
-                                        </Card.ImgOverlay>
-                                    </Card>
-                                </Dropdown.ItemText>
-                                <Dropdown.ItemText>
-                                    <Card>
-                                        <Card.Img alt="Card image" src='https://www.univision.com/proxy/api/cached/picture?href=https%3A%2F%2Fuvn-brightspot.s3.amazonaws.com%2Fassets%2Fvixes%2Fm%2Fmusica-amor-coracao-1016-1400x800.jpg&width=0&height=0&ratio_width=1240&ratio_height=698&format=webp' />
-                                        <Card.ImgOverlay className={`${s.card_overlay}`}>
-                                            <Card.Header className={`${s.card_header}`}>
-                                                <Card.Text>Nombre del Producto</Card.Text>
-                                            </Card.Header>
-                                            <Card.Body className={`${s.card_body}`}></Card.Body>
-                                            <Card.Footer className={`${s.card_fooster} text-end`}>
-                                                <Card.Text>$ 100.000</Card.Text>
-                                            </Card.Footer>
-                                        </Card.ImgOverlay>
-                                    </Card>
-                                </Dropdown.ItemText>
+                                {
+                                    productos.length ?
+                                        productos.map(x => (
+                                            <Dropdown.ItemText key={x.id}>
+                                                <Card>
+                                                    <Card.Img alt="Card image" src={x.imagen} />
+                                                    <Card.ImgOverlay className={`${s.card_overlay}`}>
+                                                        <Card.Header className={`${s.card_header}`}>
+                                                            <Card.Text>{x.nombre}</Card.Text>
+                                                        </Card.Header>
+                                                        <Card.Body className={`${s.card_body}`}></Card.Body>
+                                                        <Card.Footer className={`${s.card_fooster} text-end`}>
+                                                            <Card.Text>{`$${x.precio}`}</Card.Text>
+                                                        </Card.Footer>
+                                                    </Card.ImgOverlay>
+                                                </Card>
+                                            </Dropdown.ItemText>
+                                        )) :
+                                        <Dropdown.ItemText>
+                                            <Card>
+                                                <Card.Body className={`${s.card_body}`}>Carro Vacio</Card.Body>
+                                            </Card>
+                                        </Dropdown.ItemText>
+                                }
                             </div>
-
                             <Dropdown.Divider />
-                            <Dropdown.ItemText>Total $ 100.000</Dropdown.ItemText>
+                            <Dropdown.ItemText>{`Total $ ${productos.reduce((a, b) => a + b.precio, 0)}`}</Dropdown.ItemText>
                         </Dropdown.Menu>
                     </Dropdown>
                 </Nav>
