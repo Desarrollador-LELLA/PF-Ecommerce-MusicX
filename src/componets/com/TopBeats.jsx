@@ -2,9 +2,8 @@ import Carousel from "react-bootstrap/Carousel";
 import React, { useEffect, useState } from "react";
 import { getProductos } from "../../redux/actions/productoAction";
 import s from "../../css/TopBeats.module.css";
-import Image from 'react-bootstrap/Image'
+import Image from "react-bootstrap/Image";
 import { Link } from "react-router-dom";
-
 
 export default function TopBeats() {
   const [productos, setProductos] = useState([]);
@@ -21,18 +20,22 @@ export default function TopBeats() {
     <>
       {productos.length && (
         <>
-          <Carousel variant="dark" className={s.carrusel}>
+          <Carousel variant="withe" className={s.carrusel}>
             <Carousel.Item>
-              <Image 
+              <Image
                 className="d-block w-100"
                 src={productos[0].data().imagen}
                 alt="First slide"
               />
               <Carousel.Caption>
                 <Link to={productos[0].data().id}>
-                <h3 className={`display-1 ${s.title}`}>{productos[0].data().nombre}</h3>
-                <span className={s.contby}><p className="display-4">BY:{productos[0].data().autor}</p>
-                </span></Link>
+                  <h3 className={`display-1 ${s.title}`}>
+                    {productos[0].data().nombre}
+                  </h3>
+                  <span className={s.contby}>
+                    <p className="display-4">BY:{productos[0].data().autor}</p>
+                  </span>
+                </Link>
               </Carousel.Caption>
             </Carousel.Item>
             <Carousel.Item>
@@ -43,8 +46,8 @@ export default function TopBeats() {
               />
 
               <Carousel.Caption>
-              <Link to={productos[1].data().id}>
-                <h3 className="display-1">{productos[1].data().nombre}</h3>
+                <Link to={productos[1].data().id}>
+                  <h3 className="display-1">{productos[1].data().nombre}</h3>
                 </Link>
                 <p className="display-4">BY:{productos[1].data().autor}</p>
               </Carousel.Caption>
@@ -58,8 +61,8 @@ export default function TopBeats() {
               />
 
               <Carousel.Caption>
-              <Link to={productos[2].data().id}>
-                <h3 className="display-1">{productos[2].data().nombre}</h3>
+                <Link to={productos[2].data().id}>
+                  <h3 className="display-1">{productos[2].data().nombre}</h3>
                 </Link>
                 <p className="display-4">BY:{productos[2].data().autor}</p>
               </Carousel.Caption>
