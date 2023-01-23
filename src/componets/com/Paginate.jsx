@@ -1,24 +1,65 @@
 import React from 'react'
 import { useEffect } from 'react';
-import { getTeste } from '../../redux/actions/productoAction'
+import { useDispatch, useSelector } from 'react-redux';
+import * as actions from "../../redux/actions/productoAction"
+import {productsReducer} from "../../redux/reducer/productsReducer"
+
 
 export default function Paginate() {
-const teste = async () => {
-  const teste2 = await getTeste();
-  
-  console.log(teste2.todo[0].data())
-  console.log(teste2.siguente[0].data())
-  console.log(teste2.anterior[0].data())
+// const teste = async () => {
+//   const teste2 = await getTeste();
 
-}
-useEffect(()=>{
-    teste()
-},[])
+//   dispatch = useDispatch()
+//   const productos  = useSelector(state => state.products)
   
-return (
-    <div>
-      
-    </div>
-  )
-}
- // hola 
+let page = [];
+
+useEffect(()=>{
+    },[])
+  
+return(
+  <div >
+    {/* {currentPage !== 1 ? (
+      <>
+        <button
+          onClick={() => dispatch(actions.ChangePage(currentPage - 1))}
+        >
+          {"<"}
+        </button>
+        <button
+          onClick={() => dispatch(actions.ChangePage(currentPage - 1))}
+        >
+          {currentPage - 1}
+        </button>
+      </>
+    ) : (
+      <>
+        <button disable>{"<"}</button>
+        
+      </>
+    )}
+
+    <button className="active">{currentPage}</button>
+
+    {currentPage !== pages[pages.length - 1] ? (
+      <>
+        <button
+          onClick={() => dispatch(actions.ChangePage(currentPage + 1))}
+        >
+          {currentPage + 1}
+        </button>
+        <button
+          onClick={() => dispatch(actions.ChangePage(currentPage + 1))}
+        >
+          {">"}
+        </button>
+      </>
+    ) : (
+      <>
+        
+        <button disabled>{">"}</button>
+      </> */}
+    {/* )} */}
+  </div>
+);
+    }
