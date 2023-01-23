@@ -57,7 +57,6 @@ export default function DetailProduct() {
 
   return (
     <div>
-      {console.log(productoUnoDetalle)}
       <div>
         <Container>
           <div Style="margin-top: 50px"></div>
@@ -85,7 +84,7 @@ export default function DetailProduct() {
                   <h1>
                     {`${productoUnoDetalle.nombre} - ${productoUnoDetalle.autor}`}
                   </h1>
-                  valor: $100 + licencia ${presioProducto}
+                  valor: ${presioProducto ? presioProducto : 0}
                   <p Style="margin-top: 10px" className="text-break ">
                     {productoUnoDetalle.descripcion}
                   </p>
