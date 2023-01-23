@@ -28,7 +28,7 @@ export default function TopBeats() {
                 alt="First slide"
               />
               <Carousel.Caption>
-                <Link to={productos[0].data().id}>
+                <Link to={productos[0].id}>
                   <h3 className={`display-1 ${s.title}`}>
                     {productos[0].data().nombre}
                   </h3>
@@ -46,7 +46,7 @@ export default function TopBeats() {
               />
 
               <Carousel.Caption>
-                <Link to={productos[1].data().id}>
+                <Link to={productos[1].id}>
                   <h3 className="display-1">{productos[1].data().nombre}</h3>
                 </Link>
                 <p className="display-4">BY:{productos[1].data().autor}</p>
@@ -61,7 +61,7 @@ export default function TopBeats() {
               />
 
               <Carousel.Caption>
-                <Link to={productos[2].data().id}>
+                <Link to={productos[2].id}>
                   <h3 className="display-1">{productos[2].data().nombre}</h3>
                 </Link>
                 <p className="display-4">BY:{productos[2].data().autor}</p>
