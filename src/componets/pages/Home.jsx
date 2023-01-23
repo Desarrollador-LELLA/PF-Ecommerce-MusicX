@@ -27,8 +27,8 @@ const Home = () => {
         <span data-text="!">!</span>
       </p>
       <TopBeats />
-      <ProductCards />
-      <Paginate></Paginate>
+      <ProductCards/>
+     
     </div>
   );
 };
