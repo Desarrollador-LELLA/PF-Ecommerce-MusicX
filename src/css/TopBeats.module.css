@@ -1,34 +1,65 @@
 @import url(https://fonts.googleapis.com/css?family=Varela+Round);
-.carrusel{
-    margin: auto;
-    align-items: center;
-    width: 50%; 
+.carrusel {
+  margin: auto;
+  align-items: center;
+  width: 50%;
 }
-.carrusel h3{
-    color: rgb(94, 180, 166);
-    font-family: Poppins,Roboto,"Helvetica Neue",sans-serif;
+.carrusel h3 {
+  font-family: "Dela Gothic One";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 430%;
+  line-height: 52px;
+  text-align: center;
 
+  background: linear-gradient(
+    180deg,
+    rgba(36, 255, 242, 0) 1.56%,
+    #7efff7 59.9%,
+    rgba(36, 255, 242, 0) 100%
+  );
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  text-fill-color: transparent;
 }
-.carrusel a{
-    text-decoration: none;
-}
-
-.carrusel div{
-    padding: 30px;
-}
-
-.carrusel p{
-    color: rgb(91, 250, 242);
-    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
-    font-size: 100%;
-    background-color: rgba(55, 77, 75, 0.979);
-    border-radius: 40px;
-    border: solid;
-    border-color: rgba(95, 235, 245, 0.178);
-   width: 30%;
+.carrusel a {
+  text-decoration: none;
 }
 
-.carrusel img{
-    padding: 2%;
-    border-radius: 10%;
+.carrusel div {
+  padding: 30px;
 }
+
+.carrusel p {
+  color: rgb(91, 250, 242);
+  font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
+    "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
+  font-size: 100%;
+  border-radius: 40px;
+  border: solid;
+  border-color: rgba(95, 235, 245, 0.178);
+  width: 30%;
+  background: linear-gradient(
+    180deg,
+    rgba(0, 255, 240, 0.0474006) 71.35%,
+    rgba(66, 68, 68, 0.7)99.99%,
+    rgba(40, 41, 40, 0) 100%
+  );
+  mix-blend-mode: screen;
+  border-radius: 22.5px;
+  font-family: "Dela Gothic One";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 24px;
+  line-height: 35px;
+  text-align: center;
+
+  color: #00eeff;
+}
+
+.carrusel img {
+  padding: 2%;
+  border-radius: 10%;
+}
+
