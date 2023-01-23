@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { Button, Card, Container, FloatingLabel, Form, Label, Image, Table } from 'react-bootstrap';
 import { Link, useNavigate } from 'react-router-dom';
 
-import { collection, getDocs } from "firebase/firestore"; 
+import { collection, getDocs, doc, updateDoc } from "firebase/firestore"; 
 import { allAuth, allDb, auth, db } from "../../firebaseInicial/firebase";
 import { listado_producto_by_admin } from '../../redux/actions/productoAction';
 import style from '../../css/ProductoLista.module.css';
@@ -26,6 +26,50 @@ const ProductoLista = () => {
         let ayuda = await listado_producto_by_admin();
         setListado(ayuda);
     }
+
+    const navigate = useNavigate();
+
+
+    const handleHabilitar = async (id, valor) => {
+        try
+        {
+            console.log("ACTUAL", id, valor);
+            const docRef = doc(db, "productos", id);
+            await updateDoc(docRef, {
+                habilitado: valor
+            });
+        }
+        catch(err)
+        {
+            console.log("Error generado : ", err);
+        }
+    }
+
+    //  OK, ESPERO TOULON
+    //  SI ESTA HABILITADO MOSTRARA TRUE(SI), CASO CONTRARIO FALSE(NO)
+    //  SON ERRORES DE DISENO AL PARECER
+    //  YO NO HICE NADA
+    //  ENTONCES, LO DEJAMOS PARA MANANA ??
+    //  en mi defensa amigo Toulon, yo NO uso for
+
+
+    
+    
+    const handleDeshabilitar = async (id) => {
+        try
+        {
+            const docRef = doc(db, "productos", id);
+            await updateDoc(docRef, {
+                habilitado: false
+            });
+        }
+        catch(err)
+        {
+            console.log("Error generado : ", err);
+            navigate("/producto_lista");
+        }
+    }
+
 
     /*      Carga por primera vez la lista        */
     useEffect( () => {
@@ -55,6 +99,9 @@ const ProductoLista = () => {
                             listado?.map( (e) => 
                                 (
                                     <tr className={ `${ style.tr_sombreado }` }>
+                                        {
+                                            console.log("HELP", e.id)
+                                        }
                                         <td>{ e.data().nombre }</td>
                                         <td>{ e.data().descripcion }</td>
                                         <td>{ e.data().precio }</td>
@@ -68,13 +115,25 @@ const ProductoLista = () => {
                                         </td>
                                         <td>
                                             <Link to={`/producto_detalle/${ e._document.key.path.segments[6] }`}>
-                                                <Button className='btn btn-success'>Editar</Button>
+                                                <Button className='btn btn-primary'>Editar</Button>
                                             </Link>
                                         </td>
                                         <td>
-                                            <Link>
-                                                <Button className='btn btn-danger'>Eliminar</Button>
-                                            </Link>
+                                            {
+                                                e.data().habilitado ?           //      Yo hago clic en el boton pero cambia todos los valores de la columna,ESO SOMBREADO ES EL ID, NO
+
+                                                (
+                                                    <Link>
+                                                        <Button className='btn btn-danger' id={ e.id } onClick={ handleHabilitar(e.id, !e.data().habilitado) }>Deshabilitar</Button>
+                                                    </Link>
+                                                )
+                                                :
+                                                (
+                                                    <Link>
+                                                        <Button className='btn btn-warning' id={ e.id } onClick={ handleHabilitar(e.id, !e.data().habilitado) }>Habilitar</Button>
+                                                    </Link>
+                                                )
+                                            }
                                         </td>
                                     </tr>
                                 )

@@ -12,6 +12,7 @@ const ProductoCreate = () => {
     const navegar = useNavigate();
     const [producto, setProducto] = useState({
         nombre: "",
+        autor: "",
         descripcion: "",
         precio: 0,
         key: "",
@@ -23,7 +24,7 @@ const ProductoCreate = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
-    const ValidoProducto = ({ nombre, descripcion, precio, key, tiempo, imagen }) => {
+    const ValidoProducto = ({ nombre, autor, descripcion, precio, key, tiempo, imagen }) => {
         const e = {};
         let valido = true;
         const regex = /^[0-9].*$/;
@@ -37,7 +38,19 @@ const ProductoCreate = () => {
             valido = false;
         }
 
-        if (descripcion.toString().trim().length === 0) {
+        if (autor.toString().trim().length === 0)
+        {
+            e.autor = 'El autor esta Vacio';
+            valido = false;
+        }
+        else if (autor.length > 30)
+        {
+            e.autor = 'El autor no puede tener mas de 30 Caracteres';
+            valido = false;
+        }
+
+        if (descripcion.toString().trim().length === 0)
+        {
             e.descripcion = 'La descripcion esta vacio';
             valido = false;
         }
@@ -111,38 +124,43 @@ const ProductoCreate = () => {
     return (
         <div>
             <Container className='my-3'>
-                <Button onClick={() => navegar(-1)}>Volver</Button>
-                <Card className={`${style.registroProducto} m-auto`}>
-                    <Form className='card card-body' onSubmit={e => handleSubmit(e)}>
+                <Card className={ `${ style.registroProducto } m-auto` }>
+                    <Form className='card card-body' onSubmit={ e => handleSubmit(e) }>
+                        <div className={ style.productoCreate_title }>Creacion de Producto (Admin)</div>
                         <div className='form-group input-group input-group-text my-3 d-flex justify-content-between'>
                             <Form.Label>Nombre producto :</Form.Label>
-                            <Form.Control name='nombre' className={`${style.textbox}`} type='text' placeholder='Ingrese nombre producto' onChange={handleInputChange} isInvalid={!!errores.nombre} />
-                            <Form.Control.Feedback type={'invalid'}>{errores.nombre}</Form.Control.Feedback>
+                            <Form.Control name='nombre' type='text' className={ `${ style.textbox }` } placeholder='Ingrese nombre producto' onChange={ handleInputChange } isInvalid={!!errores.nombre} />
+                            <Form.Control.Feedback type={'invalid'}>{ errores.nombre }</Form.Control.Feedback>
+                        </div>
+                        <div className='form-group input-group input-group-text my-3 d-flex justify-content-between'>
+                            <Form.Label>Autor producto :</Form.Label>
+                            <Form.Control name='autor' type='text' className={ `${ style.textbox }` } placeholder='Ingrese autor producto' onChange={ handleInputChange } isInvalid={!!errores.autor} />
+                            <Form.Control.Feedback type={'invalid'}>{ errores.autor }</Form.Control.Feedback>
                         </div>
                         <div className='form-group input-group input-group-text my-3 d-flex justify-content-between'>
                             <Form.Label>Descripcion producto :</Form.Label>
-                            <Form.Control name='descripcion' className={`${style.textbox}`} type='text' placeholder='Ingrese descripcion producto' onChange={handleInputChange} isInvalid={!!errores.descripcion} />
-                            <Form.Control.Feedback type={'invalid'}>{errores.descripcion}</Form.Control.Feedback>
+                            <Form.Control name='descripcion' type='text' className={ `${ style.textbox }` } placeholder='Ingrese descripcion producto' onChange={ handleInputChange } isInvalid={!!errores.descripcion} />
+                            <Form.Control.Feedback type={'invalid'}>{ errores.descripcion }</Form.Control.Feedback>
                         </div>
                         <div className='form-group input-group input-group-text my-3 d-flex justify-content-between'>
                             <Form.Label>Key producto :</Form.Label>
-                            <Form.Control name='key' className={`${style.textbox}`} type='text' placeholder='Ingrese key producto' onChange={handleInputChange} isInvalid={!!errores.key} />
-                            <Form.Control.Feedback type={'invalid'}>{errores.key}</Form.Control.Feedback>
+                            <Form.Control name='key' type='text' className={ `${ style.textbox }` } placeholder='Ingrese key producto' onChange={ handleInputChange } isInvalid={!!errores.key} />
+                            <Form.Control.Feedback type={'invalid'}>{ errores.key }</Form.Control.Feedback>
                         </div>
                         <div className='form-group input-group input-group-text my-3 d-flex justify-content-between'>
                             <Form.Label>Precio producto :</Form.Label>
-                            <Form.Control name='precio' className={`${style.textbox}`} type='text' placeholder='Ingrese precio producto' onChange={handleInputChange} isInvalid={!!errores.precio} />
-                            <Form.Control.Feedback type={'invalid'}>{errores.precio}</Form.Control.Feedback>
+                            <Form.Control name='precio' type='text' className={ `${ style.textbox }` } placeholder='Ingrese precio producto' onChange={ handleInputChange } isInvalid={!!errores.precio} />
+                            <Form.Control.Feedback type={'invalid'}>{ errores.precio }</Form.Control.Feedback>
                         </div>
                         <div className='form-group input-group input-group-text my-3 d-flex justify-content-between'>
                             <Form.Label>Tiempo producto :</Form.Label>
-                            <Form.Control name='tiempo' className={`${style.textbox}`} type='number' placeholder='Ingrese tiempo producto' onChange={handleInputChange} isInvalid={!!errores.tiempo} />
-                            <Form.Control.Feedback type={'invalid'}>{errores.tiempo}</Form.Control.Feedback>
+                            <Form.Control name='tiempo' type='number' className={ `${ style.textbox }` } placeholder='Ingrese tiempo producto' onChange={ handleInputChange } isInvalid={!!errores.tiempo} />
+                            <Form.Control.Feedback type={'invalid'}>{ errores.tiempo }</Form.Control.Feedback>
                         </div>
                         <div className='form-group input-group input-group-text my-3 d-flex justify-content-between'>
                             <Form.Label>Imagen producto :</Form.Label>
-                            <Form.Control name='imagen' className={`${style.textbox} float-right`} type='text' placeholder='Ingrese url producto' onChange={handleInputChange} isInvalid={!!errores.imagen} />
-                            <Form.Control.Feedback type={'invalid'}>{errores.imagen}</Form.Control.Feedback>
+                            <Form.Control name='imagen' type='text' className={ `${ style.textbox } float-right` } placeholder='Ingrese url producto' onChange={ handleInputChange } isInvalid={!!errores.imagen} />
+                            <Form.Control.Feedback type={'invalid'}>{ errores.imagen }</Form.Control.Feedback>
                         </div>
                         <div className='form-group input-group input-group-text my-3'>
                             <Button className={`${style.button} text-center btn btn-primary`} type='submit' variant='primary' >Registrar</Button>
