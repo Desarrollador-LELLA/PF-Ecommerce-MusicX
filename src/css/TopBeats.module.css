@@ -2,7 +2,7 @@
 .carrusel{
     margin: auto;
     align-items: center;
-    width: 50%;
+    width: 50%; 
 }
 .carrusel h3{
     color: rgb(94, 180, 166);
@@ -30,4 +30,5 @@
 
 .carrusel img{
     padding: 2%;
+    border-radius: 10%;
 }
