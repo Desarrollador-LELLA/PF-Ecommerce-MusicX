@@ -15,7 +15,7 @@ export const detalle_usuario_cliente = async (id) => {
       // doc.data() will be undefined in this case
       // console.log("No such document!");
     }
-  //   console.log(docSnap);
+    console.log(docSnap);
     return docSnap
 } catch (error) {
     console.log(error);

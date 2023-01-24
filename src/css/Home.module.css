@@ -2,48 +2,72 @@
   background: #171316;
 }
 
-.topbeats {
-    text-align: center;
-    color: rgb(59, 149, 154);
-    font-family: 
-    Dela Gothic One;
-    font-size: 1em;
-    font-weight: 700;
-    font-family: 'Dela Gothic One';
-font-style: normal;
-font-weight: 50%;
-font-size: 30%;
-line-height: 99%;
-text-align: center;
-  }
-  .topbeats span {
-    width: 1.5%;
-    display: inline-block;
-    position: relative;
-    transform-style: preserve-3d;
-    perspective: 500;
-    -webkit-font-smoothing: antialiased;
-    
-  }
 
+.topbeats {
+  font-family: 'Dela Gothic One';
+  font-style: normal;
+  font-weight: 40%;
+  color: #1f9999;
+  margin-left: 34%;  
+  padding-top: 1%;
+}
+
+.topbeats span {
+  display: inline-block;
+  transform-style: preserve-3d;
+  perspective: 500;
+  -webkit-font-smoothing: antialiased;
+  margin: -3.3%;
+}
+.topbeats span::before,
+.topbeats span::after {
+  display: none;
+  position: absolute;
+  top: 0;
+  left: -1px;
+  transform-origin: left top;
+  transition: all ease-out 0.3s;
+  content: attr(data-text);
+}
+.topbeats span::before {
+  z-index: 1;
+  color: rgba(0,0,0,0.2);
+  transform: scale(1.1, 1) skew(0deg, 20deg);
+}
+.topbeats span::after {
+  z-index: 2;
+  color: #434c4d;
+  text-shadow: -1px 0 1px #214e4b, 1px 0 1px rgba(27, 69, 94, 0.8);
+  transform: rotateY(-40deg);
+}
+.topbeats span:hover::before {
+  transform: scale(1.1, 1) skew(0deg, 5deg);
+}
+.topbeats span:hover::after {
+  transform: rotateY(-10deg);
+}
+.topbeats span + span {
+  margin-left: 0.3em;
+}
+@media (min-width: 20em) {
+  .topbeats {
+    font-size: 2em;
+  }
   .topbeats span::before,
   .topbeats span::after {
     display: block;
   }
-
-
+}
 @media (min-width: 30em) {
   .topbeats {
     font-size: 3em;
   }
 }
-
 @media (min-width: 40em) {
   .topbeats {
     font-size: 5em;
   }
 }
-
 @media (min-width: 60em) {
   .topbeats {
     font-size: 8em;
