@@ -13,8 +13,6 @@
 .dropdown_menu {
     width: 250px;
     max-height: 386px;
-    /* overflow-y: scroll; */
-    /* height: 266px; */
 }
 
 .card_overlay {

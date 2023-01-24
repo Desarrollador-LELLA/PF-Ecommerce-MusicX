@@ -1,5 +1,5 @@
 import { useDispatch, useSelector } from 'react-redux';
-import { needVerificationAction, getUserById, loadingAction, uno } from './redux/actions/authAction';
+import { needVerificationAction, getUserById, loadingAction } from './redux/actions/authAction';
 import { useEffect } from 'react';
 import { auth } from './firebaseInicial/firebase';
 import { Navigate, Route, Routes } from "react-router-dom";
@@ -17,6 +17,8 @@ import Carrito from "./componets/pages/Carrito";
 import ProductoDetalle from './componets/pages/ProductoDetalle';
 import PerfilU from "./componets/pages/PerfilU";
 import PerfilAd from './componets/pages/PerfilAd';
+import './css/app.css'
+import TesterPaginado from './componets/pages/TesterPaginado';
 
 function App() {
 
@@ -60,6 +62,7 @@ function App() {
         <Route path='perfil' element={authenticatedAuth ? <Perfil /> : <Navigate to="/iniciarsesion" />} />
         {/* NO SE ESPESIFICA SI ES PUBLICA NI PRIVADA NI QUE COSA ES */}
         <Route path="PerfilAdmin" element={authenticatedAuth ? <PerfilAd /> : <Navigate to="/iniciarsesion" />} />
+        <Route path="testerpaginado" element={<TesterPaginado />} />
       </Route>
     </Routes>
   );
