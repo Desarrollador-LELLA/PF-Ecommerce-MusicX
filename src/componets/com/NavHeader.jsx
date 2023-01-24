@@ -1,5 +1,5 @@
 import React from 'react';
-import { Navbar, Container, Image, ButtonGroup, Nav, Dropdown, Badge, Card, Row, Col, Button } from 'react-bootstrap';
+import { Navbar, Container, Image, ButtonGroup, Nav, Dropdown, Badge, Card, Button } from 'react-bootstrap';
 import icLogo from '../images/ic_logo_tester.png';
 import { Link, NavLink, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from 'react-redux';
@@ -35,12 +35,15 @@ const NavHeader = () => {
                         <NavLink className='nav-link' to='/aboutus'>
                             About
                         </NavLink>
+                        <NavLink className='nav-link' to='/testerpaginado'>
+                            Tester Paginado
+                        </NavLink>
                         {/* AGREGAR MAS LINK SE LO DECENA COPY PASTE NavLink DE ARRIBA */}
                     </Nav>
                     {
                         loadingAuth ? null : !authenticatedAuth &&
                             <ButtonGroup>
-                                <Link className='btn btn-primary' to='/iniciarsesion'>
+                                <Link className='btn btn-dark' to='/iniciarsesion'>
                                     Entrar
                                 </Link>
                                 <Link className='btn btn-secondary me-3' to='/registro'>
@@ -56,18 +59,17 @@ const NavHeader = () => {
                                 <Dropdown.Toggle variant="none" id="dropdown-basic">
                                     <Image src={icUsuario} />
                                 </Dropdown.Toggle>
-                                <Dropdown.Menu className='position-absolute'>
-                                    <Dropdown.Header>Usuario</Dropdown.Header>
+                                <Dropdown.Menu className='position-absolute' variant="dark">
+                                    <Dropdown.Header className='text-center'>Usuario</Dropdown.Header>
                                     <Dropdown.Divider />
-                                    <Dropdown.Item onClick={() => navegar('/PerfilUsuario')}><Image src={icPerfil} width='24px' />{'   '}Mi Perfil Cliente</Dropdown.Item>
-                                    <Dropdown.Item onClick={() => navegar('/perfiladmin')}><Image src={icPerfil} width='24px' />{'   '}Mi Perfil Admin</Dropdown.Item>
+                                    <Dropdown.Item onClick={() => navegar('/perfil')}><Image src={icPerfil} width='24px' /><span className='ms-3'>Mi Perfil</span></Dropdown.Item>
                                     <Dropdown.Divider />
-                                    <Dropdown.Header>Administracion</Dropdown.Header>
+                                    <Dropdown.Header className='text-center'>Administracion</Dropdown.Header>
                                     <Dropdown.Divider />
-                                    <Dropdown.Item onClick={() => navegar('/producto_lista')}><Image src={icProductos} width='24px' />{'   '}Administrar Productos</Dropdown.Item>
-                                    <Dropdown.Item onClick={() => navegar('/generos')}><Image src={icGeneros} width='24px' />{'   '}Administrar Generos</Dropdown.Item>
+                                    <Dropdown.Item onClick={() => navegar('/producto_lista')}><Image src={icProductos} width='24px' /><span className='ms-3'>Administrar Productos</span></Dropdown.Item>
+                                    <Dropdown.Item onClick={() => navegar('/generos')}><Image src={icGeneros} width='24px' /><span className='ms-3'>Administrar Generos</span></Dropdown.Item>
                                     <Dropdown.Divider />
-                                    <Dropdown.Item onClick={cerrarSesion}><Image src={icSalir} width='24px' />{'   '}Cerrar Sesion</Dropdown.Item>
+                                    <Dropdown.Item onClick={cerrarSesion}><Image src={icSalir} width='24px' /><span className='ms-3'>Cerrar Sesion</span></Dropdown.Item>
                                 </Dropdown.Menu>
                             </Dropdown>
                     }
@@ -78,9 +80,9 @@ const NavHeader = () => {
                                 {productos.length}
                             </Badge>
                         </Dropdown.Toggle>
-                        <Dropdown.Menu className={`position-absolute ${s.dropdown_menu}`}>
+                        <Dropdown.Menu className={`position-absolute ${s.dropdown_menu}`} variant="dark">
                             <Dropdown.Header>Mi Carro
-                                <Button onClick={() => navegar('/carrito')} className='float-sm-end' size='sm'>Carro</Button>
+                                <Button variant='dark' onClick={() => navegar('/carrito')} className='float-sm-end' size='sm'>Carro</Button>
                             </Dropdown.Header>
                             <Dropdown.Divider />
                             <div className={`${s.dropdown_contenedor}`}>
@@ -103,7 +105,7 @@ const NavHeader = () => {
                                             </Dropdown.ItemText>
                                         )) :
                                         <Dropdown.ItemText>
-                                            <Card>
+                                            <Card bg='dark'>
                                                 <Card.Body className={`${s.card_body}`}>Carro Vacio</Card.Body>
                                             </Card>
                                         </Dropdown.ItemText>
