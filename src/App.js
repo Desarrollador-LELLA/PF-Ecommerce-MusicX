@@ -53,7 +53,7 @@ function App() {
         <Route path="iniciarsesion" element={!authenticatedAuth ? <InicioSesion /> : <Navigate to="/" />} />
         <Route path="PerfilUsuario" element={authenticatedAuth ? <PerfilU /> : <Navigate to= "/" />} />
         <Route  path='Bibloteca'  element ={authenticatedAuth ? <Bibloteca/> : <Navigate to = "/iniciarsesion" />}/>
-        {/* CONDICIONALES ADMIN */}
+        {/* CONDICIONALES ADMIN*/}
         <Route path="producto_create" element={authenticatedAuth ? <ProductoCreate /> : <Navigate to="/" />} />
         <Route path="PerfilAdmin" element={authenticatedAuth ? <PerfilAd /> : <Navigate to="/" />} />
         <Route path="generos" element={authenticatedAuth ? <Generos /> : <Navigate to="/" />} />
