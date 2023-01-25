@@ -5,8 +5,16 @@
     color: rgb(15, 14, 14);
     text-shadow: rgba(27, 25, 25, 0.587) 6px 6px 6px;
     text-align: center;
+    
 }
 
 .crear-genero {
     text-align: center;
+}
+
+.card-body {
+    color:  red;
+}
+.boton-editar {
+    color: red;
 }
