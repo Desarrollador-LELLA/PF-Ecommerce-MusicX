@@ -1,23 +1,18 @@
  .productcards {
-  position: absolute;
-  width: 80%;
-  height: 80%;
-  left: 10%;
-  top: 20%px;
   background: linear-gradient(
     180deg,
     rgba(39, 26, 41, 0.253) 1.04%,
     rgba(76, 95, 99, 0.1056) 66.67%,
     rgba(58, 37, 58, 0.066) 100%
   );
-  border-radius: 28px;
+  border-radius: 23px;
   padding: 2%;
 }
 
 .cardcont{
 
     background: linear-gradient(180deg, rgba(213, 50, 233, 0.253) 1.04%, rgba(76, 95, 99, 0.1056) 66.67%, rgba(204, 34, 207, 0.066) 100%);
-    border-radius: 28px;
+    border-radius: 50px;
 
 }
 .cardimg{
