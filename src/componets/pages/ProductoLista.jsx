@@ -28,7 +28,7 @@ const ProductoLista = () => {
     }
 
     const navigate = useNavigate();
-
+    let [ultimo, setUltimo] = useState(1);
 
     const handleHabilitar = async (id, valor) => {
         try
@@ -36,45 +36,22 @@ const ProductoLista = () => {
             console.log("ACTUAL", id, valor);
             const docRef = doc(db, "productos", id);
             await updateDoc(docRef, {
-                habilitado: valor
+                habilitado: !valor
             });
+            setUltimo(ultimo = ultimo + 1);
         }
         catch(err)
         {
             console.log("Error generado : ", err);
         }
     }
-
-    //  OK, ESPERO TOULON
-    //  SI ESTA HABILITADO MOSTRARA TRUE(SI), CASO CONTRARIO FALSE(NO)
-    //  SON ERRORES DE DISENO AL PARECER
-    //  YO NO HICE NADA
-    //  ENTONCES, LO DEJAMOS PARA MANANA ??
-    //  en mi defensa amigo Toulon, yo NO uso for
-
-
     
-    
-    const handleDeshabilitar = async (id) => {
-        try
-        {
-            const docRef = doc(db, "productos", id);
-            await updateDoc(docRef, {
-                habilitado: false
-            });
-        }
-        catch(err)
-        {
-            console.log("Error generado : ", err);
-            navigate("/producto_lista");
-        }
-    }
-
 
     /*      Carga por primera vez la lista        */
     useEffect( () => {
         lista();
-    }, []);
+    }, [ultimo]);
+
 
     return (
         <div>
@@ -99,9 +76,6 @@ const ProductoLista = () => {
                             listado?.map( (e) => 
                                 (
                                     <tr className={ `${ style.tr_sombreado }` }>
-                                        {
-                                            console.log("HELP", e.id)
-                                        }
                                         <td>{ e.data().nombre }</td>
                                         <td>{ e.data().descripcion }</td>
                                         <td>{ e.data().precio }</td>
@@ -119,21 +93,22 @@ const ProductoLista = () => {
                                             </Link>
                                         </td>
                                         <td>
-                                            {
+                                            {/*
                                                 e.data().habilitado ?           //      Yo hago clic en el boton pero cambia todos los valores de la columna,ESO SOMBREADO ES EL ID, NO
 
                                                 (
-                                                    <Link>
-                                                        <Button className='btn btn-danger' id={ e.id } onClick={ handleHabilitar(e.id, !e.data().habilitado) }>Deshabilitar</Button>
-                                                    </Link>
+                                                    <Button className='btn btn-danger' id={ e.id } onClick={ handleHabilitar(e.id, !e.data().habilitado) }>Deshabilitar</Button>
                                                 )
                                                 :
                                                 (
-                                                    <Link>
-                                                        <Button className='btn btn-warning' id={ e.id } onClick={ handleHabilitar(e.id, !e.data().habilitado) }>Habilitar</Button>
-                                                    </Link>
+                                                    <Button className='btn btn-warning' id={ e.id } onClick={ handleHabilitar(e.id, !e.data().habilitado) }>Habilitar</Button>
                                                 )
-                                            }
+                                            */}
+                                            <Link>
+                                                <Button id={ e.id } variant= { e.data().habilitado ? 'danger' : 'warning' } onClick={ x => handleHabilitar(e.id, e.data().habilitado) }>
+                                                    { e.data().habilitado ? "Deshabilitar" : "Habilitar" }
+                                                </Button>
+                                            </Link>
                                         </td>
                                     </tr>
                                 )
