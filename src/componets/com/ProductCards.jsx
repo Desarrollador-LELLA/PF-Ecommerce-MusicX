@@ -21,7 +21,7 @@ export default function ProductCards(props) {
       <Row xs={3} md={4} className="g-5">
         {productos?.map((ele) => (
           <Col className={s.card} key={ele.data().key}>
-            <Card className={`my-5 ${s.cardcont}`}>
+            <Card className={`my-2 ${s.cardcont}`}>
               <div className={s.contcards}>
                 <Link to={ele.id}>
                   <Card.Img className={s.cardimg} src={ele.data().imagen} />
@@ -29,11 +29,9 @@ export default function ProductCards(props) {
               </div>
               <Card.Body>
                 <Card.Title className={s.cardtitle}>{ele.data().nombre}</Card.Title>
-                <Card.Text>
-                  <strong> By {ele.data().autor}</strong>
-                </Card.Text>
-                <Card.Text>BPM:{ele.data().tiempo}</Card.Text>
-                <Card.Text>{ele.data().descripcion}</Card.Text>
+                <Card.Text className={s.cardby}>By {ele.data().autor}</Card.Text>
+                <Card.Text className={s.cardby}>BPM:{ele.data().tiempo}</Card.Text>
+                <div className={s.marquee}><Card.Text className={s.carddesc}>{ele.data().descripcion}</Card.Text></div>
               </Card.Body>
             </Card>
           </Col>

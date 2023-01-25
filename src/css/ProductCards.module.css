@@ -22,13 +22,13 @@
 }
 .cardimg{
     border-radius: 100%;
-    
     display: inline-block;
+    padding: 3%;
 } 
 
 .cardimg:hover{
     animation-name: gixaxb;
-    animation-duration: 4s;
+    animation-duration: 5s;
     animation-iteration-count: infinite;
     animation-timing-function: linear;
 }
@@ -40,11 +40,55 @@
     }
 }
 
-/* .cardtitle{
 
-width: 100%;
+
+.cardtitle{
+    font-family: 'Dela Gothic One';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 27px;
+    line-height: 25px;
+    text-align: center;
+    
+    color: #55CDD5;
+} 
+
+.cardby{
 font-family: 'Dela Gothic One';
-font-size: 30px;
+font-style: normal;
+font-weight: 400;
+font-size: 25px;
+line-height: 25px;
+color: #8a4883;
+text-align: center;
+}
 
-color: #55CDD5;
-} */
+.marquee {
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    height: 90px;
+    overflow: hidden;
+  }
+.carddesc{
+font-family: 'Dela Gothic One';
+font-style: normal;
+font-weight: 400;
+font-size: 25px;
+color: rgba(35, 204, 204, 0.59);
+  list-style: none;
+  animation: scrolling 20s linear infinite;
+  white-space: nowrap;
+}
+
+@keyframes scrolling {
+    0% { transform: translateX(0) }
+    100% { transform: translateX(-100%) }
+  }
+
+
+
+  .card{
+    padding: 1%;
+  }
