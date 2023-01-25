@@ -39,7 +39,14 @@ const NavHeader = () => {
                             Tester Paginado
                         </NavLink>
                         {/* AGREGAR MAS LINK SE LO DECENA COPY PASTE NavLink DE ARRIBA */}
+
+                        <NavLink className='nav-link' to='/Bibloteca'>
+                            Bibloteca 
+                        </NavLink>
                     </Nav>
+
+
+
                     {
                         loadingAuth ? null : !authenticatedAuth &&
                             <ButtonGroup>
