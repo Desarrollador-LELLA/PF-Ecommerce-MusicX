@@ -67,6 +67,7 @@ function App() {
         <Route path="subirfoto" element={<Subirfoto />} />
         <Route path="PerfilAdmin" element={authenticatedAuth ? <PerfilAd /> : <Navigate to="/iniciarsesion" />} />
         <Route path="testerpaginado" element={<TesterPaginado />} />
+        {/* <Route path="testerpaginado/:pag" element={<TesterPaginado />} /> */}
       </Route>
 
 

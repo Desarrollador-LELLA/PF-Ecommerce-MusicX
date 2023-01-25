@@ -139,75 +139,127 @@ export const actualizaDocumento = async (nombreCollecion, id, { data }) => {
     }
 };
 
-export const primeraLectura = async () => {
-    const first = allDb.query(
-        allDb.collection(db, "productos"),
-        allDb.orderBy("nombre"),
-        allDb.limit(2)
-
-    );
-    
-    const documentSnapshots = await allDb.getDocs(first);
-    
-    const todo = documentSnapshots.docs;
-
-    return {todo, documentSnapshots};
-
+/**
+ * Este metodo consulta y trae varios documento en espesifico el cual necesita una coleccion y una clausula where de los attibutos que necesita comparar.
+ * 
+ * e.g "<", "<=", "==", "<", "<=", "!="
+ * 
+ * Ejemplo: const r = whereDocumentos('usuarios', {'nombre', '!=', 'pene'})
+ * 
+ * retorna { mensaje: 'string mensaje', result: [], confirma: false o true }
+ * 
+ * @by Don Toulon
+ */
+export const todosDocumentos = async (nombreCollecion) => {
+    try {
+        const arrays = [];
+        const q = allDb.query(allDb.collection(db, nombreCollecion));
+        const querySnapshot = await allDb.getDocs(q);
+        querySnapshot.forEach((doc) => {
+            const item = doc.data();
+            item.id = doc.id;
+            arrays.push(item);
+        });
+        retorno.result = arrays;
+        retorno.confirma = true;
+        retorno.mensaje = 'Consulta Exitosa';
+    } catch (error) {
+        retorno.result = [];
+        retorno.mensaje = error.message;
+    } finally {
+        return retorno;
+    }
 };
 
-export const paginado = async () => {
-    // aqui yo creo la consulta 
-    const first = await allDb.query(
-        allDb.collection(db, "productos"),
-        allDb.orderBy("nombre"),
-        allDb.limit(2)
-
+export const paginasPaginado = async (coleccion, orderBy) => {
+    const totalDatos = allDb.query(
+        allDb.collection(db, coleccion),
+        allDb.orderBy(orderBy)
     );
-    //aqui yo ejecuto la consulta de frist 
-    const documentSnapshots = await allDb.getDocs(first);
-    //extraer los documentos de la consulta para desencriptarlos 
-    const todo = await documentSnapshots.docs;
-    //extrayendo el ultimo documento de la consulta y lo guardo en lastvisible 
-    const lastVisible = await documentSnapshots.docs[
-        documentSnapshots.docs.length - 1
-    ];
-    //extrayendo el primero documento de la consulta y lo guardo en fristvisible
-    const fristVisible = await documentSnapshots.docs[
-        documentSnapshots.docs.length - 2
-    ];
-    //crear la consulta empieza desde cierta parte hacia adelante 
-    const next = await allDb.query(
-        allDb.collection(db, "productos"),
-        allDb.orderBy("nombre"),
-        allDb.startAt(lastVisible),
-        allDb.limit(2)
+    const documentSnapshots = await allDb.getDocs(totalDatos);
+    const total = documentSnapshots.size;
+
+    return {
+        totalItems: total,
+        paginas: Math.ceil(total / 3)
+    };
+};
+
+export const obtienePaginado = async (coleccion, orderBy) => {
+
+    const lista = [];
+    const primera = allDb.query(
+        allDb.collection(db, coleccion),
+        allDb.orderBy(orderBy),
+        allDb.limit(3)
+    );
+    const numPaginas = await paginasPaginado(coleccion, orderBy);
+    const documentSnapshots = await allDb.getDocs(primera);
+    const ultimaVisible = documentSnapshots.docs[documentSnapshots.docs.length - 1] || null;
+    const primeraVisible = documentSnapshots.docs[0] || null;
+
+    documentSnapshots.forEach((doc) => {
+        let linea = doc.data();
+        linea.id = doc.id;
+        lista.push(linea);
+    });
+
+    return {
+        ultimaVisible,
+        primeraVisible,
+        lista,
+        numPaginas
+    };
+};
+
+export const siguientePaginado = async (coleccion, orderBy, uVisible) => {
+
+    const lista = [];
+    const next = allDb.query(
+        allDb.collection(db, coleccion),
+        allDb.orderBy(orderBy),
+        allDb.limit(3),
+        allDb.startAfter(uVisible)
+    );
+    const documentSnapshots = await allDb.getDocs(next);
+    const ultimaVisible = documentSnapshots.docs[documentSnapshots.docs.length - 1] || null;
+    const primeraVisible = documentSnapshots.docs[0] || null;
+
+    documentSnapshots.forEach((doc) => {
+        let linea = doc.data();
+        linea.id = doc.id;
+        lista.push(linea);
+    });
+
+    return {
+        ultimaVisible,
+        primeraVisible,
+        lista
+    };
+};
+
+export const anteriorPaginado = async (coleccion, orderBy, pVisible) => {
+    const lista = [];
+    const back = allDb.query(
+        allDb.collection(db, coleccion),
+        allDb.orderBy(orderBy),
+        allDb.limitToLast(3),
+        allDb.endBefore(pVisible)
     );
 
-    const document = await allDb.getDocs(next);
-    const siguente = await document.docs;
+    const documentSnapshots = await allDb.getDocs(back);
+    const ultimaVisible = documentSnapshots.docs[documentSnapshots.docs.length - 1] || null;
+    const primeraVisible = documentSnapshots.docs[0] || null;
 
-    const lastVisible2 = await document.docs[
-        document.docs.length - 1
-    ];
-    const fristVisible2 = await document.docs[
-        document.docs.length - 2
-    ];
-    // crear la consulta empieza desde cierta parte hacia atras 
-    const previus = await allDb.query(
-        allDb.collection(db, "productos"),
-        allDb.orderBy("nombre"),
-        allDb.startAfter(fristVisible2),
-        allDb.limit(2)
-    );
-    const document3 = await allDb.getDocs(previus);
-    const anterior = await document3.docs;
+    documentSnapshots.forEach((doc) => {
+        let linea = doc.data();
+        linea.id = doc.id;
+        lista.push(linea);
+    });
 
-    const lastVisible3 = await document3.docs[
-        document3.docs.length - 1
-    ];
-    const fristVisible3 = await document3.docs[
-        document3.docs.length - 2
-    ];
-
-    return { todo, anterior, siguente, lastVisible };
+    return {
+        ultimaVisible,
+        primeraVisible,
+        lista
+    };
 };
