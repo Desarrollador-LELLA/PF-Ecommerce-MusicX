@@ -4,7 +4,12 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
 import style from '../../css/productoCreate.module.css';
 import { db } from '../../firebaseInicial/firebase';
-import { collection, addDoc } from "firebase/firestore";
+import { collection, addDoc } from "firebase/firestore"; 
+import { storage } from '../../firebaseInicial/firebase';
+//      Subir imagenes
+//  import { storage } from "./firebase";
+import { ref, uploadBytes, getDownloadURL, getStorage } from "firebase/storage";
+import { v4 } from "uuid";
 
 
 const ProductoCreate = () => {
@@ -17,12 +22,24 @@ const ProductoCreate = () => {
         precio: 0,
         key: "",
         tiempo: 0,
-        imagen: ""
+        //imagen: "",
+        imagen: null
     });
 
+    //  const [image, setImage] = useState(null);
+
+    const [url, setURL] = useState(null);
     const [errores, setErrores] = useState({});
+
     const dispatch = useDispatch();
     const navigate = useNavigate();
+
+
+    //  Segundo ejemplo
+    const [imageUpload, setImageUpload] = useState(null);
+    const [imageUrls, setImageUrls] = useState([]);
+
+    
 
     const ValidoProducto = ({ nombre, autor, descripcion, precio, key, tiempo, imagen }) => {
         const e = {};
@@ -94,6 +111,16 @@ const ProductoCreate = () => {
     };
 
 
+    /*
+    const handleImageChange = (e) => {
+        if(e.target.files[0])
+        {
+            setImage(e.target.files[0]);
+        }
+    }
+    */
+
+
     const handleInputChange = (e) => {
         const { name, value } = e.target;
         setProducto({
@@ -109,17 +136,54 @@ const ProductoCreate = () => {
 
 
     const handleSubmit = async (e) => {
-        e.preventDefault();
-        try {
-            if (errores.valido) {
+        try
+        {
+            e.preventDefault();
+
+            if(errores.valido)
+            {
+                /*
+                const imageRef = ref(storage, "image.jpg");
+
+                uploadBytes(imageRef, producto.imagen, {
+                    contentType: 'image/jpeg'
+                }).then( () => {
+                    setURL(url);
+                }).catch( (err) => {
+                    console.log("Error generado 1 :", err);
+                });
+                
                 await addDoc(collection(db, "productos"), { ...producto, deshabilitado: false });
                 navigate("/producto_lista");
+                
+                console.log(producto);
+                console.log(imageRef);
+                console.log(producto.imagen);
+                */
+
+
+                //  const imageRef = ref(storage, `images/${ producto.imagen }`);
+
+                const imageRef = ref(storage, `images/${ imageUpload.name + v4() }`);
+
+                uploadBytes(imageRef, imageUpload).then( () => {
+                    setURL(url);
+                }).catch( (err) => {
+                    console.log("Error generado 1 :", err);
+                });
+
+                await addDoc(collection(db, "productos"), { ...producto, deshabilitado: false });
+                console.log(producto);
+                console.log(imageRef);
+                console.log(producto.imagen);
             }
         }
-        catch (err) {
-            console.log("Error generado :", err);
+        catch(err)
+        {
+            console.log("Error generado 2 :", err);
         }
     };
+
 
     return (
         <div>
@@ -159,9 +223,16 @@ const ProductoCreate = () => {
                         </div>
                         <div className='form-group input-group input-group-text my-3 d-flex justify-content-between'>
                             <Form.Label>Imagen producto :</Form.Label>
+                            {/*
                             <Form.Control name='imagen' type='text' className={ `${ style.textbox } float-right` } placeholder='Ingrese url producto' onChange={ handleInputChange } isInvalid={!!errores.imagen} />
+                            <input name='imagen' type='file' onChange={ (e) => setImageUpload(e.target.values[0]) } />
+                            */}
+
+
+                            <input name='imagen' type='file' onChange={ handleInputChange } />
                             <Form.Control.Feedback type={'invalid'}>{ errores.imagen }</Form.Control.Feedback>
                         </div>
+
                         <div className='form-group input-group input-group-text my-3'>
                             <Button className={`${style.button} text-center btn btn-primary`} type='submit' variant='primary' >Registrar</Button>
                         </div>

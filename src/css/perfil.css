@@ -15,7 +15,8 @@ html {
 }
 
 body {
-    color: #404040;
+    background-color: rgb(23, 19, 22);
+    color: #fff;
     font-family: "Arial", Segoe UI, Tahoma, sans-serifl, Helvetica Neue, Helvetica;
 }
 .seccion-perfil-usuario .perfil-usuario-body,
@@ -24,13 +25,14 @@ body {
     flex-wrap: wrap;
     flex-direction: column;
     align-items: center;
+    background-color: rgb(23, 19, 22);
 }
 
 .seccion-perfil-usuario .perfil-usuario-header {
     width: 100%;
     display: flex;
     justify-content: center;
-    background: linear-gradient(#6eafdb, transparent);
+    background-color:rgb(23, 19, 22);
     margin-bottom: 1.25rem;
 }
 
@@ -39,7 +41,7 @@ body {
     position: relative;
     width: 90%;
     height: 17rem;
-    background-image: linear-gradient(45deg, #03053c, #4385ed);
+    background-image: linear-gradient(45deg, rgba(54, 19, 36, 1), rgba(23, 19, 22, 1));
     border-radius: 0 0 20px 20px;
    
 }
@@ -52,13 +54,17 @@ body {
     border-radius: 8px;
     padding: 12px 25px;
     background-color: rgba(0, 0, 0, .5);
-    color: #fff;
+    color:  #fff;
     cursor: pointer;
 }
 
 .seccion-perfil-usuario .perfil-usuario-portada .boton-portada i {
     margin-right: 1rem;
 }
+.seccion-perfil-usuario .perfil-usuario-portada .boton-portada:hover{
+    background-color: #000000;
+}
+
 
 .seccion-perfil-usuario .perfil-usuario-avatar {
     display: flex;
@@ -66,8 +72,8 @@ body {
     height: 180px;
     align-items: center;
     justify-content: center;
-    border: 7px solid #FFFFFF;
-    background-color: #DFE5F2;
+    border: 7px solid rgba(54, 19, 36, 1);
+    background-color: rgb(23, 19, 22);
     border-radius: 50%;
     box-shadow: 0 0 12px rgba(0, 0, 0, .2);
     position: absolute;
@@ -88,7 +94,7 @@ body {
     top: -2px;
     border: 0;
     background-color: #fff;
-    box-shadow: 0 0 12px rgba(0, 0, 0, .2);
+    box-shadow: 0 0 12px rgba(54, 19, 36, 1);
     width: 45px;
     height: 45px;
     border-radius: 50%;
@@ -109,7 +115,7 @@ body {
 }
 
 .seccion-perfil-usuario .perfil-usuario-body .texto {
-    color: #848484;
+    color:  #fff;
     font-size: 0.95em;
 }
 
@@ -119,8 +125,8 @@ body {
     flex-direction: column;
     flex-wrap: wrap;
     padding: 1.5rem 2rem;
-    box-shadow: 0 0 12px rgba(0, 0, 0, .2);
-    background-color: #fff;
+    box-shadow: 0 0 12px rgba(54, 19, 36, 1);
+    background-color:  rgba(54, 19, 36, 1);
     border-radius: 15px;
     width: 100%;
 }
@@ -172,6 +178,9 @@ body {
 .boton-biblioteca i {
     margin-right: 1rem;
 }
+.boton-irABiblioteca .boton-biblioteca:hover{
+    background-color: #000000;
+}
 
 .boton-editar-info .boton-editar {
     
@@ -189,6 +198,9 @@ body {
 .boton-editar i {
     margin-right: 1rem;
 }
+.boton-editar-info .boton-editar:hover{
+    background-color: #000000;
+}
 .boton-cambiar-P .boton-cambiarP {
     
     position: relative;
@@ -204,6 +216,9 @@ body {
 }
 .boton-cambiarP i {
     margin-right: 1rem;
+}
+.boton-cambiar-P .boton-cambiarP:hover{
+    background-color: #000000;
 }
 
 
