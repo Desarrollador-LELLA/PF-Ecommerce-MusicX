@@ -65,6 +65,7 @@ function App() {
         {/* NO SE ESPESIFICA SI ES PUBLICA NI PRIVADA NI QUE COSA ES */}
         <Route path="PerfilAdmin" element={authenticatedAuth ? <PerfilAd /> : <Navigate to="/iniciarsesion" />} />
         <Route path="testerpaginado" element={<TesterPaginado />} />
+        {/* <Route path="testerpaginado/:pag" element={<TesterPaginado />} /> */}
       </Route>
     </Routes>
   );

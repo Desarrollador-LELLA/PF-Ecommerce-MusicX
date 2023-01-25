@@ -10,3 +10,38 @@ export const erroresList = (error) => {
 
     return error.message;
 };
+
+export const paginacion = (cantItems, paginaActual) => {
+    const cantPaginas = Math.ceil(cantItems / 3);
+    const paginasBar = [
+      1,
+      paginaActual > 3 && cantPaginas > 5 ? true : false,
+      cantPaginas >= 2
+        ? paginaActual > 3 && cantPaginas > 4
+          ? paginaActual - 1 > cantPaginas - 3
+            ? cantPaginas - 3
+            : paginaActual - 1
+          : 2
+        : false,
+      cantPaginas >= 3
+        ? paginaActual > 3 && cantPaginas > 4
+          ? paginaActual > cantPaginas - 2
+            ? cantPaginas - 2
+            : paginaActual
+          : 3
+        : false,
+      cantPaginas >= 4
+        ? paginaActual > 3 && cantPaginas > 4
+          ? paginaActual + 1 > cantPaginas - 1
+            ? cantPaginas - 1
+            : paginaActual + 1
+          : 4
+        : false,
+      paginaActual < cantPaginas - 2 && cantPaginas > 5 ? true : false,
+      cantPaginas >= 5 ? cantPaginas : false,
+    ];
+  
+    const fin = paginaActual * 3;
+    const inicio = fin - 3;
+    return { paginasBar, inicio, fin, cantPaginas };
+  };
