@@ -4,21 +4,21 @@
 
 
 .topbeats {
+  display: flex;
   font-family: 'Dela Gothic One';
   font-style: normal;
-  font-weight: 50%;
-  font-size: 90%;
-  line-height: 90%;
+  font-weight: 40%;
   color: #1f9999;
-  margin-left: 33%;  
-  padding-top: 2%;
+  margin-left: 25%;  
+  margin-right: 25%;
+  padding-top: 1%;
 }
+
 .topbeats span {
   display: inline-block;
   transform-style: preserve-3d;
   perspective: 500;
   -webkit-font-smoothing: antialiased;
-  padding-left: 0%;
   margin: -3.3%;
 }
 .topbeats span::before,

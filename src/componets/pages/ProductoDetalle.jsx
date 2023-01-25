@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react';
 import { Button, Card, Container, Form } from 'react-bootstrap';
 import { Link, useNavigate } from 'react-router-dom';
 import { detalle_producto_admin } from '../../redux/actions/productoAction';
@@ -127,7 +127,7 @@ const ProductoDetalle = () => {
             ...detalle,
             [name]: value
         });
-    }
+    };
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -141,7 +141,7 @@ const ProductoDetalle = () => {
         {
             console.log("Error generado : ", err);
         }
-    }
+    };
 
     return (
         <div>
@@ -188,16 +188,16 @@ const ProductoDetalle = () => {
                             <Form.Control.Feedback type={'invalid'}>{ errores.nombre }</Form.Control.Feedback>
                         </div>
                         <div className='form-group input-group input-group-text my-3 d-flex justify-content-between'>
-                            <img src={ detalle?.imagen } alt='' width="80px" height="80px" />
+                            <img src={detalle?.imagen} alt='' width="80px" height="80px" />
                         </div>
                         <div>
-                            <Button className={ `${ style.button } text-center btn btn-primary float-end` } type='submit' variant='primary'>Editar</Button>
+                            <Button className={`${style.button} text-center btn btn-primary float-end`} type='submit' variant='primary'>Editar</Button>
                         </div>
                     </Form>
                 </Card>
             </Container>
         </div>
-    )
-}
+    );
+};
 
 export default ProductoDetalle;

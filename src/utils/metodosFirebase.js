@@ -16,7 +16,6 @@ export const unDocumento = async (nombreCollecion, id) => {
     try {
         const docRef = allDb.doc(db, nombreCollecion, id);
         const docSnap = await allDb.getDoc(docRef);
-
         if (docSnap.exists()) {
             retorno.result = docSnap.data();
             retorno.result.id = docSnap.id;
@@ -109,4 +108,77 @@ export const actualizaDocumento = async (nombreCollecion, id, { data }) => {
     } finally {
         return retorno;
     }
+};
+
+export const primeraLectura = async () => {
+    const first = allDb.query(
+        allDb.collection(db, "productos"),
+        allDb.orderBy("nombre"),
+        allDb.limit(2)
+
+    );
+    
+    const documentSnapshots = await allDb.getDocs(first);
+    
+    const todo = documentSnapshots.docs;
+
+    return {todo, documentSnapshots};
+
+};
+
+export const paginado = async () => {
+    // aqui yo creo la consulta 
+    const first = await allDb.query(
+        allDb.collection(db, "productos"),
+        allDb.orderBy("nombre"),
+        allDb.limit(2)
+
+    );
+    //aqui yo ejecuto la consulta de frist 
+    const documentSnapshots = await allDb.getDocs(first);
+    //extraer los documentos de la consulta para desencriptarlos 
+    const todo = await documentSnapshots.docs;
+    //extrayendo el ultimo documento de la consulta y lo guardo en lastvisible 
+    const lastVisible = await documentSnapshots.docs[
+        documentSnapshots.docs.length - 1
+    ];
+    //extrayendo el primero documento de la consulta y lo guardo en fristvisible
+    const fristVisible = await documentSnapshots.docs[
+        documentSnapshots.docs.length - 2
+    ];
+    //crear la consulta empieza desde cierta parte hacia adelante 
+    const next = await allDb.query(
+        allDb.collection(db, "productos"),
+        allDb.orderBy("nombre"),
+        allDb.startAt(lastVisible),
+        allDb.limit(2)
+    );
+
+    const document = await allDb.getDocs(next);
+    const siguente = await document.docs;
+
+    const lastVisible2 = await document.docs[
+        document.docs.length - 1
+    ];
+    const fristVisible2 = await document.docs[
+        document.docs.length - 2
+    ];
+    // crear la consulta empieza desde cierta parte hacia atras 
+    const previus = await allDb.query(
+        allDb.collection(db, "productos"),
+        allDb.orderBy("nombre"),
+        allDb.startAfter(fristVisible2),
+        allDb.limit(2)
+    );
+    const document3 = await allDb.getDocs(previus);
+    const anterior = await document3.docs;
+
+    const lastVisible3 = await document3.docs[
+        document3.docs.length - 1
+    ];
+    const fristVisible3 = await document3.docs[
+        document3.docs.length - 2
+    ];
+
+    return { todo, anterior, siguente, lastVisible };
 };

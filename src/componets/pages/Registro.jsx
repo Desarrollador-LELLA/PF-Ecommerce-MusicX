@@ -56,47 +56,63 @@ const Registro = () => {
     };
 
     return (
-        <Container className='my-2'>
+        <Container className='my-4'>
             <Card className={`${s.registrocard} m-auto`}>
                 <Card.Body>
                     <div className='text-center'>
                         <Image className='btn-primary' src={icLogo} width='100px' />
                     </div>
-
-                    <Card.Title className='text-center my-3'>Registrarme</Card.Title>
+                    <Card.Title className='text-center my-3 text-white'>Registrarme</Card.Title>
                     <Form onSubmit={onSubmit}>
-                        <Placeholder as='p' animation='glow' >
-                            <Placeholder.Button  xs={12} size="lg" bg="dark" />
-                        </Placeholder>
-                        <FloatingLabel className='mb-3' controlId='floatingInput' label='Nombre'>
-                            {loading ?
-                                <Placeholder as='p' animation='glow' >
-                                    <Placeholder xs={12} size="lg" />
-                                </Placeholder>
+                        {
+                            loading ?
+                                <>
+                                    <Placeholder as='p' animation='glow' >
+                                        <Placeholder.Button xs={12} bg="light" bsPrefix={`${s.placeholderglow} placeholder`} />
+                                    </Placeholder>
+                                    <Placeholder as='p' animation='glow' >
+                                        <Placeholder.Button xs={12} bg="light" bsPrefix={`${s.placeholderglow} placeholder`} />
+                                    </Placeholder>
+                                    <Placeholder as='p' animation='glow' >
+                                        <Placeholder.Button xs={12} bg="light" bsPrefix={`${s.placeholderglow} placeholder`} />
+                                    </Placeholder>
+                                    <Placeholder as='p' animation='glow' >
+                                        <Placeholder.Button xs={12} bg="light" bsPrefix={`${s.placeholderglow} placeholder`} />
+                                    </Placeholder>
+                                    <Placeholder as='p' animation='glow' >
+                                        <Placeholder.Button xs={12} bg="light" bsPrefix={`${s.placeholderglow} placeholder`} />
+                                    </Placeholder>
+                                    <Placeholder as='p' animation='glow' >
+                                        <Placeholder.Button xs={4} bg="dark float-end mb-3" />
+                                    </Placeholder>
+                                </>
                                 :
-                                <Form.Control name='nombre' type='text' placeholder='Juan' onChange={onChange} value={registro.nombre} isInvalid={!!errores.nombre} />
-                            }
-                            <Form.Control.Feedback type={'invalid'}>{errores.nombre}</Form.Control.Feedback>
-                        </FloatingLabel>
-                        <FloatingLabel className='mb-3' controlId='floatingInput' label='Apellido'>
-                            <Form.Control name='apellido' type='text' placeholder='Perez' onChange={onChange} value={registro.apellido} isInvalid={!!errores.apellido} />
-                            <Form.Control.Feedback type='invalid'>{errores.apellido}</Form.Control.Feedback>
-                        </FloatingLabel>
-                        <FloatingLabel className='mb-3' controlId='floatingInput' label='Correo Electronico'>
-                            <Form.Control name='correo' type='email' placeholder='micorreo@example.com' onChange={onChange} value={registro.correo} isInvalid={!!errores.correo} />
-                            <Form.Control.Feedback type='invalid'>{errores.correo}</Form.Control.Feedback>
-                        </FloatingLabel>
-                        <FloatingLabel className='mb-3' controlId='floatingPassword' label='Contraseña'>
-                            <Form.Control name='clave' type='password' placeholder='Contraseña' onChange={onChange} value={registro.clave} isInvalid={!!errores.clave} />
-                            <Form.Control.Feedback type='invalid'>{errores.clave}</Form.Control.Feedback>
-                        </FloatingLabel>
-                        <FloatingLabel className='mb-3' controlId='floatingPassword' label='Repetir Contraseña'>
-                            <Form.Control name='rclave' type='password' placeholder='Repetir Contraseña' onChange={onChange} value={registro.rclave} isInvalid={!!errores.rclave} />
-                            <Form.Control.Feedback type='invalid'>{errores.rclave}</Form.Control.Feedback>
-                        </FloatingLabel>
-                        <Button className='float-end mb-3' variant='primary' type='submit' onClick={onChange}>
-                            Registrarme
-                        </Button>
+                                <>
+                                    <FloatingLabel className='mb-3' controlId='floatingInput' label='Nombre'>
+                                        <Form.Control name='nombre' type='text' placeholder='Juan' onChange={onChange} value={registro.nombre} isInvalid={!!errores.nombre} />
+                                        <Form.Control.Feedback type={'invalid'}>{errores.nombre}</Form.Control.Feedback>
+                                    </FloatingLabel>
+                                    <FloatingLabel className='mb-3' controlId='floatingInput' label='Apellido'>
+                                        <Form.Control name='apellido' type='text' placeholder='Perez' onChange={onChange} value={registro.apellido} isInvalid={!!errores.apellido} />
+                                        <Form.Control.Feedback type='invalid'>{errores.apellido}</Form.Control.Feedback>
+                                    </FloatingLabel>
+                                    <FloatingLabel className='mb-3' controlId='floatingInput' label='Correo Electronico'>
+                                        <Form.Control name='correo' type='email' placeholder='micorreo@example.com' onChange={onChange} value={registro.correo} isInvalid={!!errores.correo} />
+                                        <Form.Control.Feedback type='invalid'>{errores.correo}</Form.Control.Feedback>
+                                    </FloatingLabel>
+                                    <FloatingLabel className='mb-3' controlId='floatingPassword' label='Contraseña'>
+                                        <Form.Control name='clave' type='password' placeholder='Contraseña' onChange={onChange} value={registro.clave} isInvalid={!!errores.clave} />
+                                        <Form.Control.Feedback type='invalid'>{errores.clave}</Form.Control.Feedback>
+                                    </FloatingLabel>
+                                    <FloatingLabel className='mb-3' controlId='floatingPassword' label='Repetir Contraseña'>
+                                        <Form.Control name='rclave' type='password' placeholder='Repetir Contraseña' onChange={onChange} value={registro.rclave} isInvalid={!!errores.rclave} />
+                                        <Form.Control.Feedback type='invalid'>{errores.rclave}</Form.Control.Feedback>
+                                    </FloatingLabel>
+                                    <Button className='float-end mb-3' variant='dark' type='submit' onClick={onChange}>
+                                        Registrarme
+                                    </Button>
+                                </>
+                        }
                     </Form>
                     <Link className='navbar-brand text-success' to='/iniciarsesion'>
                         Ya tengo una Cuenta

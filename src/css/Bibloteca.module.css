@@ -1,0 +1,50 @@
+.contenedor{
+    display: flex;
+}
+
+.footer{
+    position: absolute;
+    width: 1280px;
+    height: 217px;
+    left: -2px;
+    top: 615px;
+    
+    background: linear-gradient(180deg, rgba(54, 19, 36, 0) 0%, #871D50 100%);
+    mix-blend-mode: normal;
+    filter: blur(40px);
+    backdrop-filter: blur(250px);
+} 
+
+/* position: absolute;
+width: 1280px;
+height: 217px;
+left: -2px;
+top: 615px;
+background: linear-gradient(110deg, #561d53 0%, #871D50 100%);
+mix-blend-mode: normal;
+filter: blur(31px);
+-webkit-backdrop-filter: blur(250px);
+backdrop-filter: blur(9px); */
+
+
+.imagen{
+    
+width: 207px;
+height: 203px;
+top: 231px;
+background: url(https://lastfm.freetls.fastly.net/i/u/770x0/5a078f59e106c12a500fac6bcd2aecd9.jpg);
+border-radius: 101.5px;
+}
+
+.imagenes{
+    position: absolute;
+    width: 176px;
+    height: 166px;
+    top: 229.49px;
+    
+}
+
+.fondo{
+    background: #1E1E1E;
+    height: 100%;
+}
