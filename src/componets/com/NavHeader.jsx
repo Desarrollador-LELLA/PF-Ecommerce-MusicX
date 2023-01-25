@@ -59,8 +59,8 @@ const NavHeader = () => {
                                 <Dropdown.Menu className='position-absolute'>
                                     <Dropdown.Header>Usuario</Dropdown.Header>
                                     <Dropdown.Divider />
-                                    <Dropdown.Item onClick={() => navegar('/PerfilUsuario')}><Image src={icPerfil} width='24px' />{'   '}Mi Perfil Cliente</Dropdown.Item>
-                                    <Dropdown.Item onClick={() => navegar('/perfiladmin')}><Image src={icPerfil} width='24px' />{'   '}Mi Perfil Admin</Dropdown.Item>
+                                    <Dropdown.Item onClick={() => navegar('/perfil')}><Image src={icPerfil} width='24px' />{'   '}Mi Perfil Cliente</Dropdown.Item>
+                                    {/* <Dropdown.Item onClick={() => navegar('/perfiladmin')}><Image src={icPerfil} width='24px' />{'   '}Mi Perfil Admin</Dropdown.Item> */}
                                     <Dropdown.Divider />
                                     <Dropdown.Header>Administracion</Dropdown.Header>
                                     <Dropdown.Divider />

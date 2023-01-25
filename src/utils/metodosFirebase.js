@@ -1,7 +1,36 @@
 //ejemplos de metodos de firebase
-import { allAuth, allDb, auth, db } from '../firebaseInicial/firebase';
+import { allAuth, allDb, auth, db, stor, allStor } from '../firebaseInicial/firebase';
 
 const retorno = { mensaje: '', result: {}, confirma: false };
+
+export const subirArchivo = async (archivoSeleccionado, idUsuario) => {
+    if (archivoSeleccionado == null) return; 
+    const extension = archivoSeleccionado.type.substring(6, archivoSeleccionado.type.length)
+    const imageRef = allStor.ref(stor, `usuarios/avatars/${idUsuario}/avatar.${extension}`)
+    await allStor.uploadBytes(imageRef, archivoSeleccionado).then(() => {
+        console.log('primer then')
+    }).catch(err => {
+        console.log(err.message)
+    })
+};
+
+export const mostrarImgen = async (pathArchivo) => {
+    const imagenRef = allStor.ref(stor, pathArchivo)
+    console.log(pathArchivo);
+    let imagen = null 
+    await allStor.listAll(imagenRef).then((res) => {
+        res.items.forEach((item) => {
+            allStor.getDownloadURL(item).then((url) => {
+               imagen = url
+               console.log(url);
+                //setImageList((prev) => [...prev, url] )
+            })
+        });
+    }).catch(err => {
+        console.log(err.message)
+    });
+    return imagen
+}
 
 /**
  * Este metodo consulta y trae 1 documento en espesifico el cual necesita una coleccion y un id del documento a consultar

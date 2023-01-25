@@ -17,7 +17,7 @@ import Carrito from "./componets/pages/Carrito";
 import ProductoDetalle from './componets/pages/ProductoDetalle';
 import PerfilU from "./componets/pages/PerfilU";
 import PerfilAd from './componets/pages/PerfilAd';
-
+import Subirfoto from './componets/pages/Subirfoto';
 function App() {
 
   const dispatch = useDispatch();
@@ -51,7 +51,7 @@ function App() {
         {/* CONDICIONALES CLIENTES */}
         <Route path="registro" element={!authenticatedAuth ? <Registro /> : <Navigate to="/" />} />
         <Route path="iniciarsesion" element={!authenticatedAuth ? <InicioSesion /> : <Navigate to="/" />} />
-        <Route path="PerfilUsuario" element={authenticatedAuth ? <PerfilU /> : <Navigate to="/iniciarsesion" />} />
+        
         {/* CONDICIONALES ADMIN */}
         <Route path="producto_create" element={authenticatedAuth ? <ProductoCreate /> : <Navigate to="/iniciarsesion" />} />
         <Route path="generos" element={authenticatedAuth ? <Generos /> : <Navigate to="/iniciarsesion" />} />
@@ -59,8 +59,12 @@ function App() {
         <Route path='producto_detalle/:id' element={authenticatedAuth ? <ProductoDetalle /> : <Navigate to="/iniciarsesion" />} />
         <Route path='perfil' element={authenticatedAuth ? <Perfil /> : <Navigate to="/iniciarsesion" />} />
         {/* NO SE ESPESIFICA SI ES PUBLICA NI PRIVADA NI QUE COSA ES */}
-        <Route path="PerfilAdmin" element={authenticatedAuth ? <PerfilAd /> : <Navigate to="/iniciarsesion" />} />
+        <Route path="subirfoto" element={<Subirfoto />} />
       </Route>
+
+
+
+      
     </Routes>
   );
 }
