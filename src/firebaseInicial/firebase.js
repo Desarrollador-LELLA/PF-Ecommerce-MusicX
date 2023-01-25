@@ -2,8 +2,7 @@ import fireConfig from './config';
 import { initializeApp } from 'firebase/app';
 import * as allAuth from 'firebase/auth';
 import * as allDb from 'firebase/firestore';
-import * as allStor from 'firebase/storage'
-
+import * as allStor from 'firebase/storage';
 
 const app = initializeApp(fireConfig);
 const stor = allStor.getStorage(app);
