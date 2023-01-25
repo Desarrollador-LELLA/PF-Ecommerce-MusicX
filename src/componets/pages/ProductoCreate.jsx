@@ -5,7 +5,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import style from '../../css/productoCreate.module.css';
 import { db } from '../../firebaseInicial/firebase';
 import { collection, addDoc } from "firebase/firestore"; 
-import { storage } from '../../firebaseInicial/firebase';
+import { stor } from '../../firebaseInicial/firebase';
 //      Subir imagenes
 //  import { storage } from "./firebase";
 import { ref, uploadBytes, getDownloadURL, getStorage } from "firebase/storage";
@@ -143,7 +143,7 @@ const ProductoCreate = () => {
             if(errores.valido)
             {
                 /*
-                const imageRef = ref(storage, "image.jpg");
+                const imageRef = ref(stor, "image.jpg");
 
                 uploadBytes(imageRef, producto.imagen, {
                     contentType: 'image/jpeg'
@@ -162,9 +162,9 @@ const ProductoCreate = () => {
                 */
 
 
-                //  const imageRef = ref(storage, `images/${ producto.imagen }`);
+                //  const imageRef = ref(stor, `images/${ producto.imagen }`);
 
-                const imageRef = ref(storage, `images/${ imageUpload.name + v4() }`);
+                const imageRef = ref(stor, `images/${ imageUpload.name + v4() }`);
 
                 uploadBytes(imageRef, imageUpload).then( () => {
                     setURL(url);
