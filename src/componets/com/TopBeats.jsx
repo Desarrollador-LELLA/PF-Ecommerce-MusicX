@@ -40,9 +40,10 @@ export default function TopBeats() {
             </Carousel.Item>
             <Carousel.Item>
               <Image
+                fluid="true"
                 className="d-block w-100"
                 src={productos[1].data().imagen}
-                alt="Second slide"
+                alt="Third slide"
               />
 
               <Carousel.Caption>
