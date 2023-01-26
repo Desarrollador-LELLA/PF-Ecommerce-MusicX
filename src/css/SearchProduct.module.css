@@ -1,0 +1,41 @@
+.dadcontainer{
+    display: flex;
+    flex-direction: row;
+}
+.filtercontainer{
+    background: #1D1015;
+    width: 36vh;
+    height: 40vw;
+    margin-left: 3%;
+    padding: 1.5%;
+    border-radius: 50px;
+}
+
+.titlefilter{
+    font-family: 'Dela Gothic One';
+font-style: normal;
+font-weight: 400;
+font-size: 40px;
+line-height: 35px;
+text-align: center;
+color: #495B5C;
+}
+
+.containerfilters{
+    width: 30vh;
+    height: 35vw;
+    background: linear-gradient(180deg, rgba(69, 69, 69, 0.253) 1.04%, rgba(78, 82, 83, 0.0264) 45.83%, rgba(117, 115, 117, 0.066) 100%);
+    border-radius: 47px;
+    padding: 10%;
+}
+
+
+.searched{
+font-family: 'Dela Gothic One';
+font-style: normal;
+font-weight: 400;
+font-size: 48px;
+color: #394545;
+text-align: center;
+margin: 1.5%;
+}
