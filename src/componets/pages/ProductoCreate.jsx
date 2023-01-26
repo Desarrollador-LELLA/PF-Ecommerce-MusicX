@@ -5,7 +5,6 @@ import { Link, useNavigate } from 'react-router-dom';
 import style from '../../css/productoCreate.module.css';
 import { db, storage, allStor, stor } from '../../firebaseInicial/firebase';
 import { collection, addDoc } from "firebase/firestore"; 
-import { stor } from '../../firebaseInicial/firebase';
 
 //      Subir imagenes
 //  import { storage } from "./firebase";

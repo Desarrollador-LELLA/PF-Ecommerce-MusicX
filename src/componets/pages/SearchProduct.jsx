@@ -4,10 +4,10 @@ import s from "../../css/SearchProduct.module.css";
 import Accordion from "react-bootstrap/Accordion";
 import Form from "react-bootstrap/Form";
 import { useLocation } from "react-router-dom";
-
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faCompactDisc, faGaugeSimple, faMusic, faTag } from "@fortawesome/free-solid-svg-icons";
 export default function SearchProduct() {
   const tester = useLocation();
-    console.log(tester)
   return (
     <div>
       <h1 className={s.searched}>{!tester ? " ":tester.search.slice(1)}...</h1>
@@ -19,7 +19,7 @@ export default function SearchProduct() {
           <div className={s.containerfilters}>
             <Accordion defaultActiveKey="0">
               <Accordion.Item eventKey="0">
-                <Accordion.Header>Generos</Accordion.Header>
+                <Accordion.Header><FontAwesomeIcon icon={faCompactDisc}/> Generos</Accordion.Header>
                 <Accordion.Body>
                   <Form>
                     <Form.Check type="switch" id="custom-switch" label="Trap" />
@@ -32,26 +32,92 @@ export default function SearchProduct() {
                 </Accordion.Body>
               </Accordion.Item>
               <Accordion.Item eventKey="1">
-                <Accordion.Header>KEY</Accordion.Header>
+                <Accordion.Header><FontAwesomeIcon icon="fa-thin fa-piano" /><FontAwesomeIcon icon={faMusic}/>KEY</Accordion.Header>
                 <Accordion.Body>
-                  <Form>
-                    <Form.Check type="switch" id="custom-switch" label="C" />
-                    <Form.Check type="switch" id="custom-switch" label="D" />
-                    <Form.Check type="switch" id="custom-switch" label="E" />
-                    <Form.Check type="switch" id="custom-switch" label="F" />
-                    <Form.Check type="switch" id="custom-switch" label="G" />
-                    <Form.Check type="switch" id="custom-switch" label="A" />
-                    <Form.Check type="switch" id="custom-switch" label="D" />
-                  </Form>
+                <Form >
+                  <Form.Select aria-label="Default select example">
+                    <option hidden>Select KEY</option>
+                    <option value="1">All</option>
+                    <option value="2">C Maj</option>
+                    <option value="3">C min</option>
+                    <option value="4">C# Maj</option>
+                    <option value="5">C# min</option>
+                    <option value="6">D Maj</option>
+                    <option value="7">D min</option>
+                    <option value="8">D# Maj</option>
+                    <option value="9">D# min</option>
+                    <option value="10">E Maj</option>
+                    <option value="11">E min</option>
+                    <option value="12">F Maj</option>
+                    <option value="13">F min</option>
+                    <option value="14">F# Maj</option>
+                    <option value="15">F# min</option>
+                    <option value="16">G Maj</option>
+                    <option value="17">G min</option>
+                    <option value="18">G# Maj</option>
+                    <option value="19">G# min</option>
+                    <option value="20">A Maj</option>
+                    <option value="21">A min</option>
+                    <option value="22">A# Maj</option>
+                    <option value="23">A# min</option>
+                    <option value="24">D Maj</option>
+                    <option value="25">D min</option>
+                    </Form.Select>
+                    {/* <Form.Check type="switch" id="custom-switch" label="C Maj" />
+                    <Form.Check type="switch" id="custom-switch" label="C min" />
+                    <Form.Check type="switch" id="custom-switch" label="C# Maj" />
+                    <Form.Check type="switch" id="custom-switch" label="C# min" />
+                    <Form.Check type="switch" id="custom-switch" label="D Maj" />
+                    <Form.Check type="switch" id="custom-switch" label="D min" />
+                    <Form.Check type="switch" id="custom-switch" label="D# Maj" />
+                    <Form.Check type="switch" id="custom-switch" label="D# min" />
+                    <Form.Check type="switch" id="custom-switch" label="E Maj" />
+                    <Form.Check type="switch" id="custom-switch" label="E min" />
+                    <Form.Check type="switch" id="custom-switch" label="F Maj" />
+                    <Form.Check type="switch" id="custom-switch" label="F min" />
+                    <Form.Check type="switch" id="custom-switch" label="F# Maj" />
+                    <Form.Check type="switch" id="custom-switch" label="F# min" />
+                    <Form.Check type="switch" id="custom-switch" label="G Maj" />
+                    <Form.Check type="switch" id="custom-switch" label="G min" />
+                    <Form.Check type="switch" id="custom-switch" label="G# Maj" />
+                    <Form.Check type="switch" id="custom-switch" label="G# min" />
+                    <Form.Check type="switch" id="custom-switch" label="A Maj" />
+                    <Form.Check type="switch" id="custom-switch" label="A min" />
+                    <Form.Check type="switch" id="custom-switch" label="A# Maj" />
+                    <Form.Check type="switch" id="custom-switch" label="A# min" />
+                    <Form.Check type="switch" id="custom-switch" label="D Maj" />
+                    <Form.Check type="switch" id="custom-switch" label="D min" /> */}
+                </Form>
                 </Accordion.Body>
               </Accordion.Item>
               <Accordion.Item eventKey="2">
-                <Accordion.Header>BPM</Accordion.Header>
+                <Accordion.Header> <FontAwesomeIcon icon={faGaugeSimple}/>BPM</Accordion.Header>
                 <Accordion.Body>
-                  <Form.Label>Minimum BPM</Form.Label>
-                  <Form.Range />
-                  <Form.Label>Maximum BPM</Form.Label>
-                  <Form.Range />
+                <Form.Control
+                  type="number"
+                  placeholder="Min"
+                  aria-label="Recipient's username"
+                  aria-describedby="basic-addon2"/>
+                  <Form.Control
+                  placeholder="Max"
+                  type="number"
+                  aria-label="Recipient's username"
+                  aria-describedby="basic-addon2"/>
+                </Accordion.Body>
+              </Accordion.Item>
+              <Accordion.Item eventKey="3">
+                <Accordion.Header><FontAwesomeIcon icon={faTag}/>Precio</Accordion.Header>
+                <Accordion.Body>
+                <Form.Control
+                  type="number"
+                  placeholder="Min"
+                  aria-label="Recipient's username"
+                  aria-describedby="basic-addon2"/>
+                  <Form.Control
+                  placeholder="Max"
+                  type="number"
+                  aria-label="Recipient's username"
+                  aria-describedby="basic-addon2"/>
                 </Accordion.Body>
               </Accordion.Item>
             </Accordion>
