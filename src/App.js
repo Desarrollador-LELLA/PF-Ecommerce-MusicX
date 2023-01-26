@@ -17,9 +17,11 @@ import Carrito from "./componets/pages/Carrito";
 import ProductoDetalle from './componets/pages/ProductoDetalle';
 import PerfilU from "./componets/pages/PerfilU";
 import PerfilAd from './componets/pages/PerfilAd';
+import Subirfoto from './componets/pages/Subirfoto';
 import './css/app.css'
 import TesterPaginado from './componets/pages/TesterPaginado';
 import Bibloteca from './componets/pages/Bibloteca';
+import SearchProduct from './componets/pages/SearchProduct';
 
 function App() {
 
@@ -51,6 +53,7 @@ function App() {
         <Route path=":id" element={<DetailProduct />} />
         <Route path="AboutUs" element={<AboutUs />} />
         <Route path="carrito" element={<Carrito />} />
+        <Route path='SearchProduct' element={<SearchProduct/>}/>
         {/* CONDICIONALES CLIENTES */}
         <Route path="registro" element={!authenticatedAuth ? <Registro /> : <Navigate to="/" />} />
         <Route path="iniciarsesion" element={!authenticatedAuth ? <InicioSesion /> : <Navigate to="/" />} />
@@ -63,9 +66,15 @@ function App() {
         <Route path='producto_detalle/:id' element={authenticatedAuth ? <ProductoDetalle /> : <Navigate to="/iniciarsesion" />} />
         <Route path='perfil' element={authenticatedAuth ? <Perfil /> : <Navigate to="/iniciarsesion" />} />
         {/* NO SE ESPESIFICA SI ES PUBLICA NI PRIVADA NI QUE COSA ES */}
+        <Route path="subirfoto" element={<Subirfoto />} />
         <Route path="PerfilAdmin" element={authenticatedAuth ? <PerfilAd /> : <Navigate to="/iniciarsesion" />} />
         <Route path="testerpaginado" element={<TesterPaginado />} />
+        {/* <Route path="testerpaginado/:pag" element={<TesterPaginado />} /> */}
       </Route>
+
+
+
+      
     </Routes>
   );
 }

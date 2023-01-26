@@ -17,13 +17,13 @@ export default function ProductCards(props) {
   }, []);
 
   return (
-    <div className={s.productcards}>
-      <Row xs={3} md={4} className="g-5">
+    <div className={`${s.productcards} container`}>
+      <Row xs={1} sm={2} md={3} lg={4} xl={4} xxl={4} className="g-5">
         {productos?.map((ele) => (
           <Col className={s.card} key={ele.data().key}>
             <Card className={`my-2 ${s.cardcont}`}>
               <div className={s.contcards}>
-                <Link to={ele.id}>
+                <Link to={`/${ele.id}`}>
                   <Card.Img className={s.cardimg} src={ele.data().imagen} />
                 </Link>
               </div>

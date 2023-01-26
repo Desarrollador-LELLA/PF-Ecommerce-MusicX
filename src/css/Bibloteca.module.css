@@ -34,6 +34,7 @@ height: 203px;
 top: 231px;
 background: url(https://lastfm.freetls.fastly.net/i/u/770x0/5a078f59e106c12a500fac6bcd2aecd9.jpg);
 border-radius: 101.5px;
+margin: 10px;
 }
 
 .imagenes{
@@ -41,10 +42,11 @@ border-radius: 101.5px;
     width: 176px;
     height: 166px;
     top: 229.49px;
+    margin: 10px;
     
 }
 
 .fondo{
-    background: #1E1E1E;
+    background: rgba(54, 19, 36, 0);
     height: 100%;
 }
