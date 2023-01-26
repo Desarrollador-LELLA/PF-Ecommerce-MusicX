@@ -23,7 +23,7 @@ export default function ProductCards(props) {
           <Col className={s.card} key={ele.data().key}>
             <Card className={`my-2 ${s.cardcont}`}>
               <div className={s.contcards}>
-                <Link to={ele.id}>
+                <Link to={`/${ele.id}`}>
                   <Card.Img className={s.cardimg} src={ele.data().imagen} />
                 </Link>
               </div>

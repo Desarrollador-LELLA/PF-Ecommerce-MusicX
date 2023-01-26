@@ -11,6 +11,7 @@ import icPerfil from '../images/ic_perfil.svg';
 import icProductos from '../images/ic_productos.svg';
 import icGeneros from '../images/ic_generos.svg';
 import s from '../../css/navheader.module.css';
+import SearchBar from './SearchBar';
 
 const NavHeader = () => {
 
@@ -39,10 +40,11 @@ const NavHeader = () => {
                             Tester Paginado
                         </NavLink>
                         {/* AGREGAR MAS LINK SE LO DECENA COPY PASTE NavLink DE ARRIBA */}
-
+                        
                         <NavLink className='nav-link' to='/Bibloteca'>
                             Bibloteca 
                         </NavLink>
+                        <SearchBar/>
                     </Nav>
 
 

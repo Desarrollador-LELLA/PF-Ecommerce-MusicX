@@ -21,6 +21,7 @@ import Subirfoto from './componets/pages/Subirfoto';
 import './css/app.css'
 import TesterPaginado from './componets/pages/TesterPaginado';
 import Bibloteca from './componets/pages/Bibloteca';
+import SearchProduct from './componets/pages/SearchProduct';
 
 function App() {
 
@@ -52,6 +53,7 @@ function App() {
         <Route path=":id" element={<DetailProduct />} />
         <Route path="AboutUs" element={<AboutUs />} />
         <Route path="carrito" element={<Carrito />} />
+        <Route path='SearchProduct' element={<SearchProduct/>}/>
         {/* CONDICIONALES CLIENTES */}
         <Route path="registro" element={!authenticatedAuth ? <Registro /> : <Navigate to="/" />} />
         <Route path="iniciarsesion" element={!authenticatedAuth ? <InicioSesion /> : <Navigate to="/" />} />
