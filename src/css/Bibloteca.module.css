@@ -35,18 +35,53 @@ top: 231px;
 background: url(https://lastfm.freetls.fastly.net/i/u/770x0/5a078f59e106c12a500fac6bcd2aecd9.jpg);
 border-radius: 101.5px;
 margin: 10px;
+margin-top: 325px;
 }
 
 .imagenes{
     position: absolute;
     width: 176px;
     height: 166px;
-    top: 229.49px;
+    top: 425.49px;
     margin: 10px;
-    
+    border-radius: 101.5px;
 }
 
 .fondo{
     background: rgba(54, 19, 36, 0);
     height: 100%;
+}
+
+.titulo{
+   
+width: 144px;
+height: 33px;
+left: 951px;
+top: 306px;
+
+font-family: 'Dela Gothic One';
+font-style: normal;
+
+font-size: 24px;
+line-height: 35px;
+
+color: #282929;
+}
+
+
+.compras{
+    position: absolute;
+    width: 546px;
+    height: 103px;
+    left: 381px;
+    top: 94px;
+    
+    font-family: 'Dela Gothic One';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 64px;
+    line-height: 93px;
+    text-align: center;
+    
+    color: #2B7E74;
 }
