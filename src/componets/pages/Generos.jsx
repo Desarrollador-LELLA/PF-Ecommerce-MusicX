@@ -17,15 +17,10 @@ const INITIAL_PAGINADO = {
   paginaActual: 1,
 };
 
-
-
-
 // const lista = [ "rock and roll", "Pop", "Hip hop/Rap", "Reggaetón", "rock nacional", "Música clásica", "salsa", "Disco", "Reggae", "Funk", "Techno"]
 
-
-
-
 const Generos = () => {
+
   const [estadoInicial, setEstadoInicial] = useState(INITIAL_PAGINADO);
   const [loading, setLoading] = useState(false);
   const { cantPaginas, fin, inicio, paginasBar } = paginacion(estadoInicial.lista.length, estadoInicial.paginaActual, estadoInicial.itemPorPagina);
@@ -39,7 +34,6 @@ const Generos = () => {
   const [listaMostrar, setListaMostrar] = useState([])
   const dispatch = useDispatch()
   const [show2, setShow2] = useState(false);
-
 
 
   useEffect(() => {
@@ -60,7 +54,9 @@ const Generos = () => {
   //   setListaMostrar(lista)
   // }, [])
 
-
+const listarGeneros = () => {
+  
+}
 
   const handleClose = () => {
     setNombre("")
@@ -84,9 +80,11 @@ const Generos = () => {
 
   const handleShow2 = () => setShow2(true);
   function handleSort(e) {
-    e.preventDefault();
-  };
 
+  function handleVolver(e) {
+    e.preventDefault();
+    dispatch(lista[e]);
+  };
 
   function handleChangee(e) {
     setNombre(e.target.value)
