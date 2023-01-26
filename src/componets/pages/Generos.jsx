@@ -11,23 +11,20 @@ import { useDispatch } from "react-redux"
 const INITIAL_PAGINADO = {
   coleccion: 'generos',
   ordenarPor: 'nombre',
-  ultimaVisible: null,
-  primeraVisible: null,
+  whereFiltros: null,
   lista: [],
-  numPaginas: 1,
+  itemPorPagina: 4,
   paginaActual: 1,
-  cantidadItems: 0
 };
 
-
-
-
-const lista = [ "rock and roll", "Pop", "Hip hop/Rap", "Reggaetón", "rock nacional", "Música clásica", "salsa", "Disco", "Reggae", "Funk", "Techno"]
-
-
-
+// const lista = [ "rock and roll", "Pop", "Hip hop/Rap", "Reggaetón", "rock nacional", "Música clásica", "salsa", "Disco", "Reggae", "Funk", "Techno"]
 
 const Generos = () => {
+
+  const [estadoInicial, setEstadoInicial] = useState(INITIAL_PAGINADO);
+  const [loading, setLoading] = useState(false);
+  const { cantPaginas, fin, inicio, paginasBar } = paginacion(estadoInicial.lista.length, estadoInicial.paginaActual, estadoInicial.itemPorPagina);
+
   const [ButtonGroup] = useState(null)
   const [error, setError] = useState(null)
   const [errorr, setErrorr] = useState(null)
@@ -40,8 +37,22 @@ const Generos = () => {
 
 
   useEffect(() => {
-    setListaMostrar(lista)
-  }, [])
+    llenarLista();
+  }, []);
+
+  const llenarLista = async () => {
+    setLoading(true);
+    const list = await todosDocumentos(estadoInicial.coleccion, estadoInicial.ordenarPor, estadoInicial.whereFiltros, () => {
+      setLoading(false);
+    });
+    setEstadoInicial({ ...estadoInicial, lista: list.result });
+  };
+
+
+
+  // useEffect(() => {
+  //   setListaMostrar(lista)
+  // }, [])
 
 const listarGeneros = () => {
   
@@ -69,32 +80,20 @@ const listarGeneros = () => {
 
   const handleShow2 = () => setShow2(true);
   function handleSort(e) {
-    e.preventDefault();
-  };
-
-
-  function handleChangee(e) {
-    setNombre(e.target.value)
-  }
-  function SwitchExample() {
-  }
-  function handleClick(e) {
-    e.preventDefault();
-
-  };
 
   function handleVolver(e) {
     e.preventDefault();
     dispatch(lista[e]);
   };
 
-  // function handleInputChange(e) {
-  //   e.preventDefault();
-  // };
+  function handleChangee(e) {
+    setNombre(e.target.value)
+  }
 
-  // function handleSubmit(e) {
-  //   e.preventDefault();
-  // };
+  function handleVolver(e) {
+    e.preventDefault();
+    dispatch(lista[e]);
+  };
 
   function buscar(e) {
     setBuscarGenero(e.target.value)
@@ -105,9 +104,6 @@ const listarGeneros = () => {
   const onClickBuscar = () => {
     if (validar()) {
       setListaMostrar(lista.filter(x => x === buscarGenero))
-      // setShow(false)
-      // setListaMostrar("")
-
     }
   }
 
@@ -146,7 +142,6 @@ const listarGeneros = () => {
     }
     if (listaMostrar.length < 3 || listaMostrar.length >= 20) {
       setErrorr("El nombre debe contener entre 3 y 20 caracteres")
-      // setNombre("")
 
       return false
     }
