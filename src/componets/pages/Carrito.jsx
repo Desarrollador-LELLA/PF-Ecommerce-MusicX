@@ -5,28 +5,46 @@ import styleCarrito from "../../css/Carrito.module.css";
 import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import * as actions from "../../redux/actions/carritoAction";
-
+import PaypalButton from "../com/Paypal";
+import {PayPalScriptProvider} from "@paypal/react-paypal-js";
 
 const Carrito = () => {
-    const [total, setTotal] = useState(0);
     const infoTotal = [];
     const productos = useSelector((store) => store.carrito.productos);
     const dispatch = useDispatch();
     const navegar = useNavigate();
+    
+    const products = () => {
+        return productos.map((producto) => {
+            return {
+                reference_id: producto.id,
+                description: producto.nombre,
+                amount: {
+                    currency: "USD",
+                    value: producto.valor.toString()
+                }
+            }
+        })
+    };
 
     const handleQuitarProducto = (id) => {
         dispatch(actions.quitarProducto(id));
     };
 
+    const totalCalculator = () => {
+        return Math.floor(productos.reduce(
+                    (accumulator, currentValue) => accumulator + Number(currentValue.valor),
+                       0 )).toString()
+    }
+
     productos.forEach((producto) => infoTotal.push(`${producto.nombre} (1)`));
 
     return (
         <div className={styleCarrito.container}>
-            <div onClick={() => navegar(-1)} className={styleCarrito.nav}>
-                <h2>Volver</h2>
-                {/* <Link to="/">
+            <div  className={styleCarrito.nav}>
+                 <Link to="/">
                     <h2>Volver</h2>
-                </Link> */}
+                </Link> 
             </div>
             <div className={styleCarrito.productContainer}>
                 {productos.map(data => {
@@ -46,16 +64,20 @@ const Carrito = () => {
             </div>
             <div className={styleCarrito.navCount}>
                 <div>
-                    <h1>TOTAL = {productos.reduce(
-                        (accumulator, currentValue) => accumulator + Number(currentValue.valor),
-                        total
-                    )
-                    } <strong>USD</strong></h1>
+                    <h1>TOTAL = {totalCalculator()} <strong>USD</strong></h1>
                 </div>
                 <div>
                     <p>{infoTotal.join(" , ")}</p>
                 </div>
-                <div>
+                <div className={styleCarrito.paypalButton}>
+                    <PayPalScriptProvider options={{"client-id": "test", "merchant-id": "WEMW3RY93ABLA"}}>
+                        <PaypalButton 
+                            currency={"USD"} 
+                            showSpinner={false} 
+                            amount={totalCalculator()} 
+                            products={products()} 
+                        />
+                    </PayPalScriptProvider>
                 </div>
             </div>
         </div>
