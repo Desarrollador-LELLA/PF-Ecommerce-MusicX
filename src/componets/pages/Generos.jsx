@@ -1,12 +1,15 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom'
-import { Button, Modal, FloatingLabel, Form } from 'react-bootstrap';
+import { Button, Modal, FloatingLabel, Form, Container, Pagination, Spinner } from 'react-bootstrap';
 import { clear } from '@testing-library/user-event/dist/clear';
 import { setLogLevel } from 'firebase/app';
 import s from "../../css/Home.module.css";
 import DropdownButton from 'react-bootstrap/DropdownButton';
 import Dropdown from 'react-bootstrap/Dropdown';
 import { useDispatch } from "react-redux"
+import { paginacion } from '../../utils/libreria';
+import { todosDocumentos, mostrarImgen, obtienePaginado, siguientePaginado, anteriorPaginado, cambiaPaginado, crearDocumento } from '../../utils/metodosFirebase';
+
 
 const INITIAL_PAGINADO = {
   coleccion: 'generos',
@@ -17,10 +20,15 @@ const INITIAL_PAGINADO = {
   paginaActual: 1,
 };
 
+
+
+
 // const lista = [ "rock and roll", "Pop", "Hip hop/Rap", "Reggaetón", "rock nacional", "Música clásica", "salsa", "Disco", "Reggae", "Funk", "Techno"]
 
-const Generos = () => {
 
+
+
+const Generos = () => {
   const [estadoInicial, setEstadoInicial] = useState(INITIAL_PAGINADO);
   const [loading, setLoading] = useState(false);
   const { cantPaginas, fin, inicio, paginasBar } = paginacion(estadoInicial.lista.length, estadoInicial.paginaActual, estadoInicial.itemPorPagina);
@@ -30,10 +38,12 @@ const Generos = () => {
   const [errorr, setErrorr] = useState(null)
   const [show, setShow] = useState(false);
   const [nombre, setNombre] = useState("");
+  const [habilitado, setHabilitado] = useState(true)
   const [buscarGenero, setBuscarGenero] = useState("");
   const [listaMostrar, setListaMostrar] = useState([])
   const dispatch = useDispatch()
   const [show2, setShow2] = useState(false);
+
 
 
   useEffect(() => {
@@ -45,7 +55,23 @@ const Generos = () => {
     const list = await todosDocumentos(estadoInicial.coleccion, estadoInicial.ordenarPor, estadoInicial.whereFiltros, () => {
       setLoading(false);
     });
+    console.log(list);
     setEstadoInicial({ ...estadoInicial, lista: list.result });
+  };
+
+  const cambiarPagina = (e) => {
+    const nom = e.target.innerText;
+    setEstadoInicial({ ...estadoInicial, paginaActual: parseInt(nom) });
+  };
+
+  const anterior = () => {
+    if (estadoInicial.paginaActual - 1 < 1) return;
+    setEstadoInicial({ ...estadoInicial, paginaActual: estadoInicial.paginaActual - 1 });
+  };
+
+  const siguiente = () => {
+    if (estadoInicial.paginaActual + 1 > cantPaginas) return;
+    setEstadoInicial({ ...estadoInicial, paginaActual: estadoInicial.paginaActual + 1 });
   };
 
 
@@ -54,9 +80,7 @@ const Generos = () => {
   //   setListaMostrar(lista)
   // }, [])
 
-const listarGeneros = () => {
-  
-}
+
 
   const handleClose = () => {
     setNombre("")
@@ -80,19 +104,29 @@ const listarGeneros = () => {
 
   const handleShow2 = () => setShow2(true);
   function handleSort(e) {
-
-  function handleVolver(e) {
     e.preventDefault();
-    dispatch(lista[e]);
   };
 
-  function handleChangee(e) {
-    setNombre(e.target.value)
-  }
 
+  async function handleCrearGenero(e) {
+    const resultado = await crearDocumento(estadoInicial.coleccion, { data: { nombre, habilitado } })
+    if (resultado.confirma) {
+      llenarLista();
+      setShow(false)
+      setNombre("")
+
+
+    }
+
+    // setNombre(e.target.value)
+  }
+  function handleOnChangeNombre(e) {
+    setNombre(e.target.value)
+
+  }
   function handleVolver(e) {
     e.preventDefault();
-    dispatch(lista[e]);
+    // dispatch(lista[e]);
   };
 
   function buscar(e) {
@@ -103,7 +137,7 @@ const listarGeneros = () => {
   }
   const onClickBuscar = () => {
     if (validar()) {
-      setListaMostrar(lista.filter(x => x === buscarGenero))
+      // setListaMostrar(lista.filter(x => x === buscarGenero))
     }
   }
 
@@ -111,7 +145,7 @@ const listarGeneros = () => {
 
   const handleCreate = () => {
     if (validate()) {
-      lista.push(nombre)
+      // lista.push(nombre)
       setShow(false)
       setNombre("")
     }
@@ -170,12 +204,11 @@ const listarGeneros = () => {
   return (
 
     <>
-      <div className={s.contendor}>
+      <Container>
 
         <Button variant="outline-secondary" onClick={handleShow}>
           Crear genero musical
         </Button>
-
         <Modal
           show={show}
           onHide={handleClose}
@@ -187,7 +220,7 @@ const listarGeneros = () => {
           </Modal.Header>
           <Modal.Body>
             <FloatingLabel controlId="floatingInput" label="Genero" className="mb-3" >
-              <Form.Control type="text" placeholder="rock an roll" onChange={handleChangee} value={nombre} />
+              <Form.Control type="text" placeholder="rock an roll" onChange={handleOnChangeNombre} value={nombre} />
             </FloatingLabel>
           </Modal.Body>
           <Modal.Footer>
@@ -200,10 +233,38 @@ const listarGeneros = () => {
             <Button variant="secondary" onClick={handleClose}>
               Close
             </Button>
-            <Button variant="primary" onClick={handleCreate}>Crear</Button>
+            <Button variant="primary" onClick={handleCrearGenero}>Crear</Button>
 
           </Modal.Footer>
         </Modal>
+        <>
+
+          <Modal
+            show={show2}
+            onHide={handleClose2}
+            backdrop="static"
+            keyboard={false}
+          >
+            <Modal.Header closeButton>
+              <Modal.Title className="text-bg-dark p-3">Editar Genero</Modal.Title>
+            </Modal.Header>
+            <Modal.Body
+              className="text-dark p-3">
+              Nombre
+            </Modal.Body>
+            <Modal.Footer>
+              <div class="btn-group" role="group" aria-label="Basic mixed styles example">
+                <button type="button" class="btn btn-success">Habilitar</button>
+                <button type="button" class="btn btn-danger">Deshabilitar</button>
+              </div>
+              <Button variant="secondary" onClick={handleClose2}>
+                Close
+              </Button>
+              <Button variant="primary">Editar</Button>
+            </Modal.Footer>
+          </Modal>
+        </>
+
         <div className={s.contendor}>
           <p className={s.topbeats}>
             <span data-text="G">G</span>
@@ -244,55 +305,45 @@ const listarGeneros = () => {
           </div>
           <div className='row row-cols-6'>
             {
-              listaMostrar.map(i => (
-                <div className='col'>
-                  <div className='card' onClick={e => { handleClick(e) }}>
-                    <div className="text-bg-dark p-3">
-                      <h3 className='card-title'>{i}</h3>
-                      <div>
-                        <>
+              loading ? <Spinner animation="border" variant="light" /> :
+                estadoInicial.lista.length ?
+                  estadoInicial.lista.slice(inicio, fin).map(i => (
+                    <div className='col'>
+                      <div className='card' onClick={e => { " handleClick(e)" }}>
+                        <div className="text-bg-dark p-3">
+                          <h3 className='card-title'>{i.nombre}</h3>
                           <Button variant="primary" onClick={handleShow2}>
                             Editar
                           </Button>
 
-                          <Modal
-                            show={show2}
-                            onHide={handleClose2}
-                            backdrop="static"
-                            keyboard={false}
-                          >
-                            <Modal.Header closeButton>
-                              <Modal.Title className="text-bg-dark p-3">Editar Genero</Modal.Title>
-                            </Modal.Header>
-                            <Modal.Body
-                              className="text-dark p-3">
-                              Nombre
-                            </Modal.Body>
-                            <Modal.Footer>
-                              <div class="btn-group" role="group" aria-label="Basic mixed styles example">
-                                <button type="button" class="btn btn-success">Habilitar</button>
-                                <button type="button" class="btn btn-danger">Deshabilitar</button>
-                              </div>
-                              <Button variant="secondary" onClick={handleClose2}>
-                                Close
-                              </Button>
-                              <Button variant="primary">Editar</Button>
-                            </Modal.Footer>
-                          </Modal>
-                        </>
+                          <div>
+
+                          </div>
+                        </div>
 
                       </div>
                     </div>
 
-                  </div>
-                </div>
-
-              ))
+                  )) : null
             }
           </div>
         </div>
         <div> <Button variant="outline-secondary" onClick={e => { handleVolver(e) }}>Volver a cargar todos los generos</Button>{' '}</div>
-      </div>
+        <Pagination>
+          <Pagination.Prev onClick={anterior} />
+          <Pagination.Item onClick={cambiarPagina} active={paginasBar[0] === estadoInicial.paginaActual ? true : false}>{paginasBar[0]}</Pagination.Item>
+          {paginasBar[1] && <Pagination.Ellipsis />}
+
+          {paginasBar[2] && <Pagination.Item onClick={cambiarPagina} active={paginasBar[2] === estadoInicial.paginaActual ? true : false}>{paginasBar[2]}</Pagination.Item>}
+          {paginasBar[3] && <Pagination.Item onClick={cambiarPagina} active={paginasBar[3] === estadoInicial.paginaActual ? true : false}>{paginasBar[3]}</Pagination.Item>}
+          {paginasBar[4] && <Pagination.Item onClick={cambiarPagina} active={paginasBar[4] === estadoInicial.paginaActual ? true : false}>{paginasBar[4]}</Pagination.Item>}
+
+          {paginasBar[5] && <Pagination.Ellipsis />}
+          {paginasBar[6] && <Pagination.Item onClick={cambiarPagina} active={paginasBar[6] === estadoInicial.paginaActual ? true : false}>{paginasBar[6]}</Pagination.Item>}
+          {<Pagination.Next onClick={siguiente} />}
+        </Pagination>
+
+      </Container>
     </>
 
 
