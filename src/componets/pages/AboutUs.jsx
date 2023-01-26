@@ -1,6 +1,6 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
-
+import styles from "../../css/AboutUs.module.css"
 
 
 export default function AboutUs() {
@@ -10,7 +10,7 @@ export default function AboutUs() {
   return (
     <div className='text-center my-3' >
       <Link to="/" className="btn btn-primary">Back</Link>
-      <h1 >sobre nosotros </h1>
+      <h1 className={styles.titulo}>sobre nosotros </h1>
       <p>info sobre la pagina </p>
 
       <footer className="page-footer font-small blue pt-4 back" style={style}  >

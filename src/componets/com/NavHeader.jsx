@@ -13,6 +13,7 @@ import icGeneros from '../images/ic_generos.svg';
 import s from '../../css/navheader.module.css';
 import SearchBar from './SearchBar';
 
+
 const NavHeader = () => {
 
     const dispatch = useDispatch();
@@ -34,7 +35,7 @@ const NavHeader = () => {
                 <Navbar.Collapse id="responsive-navbar-nav">
                     <Nav className="me-auto">
                         <NavLink className='nav-link' to='/aboutus'>
-                            About
+                            Sobre Nosotros
                         </NavLink>
                         <NavLink className='nav-link' to='/testerpaginado'>
                             Tester Paginado
