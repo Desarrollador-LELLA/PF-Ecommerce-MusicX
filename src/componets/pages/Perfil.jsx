@@ -1,21 +1,21 @@
-import React, { useEffect, useState } from "react"
-import "../../css/perfil.css"
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faUser, faPenToSquare, faImage, faEnvelope, faLock, faBook, faUserCheck, faCheck } from '@fortawesome/free-solid-svg-icons'
-import { detalle_usuario_cliente } from "../../redux/actions/usuarioAction.js"
-import { useSelector } from "react-redux"
-import avatar from "../images/img-avatar.png"
-import { Form } from "react-bootstrap"
-import { mostrarImgen, subirArchivo } from "../../utils/metodosFirebase"
+import React, { useEffect, useState } from "react";
+import "../../css/perfil.css";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faUser, faPenToSquare, faImage, faEnvelope, faLock, faBook, faUserCheck, faCheck } from '@fortawesome/free-solid-svg-icons';
+import { detalle_usuario_cliente } from "../../redux/actions/usuarioAction.js";
+import { useSelector } from "react-redux";
+import avatar from "../images/img-avatar.png";
+import { Form } from "react-bootstrap";
+import { mostrarImgen, subirArchivo } from "../../utils/metodosFirebase";
 
 
 const Perfil = () => {
 
 
-    const { usuarioAuth } = useSelector(state => state.auth)
+    const { usuarioAuth } = useSelector(state => state.auth);
 
     const [datosu, setDatosu] = useState({});
-    const [avatar2, setAvatar2] = useState( {avatar} );
+    const [avatar2, setAvatar2] = useState({ avatar });
 
     useEffect(() => {
         dU();
@@ -23,35 +23,20 @@ const Perfil = () => {
 
     }, []);
     const dU = async () => {
-        const wea = await detalle_usuario_cliente(usuarioAuth.id)
-        setDatosu(wea.result)
-
-        if (datosu.id) {
-            const verfoto = await mostrarImgen(`usuarios/avatars/${datosu.id}`)
-            
-            setAvatar2({avatar: verfoto})
-        }
-
-
-
-    }
+        const wea = await detalle_usuario_cliente(usuarioAuth.id);
+        setDatosu(wea.result);
+        const verfoto = await mostrarImgen(`usuarios/avatars/${usuarioAuth.id}/avatar.png`);
+        setAvatar2({ avatar: verfoto });
+    };
     const onchageavatar = async (e) => {
-        
-        await subirArchivo(e.target.files[0], datosu.id)
-        
-
-        if (datosu.id !== undefined) {
-            const verfoto = await mostrarImgen(`usuarios/avatars/${datosu.id}`)
-            setAvatar2(verfoto)
-        }
-
-    }
+        const verfoto = await subirArchivo(e.target.files[0], datosu.id);
+        setAvatar2({ avatar: verfoto });
+    };
 
 
     return (
 
         <section className="seccion-perfil-usuario">
-            {console.log(avatar2)}
             <div className="perfil-usuario-header">
                 <div className="perfil-usuario-portada">
                     <div className="perfil-usuario-avatar">

@@ -21,7 +21,9 @@ function Subirfoto(){
         listAll(imageListRef).then((response) => {
             response.items.forEach((item) => {
                 getDownloadURL(item).then((url) => {
-                    setImageList((prev) => [...prev, url] )
+                    setImageList((prev) => {
+                        return [...prev, url]
+                    })
                 })
             });
         });

@@ -5,30 +5,28 @@ const retorno = { mensaje: '', result: {}, confirma: false };
 
 export const subirArchivo = async (archivoSeleccionado, idUsuario) => {
     if (archivoSeleccionado == null) return; 
+    let imagen = null 
     const extension = archivoSeleccionado.type.substring(6, archivoSeleccionado.type.length)
     const imageRef = allStor.ref(stor, `usuarios/avatars/${idUsuario}/avatar.${extension}`)
     await allStor.uploadBytes(imageRef, archivoSeleccionado).then(() => {
-        console.log('primer then')
+    }).then(async data => {
+        imagen = await mostrarImgen(`usuarios/avatars/${idUsuario}/avatar.${extension}`)
     }).catch(err => {
         console.log(err.message)
     })
+    return imagen;
 };
 
 export const mostrarImgen = async (pathArchivo) => {
     const imagenRef = allStor.ref(stor, pathArchivo)
-    console.log(pathArchivo);
     let imagen = null 
-    await allStor.listAll(imagenRef).then((res) => {
-        res.items.forEach((item) => {
-            allStor.getDownloadURL(item).then((url) => {
-               imagen = url
-               console.log(url);
-                //setImageList((prev) => [...prev, url] )
-            })
-        });
-    }).catch(err => {
-        console.log(err.message)
-    });
+
+    await allStor.getDownloadURL(imagenRef).then((url) => {
+        imagen = url
+         //setImageList((prev) => [...prev, url] )
+     }).catch(err =>{
+         console.log('ERRORE', err)
+     })
     return imagen
 }
 
