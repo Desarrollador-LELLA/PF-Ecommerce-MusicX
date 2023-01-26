@@ -10,7 +10,7 @@ export default function SearchProduct() {
     console.log(tester)
   return (
     <div>
-      <h1 className={s.searched}>{tester.search.slice(1)}...</h1>
+      <h1 className={s.searched}>{!tester ? " ":tester.search.slice(1)}...</h1>
       <div className={s.dadcontainer}>
         <div className={s.filtercontainer}>
           <div>
