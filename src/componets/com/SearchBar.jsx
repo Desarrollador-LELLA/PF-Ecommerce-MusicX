@@ -13,10 +13,6 @@ export default function SearchBar() {
 
     const onClick = (event)=>{
         event.preventDefault();
-        if(!input){
-            setInput(" ")
-            navigate(`/SearchProduct?${input}`)
-        }
         navigate(`/SearchProduct?${input}`)
         console.log(input)
 
