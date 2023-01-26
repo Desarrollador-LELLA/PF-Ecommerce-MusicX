@@ -39,3 +39,33 @@ color: #394545;
 text-align: center;
 margin: 1.5%;
 }
+
+.acordion{
+    background-color: transparent;
+    border-color: rgba(255, 0, 0, 0);
+    margin: 1%;
+}
+.acordion button{
+    background-color: transparent;
+    color: #537472;
+    margin: 1%;
+}
+
+.acordion::after{
+    background-color: transparent;
+}
+.acordion button:focus{
+    background-color: transparent;
+    color: rgb(56, 228, 255);
+}
+
+.acordion h2{
+    background-color: rgba(255, 0, 0, 0);
+}
+.acordion label{
+    color: rgb(57, 102, 105);
+}
+
+.acordion div{
+    background-color: rgba(255, 0, 0, 0);
+}

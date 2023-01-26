@@ -17,11 +17,11 @@ export default function SearchProduct() {
             <h2 className={s.titlefilter}>Filtros</h2>
           </div>
           <div className={s.containerfilters}>
-            <Accordion defaultActiveKey="0">
-              <Accordion.Item eventKey="0">
-                <Accordion.Header><FontAwesomeIcon icon={faCompactDisc}/> Generos</Accordion.Header>
-                <Accordion.Body>
-                  <Form>
+            <Accordion className={s.acordion} defaultActiveKey="0">
+              <Accordion.Item className={s.acordion} eventKey="0">
+                <Accordion.Header className={s.acordion}><FontAwesomeIcon icon={faCompactDisc}/> Generos</Accordion.Header>
+                <Accordion.Body className={s.acordion} >
+                  <Form className={s.acordion}>
                     <Form.Check type="switch" id="custom-switch" label="Trap" />
                     <Form.Check type="switch" id="custom-switch" label="Hip-Hop"/>
                     <Form.Check type="switch" id="custom-switch" label="Rap" />
@@ -31,7 +31,7 @@ export default function SearchProduct() {
                   </Form>
                 </Accordion.Body>
               </Accordion.Item>
-              <Accordion.Item eventKey="1">
+              <Accordion.Item className={s.acordion} eventKey="1">
                 <Accordion.Header><FontAwesomeIcon icon="fa-thin fa-piano" /><FontAwesomeIcon icon={faMusic}/>KEY</Accordion.Header>
                 <Accordion.Body>
                 <Form >
@@ -89,8 +89,8 @@ export default function SearchProduct() {
                     <Form.Check type="switch" id="custom-switch" label="D min" /> */}
                 </Form>
                 </Accordion.Body>
-              </Accordion.Item>
-              <Accordion.Item eventKey="2">
+              </Accordion.Item  >
+              <Accordion.Item className={s.acordion} eventKey="2">
                 <Accordion.Header> <FontAwesomeIcon icon={faGaugeSimple}/>BPM</Accordion.Header>
                 <Accordion.Body>
                 <Form.Control
@@ -104,8 +104,8 @@ export default function SearchProduct() {
                   aria-label="Recipient's username"
                   aria-describedby="basic-addon2"/>
                 </Accordion.Body>
-              </Accordion.Item>
-              <Accordion.Item eventKey="3">
+              </Accordion.Item >
+              <Accordion.Item className={s.acordion} eventKey="3">
                 <Accordion.Header><FontAwesomeIcon icon={faTag}/>Precio</Accordion.Header>
                 <Accordion.Body>
                 <Form.Control
