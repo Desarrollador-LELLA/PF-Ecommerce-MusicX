@@ -1,0 +1,11 @@
+.input{
+    background: #361324;
+    color: rgb(0, 247, 255);
+}
+.input::placeholder { 
+    color: rgb(0, 255, 242); 
+}
+
+.input:focus{
+    background: #462439;
+}

@@ -22,14 +22,14 @@ export default function Bibloteca({
 
   return (
     <div className={styles.fondo}>
-      <h1>Tu Compras</h1>
+      <h1 className={styles.compras}>Tu Compras</h1>
       <div className={styles.contenedor}>
         {productos?.map((ele) =>
         (
           <div className={styles.imagen}>
-            <img className={ styles. imagenes} src={ele.data().imagen}></img>
-            <h1>{ele.data().nombre}</h1>
+            <h1 className ={styles.titulo}>{ele.data().nombre}</h1>
             <p>{ele.data().tiempo}</p>
+            <img className={ styles. imagenes} src={ele.data().imagen}></img>
           </div>
         ))}
       <div className={styles.footer}></div>

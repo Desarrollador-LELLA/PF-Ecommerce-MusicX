@@ -3,9 +3,9 @@ import { Button, Card, Container, Form, Label, Image } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
 import style from '../../css/productoCreate.module.css';
-import { db } from '../../firebaseInicial/firebase';
+import { db, storage, allStor, stor } from '../../firebaseInicial/firebase';
 import { collection, addDoc } from "firebase/firestore"; 
-import { stor } from '../../firebaseInicial/firebase';
+
 //      Subir imagenes
 //  import { storage } from "./firebase";
 import { ref, uploadBytes, getDownloadURL, getStorage } from "firebase/storage";
@@ -111,15 +111,6 @@ const ProductoCreate = () => {
     };
 
 
-    /*
-    const handleImageChange = (e) => {
-        if(e.target.files[0])
-        {
-            setImage(e.target.files[0]);
-        }
-    }
-    */
-
 
     const handleInputChange = (e) => {
         const { name, value } = e.target;
@@ -142,6 +133,9 @@ const ProductoCreate = () => {
 
             if(errores.valido)
             {
+
+                /*          PRIMER CODIGO
+                const imageRef = ref(storage, "image.jpg");
                 /*
                 const imageRef = ref(stor, "image.jpg");
 
@@ -164,6 +158,8 @@ const ProductoCreate = () => {
 
                 //  const imageRef = ref(stor, `images/${ producto.imagen }`);
 
+                /*      SEGUNDO CODIGO
+                const imageRef = ref(storage, `images/${ imageUpload.name + v4() }`);
                 const imageRef = ref(stor, `images/${ imageUpload.name + v4() }`);
 
                 uploadBytes(imageRef, imageUpload).then( () => {
@@ -176,6 +172,12 @@ const ProductoCreate = () => {
                 console.log(producto);
                 console.log(imageRef);
                 console.log(producto.imagen);
+                */
+
+
+                /*      TERCER CODIGO       */
+                //if(){}
+
             }
         }
         catch(err)
