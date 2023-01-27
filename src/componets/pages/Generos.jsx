@@ -8,7 +8,7 @@ import DropdownButton from 'react-bootstrap/DropdownButton';
 import Dropdown from 'react-bootstrap/Dropdown';
 import { useDispatch } from "react-redux"
 import { paginacion } from '../../utils/libreria';
-import { todosDocumentos, mostrarImgen, obtienePaginado, siguientePaginado, anteriorPaginado, cambiaPaginado, crearDocumento } from '../../utils/metodosFirebase';
+import { todosDocumentos, mostrarImgen, obtienePaginado, siguientePaginado, anteriorPaginado, cambiaPaginado, crearDocumento, unDocumento } from '../../utils/metodosFirebase';
 
 
 const INITIAL_PAGINADO = {
@@ -16,14 +16,9 @@ const INITIAL_PAGINADO = {
   ordenarPor: 'nombre',
   whereFiltros: null,
   lista: [],
-  itemPorPagina: 4,
+  itemPorPagina: 6,
   paginaActual: 1,
 };
-
-
-
-
-// const lista = [ "rock and roll", "Pop", "Hip hop/Rap", "Reggaetón", "rock nacional", "Música clásica", "salsa", "Disco", "Reggae", "Funk", "Techno"]
 
 
 
@@ -43,7 +38,7 @@ const Generos = () => {
   const [listaMostrar, setListaMostrar] = useState([])
   const dispatch = useDispatch()
   const [show2, setShow2] = useState(false);
-
+  const [generoEditar, setGeneroEditar] = useState({})
 
 
   useEffect(() => {
@@ -102,27 +97,40 @@ const Generos = () => {
     e.preventDefault();
   };
 
-  const handleShow2 = () => setShow2(true);
+  const handleShow2 = async (edidatId) => {
+    console.log(edidatId);
+    const objetoGenero = await unDocumento(estadoInicial.coleccion, edidatId)
+    if (objetoGenero.confirma) {
+      setGeneroEditar(objetoGenero.result)
+      setShow2(true)
+    }
+
+  };
   function handleSort(e) {
     e.preventDefault();
   };
 
 
   async function handleCrearGenero(e) {
+
     const resultado = await crearDocumento(estadoInicial.coleccion, { data: { nombre, habilitado } })
-    if (resultado.confirma) {
-      llenarLista();
+    if (validate()) {
       setShow(false)
       setNombre("")
 
-
+      if (resultado.confirma) {
+        llenarLista();
+        setShow(false)
+        setNombre("")
+      }
     }
-
-    // setNombre(e.target.value)
   }
-  function handleOnChangeNombre(e) {
-    setNombre(e.target.value)
+  function handleOnChangeNombreEditar(e) {
+    setGeneroEditar({...generoEditar, nombre:e.target.value})
 
+  }
+  function handleOnChangeNombre(e){
+    setNombre (e.target.value)
   }
   function handleVolver(e) {
     e.preventDefault();
@@ -250,7 +258,9 @@ const Generos = () => {
             </Modal.Header>
             <Modal.Body
               className="text-dark p-3">
-              Nombre
+            <FloatingLabel controlId="floatingInput" label="Genero" className="mb-3" >
+              <Form.Control type="text" placeholder="rock an roll" onChange={handleOnChangeNombreEditar} value={generoEditar.nombre} />
+            </FloatingLabel>
             </Modal.Body>
             <Modal.Footer>
               <div class="btn-group" role="group" aria-label="Basic mixed styles example">
@@ -260,7 +270,7 @@ const Generos = () => {
               <Button variant="secondary" onClick={handleClose2}>
                 Close
               </Button>
-              <Button variant="primary">Editar</Button>
+              <Button className="primary">Editar</Button>
             </Modal.Footer>
           </Modal>
         </>
@@ -312,7 +322,7 @@ const Generos = () => {
                       <div className='card' onClick={e => { " handleClick(e)" }}>
                         <div className="text-bg-dark p-3">
                           <h3 className='card-title'>{i.nombre}</h3>
-                          <Button variant="primary" onClick={handleShow2}>
+                          <Button variant="outline-secondary" onClick={()=> handleShow2(i.id)}>
                             Editar
                           </Button>
 
