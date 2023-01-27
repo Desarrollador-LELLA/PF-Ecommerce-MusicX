@@ -1,3 +1,5 @@
+
+
 .titulo{
     position: absolute;
     width: 546px;
@@ -11,6 +13,38 @@
     font-size: 64px;
     line-height: 93px;
     text-align: center;
-    
     color: #2B7E74;
+    content: attr(data-text);
 }
+
+
+.footer{
+    background: linear-gradient(180deg, rgba(54, 19, 36, 0) 0%, #871D50 100%);
+    backdrop-filter: blur(250px);
+    mix-blend-mode: normal;
+    backdrop-filter: blur(250px);
+} 
+
+
+p{
+    margin: 100px;
+    align-items: center;
+}
+
+a{
+  text-decoration: none;
+  color: white;
+}
+
+@media (min-width: 30em) {
+    .titulo {
+      font-size: 3em;
+    }
+  }
+  @media (min-width: 40em) {
+    .titulo {
+      font-size: 5em;
+    }
+  }
+ 
+

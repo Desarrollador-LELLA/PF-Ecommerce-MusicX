@@ -34,6 +34,7 @@ export default function Bibloteca({
         ))}
       <div className={styles.footer}></div>
       </div>
+      {/* <ProductCards></ProductCards> */}
     </div>
   )
 }

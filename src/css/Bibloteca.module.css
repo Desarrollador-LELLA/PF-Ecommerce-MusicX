@@ -32,7 +32,7 @@ backdrop-filter: blur(9px); */
 width: 207px;
 height: 203px;
 top: 231px;
-background: url(https://lastfm.freetls.fastly.net/i/u/770x0/5a078f59e106c12a500fac6bcd2aecd9.jpg);
+
 border-radius: 101.5px;
 margin: 10px;
 margin-top: 325px;
@@ -47,6 +47,13 @@ margin-top: 325px;
     border-radius: 101.5px;
 }
 
+.imagenes:hover{
+    animation-name: gixaxb;
+    animation-duration: 5s;
+    animation-iteration-count: infinite;
+    animation-timing-function: linear;
+}
+
 .fondo{
     background: rgba(54, 19, 36, 0);
     height: 100%;
@@ -56,15 +63,12 @@ margin-top: 325px;
    
 width: 144px;
 height: 33px;
-left: 951px;
-top: 306px;
-
 font-family: 'Dela Gothic One';
-font-style: normal;
-
+animation-name: gixaxb;
+animation-duration: 5s;
+animation-iteration-count: infinite;
+animation-timing-function: linear;
 font-size: 24px;
-line-height: 35px;
-
 color: #282929;
 }
 
@@ -85,3 +89,16 @@ color: #282929;
     
     color: #2B7E74;
 }
+
+
+@media (min-width: 30em) {
+    .compras {
+      font-size: 3em;
+    }
+  }
+  @media (min-width: 40em) {
+    .compras {
+      font-size: 5em;
+    }
+  }
+ 
