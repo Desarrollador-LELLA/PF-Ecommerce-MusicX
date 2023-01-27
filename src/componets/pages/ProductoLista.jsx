@@ -1,14 +1,65 @@
 import React, { useEffect, useState } from 'react'
-import { Button, Card, Container, FloatingLabel, Form, Label, Image, Table } from 'react-bootstrap';
+import { Button, Card, Container, Pagination, Spinner } from 'react-bootstrap';
 import { Link, useNavigate } from 'react-router-dom';
 
-import { collection, getDocs, doc, updateDoc } from "firebase/firestore"; 
-import { allAuth, allDb, auth, db } from "../../firebaseInicial/firebase";
+import { doc, updateDoc } from "firebase/firestore"; 
+import { db } from "../../firebaseInicial/firebase";
 import { listado_producto_by_admin } from '../../redux/actions/productoAction';
 import style from '../../css/ProductoLista.module.css';
+import { paginacion } from '../../utils/libreria';
+import { todosDocumentos } from '../../utils/metodosFirebase';
 
 
 const ProductoLista = () => {
+    
+    //      Codigo de paginancion
+
+    const paginado = {
+        coleccion: 'productos',
+        ordenarPor: 'nombre',
+        whereFiltros: null,
+        lista: [],
+        itemPorPagina: 4,
+        paginaActual: 1,
+    };
+
+    const [estadoInicial, setEstadoInicial] = useState(paginado);
+    const [loading, setLoading] = useState(false);
+    const { cantPaginas, fin, inicio, paginasBar } = paginacion(estadoInicial.lista.length, estadoInicial.paginaActual, estadoInicial.itemPorPagina);
+
+
+    useEffect(() => {
+        llenarLista();
+    }, []);
+
+    const llenarLista = async () => {
+        setLoading(true);
+        const list = await todosDocumentos(estadoInicial.coleccion, estadoInicial.ordenarPor, estadoInicial.whereFiltros, () => {
+            setLoading(false);
+        });
+        setEstadoInicial({ ...estadoInicial, lista: list.result });
+    };
+
+    const cambiarPagina = (e) => {
+        const nom = e.target.innerText;
+        setEstadoInicial({ ...estadoInicial, paginaActual: parseInt(nom) });
+    };
+
+    const anterior = () => {
+        if (estadoInicial.paginaActual - 1 < 1) return;
+        setEstadoInicial({ ...estadoInicial, paginaActual: estadoInicial.paginaActual - 1 });
+    };
+
+    const siguiente = () => {
+        if (estadoInicial.paginaActual + 1 > cantPaginas) return;
+        setEstadoInicial({ ...estadoInicial, paginaActual: estadoInicial.paginaActual + 1 });
+    };
+
+
+    //  *************************************************************
+
+
+
     const navegar = useNavigate()
 
     const [producto, setProducto] = useState({
@@ -26,6 +77,7 @@ const ProductoLista = () => {
         let ayuda = await listado_producto_by_admin();
         setListado(ayuda);
     }
+
 
     const navigate = useNavigate();
     let [ultimo, setUltimo] = useState(1);
@@ -48,18 +100,20 @@ const ProductoLista = () => {
     
 
     /*      Carga por primera vez la lista        */
+    /*      Ya no usare esto porque ahora usare el listado de la paginacion
     useEffect( () => {
         lista();
     }, [ultimo]);
+    */
 
 
     return (
         <div>
             <Container className='my-3'>
-                <Button className='mr-1' onClick={() => navegar('/producto_create')}>Crear</Button>
-                <Button onClick={() => navegar(-1)}>Volver</Button>
+                <Button className={ `${ style.btn_Crear }` } onClick={() => navegar('/producto_create')}>Crear</Button>
+                <Button className={ `${ style.btn_Volver }` } onClick={() => navegar(-1)}>Volver</Button>
                 <Card className=''>
-                    <table className='table'>
+                    <table className={ `${ style.table_listado } table` }>
                         <thead className='thead-dark'>
                             <tr className={ `${ style.tr } ` }>
                                 <td className='text-center'>Nombre</td>
@@ -73,49 +127,53 @@ const ProductoLista = () => {
                             </tr>
                         </thead>
                         {
-                            listado?.map( (e) => 
-                                (
-                                    <tr className={ `${ style.tr_sombreado }` }>
-                                        <td>{ e.data().nombre }</td>
-                                        <td>{ e.data().descripcion }</td>
-                                        <td>{ e.data().precio }</td>
-                                        <td>{ e.data().key }</td>
-                                        <td>{ e.data().tiempo }</td>
-                                        <td>
-                                            { e.data().habilitado ? "Si" : "No" }
-                                        </td>
-                                        <td>
-                                            <img className={ `${ style.imagen }` } src={ e.data().imagen } alt='' />
-                                        </td>
-                                        <td>
-                                            <Link to={`/producto_detalle/${ e._document.key.path.segments[6] }`}>
-                                                <Button className='btn btn-primary'>Editar</Button>
-                                            </Link>
-                                        </td>
-                                        <td>
-                                            {/*
-                                                e.data().habilitado ?           //      Yo hago clic en el boton pero cambia todos los valores de la columna,ESO SOMBREADO ES EL ID, NO
-
-                                                (
-                                                    <Button className='btn btn-danger' id={ e.id } onClick={ handleHabilitar(e.id, !e.data().habilitado) }>Deshabilitar</Button>
-                                                )
-                                                :
-                                                (
-                                                    <Button className='btn btn-warning' id={ e.id } onClick={ handleHabilitar(e.id, !e.data().habilitado) }>Habilitar</Button>
-                                                )
-                                            */}
-                                            <Link>
-                                                <Button id={ e.id } variant= { e.data().habilitado ? 'danger' : 'warning' } onClick={ x => handleHabilitar(e.id, e.data().habilitado) }>
-                                                    { e.data().habilitado ? "Deshabilitar" : "Habilitar" }
-                                                </Button>
-                                            </Link>
-                                        </td>
-                                    </tr>
-                                )
-                            )
+                            loading ? <Spinner animation="border" variant="light" /> : 
+                                estadoInicial.lista.length ?
+                                    estadoInicial.lista.slice(inicio, fin).map((e) => (
+                                        
+                                        <tr className={ `${ style.tr_sombreado }` }>
+                                            <td>{ e.nombre }</td>
+                                            <td>{ e.descripcion }</td>
+                                            <td>{ e.precio }</td>
+                                            <td>{ e.key }</td>
+                                            <td>{ e.tiempo }</td>
+                                            <td>
+                                                { e.habilitado ? "Si" : "No" }
+                                            </td>
+                                            <td>
+                                                <img className={ `${ style.imagen }` } src={ e.imagen } alt='' />
+                                            </td>
+                                            <td>
+                                                
+                                                <Link to={ `/producto_detalle/${ e.id }` }>
+                                                    <Button className='btn btn-primary'>Editar</Button>
+                                                </Link>
+                                            </td>
+                                            <td>
+                                                <Link>
+                                                    <Button id={ e.id } variant= { e.habilitado ? 'danger' : 'warning' } onClick={ x => handleHabilitar(e.id, e.habilitado) }>
+                                                        { e.habilitado ? "Deshabilitar" : "Habilitar" }
+                                                    </Button>
+                                                </Link>
+                                            </td>
+                                        </tr>
+                                )) : null
                         }
                     </table>
                 </Card>
+                <Pagination className={ `${ style.paginacion }` }>
+                    <Pagination.Prev onClick={anterior} />
+                    <Pagination.Item onClick={cambiarPagina} active={paginasBar[0] === estadoInicial.paginaActual ? true : false}>{paginasBar[0]}</Pagination.Item>
+                    {paginasBar[1] && <Pagination.Ellipsis />}
+
+                    {paginasBar[2] && <Pagination.Item onClick={cambiarPagina} active={paginasBar[2] === estadoInicial.paginaActual ? true : false}>{paginasBar[2]}</Pagination.Item>}
+                    {paginasBar[3] && <Pagination.Item onClick={cambiarPagina} active={paginasBar[3] === estadoInicial.paginaActual ? true : false}>{paginasBar[3]}</Pagination.Item>}
+                    {paginasBar[4] && <Pagination.Item onClick={cambiarPagina} active={paginasBar[4] === estadoInicial.paginaActual ? true : false}>{paginasBar[4]}</Pagination.Item>}
+
+                    {paginasBar[5] && <Pagination.Ellipsis />}
+                    {paginasBar[6] && <Pagination.Item onClick={cambiarPagina} active={paginasBar[6] === estadoInicial.paginaActual ? true : false}>{paginasBar[6]}</Pagination.Item>}
+                    {<Pagination.Next onClick={siguiente} />}
+                </Pagination>
             </Container>
         </div>
     )

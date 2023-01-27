@@ -7,9 +7,10 @@ import { db, storage, allStor, stor } from '../../firebaseInicial/firebase';
 import { collection, addDoc } from "firebase/firestore"; 
 
 //      Subir imagenes
-//  import { storage } from "./firebase";
+/*
 import { ref, uploadBytes, getDownloadURL, getStorage } from "firebase/storage";
 import { v4 } from "uuid";
+*/
 import { actualizaDocumento, crearDocumento, subirArchivoMetodo } from '../../utils/metodosFirebase';
 
 
