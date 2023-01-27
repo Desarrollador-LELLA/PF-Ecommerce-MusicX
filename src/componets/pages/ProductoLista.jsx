@@ -56,7 +56,7 @@ const ProductoLista = () => {
     return (
         <div>
             <Container className='my-3'>
-                <Button onClick={() => navegar('/producto_create')}>Crear</Button>
+                <Button className='mr-1' onClick={() => navegar('/producto_create')}>Crear</Button>
                 <Button onClick={() => navegar(-1)}>Volver</Button>
                 <Card className=''>
                     <table className='table'>
