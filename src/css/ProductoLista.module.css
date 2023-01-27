@@ -40,8 +40,27 @@ tr, td
     font-size: 14px;
 }
 
+.btn_Crear
+{
+    margin-right: 20px;
+    margin-bottom: 10px;
+}
 
+.btn_Volver
+{
+    margin-bottom: 10px;
+}
 
+.table_listado
+{
+    margin-top: 10px;
+}
 
+.paginacion
+{
+    margin-top: 20px;
+    display: flex;
+    justify-content: center;
+}
 
 
