@@ -93,13 +93,14 @@ body {
     left: -2px;
     top: -2px;
     border: 0;
-    background-color: #fff;
+    background-color: #fff, solid;
     box-shadow: 0 0 12px rgba(54, 19, 36, 1);
     width: 45px;
     height: 45px;
     border-radius: 50%;
     cursor: pointer;
 }
+
 
 .seccion-perfil-usuario .perfil-usuario-body {
     width: 70%;
