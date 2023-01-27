@@ -17,13 +17,12 @@ export const subirArchivo = async (archivoSeleccionado, idUsuario) => {
 };
 
 
-export const subirArchivoMetodo = async (ruta, pasoFinal) => {
-    if (ruta == null) return; 
+export const subirArchivoMetodo = async (ruta, archivo, pasoFinal) => {
+    if (archivo == null) return; 
     const imageRef = allStor.ref(stor, ruta);
-    await allStor.uploadBytes(imageRef, ruta).then(async data => {
+    await allStor.uploadBytes(imageRef, archivo).then(async data => {
         const imagen = await mostrarImgen(ruta);
         pasoFinal(imagen);
-        //  imagen = await mostrarImgen(ruta)
     }).catch(err => {
         console.log(err.message)
     })

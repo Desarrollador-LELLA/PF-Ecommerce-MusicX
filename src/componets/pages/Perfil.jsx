@@ -6,53 +6,39 @@ import { detalle_usuario_cliente } from "../../redux/actions/usuarioAction.js";
 import { useSelector } from "react-redux";
 import avatar from "../images/img-avatar.png";
 import { Form } from "react-bootstrap";
-import { mostrarImgen, subirArchivo } from "../../utils/metodosFirebase";
+import { actualizaDocumento, mostrarImgen, subirArchivo, subirArchivoMetodo } from "../../utils/metodosFirebase";
 import { Link } from "react-router-dom";
 
-
 const Perfil = () => {
-
-
     const { usuarioAuth } = useSelector(state => state.auth);
     const [datosu, setDatosu] = useState({});
-    const [avatar2, setAvatar2] = useState({ avatar });
 
     useEffect(() => {
         dU();
-
-
     }, []);
+
     const dU = async () => {
         const wea = await detalle_usuario_cliente(usuarioAuth.id);
         setDatosu(wea.result);
-        const verfoto = await mostrarImgen(`usuarios/avatars/${usuarioAuth.id}/avatar.png`);
-        setAvatar2({ avatar: verfoto });
-    };
-    const onchageavatar = async (e) => {
-        const verfoto = await subirArchivo(e.target.files[0], datosu.id);
-        setAvatar2({ avatar: verfoto });
     };
 
+    const onchageavatar = async (e) => {
+        const extension = e.target.files[0].type.substring(6, e.target.files[0].type.length);
+        console.log(extension)
+        await subirArchivoMetodo(`usuarios/avatars/${usuarioAuth.id}/avatar.${extension}`, e.target.files[0], async (url) => {
+            const uno = await actualizaDocumento('usuarios', usuarioAuth.id, { data: { imagen: url } })
+            setDatosu({ ...datosu, imagen: url })
+        })
+    };
 
     return (
-
         <section className="seccion-perfil-usuario">
             <div className="perfil-usuario-header">
+                {console.log(datosu)}
                 <div className="perfil-usuario-portada">
                     <div className="perfil-usuario-avatar">
-                        <img src={avatar2.avatar} alt="img-avatar" />
-
-                        {/* <Form.Group controlId="formFile" className="mb-3">
-                            <Form.Label>Default file input example</Form.Label>
-                            <Form.Control type="file" accept="image/png, image/jpg, image/jpeg" onChange={onchageavatar} />
-
-                        </Form.Group> */}
+                        <img src={datosu.imagen} alt="img-avatar" width={'166px'} height='166px' />
                         <Form.Control className="boton-avatar" type="file" accept="image/png, image/jpg, image/jpeg" onChange={onchageavatar} />
-
-                        {/* <button type="file" className="boton-avatar">
-                            <i><FontAwesomeIcon icon={faImage} /></i>
-                        </button> */}
-
                     </div>
                     <button type="button" className="boton-portada">
                         <i><FontAwesomeIcon icon={faPenToSquare} /></i> Cambiar fondo
@@ -66,13 +52,9 @@ const Perfil = () => {
                 </div>
                 <div className="perfil-usuario-footer">
                     <ul className="lista-datos">
-
-
                         {datosu.rol === "Admin" && <li><i><FontAwesomeIcon icon={faUser} /></i> UsuarioID : {datosu.id} </li>}
                         <li><i><FontAwesomeIcon icon={faEnvelope} /></i> Correo: {datosu.correo}</li>
-
                         {datosu.rol === "Admin" && <li><i><FontAwesomeIcon icon={faCheck} /></i> Rol: {datosu.rol}</li>}
-
                     </ul>
                     <ul className="lista-datos">
                         <li><i><FontAwesomeIcon icon={faUserCheck} /></i> Registro: {datosu.fechaCreacion && new Date(datosu.fechaCreacion.seconds * 1000).toString()}</li>
@@ -83,20 +65,18 @@ const Perfil = () => {
                         </button>
                     </div>
                     <div className="boton-editar-info">
-                    <Link to= {`/editarUsuario/${usuarioAuth.id}`}>
-                    <button type="onClick" className="boton-editar" >
-                            <i><FontAwesomeIcon icon={faPenToSquare} /></i> editar
-                        </button>
-                    </Link>
+                        <Link to={`/editarUsuario/${usuarioAuth.id}`}>
+                            <button type="onClick" className="boton-editar" >
+                                <i><FontAwesomeIcon icon={faPenToSquare} /></i> editar
+                            </button>
+                        </Link>
                     </div>
                     <div className="boton-cambiar-P">
                         <button type="button" className="boton-cambiarP">
                             <i><FontAwesomeIcon icon={faLock} /></i> cambiar contraseña
                         </button>
                     </div>
-
                 </div>
-
             </div>
         </section>
     );
