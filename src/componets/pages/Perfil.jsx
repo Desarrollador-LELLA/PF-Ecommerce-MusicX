@@ -7,6 +7,7 @@ import { useSelector } from "react-redux";
 import avatar from "../images/img-avatar.png";
 import { Form } from "react-bootstrap";
 import { mostrarImgen, subirArchivo } from "../../utils/metodosFirebase";
+import { Link } from "react-router-dom";
 
 
 const Perfil = () => {
@@ -42,13 +43,16 @@ const Perfil = () => {
                     <div className="perfil-usuario-avatar">
                         <img src={avatar2.avatar} alt="img-avatar" />
 
-                        <Form.Group controlId="formFile" className="mb-3">
+                        {/* <Form.Group controlId="formFile" className="mb-3">
                             <Form.Label>Default file input example</Form.Label>
                             <Form.Control type="file" accept="image/png, image/jpg, image/jpeg" onChange={onchageavatar} />
-                        </Form.Group>
-                        <button type="file" className="boton-avatar">
+
+                        </Form.Group> */}
+                        <Form.Control className="boton-avatar" type="file" accept="image/png, image/jpg, image/jpeg" onChange={onchageavatar} />
+
+                        {/* <button type="file" className="boton-avatar">
                             <i><FontAwesomeIcon icon={faImage} /></i>
-                        </button>
+                        </button> */}
 
                     </div>
                     <button type="button" className="boton-portada">
@@ -81,9 +85,11 @@ const Perfil = () => {
                         </button>
                     </div>
                     <div className="boton-editar-info">
-                        <button type="button" className="boton-editar">
+                    <Link to= {`/editarUsuario/${usuarioAuth.id}`}>
+                    <button type="onClick" className="boton-editar" >
                             <i><FontAwesomeIcon icon={faPenToSquare} /></i> editar
                         </button>
+                    </Link>
                     </div>
                     <div className="boton-cambiar-P">
                         <button type="button" className="boton-cambiarP">

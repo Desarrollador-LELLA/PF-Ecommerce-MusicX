@@ -22,7 +22,7 @@ import './css/app.css'
 import TesterPaginado from './componets/pages/TesterPaginado';
 import Bibloteca from './componets/pages/Bibloteca';
 import SearchProduct from './componets/pages/SearchProduct';
-
+import EditarP from './componets/pages/EditarP';
 function App() {
 
   const dispatch = useDispatch();
@@ -70,6 +70,7 @@ function App() {
         <Route path="PerfilAdmin" element={authenticatedAuth ? <PerfilAd /> : <Navigate to="/iniciarsesion" />} />
         <Route path="testerpaginado" element={<TesterPaginado />} />
         {/* <Route path="testerpaginado/:pag" element={<TesterPaginado />} /> */}
+        <Route path="editarUsuario/:id" element={<EditarP />} />
       </Route>
 
 

@@ -54,3 +54,26 @@ export const ValidoRegistro = ({ nombre, apellido, correo, clave, rclave }) => {
 
     return { ...e, valido };
 };
+
+export const ValidoEditarU = ({ nombre, apellido}) => {
+    const e = {};
+    let valido = true;
+
+    if (nombre.toString().trim().length === 0) {
+        e.nombre = 'El Nombre esta Vacio';
+        valido = false;
+    } else if (nombre.length > 30) {
+        e.nombre = 'El Nombre no puede tener mas de 30 Caracteres';
+        valido = false;
+    }
+
+    if (apellido.toString().trim().length === 0) {
+        e.apellido = 'El Apellido esta Vacio';
+        valido = false;
+    } else if (apellido.length > 40) {
+        e.apellido = 'El Apellido no puede tener mas de 40 Caracteres';
+        valido = false;
+    }
+
+    return { ...e, valido };
+};
