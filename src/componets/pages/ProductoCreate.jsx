@@ -6,7 +6,6 @@ import style from '../../css/productoCreate.module.css';
 import { db, storage, allStor, stor } from '../../firebaseInicial/firebase';
 import { collection, addDoc } from "firebase/firestore"; 
 
-
 //      Subir imagenes
 //  import { storage } from "./firebase";
 import { ref, uploadBytes, getDownloadURL, getStorage } from "firebase/storage";
