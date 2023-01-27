@@ -55,7 +55,7 @@ export const ValidoRegistro = ({ nombre, apellido, correo, clave, rclave }) => {
     return { ...e, valido };
 };
 
-export const ValidoEditarU = ({ nombre, apellido}) => {
+export const ValidoEditarU = ({ nombre, apellido, descripcion}) => {
     const e = {};
     let valido = true;
 
@@ -72,6 +72,13 @@ export const ValidoEditarU = ({ nombre, apellido}) => {
         valido = false;
     } else if (apellido.length > 40) {
         e.apellido = 'El Apellido no puede tener mas de 40 Caracteres';
+        valido = false;
+    }
+    if (descripcion.toString().trim().length === 0) {
+        e.descripcion = 'La descripción está vacia';
+        valido = false;
+    } else if (descripcion.length > 200) {
+        e.descripcion = 'La descripción no puede tener más de 200 Caracteres';
         valido = false;
     }
 

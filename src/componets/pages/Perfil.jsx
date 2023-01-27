@@ -14,7 +14,6 @@ const Perfil = () => {
 
 
     const { usuarioAuth } = useSelector(state => state.auth);
-
     const [datosu, setDatosu] = useState({});
     const [avatar2, setAvatar2] = useState({ avatar });
 
@@ -63,8 +62,7 @@ const Perfil = () => {
             <div className="perfil-usuario-body">
                 <div className="perfil-usuario-bio">
                     <h3 className="titulo">{datosu.nombre + " " + datosu.apellido}</h3>
-                    <p className="texto">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-                        tempor incididunt ut labore et dolore magna aliqua.</p>
+                    <p className="texto">{datosu.descripcion}</p>
                 </div>
                 <div className="perfil-usuario-footer">
                     <ul className="lista-datos">
