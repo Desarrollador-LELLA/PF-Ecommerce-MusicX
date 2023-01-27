@@ -10,11 +10,14 @@ import { collection, addDoc } from "firebase/firestore";
 //  import { storage } from "./firebase";
 import { ref, uploadBytes, getDownloadURL, getStorage } from "firebase/storage";
 import { v4 } from "uuid";
+import { actualizaDocumento, crearDocumento, subirArchivoMetodo } from '../../utils/metodosFirebase';
 
 
 const ProductoCreate = () => {
 
     const navegar = useNavigate();
+    const [imagen, setImagen] = useState(null);
+
     const [producto, setProducto] = useState({
         nombre: "",
         autor: "",
@@ -22,11 +25,9 @@ const ProductoCreate = () => {
         precio: 0,
         key: "",
         tiempo: 0,
-        //imagen: "",
-        imagen: null
+        //imagen: null
     });
 
-    //  const [image, setImage] = useState(null);
 
     const [url, setURL] = useState(null);
     const [errores, setErrores] = useState({});
@@ -126,6 +127,11 @@ const ProductoCreate = () => {
     };
 
 
+    const handleSubirImagen = async (e) => {
+        setImagen(e.target.files[0]);
+    }
+
+
     const handleSubmit = async (e) => {
         try
         {
@@ -133,6 +139,18 @@ const ProductoCreate = () => {
 
             if(errores.valido)
             {
+                /*      TERCER CODIGO       */
+                let prod = await crearDocumento("productos", { data: producto });
+                console.log(imagen);
+
+                const extension = imagen.type.substring(6, imagen.type.length)
+                let ruta = `productos/${ prod.result.id }/beat.${extension}`
+                
+                subirArchivoMetodo(ruta, (url) => {
+                    console.log(url);
+                    actualizaDocumento("productos", prod.result.id, { data: { imagen: url } })
+                });
+
 
                 /*          PRIMER CODIGO
                 const imageRef = ref(storage, "image.jpg");
@@ -175,8 +193,6 @@ const ProductoCreate = () => {
                 */
 
 
-                /*      TERCER CODIGO       */
-                //if(){}
 
             }
         }
@@ -231,7 +247,8 @@ const ProductoCreate = () => {
                             */}
 
 
-                            <input name='imagen' type='file' onChange={ handleInputChange } />
+                            {/* <input name='imagen' type='file' onChange={ handleInputChange } />  */}
+                            <Form.Control type="file" accept="image/png, image/jpg, image/jpeg" onChange={ handleSubirImagen } />
                             <Form.Control.Feedback type={'invalid'}>{ errores.imagen }</Form.Control.Feedback>
                         </div>
 
