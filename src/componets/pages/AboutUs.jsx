@@ -45,7 +45,7 @@ export default function AboutUs() {
           </div>
         </div>
 
- //hola
+ 
 
       </footer>
     </div>
