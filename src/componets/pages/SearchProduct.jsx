@@ -19,7 +19,7 @@ export default function SearchProduct() {
           <div className={s.containerfilters}>
             <Accordion className={s.acordion} defaultActiveKey="0">
               <Accordion.Item className={s.acordion} eventKey="0">
-                <Accordion.Header className={s.acordion}><FontAwesomeIcon icon={faCompactDisc}/> Generos</Accordion.Header>
+                <Accordion.Header className={s.xd}><FontAwesomeIcon icon={faCompactDisc}/> Generos</Accordion.Header>
                 <Accordion.Body className={s.acordion} >
                   <Form className={s.acordion}>
                     <Form.Check type="switch" id="custom-switch" label="Trap" />

@@ -42,7 +42,7 @@ margin: 1.5%;
 
 .acordion{
     background-color: transparent;
-    border-color: rgba(255, 0, 0, 0);
+    border-color: rgb(44, 61, 66);
     margin: 1%;
 }
 .acordion button{
@@ -57,15 +57,4 @@ margin: 1.5%;
 .acordion button:focus{
     background-color: transparent;
     color: rgb(56, 228, 255);
-}
-
-.acordion h2{
-    background-color: rgba(255, 0, 0, 0);
-}
-.acordion label{
-    color: rgb(57, 102, 105);
-}
-
-.acordion div{
-    background-color: rgba(255, 0, 0, 0);
 }
