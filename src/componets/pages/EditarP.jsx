@@ -10,6 +10,7 @@ import { actualizaDocumento } from '../../utils/metodosFirebase';
 const INIT_STATE = {
     nombre: '',
     apellido: '',
+    descripcion: '',
 
 };
 const EditarU = () => {
@@ -40,7 +41,7 @@ const EditarU = () => {
 
         if (errores.valido) {
             setLoading(true);
-            const edit = await actualizaDocumento("usuarios", edit2.id, {data: editar})
+            const edit = await actualizaDocumento("usuarios", edit2.id, {data: { nombre: editar.nombre, apellido: editar.apellido, descripcion: editar.descripcion }})
             if (edit.confirma){
                 console.log("Cambio hecho")
             }
@@ -70,6 +71,10 @@ return (
                                     <Placeholder as='p' animation='glow' >
                                         <Placeholder.Button xs={4} bg="dark float-end mb-3" />
                                     </Placeholder>
+                                    <Placeholder as='p' animation='glow' >
+                                        <Placeholder.Button xs={4} bg="dark float-end mb-3" />
+                                    </Placeholder>
+                                    
                                 </>
                                  :
                                  <>
@@ -80,6 +85,10 @@ return (
                                      <FloatingLabel className='mb-3' controlId='floatingInput' label='Apellido'>
                                          <Form.Control name='apellido' type='text' placeholder='Perez' onChange={onChange} value={editar.apellido} isInvalid={!!errores.apellido} />
                                          <Form.Control.Feedback type='invalid'>{errores.apellido}</Form.Control.Feedback>
+                                     </FloatingLabel>
+                                     <FloatingLabel className='mb-3' controlId='floatingInput' label='Descripción'>
+                                         <Form.Control name='descripcion' as="textarea" rows="3" placeholder='Escribe algo sobre ti...' onChange={onChange} value={editar.descripcion} isInvalid={!!errores.descripcion} />
+                                         <Form.Control.Feedback type={'invalid'}>{errores.descripcion}</Form.Control.Feedback>
                                      </FloatingLabel>
                                      <Button className='float-end mb-3' variant='dark' type='submit' onClick={onChange}>
                                         Guardar
