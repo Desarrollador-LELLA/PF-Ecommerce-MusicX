@@ -8,7 +8,7 @@ import DropdownButton from 'react-bootstrap/DropdownButton';
 import Dropdown from 'react-bootstrap/Dropdown';
 import { useDispatch } from "react-redux";
 import { paginacion } from '../../utils/libreria';
-import { todosDocumentos, mostrarImgen, obtienePaginado, siguientePaginado, anteriorPaginado, cambiaPaginado, crearDocumento, unDocumento } from '../../utils/metodosFirebase';
+import { todosDocumentos, mostrarImgen, obtienePaginado, siguientePaginado, anteriorPaginado, cambiaPaginado, crearDocumento, unDocumento, actualizaDocumento } from '../../utils/metodosFirebase';
 
 const INITIAL_PAGINADO = {
   coleccion: 'generos',
@@ -75,8 +75,35 @@ const Generos = () => {
   function handleOnChangeNombreCrear(e) {
     setNombreCrear(e.target.value);
   }
+  async function handleCrearGenero(e) {
+    const resultado = await crearDocumento(estadoInicial.coleccion, { data: { nombre: nombreCrear, habilitado } });
+    if (validate()) {
+      setAbrirModalCrear(false);
+      setNombreCrear("");
+
+      if (resultado.confirma) {
+        llenarLista();
+        setAbrirModalCrear(false);
+        setNombreCrear("");
+      }
+    }
+  }
+
 
   //MODAL EDITAR GENERO
+const confirmarEdicion = async () => {
+  const resultado =await actualizaDocumento (estadoInicial.coleccion,generoEditar.id,{data:{nombre:generoEditar.nombre, habilitado:generoEditar.habilitado}} )
+  if(resultado.confirma){
+    setGeneroEditar({});
+    // setError(null);
+    setAbrirModalEditar(false);
+    llenarLista();
+
+  }
+}
+  const habilarADesabilitar = () =>{
+    setGeneroEditar({...generoEditar, habilitado:!generoEditar.habilitado})
+  }
 const handleClose2 = () => {
   setNombreCrear("");
     setError(null);
@@ -106,19 +133,6 @@ const handleClose2 = () => {
     e.preventDefault();
   };
 
-  async function handleCrearGenero(e) {
-    const resultado = await crearDocumento(estadoInicial.coleccion, { data: { nombre: nombreCrear, habilitado } });
-    if (validate()) {
-      setAbrirModalCrear(false);
-      setNombreCrear("");
-
-      if (resultado.confirma) {
-        llenarLista();
-        setAbrirModalCrear(false);
-        setNombreCrear("");
-      }
-    }
-  }
 
   function handleVolver(e) {
     e.preventDefault();
@@ -227,13 +241,12 @@ const handleClose2 = () => {
         </Modal.Body>
         <Modal.Footer>
           <div class="btn-group" role="group" aria-label="Basic mixed styles example">
-            <button type="button" class="btn btn-success">Habilitar</button>
-            <button type="button" class="btn btn-danger">Deshabilitar</button>
+            <button type="button" className={generoEditar.habilitado ? "btn btn-success":"btn btn-danger"} onClick= {habilarADesabilitar}>{generoEditar.habilitado ? "habilitado":"desahabilitado"}</button>
           </div>
           <Button variant="secondary" onClick={handleClose2}>
             Close
           </Button>
-          <Button className="primary">Editar</Button>
+          <Button className="primary" onClick={ confirmarEdicion}>Editar</Button>
         </Modal.Footer>
       </Modal>
       {/* TITULO DEL FORMULARIO */}
