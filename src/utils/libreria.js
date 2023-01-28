@@ -45,3 +45,22 @@ export const paginacion = (cantItems, paginaActual, items) => {
     const inicio = fin - items;
     return { paginasBar, inicio, fin, cantPaginas };
   };
+
+  export const useFiltrado = (lista, { generos }) => {
+    let nuevaLista = lista.slice();
+
+    //FILTRA POR GENEROS
+    if(generos){
+      nuevaLista = nuevaLista.filter((x) => {
+        let retorno = generos.length === 0 ? true : false;
+        generos.forEach((y) => {
+          x.tipos.forEach((p) => {
+            if (y === p) retorno = true;
+          });
+        });
+        return retorno;
+      });
+    }
+
+    //FILTRA POR 
+  }

@@ -1,6 +1,6 @@
 .navbar {
-    background: rgb(23, 19, 22);
-    background: linear-gradient(0deg, rgba(23, 19, 22, 1) 0%, rgba(54, 19, 36, 1) 36%);
+    background: rgb(54, 19, 36, 1);
+    /* background: linear-gradient(0deg, rgba(23, 19, 22, 1) 0%, rgba(54, 19, 36, 1) 36%); */
 }
 
 .navbar_brand {
