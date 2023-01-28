@@ -40,7 +40,7 @@ const carritoReducer = (state = initialState, action) => {
     case ADD_BIBLIOTECA:    
           return {
             ...state,
-              biblioteca: action.payload
+              biblioteca: [...state.biblioteca, action.payload]
           }
     default: {
       return state;

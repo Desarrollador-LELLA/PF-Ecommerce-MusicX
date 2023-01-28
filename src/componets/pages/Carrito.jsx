@@ -51,7 +51,7 @@ const Carrito = () => {
         <div className={styleCarrito.container}>
             <div  className={styleCarrito.nav}>
                  <Link to="/">
-                    <h2>Volver</h2>
+                    <h3>Volver</h3>
                 </Link> 
             </div>
             <div className={styleCarrito.productContainer}>
