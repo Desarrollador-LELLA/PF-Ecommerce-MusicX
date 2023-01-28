@@ -3,6 +3,8 @@ import {
     PayPalButtons,
     usePayPalScriptReducer
 } from "@paypal/react-paypal-js";
+import * as actions from "../../redux/actions/carritoAction";
+import {useDispatch} from "react-redux";
 
 const PaypalButton = ({ currency, showSpinner , amount, products}) => {
     const [{ options, isPending }, dispatch] = usePayPalScriptReducer();
@@ -12,7 +14,8 @@ const PaypalButton = ({ currency, showSpinner , amount, products}) => {
     label:  'paypal',
     height: 55,
     };
-    
+    const Dispatch = useDispatch()
+
     const createOrder = (data, actions) => {
                     return actions.order
                         .create({
@@ -27,9 +30,9 @@ const PaypalButton = ({ currency, showSpinner , amount, products}) => {
 
     const onApprove = (data, actions) => {
                 return actions.order.capture().then(() => {
-                    console.log("qlq")
+                Dispatch(actions.addBiblioteca(products, "8rbU753ggnh9njSWN4GtODsmepM2"))
                 });
-                }
+        }
 
     useEffect(() => {
         dispatch({

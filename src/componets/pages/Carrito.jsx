@@ -39,6 +39,8 @@ const Carrito = () => {
 
     productos.forEach((producto) => infoTotal.push(`${producto.nombre} (1)`));
 
+    
+
     return (
         <div className={styleCarrito.container}>
             <div  className={styleCarrito.nav}>
