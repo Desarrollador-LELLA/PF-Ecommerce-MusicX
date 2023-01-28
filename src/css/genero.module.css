@@ -1,0 +1,21 @@
+
+.card_genero {
+    background: rgb(54, 19, 36, 1);
+
+}
+.img_genero {
+    background: black;
+}
+.img_genero:hover{
+    animation-name: gixaxb;
+    animation-duration: 5s;
+    animation-iteration-count: infinite;
+    animation-timing-function: linear;
+}
+@keyframes gixaxb{
+    from{
+        transform: rotate(0deg);
+    }to{
+        transform: rotate(360deg);
+    }
+}
