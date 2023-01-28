@@ -3,7 +3,8 @@ import {
   ELIMINAR_PRODUCTO,
   DETALLE_UN_PRODUCTO,
   ADD_PRODUCTOS,
-  ADD_PRODUCTO
+  ADD_PRODUCTO,
+  ADD_BIBLIOTECA
 } from "../types/carritoTypes.js";
 
 const initialState = {
@@ -35,6 +36,8 @@ const carritoReducer = (state = initialState, action) => {
         ...state,
         productoUnoDetalle: action.payload,
       };
+    case ADD_BIBLIOTECA:    
+          return state
     default: {
       return state;
     }

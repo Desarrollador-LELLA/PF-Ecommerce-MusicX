@@ -5,10 +5,11 @@ import {
   ADD_PRODUCTOS,
   ADD_PRODUCTO,
   LIMPIAR_PRODUCTO_DETALLE,
+    ADD_BIBLIOTECA
 } from "../types/carritoTypes.js";
 
 import { allDb, db } from "../../firebaseInicial/firebase";
-import { collection, getDocs } from "firebase/firestore";
+import { collection, getDocs , addDoc, setDoc, doc} from "firebase/firestore";
 
 export const pagarCarrito = () => {
   return "Aun no se hace";
@@ -66,3 +67,9 @@ export const LimpiarDetalleProd = () => {
     payload: {},
   };
 };
+
+export const addBiblioteca = (productos, idUser) => {
+    return {
+        type: ADD_BIBLIOTECA
+    }
+}
