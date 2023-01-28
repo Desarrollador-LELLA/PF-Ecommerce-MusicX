@@ -38,8 +38,14 @@ const Carrito = () => {
     }
 
     productos.forEach((producto) => infoTotal.push(`${producto.nombre} (1)`));
-
     
+    const handleBiblioteca = () => {
+        dispatch(actions.addBiblioteca(productos))
+    }
+    
+    const biblioteca = useSelector((state) => state.carrito.biblioteca);
+   
+
 
     return (
         <div className={styleCarrito.container}>
@@ -77,7 +83,9 @@ const Carrito = () => {
                             currency={"USD"} 
                             showSpinner={false} 
                             amount={totalCalculator()} 
-                            products={products()} 
+                            products={products()}
+                            productos={productos}
+                            handleBiblioteca={handleBiblioteca}
                         />
                     </PayPalScriptProvider>
                 </div>

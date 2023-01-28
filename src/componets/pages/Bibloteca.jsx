@@ -13,6 +13,8 @@ export default function Bibloteca({
     const Todo = await getProductos();
     setProductos(Todo);
   };
+    
+    const biblioteca = useSelector((store) => store.carrito.biblioteca)
 
   useEffect(() => {
     TodosLosProductos();
