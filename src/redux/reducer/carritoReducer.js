@@ -10,6 +10,7 @@ import {
 const initialState = {
   productos: [],
   productoUnoDetalle: {},
+  biblioteca: []
 };
 
 const carritoReducer = (state = initialState, action) => {
@@ -37,7 +38,10 @@ const carritoReducer = (state = initialState, action) => {
         productoUnoDetalle: action.payload,
       };
     case ADD_BIBLIOTECA:    
-          return state
+          return {
+            ...state,
+              biblioteca: action.payload
+          }
     default: {
       return state;
     }
