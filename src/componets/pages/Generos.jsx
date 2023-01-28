@@ -1,15 +1,15 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Button, Modal, FloatingLabel, Form, Container, Pagination, Spinner } from 'react-bootstrap';
+import { Button, Modal, FloatingLabel, Form, Container, Pagination, Spinner, Row, Col, Card } from 'react-bootstrap';
 import { clear } from '@testing-library/user-event/dist/clear';
 import { setLogLevel } from 'firebase/app';
-import s from "../../css/Home.module.css";
+import s from "../../css/genero.module.css";
 import DropdownButton from 'react-bootstrap/DropdownButton';
 import Dropdown from 'react-bootstrap/Dropdown';
 import { useDispatch } from "react-redux";
 import { paginacion } from '../../utils/libreria';
 import { todosDocumentos, mostrarImgen, obtienePaginado, siguientePaginado, anteriorPaginado, cambiaPaginado, crearDocumento, unDocumento, actualizaDocumento } from '../../utils/metodosFirebase';
-
+import icGenero from "../images/ic_genero.svg"
 const INITIAL_PAGINADO = {
   coleccion: 'generos',
   ordenarPor: 'nombre',
@@ -91,21 +91,21 @@ const Generos = () => {
 
 
   //MODAL EDITAR GENERO
-const confirmarEdicion = async () => {
-  const resultado =await actualizaDocumento (estadoInicial.coleccion,generoEditar.id,{data:{nombre:generoEditar.nombre, habilitado:generoEditar.habilitado}} )
-  if(resultado.confirma){
-    setGeneroEditar({});
-    // setError(null);
-    setAbrirModalEditar(false);
-    llenarLista();
+  const confirmarEdicion = async () => {
+    const resultado = await actualizaDocumento(estadoInicial.coleccion, generoEditar.id, { data: { nombre: generoEditar.nombre, habilitado: generoEditar.habilitado } })
+    if (resultado.confirma) {
+      setGeneroEditar({});
+      // setError(null);
+      setAbrirModalEditar(false);
+      llenarLista();
 
+    }
   }
-}
-  const habilarADesabilitar = () =>{
-    setGeneroEditar({...generoEditar, habilitado:!generoEditar.habilitado})
+  const habilarADesabilitar = () => {
+    setGeneroEditar({ ...generoEditar, habilitado: !generoEditar.habilitado })
   }
-const handleClose2 = () => {
-  setNombreCrear("");
+  const handleClose2 = () => {
+    setNombreCrear("");
     setError(null);
     setAbrirModalEditar(false);
   };
@@ -241,12 +241,12 @@ const handleClose2 = () => {
         </Modal.Body>
         <Modal.Footer>
           <div class="btn-group" role="group" aria-label="Basic mixed styles example">
-            <button type="button" className={generoEditar.habilitado ? "btn btn-success":"btn btn-danger"} onClick= {habilarADesabilitar}>{generoEditar.habilitado ? "habilitado":"desahabilitado"}</button>
+            <button type="button" className={generoEditar.habilitado ? "btn btn-success" : "btn btn-danger"} onClick={habilarADesabilitar}>{generoEditar.habilitado ? "habilitado" : "desahabilitado"}</button>
           </div>
           <Button variant="secondary" onClick={handleClose2}>
             Close
           </Button>
-          <Button className="primary" onClick={ confirmarEdicion}>Editar</Button>
+          <Button className="primary" onClick={confirmarEdicion}>Editar</Button>
         </Modal.Footer>
       </Modal>
       {/* TITULO DEL FORMULARIO */}
@@ -285,23 +285,33 @@ const handleClose2 = () => {
           </select>
         </div>
         {/* LISTADO DE GENEROS MAP */}
-        <div className='row row-cols-6'>
+        <Row xs={2} sm={3} md={3} lg={4} xl={5} xxl={6}>
           {
             loading ? <Spinner animation="border" variant="light" /> :
               estadoInicial.lista.length ?
                 estadoInicial.lista.slice(inicio, fin).map(i => (
-                  <div className='col'>
-                    <div className='card' onClick={e => { " handleClick(e)"; }}>
+                  <Col className='my-2'>
+                    <Card className={`${s.card_genero} h-100`} onClick={e => { " handleClick(e)"; }}>
+                      <Card.Img className = {`${s.img_genero} rounded-circle`}  src={icGenero} variant="top" />
+                      <Card.Body>
+                        <Card.Title className='text-light'>
+                          {i.nombre}
+                        </Card.Title>
+                        <Button variant="outline-secondary" onClick={() => handleShow2(i.id)}>Editar</Button>
+                      </Card.Body>
+                    </Card>
+                    {/* <div className='card' onClick={e => { " handleClick(e)"; }}>
                       <div className="text-bg-dark p-3">
                         <h3 className='card-title'>{i.nombre}</h3>
                         <Button variant="outline-secondary" onClick={() => handleShow2(i.id)}>Editar</Button>
                       </div>
-                    </div>
-                  </div>
-                )) : null  //ACA SE DEVE MOSTRAR AL USUARIO QUE NO EXISTEN GENEROS EN CASO DE BUSQUEDA O AL INICIAR
+                    </div> */}
+                  </Col>
+                )) : null  //ACA SE DEBE MOSTRAR AL USUARIO QUE NO EXISTEN GENEROS EN CASO DE BUSQUEDA O AL INICIAR
           }
-        </div>
+        </Row>
       </div>
+
       {/* PAGINADO */}
       <div> <Button variant="outline-secondary" onClick={e => { handleVolver(e); }}>Volver a cargar todos los generos</Button>{' '}</div>
       <Pagination>
