@@ -36,6 +36,38 @@ const registraAction = ({ nombre, apellido, correo, clave }, onError) => async (
   }
 };
 
+const registraGoogleAction = (onError) => async (dispatch) => {
+  try {
+    const provider = await allAuth.GoogleAuthProvider();
+    const res = await allAuth.signInWithPopup(auth, provider)
+    if (res.user) {
+      const userData = {
+        id: res.user.uid,
+        nombre,
+        apellido,
+        correo,
+        rol: 'Cliente',
+        fechaCreacion: allDb.serverTimestamp(),
+      };
+      await allDb.setDoc(allDb.doc(db, 'usuarios', res.user.uid), userData);
+      await allAuth.sendEmailVerification(res.user);
+      dispatch({
+        type: AUTH_NEED_VERIFICATION,
+      });
+      dispatch({
+        type: AUTH_SET_USER,
+        payload: { nombre, apellido },
+      });
+    }
+  } catch (err) {
+    onError();
+    dispatch({
+      type: AUTH_SET_ERROR,
+      payload: erroresList(err),
+    });
+  }
+};
+
 //INICIO DE SESION DE USUARIOS
 const signInAction = ({ correo, contraseña }, onError) =>
     async (dispatch) => {

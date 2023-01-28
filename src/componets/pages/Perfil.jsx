@@ -46,11 +46,11 @@ const Perfil = () => {
                 </div>
             </div>
             <div className="perfil-usuario-body">
-                <div className="perfil-usuario-bio">
+                <div className="perfil-usuario-bio text-light">
                     <h3 className="titulo">{datosu.nombre + " " + datosu.apellido}</h3>
                     <p className="texto">{datosu.descripcion}</p>
                 </div>
-                <div className="perfil-usuario-footer">
+                <div className="perfil-usuario-footer text-light">
                     <ul className="lista-datos">
                         {datosu.rol === "Admin" && <li><i><FontAwesomeIcon icon={faUser} /></i> UsuarioID : {datosu.id} </li>}
                         <li><i><FontAwesomeIcon icon={faEnvelope} /></i> Correo: {datosu.correo}</li>
