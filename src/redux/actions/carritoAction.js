@@ -68,9 +68,9 @@ export const LimpiarDetalleProd = () => {
   };
 };
 
-export const addBiblioteca = (productos) => {
+export const addBiblioteca = (Productos) => {
     return {
         type: ADD_BIBLIOTECA,
-        payload: productos
+        payload: Productos
     }
 }

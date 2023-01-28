@@ -30,6 +30,7 @@ const PaypalButton = ({ currency, showSpinner , amount, products, productos, han
     const onApprove = (data, actions) => {
                 return actions.order.capture().then(() => {
                     handleBiblioteca() 
+                    alert("Se ha añadido tus productos ala bliblioteca")
                 });
         }
 

@@ -44,7 +44,7 @@ const Carrito = () => {
     }
     
     const biblioteca = useSelector((state) => state.carrito.biblioteca);
-    console.log(biblioteca)
+   
 
 
     return (
