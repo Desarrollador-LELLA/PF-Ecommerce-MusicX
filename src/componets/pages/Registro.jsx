@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 import s from '../../css/registro.module.css';
 import icLogo from '../images/ic_logo_tester.png';
 import { ValidoRegistro } from '../../utils/validaciones';
-import { errorAction, registraAction } from '../../redux/actions/authAction';
+import { errorAction, registraAction, registraGoogleAction } from '../../redux/actions/authAction';
 
 const INIT_STATE = {
     nombre: '',
@@ -30,6 +30,13 @@ const Registro = () => {
             }
         };
     }, [errorAuth, dispatch]);
+
+    const onChangeGoogle = async (e) => {
+        e.preventDefault();
+        console.log('algo');
+        setLoading(true);
+        dispatch(registraGoogleAction(() => setLoading(false)));
+    };
 
     const onChange = (e) => {
         setRegistro({
@@ -110,6 +117,9 @@ const Registro = () => {
                                     </FloatingLabel>
                                     <Button className='float-end mb-3' variant='dark' type='submit' onClick={onChange}>
                                         Registrarme
+                                    </Button>
+                                    <Button className='float-end mb-3' variant='dark' type='submit' onClick={onChangeGoogle}>
+                                        Registrarme Google
                                     </Button>
                                 </>
                         }

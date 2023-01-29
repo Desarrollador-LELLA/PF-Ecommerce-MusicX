@@ -67,14 +67,15 @@ text-align: center;
     overflow: hidden;
   }
 .carddesc{
-font-family: 'Dela Gothic One';
-font-style: normal;
-font-weight: 400;
-font-size: 25px;
-color: rgba(35, 204, 204, 0.59);
+  font-family: 'Dela Gothic One';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 25px;
+  color: rgba(35, 204, 204, 0.59);
   list-style: none;
   animation: scrolling 20s linear infinite;
   white-space: nowrap;
+  -webkit-animation: scrolling 20s linear infinite;
 }
 
 @keyframes scrolling {

@@ -38,25 +38,26 @@ const registraAction = ({ nombre, apellido, correo, clave }, onError) => async (
 
 const registraGoogleAction = (onError) => async (dispatch) => {
   try {
-    const provider = await allAuth.GoogleAuthProvider();
+    const provider = new allAuth.GoogleAuthProvider();
     const res = await allAuth.signInWithPopup(auth, provider)
+    console.log(res)
     if (res.user) {
-      const userData = {
-        id: res.user.uid,
-        nombre,
-        apellido,
-        correo,
-        rol: 'Cliente',
-        fechaCreacion: allDb.serverTimestamp(),
-      };
-      await allDb.setDoc(allDb.doc(db, 'usuarios', res.user.uid), userData);
+      // const userData = {
+      //   id: res.user.uid,
+      //   nombre,
+      //   apellido,
+      //   correo,
+      //   rol: 'Cliente',
+      //   fechaCreacion: allDb.serverTimestamp(),
+      // };
+      await allDb.setDoc(allDb.doc(db, 'usuarios', res.user.uid), {userData: res.user.uid});
       await allAuth.sendEmailVerification(res.user);
       dispatch({
         type: AUTH_NEED_VERIFICATION,
       });
       dispatch({
         type: AUTH_SET_USER,
-        payload: { nombre, apellido },
+        payload: { nombre: 'nombre tester', apellido: 'apellido tester' },
       });
     }
   } catch (err) {
@@ -229,5 +230,6 @@ export {
   successAction,
   signInAction,
   signOutAction,
-  getUserById
+  getUserById,
+  registraGoogleAction
 };

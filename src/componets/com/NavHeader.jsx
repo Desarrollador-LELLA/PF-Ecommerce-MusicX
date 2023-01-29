@@ -26,7 +26,7 @@ const NavHeader = () => {
     };
 
     return (
-        <Navbar collapseOnSelect expand="lg" variant="dark" className={`${s.navbar}`}>
+        <Navbar collapseOnSelect expand="lg" variant="dark" className={`${s.navbar}`} sticky="top">
             <Container fluid>
                 <Link to='/' className={`${s.navbar_brand} navbar-brand`}>
                     <img alt="" src={icLogo} width="50" height="50" className="d-inline-block align-top" />
