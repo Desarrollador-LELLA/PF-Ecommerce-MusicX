@@ -2,14 +2,62 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 import styles from "../../css/AboutUs.module.css"
 import github from "../images/github.png"
+import nelson from "../images/nelson.jpg"
+import mateo from "../images/mateo.jfif"
+import sergio from "../images/sergio.jfif"
+import donCulon from "../images/donculon.jfif"
+import diego from "../images/diego.jfif"
+import mariano from "../images/mariano.jfif"
+import kennet from "../images/kennet.jfif"
+import ronaldo from "../images/ronaldo.png"
 
 export default function AboutUs() {
-  const style = {
-    background : "#3456"
-  }
   return (
-    <div className='text-center my-3' >
-      <Link to="/" className="btn btn-primary ">atras</Link>
+    <div className={styles.contenedor} >
+      <div className={styles.contenedorTitulo}>
+        <h1 className={styles.titulo}>Nuestro Equipo</h1>
+      </div>
+      <div className={styles.ContenedorCartas}>
+        <div className={styles.cartas}>
+          <div>
+            <img className={styles.imagen} src={mateo}></img>
+            <p>Mateo  Urquijo</p>
+          </div>
+          <div>
+            <img className={styles.imagen}  src={sergio} ></img>
+            <p>Sergio Blanco</p>
+          </div>
+          <div>
+            <img className={styles.imagen}  src={donCulon} ></img>
+            <p>Luis Llancamil</p>
+          </div>
+          <div>
+            <img className={styles.imagen}  src={diego}></img>
+            <p>Diego Amundaray</p>
+          </div>
+          <div>
+            <img className={styles.imagen}  src={mariano}></img>
+            <p>Mariano Teran</p>
+          </div>
+          <div>
+            <img className={styles.imagen}  src={kennet}></img>
+            <p>Kenneth Urbina</p>
+          </div>
+          <div>
+            <img className={styles.imagen}  src={ronaldo}></img>
+            <p>Ronaldo Delgado</p>
+          </div>
+          <div  className={styles.carta}>
+            <img className={styles.imagen} src={nelson}></img>
+            <p >Nelson vargas </p>
+            <img className={styles.logo} src={github}  />
+          </div>
+        </div>
+
+
+      </div>
+
+      {/* <Link to="/" className="btn btn-primary ">atras</Link>
       <h1 className={styles.titulo}>sobre nosotros </h1>
       <p>info sobre la pagina </p>
 
@@ -47,7 +95,7 @@ export default function AboutUs() {
 
  
 
-      </footer>
+      </footer> */}
     </div>
   )
 }
