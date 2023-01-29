@@ -99,7 +99,7 @@ export default function AboutUs() {
             </div>
           </div>
         </div>
-
+hola amigo mio 
  
 
       </footer> */}
