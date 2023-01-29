@@ -15,7 +15,7 @@ export default function Bibloteca({
   };
     
     const biblioteca = useSelector((store) => store.carrito.biblioteca)
-
+    console.log(biblioteca)
   useEffect(() => {
     TodosLosProductos();
     console.log(productos)
