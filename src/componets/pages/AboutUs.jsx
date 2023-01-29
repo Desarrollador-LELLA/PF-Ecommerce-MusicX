@@ -10,6 +10,7 @@ import diego from "../images/diego.jfif"
 import mariano from "../images/mariano.jfif"
 import kennet from "../images/kennet.jfif"
 import ronaldo from "../images/ronaldo.png"
+import linkedin from "../images/linkedin.png"
 
 export default function AboutUs() {
   return (
@@ -22,47 +23,71 @@ export default function AboutUs() {
           <div>
             <img className={styles.imagen} src={mateo}></img>
             <p>Mateo  Urquijo</p>
-            <a href="https://github.com/ImOrion" target="_blank"><img className={styles.logo} src={github}  /></a>
+            <div className={styles.links}>
+              <a href="https://github.com/ImOrion" target="_blank"><img className={styles.logo} src={github} /></a>
+              <a href="https://github.com/ImOrion" target="_blank"><img className={styles.logo} src={linkedin} /></a>
+            </div>
           </div>
           <div>
-            <img className={styles.imagen}  src={sergio} ></img>
+            <img className={styles.imagen} src={sergio} ></img>
             <p>Sergio Blanco</p>
-            <a href="https://github.com/Serblaor" target="_blank"><img className={styles.logo} src={github}  /></a>
+            <div  className={styles.links}>
+              <a href="https://github.com/Serblaor" target="_blank"><img className={styles.logo} src={github} /></a>
+              <a href="https://github.com/ImOrion" target="_blank"><img className={styles.logo} src={linkedin} /></a>
+            </div>
           </div>
           <div>
-            <img className={styles.imagen}  src={donCulon} ></img>
+            <img className={styles.imagen} src={donCulon} ></img>
             <p>Luis Llancamil</p>
-            <a href="https://github.com/Desarrollador-LELLA" target="_blank"><img className={styles.logo} src={github}  /></a>
+            <div className={styles.links}>
+              <a href="https://github.com/Desarrollador-LELLA" target="_blank"><img className={styles.logo} src={github} /></a>
+              <a href="https://github.com/ImOrion" target="_blank"><img className={styles.logo} src={linkedin} /></a>
+            </div>
           </div>
           <div>
-            <img className={styles.imagen}  src={diego}></img>
+            <img className={styles.imagen} src={diego}></img>
             <p>Diego Amundaray</p>
-            <a href="https://github.com/Aegox" target="_blank"><img className={styles.logo} src={github}  /></a>
+            <div className={styles.links}>
+              <a href="https://github.com/Aegox" target="_blank"><img className={styles.logo} src={github} /></a>
+              <a href="https://github.com/ImOrion" target="_blank"><img className={styles.logo} src={linkedin} /></a>
+            </div>
           </div>
           <div>
-            <img className={styles.imagen}  src={mariano}></img>
+            <img className={styles.imagen} src={mariano}></img>
             <p>Mariano Teran</p>
-            <a href="https://github.com/dogoarg" target="_blank"><img className={styles.logo} src={github}  /></a>
+            <div className={styles.links}>
+              <a href="https://github.com/dogoarg" target="_blank"><img className={styles.logo} src={github} /></a>
+              <a href="https://github.com/ImOrion" target="_blank"><img className={styles.logo} src={linkedin} /></a>
+            </div>
           </div>
           <div>
-            <img className={styles.imagen}  src={kennet}></img>
+            <img className={styles.imagen} src={kennet}></img>
             <p>Kenneth Urbina</p>
-            <a href="https://github.com/KennethUC10" target="_blank"><img className={styles.logo} src={github}  /></a>
+            <div className={styles.links}>
+              <a href="https://github.com/KennethUC10" target="_blank"><img className={styles.logo} src={github} /></a>
+              <a href="https://github.com/ImOrion" target="_blank"><img className={styles.logo} src={linkedin} /></a>
+            </div>
           </div>
           <div>
-            <img className={styles.imagen}  src={ronaldo}></img>
+            <img className={styles.imagen} src={ronaldo}></img>
             <p>Ronaldo Delgado</p>
-            <a href="https://github.com/RonaldoMonki" target="_blank"><img className={styles.logo} src={github}  /></a>
+            <div className={styles.links}>
+              <a href="https://github.com/RonaldoMonki" target="_blank"><img className={styles.logo} src={github} /></a>
+              <a href="https://github.com/ImOrion" target="_blank"><img className={styles.logo} src={linkedin} /></a>
+            </div>
           </div>
-          <div  className={styles.carta}>
+          <div className={styles.carta}>
             <img className={styles.imagen} src={nelson}></img>
             <p >Nelson vargas </p>
-            <a href="https://github.com/Nelsonvargas15" target="_blank"><img className={styles.logo} src={github}  /></a>
+            <div className={styles.links}>
+            <a href="https://github.com/Nelsonvargas15" target="_blank"><img className={styles.logo} src={github} /></a>
+            <a href="https://github.com/ImOrion" target="_blank"><img className={styles.logo} src={linkedin} /></a>
           </div>
         </div>
-
-
       </div>
+
+
+    </div>
 
       {/* <Link to="/" className="btn btn-primary ">atras</Link>
       <h1 className={styles.titulo}>sobre nosotros </h1>
@@ -103,6 +128,6 @@ hola amigo mio
  
 
       </footer> */}
-    </div>
+    </div >
   )
 }

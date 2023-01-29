@@ -33,6 +33,15 @@ text-align: center;
   
 }
 
+.cartas{
+display: flex;
+flex-direction: row;
+gap: 30px;
+flex-wrap: wrap;
+justify-content: center;
+width: 80%;
+}
+
 
 .cartas p{
   font-family: Poppins,sans-serif;
@@ -60,7 +69,11 @@ text-align: center;
 }
 
 
-
+.links{
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
 
 
 /* .titulo{
