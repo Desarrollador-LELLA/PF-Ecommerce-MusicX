@@ -1,6 +1,7 @@
 export const erroresList = (error) => {
     const lista = [
         { recibido: 'Firebase: Error (auth/email-already-in-use).', mostrar: 'El Correo ya esta Registrado' },
+        { recibido: 'Firebase: Error (auth/popup-closed-by-user).', mostrar: 'Registro con Google Cancelado' }
     ];
 
     const hayError = lista.find(x => x.recibido === error.message);
