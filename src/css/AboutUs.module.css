@@ -1,6 +1,4 @@
-.contrnrdor{
-  display: flex;
-}
+
 .contenedorTitulo{
   justify-content: center;
 }
@@ -30,6 +28,7 @@ text-align: center;
   width: 249px;
   justify-items: center;
   border-radius: 50%;
+  margin: 10px;
 
   
 }
@@ -42,17 +41,25 @@ text-align: center;
   text-align: center;
 }
 
-.carta.logo{
-justify-items: center;
+
+
+
+ .carta{
+  align-items: center;
+ }
+ 
+ 
+ 
+ 
+ .logo {
+  height: 50px;
+  width: 50px;
+ display: block;
+ margin: auto;
+ padding: 4px;
 }
 
 
-
-.logo{
-
-  height: 30px;
-  width: 30px;
-}
 
 
 

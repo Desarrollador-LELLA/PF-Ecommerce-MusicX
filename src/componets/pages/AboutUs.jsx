@@ -22,35 +22,42 @@ export default function AboutUs() {
           <div>
             <img className={styles.imagen} src={mateo}></img>
             <p>Mateo  Urquijo</p>
+            <a href="https://github.com/ImOrion" target="_blank"><img className={styles.logo} src={github}  /></a>
           </div>
           <div>
             <img className={styles.imagen}  src={sergio} ></img>
             <p>Sergio Blanco</p>
+            <a href="https://github.com/Serblaor" target="_blank"><img className={styles.logo} src={github}  /></a>
           </div>
           <div>
             <img className={styles.imagen}  src={donCulon} ></img>
             <p>Luis Llancamil</p>
+            <a href="https://github.com/Desarrollador-LELLA" target="_blank"><img className={styles.logo} src={github}  /></a>
           </div>
           <div>
             <img className={styles.imagen}  src={diego}></img>
             <p>Diego Amundaray</p>
+            <a href="https://github.com/Aegox" target="_blank"><img className={styles.logo} src={github}  /></a>
           </div>
           <div>
             <img className={styles.imagen}  src={mariano}></img>
             <p>Mariano Teran</p>
+            <a href="https://github.com/dogoarg" target="_blank"><img className={styles.logo} src={github}  /></a>
           </div>
           <div>
             <img className={styles.imagen}  src={kennet}></img>
             <p>Kenneth Urbina</p>
+            <a href="https://github.com/KennethUC10" target="_blank"><img className={styles.logo} src={github}  /></a>
           </div>
           <div>
             <img className={styles.imagen}  src={ronaldo}></img>
             <p>Ronaldo Delgado</p>
+            <a href="https://github.com/RonaldoMonki" target="_blank"><img className={styles.logo} src={github}  /></a>
           </div>
           <div  className={styles.carta}>
             <img className={styles.imagen} src={nelson}></img>
             <p >Nelson vargas </p>
-            <img className={styles.logo} src={github}  />
+            <a href="https://github.com/Nelsonvargas15" target="_blank"><img className={styles.logo} src={github}  /></a>
           </div>
         </div>
 
@@ -76,7 +83,7 @@ export default function AboutUs() {
               <ul className="list-unstyled">
                 <li className=' my-3'><a href="https://github.com/ImOrion" target="_blank"><img src={github} width="30" height="30"/>Mateo Urquijo</a></li>
                 <li className=' my-3' ><a href="https://github.com/Desarrollador-LELLA" target="_blank"><img src={github} width="30" height="30"/>Luis Llancamil</a></li>
-                <li className=' my-3'><a href="https://github.com/RonaldoMonki " target="_blank"><img src={github} width="30" height="30"/>Ronaldo Delgado</a></li>
+                <li className=' my-3'><a href="https://github.com/RonaldoMonki" target="_blank"><img src={github} width="30" height="30"/>Ronaldo Delgado</a></li>
                 <li className=' my-3'><a href="https://github.com/dogoarg" target="_blank"><img src={github} width="30" height="30"/>Mariano Teran</a></li>
               </ul>
             </div>
