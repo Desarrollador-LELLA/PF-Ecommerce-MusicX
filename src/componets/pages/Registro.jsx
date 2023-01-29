@@ -33,7 +33,6 @@ const Registro = () => {
 
     const onChangeGoogle = async (e) => {
         e.preventDefault();
-        console.log('algo');
         setLoading(true);
         dispatch(registraGoogleAction(() => setLoading(false)));
     };
