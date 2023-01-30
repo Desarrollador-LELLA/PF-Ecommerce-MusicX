@@ -67,7 +67,7 @@ const Perfil = () => {
                     </ul>
 
                     {datosu.rol === "Cliente" && <div className="boton-irABiblioteca">
-                        <Link to="/Biblioteca">
+                        <Link to="/bibloteca">
                             <button type="onClick" className="boton-biblioteca">
                                 <i><FontAwesomeIcon icon={faBook} /></i> Biblioteca
                             </button>

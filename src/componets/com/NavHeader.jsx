@@ -37,19 +37,9 @@ const NavHeader = () => {
                         <NavLink className='nav-link' to='/aboutus'>
                             Sobre Nosotros
                         </NavLink>
-                        <NavLink className='nav-link' to='/testerpaginado'>
-                            Tester Paginado
-                        </NavLink>
                         {/* AGREGAR MAS LINK SE LO DECENA COPY PASTE NavLink DE ARRIBA */}
-
-                        <NavLink className='nav-link' to='/Bibloteca'>
-                            Bibloteca
-                        </NavLink>
                         <SearchBar />
                     </Nav>
-
-
-
                     {
                         loadingAuth ? null : !authenticatedAuth &&
                             <ButtonGroup>
@@ -72,8 +62,7 @@ const NavHeader = () => {
                                 <Dropdown.Menu className='position-absolute' variant="dark">
                                     <Dropdown.Header className='text-center'>Usuario</Dropdown.Header>
                                     <Dropdown.Divider />
-                                    <Dropdown.Item onClick={() => navegar('/perfil')}><Image src={icPerfil} width='24px' />{'   '}Mi Perfil Cliente</Dropdown.Item>
-                                    {/* <Dropdown.Item onClick={() => navegar('/perfiladmin')}><Image src={icPerfil} width='24px' />{'   '}Mi Perfil Admin</Dropdown.Item> */}
+                                    <Dropdown.Item onClick={() => navegar('/perfil')}><Image src={icPerfil} width='24px' /><span className='ms-3'>Mi Perfil</span></Dropdown.Item>
                                     <Dropdown.Divider />
                                     <Dropdown.Header className='text-center'>Administracion</Dropdown.Header>
                                     <Dropdown.Divider />

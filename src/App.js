@@ -58,7 +58,7 @@ function App() {
         {/* CONDICIONALES CLIENTES */}
         <Route path="registro" element={!authenticatedAuth ? <Registro /> : <Navigate to="/" />} />
         <Route path="iniciarsesion" element={!authenticatedAuth ? <InicioSesion /> : <Navigate to="/" />} />
-        <Route  path='Bibloteca'  element ={authenticatedAuth ? <Bibloteca/> : <Navigate to = "/iniciarsesion" />}/>
+        <Route path='bibloteca' element ={authenticatedAuth ? <Bibloteca/> : <Navigate to = "/iniciarsesion" />}/>
         <Route path="PerfilUsuario" element={authenticatedAuth ? <PerfilU /> : <Navigate to="/iniciarsesion" />} />
         {/* CONDICIONALES ADMIN */}
         <Route path="producto_create" element={authenticatedAuth ? <ProductoCreate /> : <Navigate to="/iniciarsesion" />} />

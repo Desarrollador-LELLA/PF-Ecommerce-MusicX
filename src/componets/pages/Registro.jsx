@@ -6,6 +6,7 @@ import s from '../../css/registro.module.css';
 import icLogo from '../images/ic_logo_tester.png';
 import { ValidoRegistro } from '../../utils/validaciones';
 import { errorAction, registraAction, registraGoogleAction } from '../../redux/actions/authAction';
+import icGoogle from '../images/ic_google.svg';
 
 const INIT_STATE = {
     nombre: '',
@@ -63,13 +64,13 @@ const Registro = () => {
 
     return (
         <Container className='my-4'>
-            <Card className={`${s.registrocard} m-auto`}>
+            <Card className={`${s.registrocard} m-auto border-0`}>
                 <Card.Body>
                     <div className='text-center'>
                         <Image className='btn-primary' src={icLogo} width='100px' />
                     </div>
                     <Card.Title className='text-center my-3 text-white'>Registrarme</Card.Title>
-                    <Form onSubmit={onSubmit}>
+                    <Form onSubmit={onSubmit} className='d-grid'>
                         {
                             loading ?
                                 <>
@@ -114,11 +115,12 @@ const Registro = () => {
                                         <Form.Control name='rclave' type='password' placeholder='Repetir Contraseña' onChange={onChange} value={registro.rclave} isInvalid={!!errores.rclave} />
                                         <Form.Control.Feedback type='invalid'>{errores.rclave}</Form.Control.Feedback>
                                     </FloatingLabel>
-                                    <Button className='float-end mb-3' variant='dark' type='submit' onClick={onChange}>
+                                    <Button className='mb-3' variant='dark' type='submit' onClick={onChange}>
                                         Registrarme
                                     </Button>
-                                    <Button className='float-end mb-3' variant='dark' type='submit' onClick={onChangeGoogle}>
-                                        Registrarme Google
+                                    <Button className='mb-3' variant='dark' type='button' onClick={onChangeGoogle}>
+                                        <Image src={icGoogle} />
+                                        <span className='ms-3'>Registrarme con Google</span>
                                     </Button>
                                 </>
                         }
