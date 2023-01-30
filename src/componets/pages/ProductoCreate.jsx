@@ -1,16 +1,13 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { Button, Card, Container, Form, Label, Image } from 'react-bootstrap';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
 import style from '../../css/productoCreate.module.css';
 import { db, storage, allStor, stor } from '../../firebaseInicial/firebase';
 import { collection, addDoc } from "firebase/firestore"; 
 
+
 //      Subir imagenes
-/*
-import { ref, uploadBytes, getDownloadURL, getStorage } from "firebase/storage";
-import { v4 } from "uuid";
-*/
 import { actualizaDocumento, crearDocumento, subirArchivoMetodo } from '../../utils/metodosFirebase';
 
 
@@ -23,10 +20,9 @@ const ProductoCreate = () => {
         nombre: "",
         autor: "",
         descripcion: "",
-        precio: 0,
+        //precio: 0,
         key: "",
-        tiempo: 0,
-        //imagen: null
+        tiempo: 0
     });
 
 
@@ -87,6 +83,7 @@ const ProductoCreate = () => {
             valido = false;
         }
 
+        /*
         if (regex.test(precio) !== true) {
             e.precio = 'El precio debe ser un numero o decimal';
             valido = false;
@@ -95,6 +92,7 @@ const ProductoCreate = () => {
             e.precio = 'El precio debe ser mayor a cero';
             valido = false;
         }
+        */
 
         if (tiempo.toString().trim().length === 0) {
             e.tiempo = 'El Tiempo esta Vacio';
@@ -152,49 +150,6 @@ const ProductoCreate = () => {
                     actualizaDocumento("productos", prod.result.id, { data: { imagen: url } })
                 });
 
-
-                /*          PRIMER CODIGO
-                const imageRef = ref(storage, "image.jpg");
-                /*
-                const imageRef = ref(stor, "image.jpg");
-
-                uploadBytes(imageRef, producto.imagen, {
-                    contentType: 'image/jpeg'
-                }).then( () => {
-                    setURL(url);
-                }).catch( (err) => {
-                    console.log("Error generado 1 :", err);
-                });
-                
-                await addDoc(collection(db, "productos"), { ...producto, deshabilitado: false });
-                navigate("/producto_lista");
-                
-                console.log(producto);
-                console.log(imageRef);
-                console.log(producto.imagen);
-                */
-
-
-                //  const imageRef = ref(stor, `images/${ producto.imagen }`);
-
-                /*      SEGUNDO CODIGO
-                const imageRef = ref(storage, `images/${ imageUpload.name + v4() }`);
-                const imageRef = ref(stor, `images/${ imageUpload.name + v4() }`);
-
-                uploadBytes(imageRef, imageUpload).then( () => {
-                    setURL(url);
-                }).catch( (err) => {
-                    console.log("Error generado 1 :", err);
-                });
-
-                await addDoc(collection(db, "productos"), { ...producto, deshabilitado: false });
-                console.log(producto);
-                console.log(imageRef);
-                console.log(producto.imagen);
-                */
-
-
-
             }
         }
         catch(err)
@@ -230,11 +185,13 @@ const ProductoCreate = () => {
                             <Form.Control name='key' type='text' className={ `${ style.textbox }` } placeholder='Ingrese key producto' onChange={ handleInputChange } isInvalid={!!errores.key} />
                             <Form.Control.Feedback type={'invalid'}>{ errores.key }</Form.Control.Feedback>
                         </div>
+                        {/*
                         <div className='form-group input-group input-group-text my-3 d-flex justify-content-between'>
                             <Form.Label>Precio producto :</Form.Label>
                             <Form.Control name='precio' type='text' className={ `${ style.textbox }` } placeholder='Ingrese precio producto' onChange={ handleInputChange } isInvalid={!!errores.precio} />
                             <Form.Control.Feedback type={'invalid'}>{ errores.precio }</Form.Control.Feedback>
                         </div>
+                        */}
                         <div className='form-group input-group input-group-text my-3 d-flex justify-content-between'>
                             <Form.Label>Tiempo producto :</Form.Label>
                             <Form.Control name='tiempo' type='number' className={ `${ style.textbox }` } placeholder='Ingrese tiempo producto' onChange={ handleInputChange } isInvalid={!!errores.tiempo} />
@@ -242,17 +199,9 @@ const ProductoCreate = () => {
                         </div>
                         <div className='form-group input-group input-group-text my-3 d-flex justify-content-between'>
                             <Form.Label>Imagen producto :</Form.Label>
-                            {/*
-                            <Form.Control name='imagen' type='text' className={ `${ style.textbox } float-right` } placeholder='Ingrese url producto' onChange={ handleInputChange } isInvalid={!!errores.imagen} />
-                            <input name='imagen' type='file' onChange={ (e) => setImageUpload(e.target.values[0]) } />
-                            */}
-
-
-                            {/* <input name='imagen' type='file' onChange={ handleInputChange } />  */}
                             <Form.Control type="file" accept="image/png, image/jpg, image/jpeg" onChange={ handleSubirImagen } />
                             <Form.Control.Feedback type={'invalid'}>{ errores.imagen }</Form.Control.Feedback>
                         </div>
-
                         <div className='form-group input-group input-group-text my-3'>
                             <Button className={`${style.button} text-center btn btn-primary`} type='submit' variant='primary' >Registrar</Button>
                         </div>
