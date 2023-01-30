@@ -35,8 +35,9 @@ export default function Bibloteca({
                 <p>{elemento.tiempo}</p>
               </div>
             </div>
-          )
-        })}
+            
+          ) 
+        })  }
       </div>
 
 

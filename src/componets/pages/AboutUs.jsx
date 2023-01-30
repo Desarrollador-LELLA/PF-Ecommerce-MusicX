@@ -25,7 +25,7 @@ export default function AboutUs() {
             <p>Mateo  Urquijo</p>
             <div className={styles.links}>
               <a href="https://github.com/ImOrion" target="_blank"><img className={styles.logo} src={github} /></a>
-              <a href="https://github.com/ImOrion" target="_blank"><img className={styles.logo} src={linkedin} /></a>
+              <a href="https://www.linkedin.com/in/mateo-urquijo-639bab188/" target="_blank"><img className={styles.logo} src={linkedin} /></a>
             </div>
           </div>
           <div>
@@ -33,7 +33,7 @@ export default function AboutUs() {
             <p>Sergio Blanco</p>
             <div  className={styles.links}>
               <a href="https://github.com/Serblaor" target="_blank"><img className={styles.logo} src={github} /></a>
-              <a href="https://github.com/ImOrion" target="_blank"><img className={styles.logo} src={linkedin} /></a>
+              <a href="https://www.linkedin.com/in/serblaor7/" target="_blank"><img className={styles.logo} src={linkedin} /></a>
             </div>
           </div>
           <div>
@@ -41,7 +41,7 @@ export default function AboutUs() {
             <p>Luis Llancamil</p>
             <div className={styles.links}>
               <a href="https://github.com/Desarrollador-LELLA" target="_blank"><img className={styles.logo} src={github} /></a>
-              <a href="https://github.com/ImOrion" target="_blank"><img className={styles.logo} src={linkedin} /></a>
+              <a href="https://www.linkedin.com/in/luisestebanllancamilaguilera/" target="_blank"><img className={styles.logo} src={linkedin} /></a>
             </div>
           </div>
           <div>
@@ -49,7 +49,7 @@ export default function AboutUs() {
             <p>Diego Amundaray</p>
             <div className={styles.links}>
               <a href="https://github.com/Aegox" target="_blank"><img className={styles.logo} src={github} /></a>
-              <a href="https://github.com/ImOrion" target="_blank"><img className={styles.logo} src={linkedin} /></a>
+              <a href="https://www.linkedin.com/in/diego-amundaray-743862210/" target="_blank"><img className={styles.logo} src={linkedin} /></a>
             </div>
           </div>
           <div>
@@ -57,7 +57,8 @@ export default function AboutUs() {
             <p>Mariano Teran</p>
             <div className={styles.links}>
               <a href="https://github.com/dogoarg" target="_blank"><img className={styles.logo} src={github} /></a>
-              <a href="https://github.com/ImOrion" target="_blank"><img className={styles.logo} src={linkedin} /></a>
+              <a href="https://github.com/dogoarg" target="_blank"><img className={styles.logo} src={github} /></a>
+              <a href="" target="_blank"><img className={styles.logo} src={linkedin} /></a>
             </div>
           </div>
           <div>
@@ -65,7 +66,7 @@ export default function AboutUs() {
             <p>Kenneth Urbina</p>
             <div className={styles.links}>
               <a href="https://github.com/KennethUC10" target="_blank"><img className={styles.logo} src={github} /></a>
-              <a href="https://github.com/ImOrion" target="_blank"><img className={styles.logo} src={linkedin} /></a>
+              <a href="https://www.linkedin.com/in/kenneth-urbina-81abb8103/" target="_blank"><img className={styles.logo} src={linkedin} /></a>
             </div>
           </div>
           <div>
@@ -73,7 +74,7 @@ export default function AboutUs() {
             <p>Ronaldo Delgado</p>
             <div className={styles.links}>
               <a href="https://github.com/RonaldoMonki" target="_blank"><img className={styles.logo} src={github} /></a>
-              <a href="https://github.com/ImOrion" target="_blank"><img className={styles.logo} src={linkedin} /></a>
+              <a href="https://github.com/RonaldoMonki" target="_blank"><img className={styles.logo} src={linkedin} /></a>
             </div>
           </div>
           <div className={styles.carta}>
@@ -81,7 +82,7 @@ export default function AboutUs() {
             <p >Nelson vargas </p>
             <div className={styles.links}>
             <a href="https://github.com/Nelsonvargas15" target="_blank"><img className={styles.logo} src={github} /></a>
-            <a href="https://github.com/ImOrion" target="_blank"><img className={styles.logo} src={linkedin} /></a>
+            <a href="https://www.linkedin.com/in/nelson-vargas-470893254/" target="_blank"><img className={styles.logo} src={linkedin} /></a>
           </div>
         </div>
       </div>
