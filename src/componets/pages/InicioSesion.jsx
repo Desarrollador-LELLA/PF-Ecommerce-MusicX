@@ -101,7 +101,7 @@ export default function InicioSesion() {
                                     </Button>
                                     <Button className='mb-3' variant='dark' type='button' onClick={onChangeGoogle}>
                                         <Image src={icGoogle} />
-                                        <span className='ms-3'>Registrarme con Google</span>
+                                        <span className='ms-3'>Iniciar Sesion con Google</span>
                                     </Button>
                                 </>
                         }
