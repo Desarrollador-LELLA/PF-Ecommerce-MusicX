@@ -18,6 +18,7 @@ service cloud.firestore {
       allow read, write, create, update, delete: if request.auth != null && get(/databases/$(database)/documents/Key/$(request.auth.uid)).data.rol == 'Super-Admin';
     }
     match /generos/{generoId} {
+      allow read: if true;
       allow read, write, create, update: if request.auth != null && get(/databases/$(database)/documents/usuarios/$(request.auth.uid)).data.rol == 'Admin';
       allow read, write, create, update, delete: if request.auth != null && get(/databases/$(database)/documents/usuarios/$(request.auth.uid)).data.rol == 'Super-Admin';
     }
