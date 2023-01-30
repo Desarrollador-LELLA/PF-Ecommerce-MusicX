@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Button, Modal, FloatingLabel, Form, Container, Pagination, Spinner, Row, Col, Card } from 'react-bootstrap';
+import { Button, Modal, FloatingLabel, Form, Container, Pagination, Spinner, Row, Col, Card, Badge, InputGroup } from 'react-bootstrap';
 import { clear } from '@testing-library/user-event/dist/clear';
 import { setLogLevel } from 'firebase/app';
 import s from "../../css/genero.module.css";
@@ -10,6 +10,7 @@ import { useDispatch } from "react-redux";
 import { paginacion } from '../../utils/libreria';
 import { todosDocumentos, mostrarImgen, obtienePaginado, siguientePaginado, anteriorPaginado, cambiaPaginado, crearDocumento, unDocumento, actualizaDocumento } from '../../utils/metodosFirebase';
 import icGenero from "../images/ic_genero.svg"
+
 
 const INITIAL_PAGINADO = {
   coleccion: 'generos',
@@ -209,7 +210,7 @@ const Generos = () => {
   return (
     <Container>
       {/* MODAL CREAR GENERO */}
-      <Button variant="outline-secondary" onClick={handleAbrirModalCrear}>Crear genero musical</Button>
+      {/* <Button variant="outline-secondary" onClick={handleAbrirModalCrear}>Crear genero musical</Button> */}
       <Modal show={abrirModalCrear} onHide={handleCloseAbrirModalCrear} backdrop="static" keyboard={false}>
         <Modal.Header closeButton>
           <Modal.Title className="text-bg-dark p-3" >Crear genero</Modal.Title>
@@ -262,12 +263,39 @@ const Generos = () => {
           <span data-text="S">S</span>
           <span data-text="!">!</span>
         </p>
+
       </div>
       {/* BUSCADOR DE GENEROS */}
       <div className='container-fluid'>
-        <div>
-          <input className="text-bg-dark p-3" type='text' placeholder="Buscar..." onChange={(e) => buscar(e)} />
-          <button type="submit" className="text-bg-secondary p-3" onClick={(e) => onClickBuscar(e)}>Buscar</button>
+      {/* <Button variant="outline-secondary" onClick={handleAbrirModalCrear}>Crear genero musical</Button> */}
+      <InputGroup className="mb-3 w-50">
+        <Form.Control
+          placeholder="Buscar..."
+          aria-label="Buscar"
+          aria-describedby="basic-addon2"
+          onChange={(e) => buscar(e)}
+        />
+        
+        <Button variant="outline-secondary" type="submit"  onClick={(e) => onClickBuscar(e)}>
+          Buscar Genero
+        </Button>
+
+        <Button variant="outline-secondary" onClick={handleAbrirModalCrear} >
+          Crear Genero
+        </Button>
+
+      </InputGroup>
+      {
+            errorr ?
+              <div class="alert alert-danger" role="alert">
+                {errorr}
+              </div>
+              : null
+          }
+
+        {/* <div>
+          <input className="text-bg-dark p-1" type='text' placeholder="Buscar..." onChange={(e) => buscar(e)} />
+          <button type="submit" className="text-bg-secondary p-1" onClick={(e) => onClickBuscar(e)}>Buscar</button>
           {
             errorr ?
               <div class="alert alert-danger" role="alert">
@@ -275,16 +303,16 @@ const Generos = () => {
               </div>
               : null
           }
-        </div>
+        </div> */}
         {/* FILTRO DE GENEROS */}
-        <div>
+        {/* <div>
           <select className="text-bg-dark p-3" onChange={e => handleSort(e)}>
             <option value='art'>Artistas</option>
             <option value='lat'>Latinos</option>
             <option value='int'>Internacionales</option>
             <option value='eu'>Nombre</option>
           </select>
-        </div>
+        </div> */}
         {/* LISTADO DE GENEROS MAP */}
         <Row xs={2} sm={3} md={3} lg={4} xl={5} xxl={6}>
           {
@@ -292,13 +320,16 @@ const Generos = () => {
               estadoInicial.lista.length ?
                 estadoInicial.lista.slice(inicio, fin).map(i => (
                   <Col className='my-2'>
-                    <Card className={`${s.card_genero} h-100`} onClick={e => { " handleClick(e)"; }}>
+                    <Card className= {`${s.card_genero} h-100`} onClick={e => { " handleClick(e)"; }}>
                       <Card.Img className = {`${s.img_genero} rounded-circle`}  src={icGenero} variant="top" />
-                      <Card.Body>
+                      <Card.Body className='d-grid'>
                         <Card.Title className='text-light'>
                           {i.nombre}
                         </Card.Title>
-                        <Button variant="outline-secondary" onClick={() => handleShow2(i.id)}>Editar</Button>
+                        <Button variant="outline-secondary mb-3" onClick={() => handleShow2(i.id)}>Editar</Button>
+                        <Badge bg={i.habilitado ? "success" : "danger"}>
+                          {i.habilitado ? "Habilitado" : "Deshabilitado"}
+                        </Badge>
                       </Card.Body>
                     </Card>
                     {/* <div className='card' onClick={e => { " handleClick(e)"; }}>
@@ -314,19 +345,19 @@ const Generos = () => {
       </div>
 
       {/* PAGINADO */}
-      <div> <Button variant="outline-secondary" onClick={e => { handleVolver(e); }}>Volver a cargar todos los generos</Button>{' '}</div>
-      <Pagination>
-        <Pagination.Prev onClick={anterior} />
-        <Pagination.Item onClick={cambiarPagina} active={paginasBar[0] === estadoInicial.paginaActual ? true : false}>{paginasBar[0]}</Pagination.Item>
-        {paginasBar[1] && <Pagination.Ellipsis />}
+      {/* <div> <Button variant="outline-secondary" onClick={e => { handleVolver(e); }}>Volver a cargar todos los generos</Button>{' '}</div> */}
+      <Pagination className='justify-content-center' >
+        <Pagination.Prev onClick={anterior} className={s.paginado_genero}/>
+        <Pagination.Item  className={s.paginado_genero} onClick={cambiarPagina} active={paginasBar[0] === estadoInicial.paginaActual ? true : false}>{paginasBar[0]} </Pagination.Item >
+        {paginasBar[1] && <Pagination.Ellipsis className={s.paginado_genero}/>}
 
-        {paginasBar[2] && <Pagination.Item onClick={cambiarPagina} active={paginasBar[2] === estadoInicial.paginaActual ? true : false}>{paginasBar[2]}</Pagination.Item>}
-        {paginasBar[3] && <Pagination.Item onClick={cambiarPagina} active={paginasBar[3] === estadoInicial.paginaActual ? true : false}>{paginasBar[3]}</Pagination.Item>}
-        {paginasBar[4] && <Pagination.Item onClick={cambiarPagina} active={paginasBar[4] === estadoInicial.paginaActual ? true : false}>{paginasBar[4]}</Pagination.Item>}
+        {paginasBar[2] && <Pagination.Item onClick={cambiarPagina} className={s.paginado_genero}  active={paginasBar[2] === estadoInicial.paginaActual ? true : false}>{paginasBar[2]}</Pagination.Item>}
+        {paginasBar[3] && <Pagination.Item onClick={cambiarPagina} className={s.paginado_genero}  active={paginasBar[3] === estadoInicial.paginaActual ? true : false}>{paginasBar[3]}</Pagination.Item>}
+        {paginasBar[4] && <Pagination.Item onClick={cambiarPagina} className={s.paginado_genero} active={paginasBar[4] === estadoInicial.paginaActual ? true : false}>{paginasBar[4]}</Pagination.Item>}
 
-        {paginasBar[5] && <Pagination.Ellipsis />}
-        {paginasBar[6] && <Pagination.Item onClick={cambiarPagina} active={paginasBar[6] === estadoInicial.paginaActual ? true : false}>{paginasBar[6]}</Pagination.Item>}
-        {<Pagination.Next onClick={siguiente} />}
+        {paginasBar[5] && <Pagination.Ellipsis className={s.paginado_genero} />}
+        {paginasBar[6] && <Pagination.Item onClick={cambiarPagina} className={s.paginado_genero} active={paginasBar[6] === estadoInicial.paginaActual ? true : false}>{paginasBar[6]}</Pagination.Item>}
+        {<Pagination.Next onClick={siguiente} className={s.paginado_genero}/>}
       </Pagination>
     </Container>
   );
