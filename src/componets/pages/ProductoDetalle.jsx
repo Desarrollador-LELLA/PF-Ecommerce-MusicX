@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { Button, Card, Container, Form } from 'react-bootstrap';
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { detalle_producto_admin } from '../../redux/actions/productoAction';
 import style from '../../css/ProductoDetalle.module.css';
 import { useParams } from 'react-router-dom';
 import { db } from '../../firebaseInicial/firebase';
-import { collection, addDoc, doc, updateDoc } from "firebase/firestore"; 
+import { doc, updateDoc } from "firebase/firestore"; 
 
 
 const ProductoDetalle = () => {
@@ -14,7 +14,7 @@ const ProductoDetalle = () => {
         nombre: "",
         autor: "",
         descripcion: "",
-        precio: 0,
+        //precio: 0,
         key: "",
         tiempo: 0,
         imagen: ""
@@ -35,7 +35,7 @@ const ProductoDetalle = () => {
     }
 
 
-    const ValidoProducto = ({ nombre, autor, descripcion, precio, key, tiempo, imagen }) => {
+    const ValidoProducto = ({ nombre, autor, descripcion, key, tiempo, imagen }) => {
         const e = {};
         let valido = true;
         const regex = /^[0-9].*$/;
@@ -84,6 +84,7 @@ const ProductoDetalle = () => {
             valido = false;
         }
 
+        /*
         if(regex.test(precio) !== true)
         {
             e.precio = 'El precio debe ser un numero o decimal';
@@ -94,6 +95,7 @@ const ProductoDetalle = () => {
             e.precio = 'El precio debe ser mayor a cero';
             valido = false;
         }
+        */
 
         if (tiempo.toString().trim().length === 0)
         {
@@ -167,11 +169,13 @@ const ProductoDetalle = () => {
                             <Form.Control name='descripcion' type='text' value={ detalle?.descripcion } className={ `${ style.textbox }` } onChange={ handleInputChange } />
                             <Form.Control.Feedback type={'invalid'}>{ errores.nombre }</Form.Control.Feedback>
                         </div>
+                        {/*
                         <div className='form-group input-group input-group-text my-3 d-flex justify-content-between'>
                             <Form.Label>Precio producto :</Form.Label>
                             <Form.Control name='precio' type='text' value={ detalle?.precio } className={ `${ style.textbox }` } onChange={ handleInputChange } />
                             <Form.Control.Feedback type={'invalid'}>{ errores.nombre }</Form.Control.Feedback>
                         </div>
+                        */}
                         <div className='form-group input-group input-group-text my-3 d-flex justify-content-between'>
                             <Form.Label>Key producto :</Form.Label>
                             <Form.Control name='key' type='text' value={ detalle?.key } className={ `${ style.textbox }` } onChange={ handleInputChange } />                                

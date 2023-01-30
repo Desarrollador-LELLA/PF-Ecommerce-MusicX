@@ -56,7 +56,7 @@ const ProductoLista = () => {
     };
 
 
-    //  *************************************************************
+    //  ***************************************************************************************************************
 
 
 
@@ -97,14 +97,6 @@ const ProductoLista = () => {
             console.log("Error generado : ", err);
         }
     }
-    
-
-    /*      Carga por primera vez la lista        */
-    /*      Ya no usare esto porque ahora usare el listado de la paginacion
-    useEffect( () => {
-        lista();
-    }, [ultimo]);
-    */
 
 
     return (
@@ -118,7 +110,9 @@ const ProductoLista = () => {
                             <tr className={ `${ style.tr } ` }>
                                 <td className='text-center'>Nombre</td>
                                 <td className='text-center'>Descripcion</td>
+                                {/*
                                 <td className='text-center'>Precio</td>
+                                */}
                                 <td className='text-center'>Key</td>
                                 <td className='text-center'>Tiempo</td>
                                 <td className='text-center'>Habilitado</td>
@@ -134,7 +128,9 @@ const ProductoLista = () => {
                                         <tr className={ `${ style.tr_sombreado }` }>
                                             <td>{ e.nombre }</td>
                                             <td>{ e.descripcion }</td>
+                                            {/*
                                             <td>{ e.precio }</td>
+                                            */}
                                             <td>{ e.key }</td>
                                             <td>{ e.tiempo }</td>
                                             <td>
@@ -165,11 +161,9 @@ const ProductoLista = () => {
                     <Pagination.Prev onClick={anterior} />
                     <Pagination.Item onClick={cambiarPagina} active={paginasBar[0] === estadoInicial.paginaActual ? true : false}>{paginasBar[0]}</Pagination.Item>
                     {paginasBar[1] && <Pagination.Ellipsis />}
-
                     {paginasBar[2] && <Pagination.Item onClick={cambiarPagina} active={paginasBar[2] === estadoInicial.paginaActual ? true : false}>{paginasBar[2]}</Pagination.Item>}
                     {paginasBar[3] && <Pagination.Item onClick={cambiarPagina} active={paginasBar[3] === estadoInicial.paginaActual ? true : false}>{paginasBar[3]}</Pagination.Item>}
                     {paginasBar[4] && <Pagination.Item onClick={cambiarPagina} active={paginasBar[4] === estadoInicial.paginaActual ? true : false}>{paginasBar[4]}</Pagination.Item>}
-
                     {paginasBar[5] && <Pagination.Ellipsis />}
                     {paginasBar[6] && <Pagination.Item onClick={cambiarPagina} active={paginasBar[6] === estadoInicial.paginaActual ? true : false}>{paginasBar[6]}</Pagination.Item>}
                     {<Pagination.Next onClick={siguiente} />}

@@ -1,12 +1,11 @@
 import React, { useEffect, useState } from "react";
 import "../../css/perfil.css";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faUser, faPenToSquare, faImage, faEnvelope, faLock, faBook, faUserCheck, faCheck } from '@fortawesome/free-solid-svg-icons';
+import { faUser, faPenToSquare, faEnvelope, faLock, faBook, faUserCheck, faCheck } from '@fortawesome/free-solid-svg-icons';
 import { detalle_usuario_cliente } from "../../redux/actions/usuarioAction.js";
 import { useSelector } from "react-redux";
-import avatar from "../images/img-avatar.png";
 import { Form } from "react-bootstrap";
-import { actualizaDocumento, mostrarImgen, subirArchivo, subirArchivoMetodo } from "../../utils/metodosFirebase";
+import { actualizaDocumento, subirArchivoMetodo } from "../../utils/metodosFirebase";
 import { Link } from "react-router-dom";
 
 const Perfil = () => {
@@ -24,7 +23,6 @@ const Perfil = () => {
 
     const onchageavatar = async (e) => {
         const extension = e.target.files[0].type.substring(6, e.target.files[0].type.length);
-        console.log(extension)
         await subirArchivoMetodo(`usuarios/avatars/${usuarioAuth.id}/avatar.${extension}`, e.target.files[0], async (url) => {
             const uno = await actualizaDocumento('usuarios', usuarioAuth.id, { data: { imagen: url } })
             setDatosu({ ...datosu, imagen: url })
@@ -34,11 +32,19 @@ const Perfil = () => {
     return (
         <section className="seccion-perfil-usuario">
             <div className="perfil-usuario-header">
-                {console.log(datosu)}
                 <div className="perfil-usuario-portada">
                     <div className="perfil-usuario-avatar">
                         <img src={datosu.imagen} alt="img-avatar" width={'166px'} height='166px' />
-                        <Form.Control className="boton-avatar" type="file" accept="image/png, image/jpg, image/jpeg" onChange={onchageavatar} />
+                        <button className="boton-avatar">
+                            <i><FontAwesomeIcon icon={faPenToSquare} /></i>
+                            <Form.Control
+                                style={{ opacity: 0 }}
+                                type="file"
+                                accept="image/png, image/jpg, image/jpeg"
+                                color="transparent"
+                                onChange={onchageavatar}
+                            />
+                        </button>
                     </div>
                     <button type="button" className="boton-portada">
                         <i><FontAwesomeIcon icon={faPenToSquare} /></i> Cambiar fondo
@@ -46,11 +52,11 @@ const Perfil = () => {
                 </div>
             </div>
             <div className="perfil-usuario-body">
-                <div className="perfil-usuario-bio">
+                <div className="perfil-usuario-bio text-light">
                     <h3 className="titulo">{datosu.nombre + " " + datosu.apellido}</h3>
                     <p className="texto">{datosu.descripcion}</p>
                 </div>
-                <div className="perfil-usuario-footer">
+                <div className="perfil-usuario-footer text-light">
                     <ul className="lista-datos">
                         {datosu.rol === "Admin" && <li><i><FontAwesomeIcon icon={faUser} /></i> UsuarioID : {datosu.id} </li>}
                         <li><i><FontAwesomeIcon icon={faEnvelope} /></i> Correo: {datosu.correo}</li>
@@ -59,11 +65,14 @@ const Perfil = () => {
                     <ul className="lista-datos">
                         <li><i><FontAwesomeIcon icon={faUserCheck} /></i> Registro: {datosu.fechaCreacion && new Date(datosu.fechaCreacion.seconds * 1000).toString()}</li>
                     </ul>
-                    <div className="boton-irABiblioteca">
-                        <button type="button" className="boton-biblioteca">
-                            <i><FontAwesomeIcon icon={faBook} /></i> Biblioteca
-                        </button>
-                    </div>
+
+                    {datosu.rol === "Cliente" && <div className="boton-irABiblioteca">
+                        <Link to="/bibloteca">
+                            <button type="onClick" className="boton-biblioteca">
+                                <i><FontAwesomeIcon icon={faBook} /></i> Biblioteca
+                            </button>
+                        </Link>
+                    </div>}
                     <div className="boton-editar-info">
                         <Link to={`/editarUsuario/${usuarioAuth.id}`}>
                             <button type="onClick" className="boton-editar" >

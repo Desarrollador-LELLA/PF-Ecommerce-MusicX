@@ -2,14 +2,95 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 import styles from "../../css/AboutUs.module.css"
 import github from "../images/github.png"
+import nelson from "../images/nelson.jpg"
+import mateo from "../images/mateo.jfif"
+import sergio from "../images/sergio.jfif"
+import donCulon from "../images/donculon.jfif"
+import diego from "../images/diego.jfif"
+import mariano from "../images/mariano.jfif"
+import kennet from "../images/kennet.jfif"
+import ronaldo from "../images/ronaldo.png"
+import linkedin from "../images/linkedin.png"
 
 export default function AboutUs() {
-  const style = {
-    background : "#3456"
-  }
   return (
-    <div className='text-center my-3' >
-      <Link to="/" className="btn btn-primary ">atras</Link>
+    <div className={styles.contenedor} >
+      <div className={styles.contenedorTitulo}>
+        <h1 className={styles.titulo}>Nuestro Equipo</h1>
+      </div>
+      <div className={styles.ContenedorCartas}>
+        <div className={styles.cartas}>
+          <div>
+            <img className={styles.imagen} src={mateo}></img>
+            <p>Mateo  Urquijo</p>
+            <div className={styles.links}>
+              <a href="https://github.com/ImOrion" target="_blank"><img className={styles.logo} src={github} /></a>
+              <a href="https://www.linkedin.com/in/mateo-urquijo-639bab188/" target="_blank"><img className={styles.logo} src={linkedin} /></a>
+            </div>
+          </div>
+          <div>
+            <img className={styles.imagen} src={sergio} ></img>
+            <p>Sergio Blanco</p>
+            <div  className={styles.links}>
+              <a href="https://github.com/Serblaor" target="_blank"><img className={styles.logo} src={github} /></a>
+              <a href="https://www.linkedin.com/in/serblaor7/" target="_blank"><img className={styles.logo} src={linkedin} /></a>
+            </div>
+          </div>
+          <div>
+            <img className={styles.imagen} src={donCulon} ></img>
+            <p>Luis Llancamil</p>
+            <div className={styles.links}>
+              <a href="https://github.com/Desarrollador-LELLA" target="_blank"><img className={styles.logo} src={github} /></a>
+              <a href="https://www.linkedin.com/in/luisestebanllancamilaguilera/" target="_blank"><img className={styles.logo} src={linkedin} /></a>
+            </div>
+          </div>
+          <div>
+            <img className={styles.imagen} src={diego}></img>
+            <p>Diego Amundaray</p>
+            <div className={styles.links}>
+              <a href="https://github.com/Aegox" target="_blank"><img className={styles.logo} src={github} /></a>
+              <a href="https://www.linkedin.com/in/diego-amundaray-743862210/" target="_blank"><img className={styles.logo} src={linkedin} /></a>
+            </div>
+          </div>
+          <div>
+            <img className={styles.imagen} src={mariano}></img>
+            <p>Mariano Teran</p>
+            <div className={styles.links}>
+              <a href="https://github.com/dogoarg" target="_blank"><img className={styles.logo} src={github} /></a>
+             
+              <a href="" target="_blank"><img className={styles.logo} src={linkedin} /></a>
+            </div>
+          </div>
+          <div>
+            <img className={styles.imagen} src={kennet}></img>
+            <p>Kenneth Urbina</p>
+            <div className={styles.links}>
+              <a href="https://github.com/KennethUC10" target="_blank"><img className={styles.logo} src={github} /></a>
+              <a href="https://www.linkedin.com/in/kenneth-urbina-81abb8103/" target="_blank"><img className={styles.logo} src={linkedin} /></a>
+            </div>
+          </div>
+          <div>
+            <img className={styles.imagen} src={ronaldo}></img>
+            <p>Ronaldo Delgado</p>
+            <div className={styles.links}>
+              <a href="https://github.com/RonaldoMonki" target="_blank"><img className={styles.logo} src={github} /></a>
+              <a href="https://github.com/RonaldoMonki" target="_blank"><img className={styles.logo} src={linkedin} /></a>
+            </div>
+          </div>
+          <div className={styles.carta}>
+            <img className={styles.imagen} src={nelson}></img>
+            <p >Nelson vargas </p>
+            <div className={styles.links}>
+            <a href="https://github.com/Nelsonvargas15" target="_blank"><img className={styles.logo} src={github} /></a>
+            <a href="https://www.linkedin.com/in/nelson-vargas-470893254/" target="_blank"><img className={styles.logo} src={linkedin} /></a>
+          </div>
+        </div>
+      </div>
+
+
+    </div>
+
+      {/* <Link to="/" className="btn btn-primary ">atras</Link>
       <h1 className={styles.titulo}>sobre nosotros </h1>
       <p>info sobre la pagina </p>
 
@@ -28,7 +109,7 @@ export default function AboutUs() {
               <ul className="list-unstyled">
                 <li className=' my-3'><a href="https://github.com/ImOrion" target="_blank"><img src={github} width="30" height="30"/>Mateo Urquijo</a></li>
                 <li className=' my-3' ><a href="https://github.com/Desarrollador-LELLA" target="_blank"><img src={github} width="30" height="30"/>Luis Llancamil</a></li>
-                <li className=' my-3'><a href="https://github.com/RonaldoMonki " target="_blank"><img src={github} width="30" height="30"/>Ronaldo Delgado</a></li>
+                <li className=' my-3'><a href="https://github.com/RonaldoMonki" target="_blank"><img src={github} width="30" height="30"/>Ronaldo Delgado</a></li>
                 <li className=' my-3'><a href="https://github.com/dogoarg" target="_blank"><img src={github} width="30" height="30"/>Mariano Teran</a></li>
               </ul>
             </div>
@@ -44,10 +125,10 @@ export default function AboutUs() {
             </div>
           </div>
         </div>
-
+hola amigo mio 
  
 
-      </footer>
-    </div>
+      </footer> */}
+    </div >
   )
 }

@@ -1,104 +1,69 @@
-.contenedor{
-    display: flex;
-}
-
-.footer{
-    position: absolute;
-    width: 1280px;
-    height: 217px;
-    left: -2px;
-    top: 615px;
-    
-    background: linear-gradient(180deg, rgba(54, 19, 36, 0) 0%, #871D50 100%);
-    mix-blend-mode: normal;
-    filter: blur(40px);
-    backdrop-filter: blur(250px);
-} 
-
-/* position: absolute;
-width: 1280px;
-height: 217px;
-left: -2px;
-top: 615px;
-background: linear-gradient(110deg, #561d53 0%, #871D50 100%);
-mix-blend-mode: normal;
-filter: blur(31px);
--webkit-backdrop-filter: blur(250px);
-backdrop-filter: blur(9px); */
-
-
-.imagen{
-    
-width: 207px;
-height: 203px;
-top: 231px;
-
-border-radius: 101.5px;
-margin: 10px;
-margin-top: 325px;
-}
-
-.imagenes{
-    position: absolute;
-    width: 176px;
-    height: 166px;
-    top: 425.49px;
-    margin: 10px;
-    border-radius: 101.5px;
-}
-
-.imagenes:hover{
-    animation-name: gixaxb;
-    animation-duration: 5s;
-    animation-iteration-count: infinite;
-    animation-timing-function: linear;
-}
-
-.fondo{
-    background: rgba(54, 19, 36, 0);
-    height: 100%;
-}
-
-.titulo{
-   
-width: 144px;
-height: 33px;
-font-family: 'Dela Gothic One';
-animation-name: gixaxb;
-animation-duration: 5s;
-animation-iteration-count: infinite;
-animation-timing-function: linear;
-font-size: 24px;
-color: #282929;
+.contenedor {
+  display: flex;
+  flex-direction: column;
+  gap: 100px;
 }
 
 
-.compras{
-    position: absolute;
-    width: 546px;
-    height: 103px;
-    left: 381px;
-    top: 94px;
-    
-    font-family: 'Dela Gothic One';
-    font-style: normal;
-    font-weight: 400;
-    font-size: 64px;
-    line-height: 93px;
-    text-align: center;
-    
-    color: #2B7E74;
+
+
+.titulo {
+  font-size: 60px;
+  padding: 20px;
+  width: 100%;
+  height: 15%;
+  text-align: center;
+  font-family: Poppins,sans-serif;
+  font-style: normal;
+  color: #2B7E74;
+  text-align: center;
 }
 
-
-@media (min-width: 30em) {
-    .compras {
-      font-size: 3em;
-    }
-  }
-  @media (min-width: 40em) {
-    .compras {
-      font-size: 5em;
-    }
-  }
+.elementos {
+  display: flex;
+  width: 100%;
+  height: 100%;
+  justify-content: center;
+  gap: 50px;
+  flex-wrap: wrap;
  
+}
+
+.elemento {
+  height: 300px;
+  width: 300px;
+  position: relative;
+}
+
+
+
+.elemento img {
+  height: 100%;
+  width: 100%;
+  border-radius: 100%;
+
+}
+
+.elemento img:hover{
+  animation-name: gixaxb;
+  animation-duration: 3s;
+  animation-iteration-count: infinite;
+  animation-timing-function: linear;
+}
+@keyframes gixaxb{
+  from{
+      transform: rotate(0deg);
+  }to{
+      transform: rotate(360deg);
+  }
+}
+
+.descripcion {
+  display: flex;
+  position: absolute;
+  top: 40%;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+
+}
