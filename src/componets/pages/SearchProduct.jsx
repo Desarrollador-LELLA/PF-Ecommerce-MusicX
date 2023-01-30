@@ -212,7 +212,7 @@ export default function SearchProduct() {
               </Card>
             </Col>
           ))
-        ) : <h1>Aprenda a Escribir</h1>}
+        ) : <h1>{"No se encontraron Beats :("}</h1>}
       </Row>
       <Pagination>
         <Pagination.Prev onClick={anterior} />
