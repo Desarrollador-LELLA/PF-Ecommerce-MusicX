@@ -40,13 +40,13 @@ const registraGoogleAction = (onError) => async (dispatch) => {
   try {
     const provider = new allAuth.GoogleAuthProvider();
     const { _tokenResponse, user } = await allAuth.signInWithPopup(auth, provider)
-    console.log(_tokenResponse)
     if (_tokenResponse.isNewUser) {
       const userData = {
         id: _tokenResponse.localId,
         nombre: _tokenResponse.firstName ? _tokenResponse.firstName : 'Sin Nombre',
         apellido: _tokenResponse.lastName ? _tokenResponse.lastName : 'Sin Apellido',
         correo: _tokenResponse.email,
+        imagen: _tokenResponse.photoUrl,
         rol: 'Cliente',
         fechaCreacion: allDb.serverTimestamp(),
       };
