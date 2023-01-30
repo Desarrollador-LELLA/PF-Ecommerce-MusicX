@@ -24,7 +24,7 @@ const INITIAL_PAGINADO = {
   ordenarPor: "nombre",
   whereFiltros: null,
   lista: [],
-  itemPorPagina: 4,
+  itemPorPagina: 10,
   paginaActual: 1,
 };
 
@@ -126,10 +126,6 @@ export default function SearchProduct() {
           <div>
             <h2 className={s.titlefilter}>Filtros</h2>
           </div>
-          <select>
-            <option>A-Z</option>
-            <option>Z-A</option>
-          </select>
           <div className={s.containerfilters}>
             <Accordion className={s.acordion} defaultActiveKey="0">
               <Accordion.Item className={s.acordion} eventKey="0">
@@ -139,7 +135,7 @@ export default function SearchProduct() {
                     
                   {generos.length ?
                     generos.map(i =>(
-                        <Form.Check onClick={onPene} type="switch" id="custom-switch" name={i.data().nombre} label={i.data().nombre}/>  
+                        <Form.Check key={i.data().nombre} onClick={onPene} type="switch" id="custom-switch" name={i.data().nombre} label={i.data().nombre}/>  
                                   
                         )) : null  //ACA SE DEBE MOSTRAR AL USUARIO QUE NO EXISTEN GENEROS EN CASO DE BUSQUEDA O AL INICIAR
                   }
@@ -156,7 +152,7 @@ export default function SearchProduct() {
                     {
               keys.length ?
                 keys.map(i =>(
-                          <option  value={i.data().nombre}>{i.data().nombre}</option>    
+                          <option key={i.data().nombre} value={i.data().nombre}>{i.data().nombre}</option>    
                           
                 )) : null  //ACA SE DEBE MOSTRAR AL USUARIO QUE NO EXISTEN GENEROS EN CASO DE BUSQUEDA O AL INICIAR
           }
@@ -164,7 +160,7 @@ export default function SearchProduct() {
                 </Form>
                 </Accordion.Body>
               </Accordion.Item  >
-              <Accordion.Item className={s.acordion} eventKey="2">
+              {/* <Accordion.Item className={s.acordion} eventKey="2">
                 <Accordion.Header> <FontAwesomeIcon icon={faGaugeSimple}/>BPM</Accordion.Header>
                 <Accordion.Body>
                 <Form.Control
@@ -178,7 +174,7 @@ export default function SearchProduct() {
                   aria-label="Recipient's username"
                   aria-describedby="basic-addon2"/>
                 </Accordion.Body>
-              </Accordion.Item >
+              </Accordion.Item > */}
             </Accordion>
           </div>
         </div>
