@@ -1,0 +1,14 @@
+.editarperfil{
+    max-width: 600px;
+    background: linear-gradient(0deg, rgba(23, 19, 22, 1) 0%, rgba(54, 19, 36, 1) 36%);
+    color: rgba(54, 19, 36, 1);
+}
+
+.placeholderglow2 {
+    height: 58px;
+    background-color: blue;
+}
+.container {
+    background-color:transparent;
+}
+
