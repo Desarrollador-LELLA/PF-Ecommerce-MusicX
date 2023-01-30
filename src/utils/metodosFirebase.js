@@ -176,6 +176,7 @@ export const todosDocumentos = async (nombreCollecion, orderBy, whereFiltros, lo
                 allDb.collection(db, nombreCollecion),
                 allDb.orderBy(orderBy),
             );
+                
         }
 
         const querySnapshot = await allDb.getDocs(q);

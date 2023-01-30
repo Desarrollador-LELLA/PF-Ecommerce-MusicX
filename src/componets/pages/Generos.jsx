@@ -10,6 +10,7 @@ import { useDispatch } from "react-redux";
 import { paginacion } from '../../utils/libreria';
 import { todosDocumentos, mostrarImgen, obtienePaginado, siguientePaginado, anteriorPaginado, cambiaPaginado, crearDocumento, unDocumento, actualizaDocumento } from '../../utils/metodosFirebase';
 import icGenero from "../images/ic_genero.svg"
+
 const INITIAL_PAGINADO = {
   coleccion: 'generos',
   ordenarPor: 'nombre',
