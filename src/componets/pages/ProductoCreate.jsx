@@ -331,7 +331,7 @@ const ProductoCreate = () => {
                 type="file"
                 accept="image/png, image/jpg, image/jpeg"
                 onChange={handleSubirImagen}
-              />
+              /><br/>
               <Form.Control.Feedback type={"invalid"}>
                 {errores.imagen}
               </Form.Control.Feedback>
