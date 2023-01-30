@@ -6,21 +6,18 @@ export const filterProducts = ({ opDesc, opAsce, opAZ, opZA, opSinOrden, search,
     if (search){
         nuevaLista = nuevaLista.filter((ele) =>
         {
-         return ele.nombre.toLowerCase().includes(search.toLowerCase())
+         return ele.nombre.toLowerCase().includes(search.toLowerCase())|| ele.autor.toLowerCase().includes(search.toLowerCase())||ele.descripcion.toLowerCase().includes(search.toLowerCase())
         }
         );
     }
     if(generos.length){
         nuevaLista = nuevaLista.filter((x) => {
-            console.log(x)
             return generos.every((p) => {
               return x.generos.includes(p);
             });
           });
-        console.log(generos)
     }
     if(keyF){
-        console.log(keyF)
         if(keyF==="All"){
             nuevaLista=lista.slice()
         }else if(keyF){
@@ -56,7 +53,7 @@ export const filterProducts = ({ opDesc, opAsce, opAZ, opZA, opSinOrden, search,
     }
     if (opSinOrden) {
       return nuevaLista;
-    } else 
+    }
     console.log(nuevaLista)
     return nuevaLista;
   };
