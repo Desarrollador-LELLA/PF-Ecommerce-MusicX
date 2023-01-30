@@ -57,7 +57,7 @@ export default function AboutUs() {
             <p>Mariano Teran</p>
             <div className={styles.links}>
               <a href="https://github.com/dogoarg" target="_blank"><img className={styles.logo} src={github} /></a>
-              <a href="https://github.com/dogoarg" target="_blank"><img className={styles.logo} src={github} /></a>
+             
               <a href="" target="_blank"><img className={styles.logo} src={linkedin} /></a>
             </div>
           </div>
