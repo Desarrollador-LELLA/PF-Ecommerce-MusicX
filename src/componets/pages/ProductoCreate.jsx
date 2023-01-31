@@ -39,11 +39,13 @@ const ProductoCreate = () => {
 
     {
       nombre: "Licencia Tipo 3",
-      descripcion: " descripcion: "Esta licencia entregará al usuario un archivo .zip o .rar descomprimible que contendrá la pista dividida en canales por stems",
+      descripcion:
+        "Esta licencia entregará al usuario un archivo .zip o .rar descomprimible que contendrá la pista dividida en canales por stems",
     },
     {
       nombre: "Licencia Tipo 4",
-      descripcion: "Esta licencia te permitirá obtener todas las credenciales y derechos sobre el beat con todos sus niveles de archivo",
+      descripcion:
+        "Esta licencia te permitirá obtener todas las credenciales y derechos sobre el beat con todos sus niveles de archivo",
     },
   ];
   const [EstadoTipoLi, setEstadoTipoLi] = useState(tipoLicencias);
