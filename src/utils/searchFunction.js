@@ -1,5 +1,5 @@
 
-export const filterProducts = ({ opDesc, opAsce, opAZ, opZA, opSinOrden, search,generos,keyF}, lista) => {
+export const filterProducts = ({ opDesc, opAsce, opAZ, opZA, opSinOrden, search,generos,keyF,bpmMin,bpmMax}, lista) => {
     
     let nuevaLista = lista.slice();
 
@@ -27,6 +27,12 @@ export const filterProducts = ({ opDesc, opAsce, opAZ, opZA, opSinOrden, search,
             })
         }
     }
+    if(bpmMin){
+      nuevaLista = nuevaLista.filter((x) => {
+        return x.tiempo >= bpmMin.toString()
+      });
+    }
+
      if (opDesc) {
       nuevaLista.sort((a, b) => a.ataque - b.ataque);
     } else if (opAsce) {
