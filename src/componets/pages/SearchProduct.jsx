@@ -135,7 +135,7 @@ export default function SearchProduct() {
                     
                   {generos.length ?
                     generos.map(i =>(
-                        <Form.Check key={i.data().nombre} onClick={onPene} type="switch" id="custom-switch" name={i.data().nombre} label={i.data().nombre}/>  
+                        <Form.Check className={s.gencheck} key={i.data().nombre} onClick={onPene} type="switch" id="custom-switch" name={i.data().nombre} label={i.data().nombre}/>  
                                   
                         )) : null  //ACA SE DEBE MOSTRAR AL USUARIO QUE NO EXISTEN GENEROS EN CASO DE BUSQUEDA O AL INICIAR
                   }
@@ -152,7 +152,7 @@ export default function SearchProduct() {
                     {
               keys.length ?
                 keys.map(i =>(
-                          <option key={i.data().nombre} value={i.data().nombre}>{i.data().nombre}</option>    
+                          <option className={s.option} key={i.data().nombre} value={i.data().nombre}>{i.data().nombre}</option>    
                           
                 )) : null  //ACA SE DEBE MOSTRAR AL USUARIO QUE NO EXISTEN GENEROS EN CASO DE BUSQUEDA O AL INICIAR
           }
