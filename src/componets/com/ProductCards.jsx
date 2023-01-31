@@ -107,52 +107,12 @@ export default function ProductCards(props) {
           ))
         ) : null}
       </Row>
-      <Pagination>
+      <div className={s.paginationcontainer}>
+      <Pagination className={s.paginationcontainer}>
         <Pagination.Prev onClick={anterior} />
-        <Pagination.Item
-          onClick={cambiarPagina}
-          active={paginasBar[0] === estadoInicial.paginaActual ? true : false}
-        >
-          {paginasBar[0]}
-        </Pagination.Item>
-        {paginasBar[1] && <Pagination.Ellipsis />}
-
-        {paginasBar[2] && (
-          <Pagination.Item
-            onClick={cambiarPagina}
-            active={paginasBar[2] === estadoInicial.paginaActual ? true : false}
-          >
-            {paginasBar[2]}
-          </Pagination.Item>
-        )}
-        {paginasBar[3] && (
-          <Pagination.Item
-            onClick={cambiarPagina}
-            active={paginasBar[3] === estadoInicial.paginaActual ? true : false}
-          >
-            {paginasBar[3]}
-          </Pagination.Item>
-        )}
-        {paginasBar[4] && (
-          <Pagination.Item
-            onClick={cambiarPagina}
-            active={paginasBar[4] === estadoInicial.paginaActual ? true : false}
-          >
-            {paginasBar[4]}
-          </Pagination.Item>
-        )}
-
-        {paginasBar[5] && <Pagination.Ellipsis />}
-        {paginasBar[6] && (
-          <Pagination.Item
-            onClick={cambiarPagina}
-            active={paginasBar[6] === estadoInicial.paginaActual ? true : false}
-          >
-            {paginasBar[6]}
-          </Pagination.Item>
-        )}
         {<Pagination.Next onClick={siguiente} />}
       </Pagination>
+      </div>
     </div>
   );
 }

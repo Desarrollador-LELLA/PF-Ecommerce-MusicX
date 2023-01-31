@@ -5,7 +5,7 @@
 .filtercontainer{
     background: #1D1015;
     width: 36vh;
-    height: 40vw;
+    height: 60vw;
     margin-left: 3%;
     padding: 1.5%;
     border-radius: 50px;
@@ -23,7 +23,7 @@ color: #09bfc9;
 
 .containerfilters{
     width: 30vh;
-    height: 35vw;
+    height: 55vw;
     background: linear-gradient(180deg, rgba(69, 69, 69, 0.253) 1.04%, rgba(78, 82, 83, 0.0264) 45.83%, rgba(117, 115, 117, 0.066) 100%);
     border-radius: 47px;
     padding: 10%;
@@ -33,7 +33,7 @@ color: #09bfc9;
 .searched{
 font-family: 'Dela Gothic One';
 font-style: normal;
-font-weight: 400;
+font-weight: 300;
 font-size: 48px;
 color: #394545;
 text-align: center;
@@ -62,3 +62,8 @@ margin: 1.5%;
 .gencheck label{
     color: rgb(45, 134, 134);
 }
+
+
+
+  
+  
