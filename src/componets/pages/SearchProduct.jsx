@@ -18,13 +18,14 @@ import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
 import { Link } from "react-router-dom";
 import { filterProducts } from "../../utils/searchFunction";
+import a from "../../css/ProductCards.module.css"
 
 const INITIAL_PAGINADO = {
   coleccion: "productos",
   ordenarPor: "nombre",
   whereFiltros: null,
   lista: [],
-  itemPorPagina: 10,
+  itemPorPagina: 12,
   paginaActual: 1,
 };
 
@@ -34,9 +35,11 @@ const FILTROS ={
   opAZ: null, 
   opZA:null, 
   opSinOrden:null,
-  search:null,
+  search:"",
   generos:[],
-  keyF:null
+  keyF:null,
+  bpmMin:null,
+  bpmMax:null
 }
 
 export default function SearchProduct() {
@@ -53,7 +56,6 @@ export default function SearchProduct() {
     estadoInicial.paginaActual,
     estadoInicial.itemPorPagina
   );
-  const filtroGeneros =[] 
 
   const onPene = (e)=>{
     if(filtros.generos.includes(e.target.name)){
@@ -63,6 +65,14 @@ export default function SearchProduct() {
   }
   const onChangeKey = (e)=>{
       setFiltros({...filtros,keyF:e.target.value})
+  }
+  const onChangeBPMMin = (e)=>{
+    console.log(e.target.value)
+    setFiltros({...filtros,bpmMin:e.target.value})
+  }
+  const onChangeBPMMax = (e)=>{
+    console.log(e.target.value)
+    setFiltros({...filtros,bpmMax:e.target.value})
   }
   useEffect(() => {
     llenarKeys();
@@ -120,7 +130,7 @@ export default function SearchProduct() {
 
   return (
     <div>
-      <h1 className={s.searched}>{!tester ? " ":tester.search.slice(1)}...</h1>
+      <h1 className={s.searched}>{tester.search =="?undefined" ? "":tester.search.slice(1)}...</h1>
       <div className={s.dadcontainer}>
         <div className={s.filtercontainer}>
           <div>
@@ -135,7 +145,7 @@ export default function SearchProduct() {
                     
                   {generos.length ?
                     generos.map(i =>(
-                        <Form.Check key={i.data().nombre} onClick={onPene} type="switch" id="custom-switch" name={i.data().nombre} label={i.data().nombre}/>  
+                        <Form.Check className={s.gencheck} key={i.data().nombre} onClick={onPene} type="switch" id="custom-switch" name={i.data().nombre} label={i.data().nombre}/>  
                                   
                         )) : null  //ACA SE DEBE MOSTRAR AL USUARIO QUE NO EXISTEN GENEROS EN CASO DE BUSQUEDA O AL INICIAR
                   }
@@ -152,7 +162,7 @@ export default function SearchProduct() {
                     {
               keys.length ?
                 keys.map(i =>(
-                          <option key={i.data().nombre} value={i.data().nombre}>{i.data().nombre}</option>    
+                          <option className={s.option} key={i.data().nombre} value={i.data().nombre}>{i.data().nombre}</option>    
                           
                 )) : null  //ACA SE DEBE MOSTRAR AL USUARIO QUE NO EXISTEN GENEROS EN CASO DE BUSQUEDA O AL INICIAR
           }
@@ -160,47 +170,49 @@ export default function SearchProduct() {
                 </Form>
                 </Accordion.Body>
               </Accordion.Item  >
-              {/* <Accordion.Item className={s.acordion} eventKey="2">
+              <Accordion.Item className={s.acordion} eventKey="2">
                 <Accordion.Header> <FontAwesomeIcon icon={faGaugeSimple}/>BPM</Accordion.Header>
                 <Accordion.Body>
                 <Form.Control
+                  onChange={onChangeBPMMin}
                   type="number"
                   placeholder="Min"
                   aria-label="Recipient's username"
                   aria-describedby="basic-addon2"/>
                   <Form.Control
+                  onChange={onChangeBPMMax}
                   placeholder="Max"
                   type="number"
                   aria-label="Recipient's username"
                   aria-describedby="basic-addon2"/>
                 </Accordion.Body>
-              </Accordion.Item > */}
+              </Accordion.Item > 
             </Accordion>
           </div>
         </div>
-        <div className={`${s.productcards} container`}>
+        <div className={`${a.productcards} container`}>
       <Row xs={1} sm={2} md={3} lg={4} xl={4} xxl={4} className="g-5">
         {loading ? (
           <Spinner animation="border" variant="light" />
         ) : filteredProducts.length ? (
           filteredProducts.slice(inicio, fin).map((x) => (
-            <Col key={x.id} className={s.card}>
-              <Card className={`my-2 ${s.cardcont}`}>
-                <div className={s.contcards}>
+            <Col key={x.id} className={a.card}>
+              <Card className={`my-2 ${a.cardcont}`}>
+                <div className={a.contcards}>
                   <Link to={`/${x.id}`}>
                     <Card.Img
-                      className={s.cardimg}
+                      className={a.cardimg}
                       variant="top"
                       src={x.imagen}
                     />
                   </Link>
                 </div>
                 <Card.Body>
-                  <Card.Title className={s.cardtitle}>{x.nombre}</Card.Title>
-                  <Card.Text className={s.cardby}>BY {x.autor}</Card.Text>
-                  <Card.Text className={s.cardby}>BPM:{x.tiempo}</Card.Text>
-                  <div className={s.marquee}>
-                    <Card.Text className={s.carddesc}>
+                  <Card.Title className={a.cardtitle}>{x.nombre}</Card.Title>
+                  <Card.Text className={a.cardby}>BY {x.autor}</Card.Text>
+                  <Card.Text className={a.cardby}>BPM:{x.tiempo}</Card.Text>
+                  <div className={a.marquee}>
+                    <Card.Text className={a.carddesc}>
                       {x.descripcion}
                     </Card.Text>
                   </div>

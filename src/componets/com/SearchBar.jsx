@@ -11,7 +11,7 @@ export default function SearchBar() {
 
   const onClick = (event) => {
     event.preventDefault();
-    navigate(`/SearchProduct?${input}`);
+    navigate(`/SearchProduct?${input}`)
   };
 
   const handleChange = (e) => {
@@ -19,25 +19,23 @@ export default function SearchBar() {
   };
 
   return (
-    <div>
-      <Form onSubmit={onClick}>
-        <InputGroup className="mb-3">
-          <Form.Control
-            onChange={handleChange}
-            className={s.input}
-            placeholder="Search Beat"
-            aria-label="Recipient's username"
-            aria-describedby="basic-addon2"
-          />
-          <Button
-            onClick={onClick}
-            variant="outline-secondary"
-            id="button-addon2"
-          >
-            Search
-          </Button>
-        </InputGroup>
-      </Form>
-    </div>
+    <Form onSubmit={onClick} className='me-3'>
+      <InputGroup>
+        <Form.Control
+          onChange={handleChange}
+          className={s.input}
+          placeholder="Search Beat"
+          aria-label="Recipient's username"
+          aria-describedby="basic-addon2"
+        />
+        <Button
+          onClick={onClick}
+          variant="outline-secondary"
+          id="button-addon2"
+        >
+          Find Beat
+        </Button>
+      </InputGroup>
+    </Form>
   );
 }

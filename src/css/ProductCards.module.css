@@ -88,3 +88,25 @@ text-align: center;
   .card{
     padding: 1%;
   }
+
+
+  .paginationcontainer ul{
+    display: flex;
+    text-align: center;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .paginationcontainer ul li a{
+    background-color: transparent;
+    width: 20vw;
+    height: 5vh;
+  }
+
+  .paginationcontainer ul li a:hover{
+    background: linear-gradient(180deg, rgba(213, 50, 233, 0.253) 1.04%, rgba(76, 95, 99, 0.1056) 66.67%, rgba(204, 34, 207, 0.066) 100%);
+  }
+  
+  .paginationcontainer ul li a:focus{
+    background: linear-gradient(180deg, rgba(213, 50, 233, 0.253) 1.04%, rgba(76, 95, 99, 0.1056) 66.67%, rgba(204, 34, 207, 0.066) 100%);
+  }

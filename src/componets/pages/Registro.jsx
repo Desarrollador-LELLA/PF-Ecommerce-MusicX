@@ -65,7 +65,7 @@ const Registro = () => {
     return (
         <Container className='my-4'>
             <Card className={`${s.registrocard} m-auto border-0`}>
-                <Card.Body>
+                <Card.Body className='d-grid'>
                     <div className='text-center'>
                         <Image className='btn-primary' src={icLogo} width='100px' />
                     </div>
@@ -90,7 +90,10 @@ const Registro = () => {
                                         <Placeholder.Button xs={12} bg="light" bsPrefix={`${s.placeholderglow} placeholder`} />
                                     </Placeholder>
                                     <Placeholder as='p' animation='glow' >
-                                        <Placeholder.Button xs={4} bg="dark float-end mb-3" />
+                                        <Placeholder.Button xs={12} bg="dark" />
+                                    </Placeholder>
+                                    <Placeholder as='p' animation='glow' >
+                                        <Placeholder.Button xs={12} bg="dark" />
                                     </Placeholder>
                                 </>
                                 :
@@ -125,7 +128,7 @@ const Registro = () => {
                                 </>
                         }
                     </Form>
-                    <Link className='navbar-brand text-success' to='/iniciarsesion'>
+                    <Link className='navbar-brand text-success mb-3' to='/iniciarsesion'>
                         Ya tengo una Cuenta
                     </Link>
                     {errorAuth && <Badge bg="danger">{errorAuth}</Badge>}

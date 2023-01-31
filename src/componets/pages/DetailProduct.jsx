@@ -18,11 +18,11 @@ export default function DetailProduct() {
   const [presioProducto, setPresioProducto] = useState("");
   const { productoUnoDetalle } = useSelector((state) => state.carrito);
   const arryAux = [
-    { nombre: "Licencia 1", id: "akshdsad3568", valor: 100 },
-    { nombre: "Licencia 2", id: "aks1hd8", valor: 200 },
-    { nombre: "Licencia 3", id: "aks3hd8", valor: 300 },
-    { nombre: "Licencia 4", id: "aksh4d8", valor: 400 },
-    { nombre: "Licencia 5", id: "aksh2d8", valor: 500 },
+    { nombre: "Licencia 1: Esta licencia te entregará archivo .mp3", id: "akshdsad3568", valor: 100 },
+    { nombre: "Licencia 2: Esta licencia te entregará un archivo .wav", id: "aks1hd8", valor: 200 },
+    { nombre: "Licencia 3: Esta licencia te entregará un archivo .zip o .rar descomprimible que contendrá la pista dividida en canales por stems", id: "aks3hd8", valor: 300 },
+    { nombre: "Licencia 4: Esta licencia te entregará los derechos completos del beat y ya no estará disponible para la venta (los usuarios que hayan obtenido cualquier licencia de este producto mantendrán sus derechos)", id: "aksh4d8", valor: 400 },
+    { nombre: "Licencia 5: no definido aún...", id: "aksh2d8", valor: 500 },
   ];
 
   useEffect(() => {
