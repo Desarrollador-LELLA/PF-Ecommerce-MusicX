@@ -3,7 +3,8 @@ export const filterProducts = ({ opDesc, opAsce, opAZ, opZA, opSinOrden, search,
     
     let nuevaLista = lista.slice();
 
-    if (search){
+    if (search != "undefined"){
+      console.log(search)
         nuevaLista = nuevaLista.filter((ele) =>
         {
          return ele.nombre.toLowerCase().includes(search.toLowerCase())|| ele.autor.toLowerCase().includes(search.toLowerCase())||ele.descripcion.toLowerCase().includes(search.toLowerCase())

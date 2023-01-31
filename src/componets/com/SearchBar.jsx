@@ -11,7 +11,7 @@ export default function SearchBar() {
 
   const onClick = (event) => {
     event.preventDefault();
-    navigate(`/SearchProduct?${input}`);
+    navigate(`/SearchProduct?${input}`)
   };
 
   const handleChange = (e) => {
@@ -33,7 +33,7 @@ export default function SearchBar() {
           variant="outline-secondary"
           id="button-addon2"
         >
-          Search
+          Find Beat
         </Button>
       </InputGroup>
     </Form>
