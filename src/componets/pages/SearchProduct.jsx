@@ -37,7 +37,9 @@ const FILTROS ={
   opSinOrden:null,
   search:"",
   generos:[],
-  keyF:null
+  keyF:null,
+  bpmMin:null,
+  bpmMax:null
 }
 
 export default function SearchProduct() {
@@ -63,6 +65,14 @@ export default function SearchProduct() {
   }
   const onChangeKey = (e)=>{
       setFiltros({...filtros,keyF:e.target.value})
+  }
+  const onChangeBPMMin = (e)=>{
+    console.log(e.target.value)
+    setFiltros({...filtros,bpmMin:e.target.value})
+  }
+  const onChangeBPMMax = (e)=>{
+    console.log(e.target.value)
+    setFiltros({...filtros,bpmMax:e.target.value})
   }
   useEffect(() => {
     llenarKeys();
@@ -164,11 +174,13 @@ export default function SearchProduct() {
                 <Accordion.Header> <FontAwesomeIcon icon={faGaugeSimple}/>BPM</Accordion.Header>
                 <Accordion.Body>
                 <Form.Control
+                  onChange={onChangeBPMMin}
                   type="number"
                   placeholder="Min"
                   aria-label="Recipient's username"
                   aria-describedby="basic-addon2"/>
                   <Form.Control
+                  onChange={onChangeBPMMax}
                   placeholder="Max"
                   type="number"
                   aria-label="Recipient's username"
