@@ -18,7 +18,7 @@ font-weight: 400;
 font-size: 40px;
 line-height: 35px;
 text-align: center;
-color: #495B5C;
+color: #09bfc9;
 }
 
 .containerfilters{
@@ -57,4 +57,8 @@ margin: 1.5%;
 .acordion button:focus{
     background-color: transparent;
     color: rgb(56, 228, 255);
+}
+
+.gencheck label{
+    color: rgb(45, 134, 134);
 }

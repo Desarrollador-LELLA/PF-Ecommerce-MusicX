@@ -30,19 +30,20 @@ const ProductoCreate = () => {
   const tipoLicencias = [
     {
       nombre: "Licencia Tipo 1",
-      descripcion: " Descricion para Licencia 1",
+      descripcion: "Esta licencia entregará al usuario un archivo .mp3",
     },
     {
       nombre: "Licencia Tipo 2",
-      descripcion: " Descricion para Licencia 2",
+      descripcion: "Esta licencia entregará al usuario un archivo .wav",
     },
+
     {
       nombre: "Licencia Tipo 3",
-      descripcion: " Descricion para Licencia 3",
+      descripcion: " descripcion: "Esta licencia entregará al usuario un archivo .zip o .rar descomprimible que contendrá la pista dividida en canales por stems",
     },
     {
       nombre: "Licencia Tipo 4",
-      descripcion: " Descricion para Licencia 4",
+      descripcion: "Esta licencia te permitirá obtener todas las credenciales y derechos sobre el beat con todos sus niveles de archivo",
     },
   ];
   const [EstadoTipoLi, setEstadoTipoLi] = useState(tipoLicencias);
