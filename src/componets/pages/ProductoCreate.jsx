@@ -18,7 +18,7 @@ import style from "../../css/productoCreate.module.css";
 import { db, storage, allStor, stor } from "../../firebaseInicial/firebase";
 import { collection, addDoc } from "firebase/firestore";
 
-//      Subir imagenes
+//      Subir imagenes    -   KUC
 import {
   actualizaDocumento,
   crearDocumento,
