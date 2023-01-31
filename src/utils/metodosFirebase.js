@@ -16,7 +16,6 @@ export const subirArchivo = async (archivoSeleccionado, idUsuario) => {
     return imagen;
 };
 
-
 export const subirArchivoMetodo = async (ruta, archivo, pasoFinal) => {
     if (archivo == null) return; 
     const imageRef = allStor.ref(stor, ruta);

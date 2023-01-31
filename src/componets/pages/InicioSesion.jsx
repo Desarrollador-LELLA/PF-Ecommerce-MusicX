@@ -57,10 +57,8 @@ export default function InicioSesion() {
     return (
 
         <Container className='my-4'>
-            <Card className={`${s.iniciosesioncard} m-auto border-0`}>
-                {errors.contraseña ? <Badge bg="danger">{errors.contraseña}</Badge> : null}
-                {errors.correo ? <Badge bg="danger">{errors.correo}</Badge> : <span></span>}
-                <Card.Body>
+            <Card className={`${s.iniciosesioncard} m-auto border-0`}>               
+                <Card.Body className='d-grid'>
                     <div className='text-center'>
                         <Image className='btn-primary' rounded={false} src={icLogo} width='100px' />
                     </div>
@@ -85,10 +83,12 @@ export default function InicioSesion() {
                                 :
                                 <>
                                     <FloatingLabel className='mb-3' controlId='floatingInput' label='Correo Electronico'>
-                                        <Form.Control onChange={handleChangeCorreo} type='correo' placeholder='micorreo@example.com' />
+                                        <Form.Control onChange={handleChangeCorreo} type='correo' placeholder='micorreo@example.com' isInvalid={!!errors.correo} />
+                                        <Form.Control.Feedback type='invalid'>{errors.correo}</Form.Control.Feedback>
                                     </FloatingLabel>
                                     <FloatingLabel className='mb-3' controlId='floatingPassword' label='Contraseña'>
-                                        <Form.Control onChange={handleChangeContraseña} type='password' placeholder='Contraseña' />
+                                        <Form.Control onChange={handleChangeContraseña} type='password' placeholder='Contraseña' isInvalid={!!errors.contraseña} />
+                                        <Form.Control.Feedback type='invalid'>{errors.contraseña}</Form.Control.Feedback>
                                     </FloatingLabel>
                                     <Button onClick={(event) => handleSubmit(event)} className='mb-3' variant='dark' type='submit'
                                         disabled={
@@ -106,7 +106,7 @@ export default function InicioSesion() {
                                 </>
                         }
                     </Form>
-                    <Link className='navbar-brand text-success' to='/registro'>
+                    <Link className='navbar-brand text-success mb-3' to='/registro'>
                         Quiero Registrarme
                     </Link>
                     {errorAuth && <Badge bg="danger">{errorAuth}</Badge>}

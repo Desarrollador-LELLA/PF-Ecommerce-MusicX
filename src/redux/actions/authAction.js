@@ -15,6 +15,7 @@ const registraAction = ({ nombre, apellido, correo, clave }, onError) => async (
         apellido,
         correo,
         rol: 'Cliente',
+        imagen: '',
         fechaCreacion: allDb.serverTimestamp(),
       };
       await allDb.setDoc(allDb.doc(db, 'usuarios', res.user.uid), userData);
@@ -24,7 +25,7 @@ const registraAction = ({ nombre, apellido, correo, clave }, onError) => async (
       });
       dispatch({
         type: AUTH_SET_USER,
-        payload: { id: userData.id, nombre, apellido },
+        payload: { id: userData.id, nombre, apellido, imagen: '', rol: 'Cliente' },
       });
     }
   } catch (err) {
@@ -57,7 +58,7 @@ const registraGoogleAction = (onError) => async (dispatch) => {
       });
       dispatch({
         type: AUTH_SET_USER,
-        payload: { id: userData.id, nombre: userData.nombre, apellido: userData.apellido },
+        payload: { id: userData.id, nombre: userData.nombre, apellido: userData.apellido, imagen: userData.imagen, rol: 'Cliente' },
       });
     }
   } catch (err) {
@@ -114,7 +115,7 @@ const successAction = (msg) => (dispatch) => {
   });
 };
 
-// ACTION QUE PODRIA USAR EN EL FUTURO
+// ACTION QUE TRAE AL USUARIO POR SU ID
 const getUserById = (id) => async (dispatch) => {
   try {
     const docRef = allDb.doc(db, 'usuarios', id);
@@ -124,6 +125,8 @@ const getUserById = (id) => async (dispatch) => {
         id: user.get('id'),
         nombre: user.get('nombre'),
         apellido: user.get('apellido'),
+        imagen: user.get('imagen'),
+        rol: user.get('rol')
       };
       dispatch({
         type: AUTH_SET_USER,
