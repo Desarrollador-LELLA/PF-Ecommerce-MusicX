@@ -36,7 +36,15 @@ const ProductoCreate = () => {
       nombre: "Licencia Tipo 2",
       descripcion: "Esta licencia entregará al usuario un archivo .wav",
     },
-    { nombre: "Licencia Tipo 3", descripcion: "Esta licencia entregará al usuario un archivo .zip o .rar descomprimible que contendrá la pista dividida en canales por stems" },
+
+    {
+      nombre: "Licencia Tipo 3",
+      descripcion: " descripcion: "Esta licencia entregará al usuario un archivo .zip o .rar descomprimible que contendrá la pista dividida en canales por stems",
+    },
+    {
+      nombre: "Licencia Tipo 4",
+      descripcion: "Esta licencia te permitirá obtener todas las credenciales y derechos sobre el beat con todos sus niveles de archivo",
+    },
   ];
   const [EstadoTipoLi, setEstadoTipoLi] = useState(tipoLicencias);
   const [licencia, setLicencia] = useState({});
@@ -44,6 +52,7 @@ const ProductoCreate = () => {
   const [popUp, setPopUp] = useState({
     state: false,
   });
+  const [archivo, setArchivo] = useState([]);
   //Estados Roanaldo fin-----------------------------
 
   const navegar = useNavigate();
@@ -176,18 +185,19 @@ const ProductoCreate = () => {
     handlePopUp();
   };
   const handlerEliminar = (e) => {
-    console.log(e.target.value);
     const filtrado = LicenCreadas.filter(
       (licen) => licen.TipoLicencia !== e.target.id
     );
     setLicenCreadas(filtrado);
     switch (e.target.id) {
-      case "Licencia Tipo 1":
+      case tipoLicencias[0].nombre:
         return setEstadoTipoLi([tipoLicencias[0], ...EstadoTipoLi]);
-      case "Licencia Tipo 2":
+      case tipoLicencias[1].nombre:
         return setEstadoTipoLi([tipoLicencias[1], ...EstadoTipoLi]);
-      case "Licencia Tipo 3":
+      case tipoLicencias[2].nombre:
         return setEstadoTipoLi([tipoLicencias[2], ...EstadoTipoLi]);
+      case tipoLicencias[3].nombre:
+        return setEstadoTipoLi([tipoLicencias[3], ...EstadoTipoLi]);
       default: {
         return;
       }
@@ -213,6 +223,10 @@ const ProductoCreate = () => {
   const handleSubirImagen = async (e) => {
     setImagen(e.target.files[0]);
   };
+  const handlerSbubirArchivo = async (e) => {
+    await setArchivo([...archivo, e.target.files[0]]);
+    console.log(archivo);
+  };
 
   const handleSubmit = async (e) => {
     try {
@@ -221,18 +235,39 @@ const ProductoCreate = () => {
       if (errores.valido) {
         /*      TERCER CODIGO       */
         let prod = await crearDocumento("productos", {
-          data: { ...producto, licencias: LicenCreadas },
+          data: { ...producto },
         });
         console.log(imagen);
 
         const extension = imagen.type.substring(6, imagen.type.length);
+        const extensionArchivo = archivo.map((archi) =>
+          archi.type.substring(6, archi.type.length)
+        );
         let ruta = `productos/${prod.result.id}/beat.${extension}`;
+        let rutaArchivo = extensionArchivo.map(
+          (archi, i) =>
+            `productos/${prod.result.id}/${LicenCreadas[i].TipoLicencia}.${extensionArchivo[i]}` //[ruta1, ruta2]
+        );
 
         subirArchivoMetodo(ruta, (url) => {
           console.log(url);
           actualizaDocumento("productos", prod.result.id, {
             data: { imagen: url },
           });
+        });
+
+        for (let i = 0; i < LicenCreadas.length; i++) {
+          const uno = await subirArchivoMetodo(
+            rutaArchivo[i],
+            archivo[i],
+            (url) => {
+              LicenCreadas[i].url = url; // [url1 , url2 ]
+            }
+          );
+        }
+        console.log(LicenCreadas);
+        const dos = await actualizaDocumento("productos", prod.result.id, {
+          data: { licencias: LicenCreadas },
         });
       }
     } catch (err) {
@@ -331,7 +366,8 @@ const ProductoCreate = () => {
                 type="file"
                 accept="image/png, image/jpg, image/jpeg"
                 onChange={handleSubirImagen}
-              /><br/>
+              />
+              <br />
               <Form.Control.Feedback type={"invalid"}>
                 {errores.imagen}
               </Form.Control.Feedback>
@@ -402,7 +438,7 @@ const ProductoCreate = () => {
             <Form.Group controlId="formFileSm" className="mb-3">
               <Form.Label>Sube el archivo para tu licencia</Form.Label>
               <Form.Control
-                onChange={handlerLicencia}
+                onChange={handlerSbubirArchivo}
                 name="archivo"
                 type="file"
                 size="sm"
