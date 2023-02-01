@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import "../../css/perfil.css";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faUser, faPenToSquare, faEnvelope, faLock, faBook, faUserCheck, faCheck } from '@fortawesome/free-solid-svg-icons';
+import { faUser, faPenToSquare, faEnvelope, faLock, faBook, faUserCheck, faCheck} from '@fortawesome/free-solid-svg-icons';
 import { detalle_usuario_cliente } from "../../redux/actions/usuarioAction.js";
 import { useSelector } from "react-redux";
 import { Form } from "react-bootstrap";
@@ -67,7 +67,7 @@ const Perfil = () => {
                     </ul>
 
                     {datosu.rol === "Cliente" && <div className="boton-irABiblioteca">
-                        <Link to="/Biblioteca">
+                        <Link to="/bibloteca">
                             <button type="onClick" className="boton-biblioteca">
                                 <i><FontAwesomeIcon icon={faBook} /></i> Biblioteca
                             </button>
