@@ -11,6 +11,7 @@ import icPerfil from '../images/ic_perfil.svg';
 import icProductos from '../images/ic_productos.svg';
 import icBiblioteca from '../images/ic_biblioteca.svg';
 import icGeneros from '../images/ic_generos.svg';
+import icKeys from '../images/ic_keys.svg'
 import s from '../../css/navheader.module.css';
 import SearchBar from './SearchBar';
 
@@ -25,6 +26,8 @@ const NavHeader = () => {
     const cerrarSesion = () => {
         dispatch(signOutAction());
     };
+
+    //pene
 
     return (
         <Navbar collapseOnSelect expand="lg" variant="dark" className={`${s.navbar}`} sticky="top">
@@ -82,6 +85,7 @@ const NavHeader = () => {
                                             <Dropdown.Divider />
                                             <Dropdown.Item onClick={() => navegar('/producto_lista')}><Image src={icProductos} width='24px' /><span className='ms-3'>Administrar Productos</span></Dropdown.Item>
                                             <Dropdown.Item onClick={() => navegar('/generos')}><Image src={icGeneros} width='24px' /><span className='ms-3'>Administrar Generos</span></Dropdown.Item>
+                                            <Dropdown.Item onClick={() => navegar('/keys')}><Image src={icKeys} width='24px' /><span className='ms-3'>Administrar Keys</span></Dropdown.Item>
                                         </>
                                     }
                                     <Dropdown.Divider />

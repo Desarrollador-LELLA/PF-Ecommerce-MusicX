@@ -21,6 +21,7 @@ import TesterPaginado from './componets/pages/TesterPaginado';
 import Bibloteca from './componets/pages/Bibloteca';
 import SearchProduct from './componets/pages/SearchProduct';
 import EditarP from './componets/pages/EditarP';
+import Keys from './componets/pages/Keys';
 
 function App() {
 
@@ -60,6 +61,7 @@ function App() {
         {/* CONDICIONALES ADMIN */}
         <Route path="producto_create" element={authenticatedAuth ? <ProductoCreate /> : <Navigate to="/iniciarsesion" />} />
         <Route path="generos" element={authenticatedAuth ? <Generos /> : <Navigate to="/iniciarsesion" />} />
+        <Route path="keys" element={authenticatedAuth ? <Keys /> : <Navigate to="/iniciarsesion" />} />
         <Route path="producto_lista" element={authenticatedAuth ? <ProductoLista /> : <Navigate to="/iniciarsesion" />} />
         <Route path='producto_detalle/:id' element={authenticatedAuth ? <ProductoDetalle /> : <Navigate to="/iniciarsesion" />} />
         <Route path='perfil' element={authenticatedAuth ? <Perfil /> : <Navigate to="/iniciarsesion" />} />
@@ -68,10 +70,6 @@ function App() {
         <Route path="testerpaginado" element={<TesterPaginado />} />
         <Route path="editarUsuario/:id" element={<EditarP />} />
       </Route>
-
-
-
-      
     </Routes>
   );
 }

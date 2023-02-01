@@ -42,15 +42,32 @@ const usuarios = {
     ],
     biblioteca: [
         {
-            
+            id: 'id del producto',
+            autor: 'nombre autor',
+            descripcion: 'una descripcion',
+            imagen: 'link de la imagen',
+            key: 'un key',
+            nombre: 'nombre del producto',
+            tiempo: 180,
+            archivoPrueba: 'link del archivo de prueba',
+            generos: [
+                'genero 1',
+                'genero 2'
+            ],
+            licencia: {
+                tipo_licencia: 'tipo',
+                descripcion: 'descripcion de la licencia bla bla bla...',
+                precio: 200,
+                archivo: 'link del archivo winrar'
+            }
         }
     ]
-}
+};
 
 const generos = {
     nombre: 'nombre del genro',
     habilitado: true
-}
+};
 
 licencias: [
     {
