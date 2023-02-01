@@ -7,8 +7,7 @@ import { useLocation } from "react-router-dom";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCompactDisc, faGaugeSimple, faMusic, faTag } from "@fortawesome/free-solid-svg-icons";
 import { Spinner } from "react-bootstrap";
-import { todosDocumentos
- } from "../../utils/metodosFirebase";
+import { todosDocumentos } from "../../utils/metodosFirebase";
 import { getKeys } from "../../utils/keysActions";
 import { getGeneros } from "../../utils/generosActions";
 import { Pagination } from "react-bootstrap";
@@ -19,6 +18,7 @@ import Row from "react-bootstrap/Row";
 import { Link } from "react-router-dom";
 import { filterProducts } from "../../utils/searchFunction";
 import a from "../../css/ProductCards.module.css"
+
 
 const INITIAL_PAGINADO = {
   coleccion: "productos",

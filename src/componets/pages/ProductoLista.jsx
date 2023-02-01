@@ -122,37 +122,33 @@ const ProductoLista = () => {
                         </thead>
                         {
                             loading ? <Spinner animation="border" variant="light" /> : 
-                                estadoInicial.lista.length ?
-                                    estadoInicial.lista.slice(inicio, fin).map((e) => (
-                                        
-                                        <tr className={ `${ style.tr_sombreado }` }>
-                                            <td>{ e.nombre }</td>
-                                            <td>{ e.descripcion }</td>
-                                            {/*
-                                            <td>{ e.precio }</td>
-                                            */}
-                                            <td>{ e.key }</td>
-                                            <td>{ e.tiempo }</td>
-                                            <td>
-                                                { e.habilitado ? "Si" : "No" }
-                                            </td>
-                                            <td>
-                                                <img className={ `${ style.imagen }` } src={ e.imagen } alt='' />
-                                            </td>
-                                            <td>
-                                                
-                                                <Link to={ `/producto_detalle/${ e.id }` }>
-                                                    <Button className='btn btn-primary'>Editar</Button>
-                                                </Link>
-                                            </td>
-                                            <td>
-                                                <Link>
-                                                    <Button id={ e.id } variant= { e.habilitado ? 'danger' : 'warning' } onClick={ x => handleHabilitar(e.id, e.habilitado) }>
-                                                        { e.habilitado ? "Deshabilitar" : "Habilitar" }
-                                                    </Button>
-                                                </Link>
-                                            </td>
-                                        </tr>
+                            estadoInicial.lista.length ?
+                                estadoInicial.lista.slice(inicio, fin).map((e) => (                                        
+                                    <tr className={ `${ style.tr_sombreado }` }>
+                                        <td>{ e.nombre }</td>
+                                        <td>{ e.descripcion }</td>
+                                        <td>{ e.key }</td>
+                                        <td>{ e.tiempo }</td>
+                                        <td>
+                                            { e.habilitado ? "Si" : "No" }
+                                        </td>
+                                        <td>
+                                            <img className={ `${ style.imagen }` } src={ e.imagen } alt='' />
+                                        </td>
+                                        <td>
+                                            
+                                            <Link to={ `/producto_detalle/${ e.id }` }>
+                                                <Button className='btn btn-primary'>Editar</Button>
+                                            </Link>
+                                        </td>
+                                        <td>
+                                            <Link>
+                                                <Button id={ e.id } variant= { e.habilitado ? 'danger' : 'warning' } onClick={ x => handleHabilitar(e.id, e.habilitado) }>
+                                                    { e.habilitado ? "Deshabilitar" : "Habilitar" }
+                                                </Button>
+                                            </Link>
+                                        </td>
+                                    </tr>
                                 )) : null
                         }
                     </table>
