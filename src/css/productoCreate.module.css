@@ -11,6 +11,11 @@
     margin-left: 10px;
 }
 
+.selectbox
+{
+    max-width: 500px;
+}
+
 .button
 {
     width: 250px;
