@@ -25,21 +25,37 @@
   width: 500px;
 }
 .divLicencias {
-  border-top: solid 1px;
-  border-color: black;
+  border-top: solid 2px;
+  border-color: #db7fa0;
   margin-top: 1px;
-  overflow-y: scroll;
+  padding: 2px;
+
   height: 200px;
 }
 .cardProducto {
+  color: #f7d0de;
+  background: rgba(119, 43, 80, 0.74);
   margin: 5px;
   cursor: pointer;
 }
 
 .cardSelect {
-  border-color: blue;
+  border: solid 3px;
+  border-color: #f7d0de;
   margin: 10px;
 }
 .espaciado {
   padding: 50px;
+}
+
+.btonLicencia {
+  background-color: #f7d0de;
+}
+.tituloProducto {
+  color: rgba(35, 204, 204, 0.59);
+}
+
+.texto {
+  margin-top: 10px;
+  color: rgba(115, 201, 201, 0.59);
 }
