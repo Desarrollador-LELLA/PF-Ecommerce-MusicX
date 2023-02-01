@@ -18,10 +18,28 @@ export default function DetailProduct() {
   const [presioProducto, setPresioProducto] = useState("");
   const { productoUnoDetalle } = useSelector((state) => state.carrito);
   const arryAux = [
-    { nombre: "Licencia 1: Esta licencia te entregará archivo .mp3", id: "akshdsad3568", valor: 100 },
-    { nombre: "Licencia 2: Esta licencia te entregará un archivo .wav", id: "aks1hd8", valor: 200 },
-    { nombre: "Licencia 3: Esta licencia te entregará un archivo .zip o .rar descomprimible que contendrá la pista dividida en canales por stems", id: "aks3hd8", valor: 300 },
-    { nombre: "Licencia 4: Esta licencia te entregará los derechos completos del beat y ya no estará disponible para la venta (los usuarios que hayan obtenido cualquier licencia de este producto mantendrán sus derechos)", id: "aksh4d8", valor: 400 },
+    {
+      nombre: "Licencia 5852: Esta licencia te entregará archivo .mp3",
+      id: "akshdsad3568",
+      valor: 100,
+    },
+    {
+      nombre: "Licencia 2: Esta licencia te entregará un archivo .wav",
+      id: "aks1hd8",
+      valor: 200,
+    },
+    {
+      nombre:
+        "Licencia 3: Esta licencia te entregará un archivo .zip o .rar descomprimible que contendrá la pista dividida en canales por stems",
+      id: "aks3hd8",
+      valor: 300,
+    },
+    {
+      nombre:
+        "Licencia 4: Esta licencia te entregará los derechos completos del beat y ya no estará disponible para la venta (los usuarios que hayan obtenido cualquier licencia de este producto mantendrán sus derechos)",
+      id: "aksh4d8",
+      valor: 400,
+    },
     { nombre: "Licencia 5: no definido aún...", id: "aksh2d8", valor: 500 },
   ];
 
@@ -30,7 +48,12 @@ export default function DetailProduct() {
   }, [dispatch]);
 
   function handleAddToCart(producto, e) {
-    dispatch(addProducto(producto, e.target.value));
+    const productoAgregar = {
+      ...producto,
+      licencias: producto.licencias[e.target.id],
+    };
+    console.log("producto a agregar ", productoAgregar, producto);
+    dispatch(addProducto(productoAgregar));
     // alert("PRODUCTO AGREGADO AL CARRITO");
   }
 
@@ -60,7 +83,7 @@ export default function DetailProduct() {
     <div>
       <div>
         <Container>
-          <Button onClick={() => navegar('/')}>Volver</Button>
+          <Button onClick={() => navegar("/")}>Volver</Button>
           <Row>
             <Col>
               <div className={css.box}>
@@ -82,33 +105,36 @@ export default function DetailProduct() {
             <Col>
               <Row>
                 <Col Style="padding-left: 30px;">
-                  <h1>
+                  <h1 className={css.tituloProducto}>
                     {`${productoUnoDetalle.nombre} - ${productoUnoDetalle.autor}`}
                   </h1>
-                  valor: ${presioProducto ? presioProducto : 0}
-                  <p Style="margin-top: 10px" className="text-break ">
+
+                  <p className={`text-break ${css.texto}`}>
                     {productoUnoDetalle.descripcion}
+                    <br />
+                    valor: ${presioProducto ? presioProducto : 0}
                   </p>
                 </Col>
               </Row>
-              <p className="text-center">Lista Licencias</p>
+              <p className={`text-center ${css.texto}`}>Lista Licencias</p>
               <div className={`${css.divLicencias} shadow-sm `}>
                 <ListGroup>
-                  {arryAux.map((obj, indx) => (
+                  {productoUnoDetalle.licencias?.map((obj, indx) => (
                     <div key={indx} onClick={(e) => handlerLicencia(e)}>
                       <Card className={`${css.cardProducto}`}>
-                        <Card.Body id={indx} value={obj.valor}>
-                          {`${obj.nombre} detalle de la licencia' `}
+                        <Card.Body id={indx} value={obj.precio}>
+                          {`${obj.TipoLicencia}  ${obj.descripcion}' `}
                           <Button
+                            id={indx}
                             name="boton"
                             Style="display: none"
-                            className="float-end btn btn-primary"
+                            className={`float-end btn btn-light ${css.btonLicencia} `}
                             onClick={(e) =>
                               handleAddToCart(productoUnoDetalle, e)
                             }
-                            value={obj.valor}
+                            value={obj.precio}
                           >
-                            ${obj.valor}
+                            ${obj.precio}
                           </Button>
                         </Card.Body>
                       </Card>
