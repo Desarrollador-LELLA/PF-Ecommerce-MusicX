@@ -1,8 +1,63 @@
-.contenedor {
+
+/* .img_biblioteca {
+  background: black;
+} */
+.img_biblioteca:hover{
+  animation-name: gixaxb;
+  animation-duration: 5s;
+  animation-iteration-count: infinite;
+  animation-timing-function: linear;
+}
+
+@keyframes gixaxb{
+  from{
+      transform: rotate(0deg);
+  }to{
+      transform: rotate(360deg);
+  }
+}
+
+
+
+.card_biblioteca {
+  background: linear-gradient(180deg, rgba(220, 18, 247, 0.253) 1.04%, rgba(76, 95, 99, 0.1056) 66.67%, rgba(204, 34, 207, 0.066) 100%);
+  border-radius: 50px;
+  
+}
+
+
+.cardtitulo_biblioteca{
+  color: rgba(35, 204, 204, 0.59);color: rgba(35, 204, 204, 0.59);
+}
+
+
+.cardtext_biblioteca{
+  color: #8a4883;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* .contenedor {
   display: flex;
   flex-direction: column;
   gap: 100px;
-}
+} */
 
 
 
@@ -19,7 +74,7 @@
   text-align: center;
 }
 
-.elementos {
+/* .elementos {
   display: flex;
   width: 100%;
   height: 100%;
@@ -27,43 +82,6 @@
   gap: 50px;
   flex-wrap: wrap;
  
-}
+} */
 
-.elemento {
-  height: 300px;
-  width: 300px;
-  position: relative;
-}
-
-
-
-.elemento img {
-  height: 100%;
-  width: 100%;
-  border-radius: 100%;
-
-}
-
-.elemento img:hover{
-  animation-name: gixaxb;
-  animation-duration: 3s;
-  animation-iteration-count: infinite;
-  animation-timing-function: linear;
-}
-@keyframes gixaxb{
-  from{
-      transform: rotate(0deg);
-  }to{
-      transform: rotate(360deg);
-  }
-}
-
-.descripcion {
-  display: flex;
-  position: absolute;
-  top: 40%;
-  flex-direction: column;
-  align-items: center;
-  width: 100%;
-
-}
+/* s */
