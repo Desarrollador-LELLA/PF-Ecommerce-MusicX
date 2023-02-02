@@ -21,7 +21,7 @@ const Keys = () => {
                 <Col>
                     <Card className={`${s.card_keys} h-100 border-0`}>
                         <Card.Body>
-                                <Card.Img src={iconoGenero} className={`${s.img_keys} rounded-circle p-3`} />
+                            <Card.Img src={iconoGenero} className={`${s.img_keys} rounded-circle p-3`} />
                             <div className={`${s.img_keys} rounded-circle`}>
                             </div>
                             <Card.Title>{'x.nombre'}</Card.Title>
