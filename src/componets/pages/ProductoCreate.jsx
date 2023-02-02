@@ -84,7 +84,7 @@ const ProductoCreate = () => {
   useEffect( () => {
       llenarKeys();
       llenarGeneros();
-  });
+  }, []);
 
 
   //  Segundo ejemplo
