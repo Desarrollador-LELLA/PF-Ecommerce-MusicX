@@ -9,7 +9,7 @@ import {
 } from "../types/carritoTypes.js";
 
 import { allDb, db } from "../../firebaseInicial/firebase";
-import { collection, getDocs , addDoc, setDoc, doc} from "firebase/firestore";
+import { collection, getDocs , addDoc, setDoc, doc, updateDoc} from "firebase/firestore";
 
 export const pagarCarrito = () => {
   return "Aun no se hace";
@@ -68,9 +68,23 @@ export const LimpiarDetalleProd = () => {
   };
 };
 
-export const addBiblioteca = (Productos) => {
-    return {
-        type: ADD_BIBLIOTECA,
-        payload: Productos
+export const addBiblioteca = async (productos, idUser) => {
+    return async (dispatch) => {
+        let data = [];
+        console.log(data)
+        await productos.forEach((producto) => {
+            let refproducto = allDb.doc(db, "productos", 
+"S1w7b89f34NzpjUdJCIQZNVA6XM2")
+            let product = allDb.getDoc(refproducto)
+            data.push(product.data())
+            console.log(producto.id)
+        })
+
+        console.log(productos, typeof productos) 
+        const usuario = allDb.doc(db, "usuarios", idUser);
+        await updateDoc(usuario, {biblioteca: productos})
+        dispatch({
+            type: ADD_BIBLIOTECA 
+        })
     }
 }
