@@ -95,6 +95,11 @@ const EditarU = () => {
                                     <Button className='float-end mb-3' variant='dark' type='submit' onClick={onChange}>
                                         Guardar
                                     </Button>
+                                    <div>
+                                       <link  to="#">
+                                        <Button className='' type='submit' variant='dark' onClick={"#"} > Volver</Button>
+                                        </link>
+                                    </div>
                                 </>
                         }
                     </Form>
