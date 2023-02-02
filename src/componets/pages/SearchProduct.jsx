@@ -18,7 +18,7 @@ import Row from "react-bootstrap/Row";
 import { Link } from "react-router-dom";
 import { filterProducts } from "../../utils/searchFunction";
 import a from "../../css/ProductCards.module.css"
-
+import { unDocumentoCallback } from "../../utils/metodosFirebase";
 
 const INITIAL_PAGINADO = {
   coleccion: "productos",
@@ -93,8 +93,8 @@ export default function SearchProduct() {
     });
   }
   useEffect(() => {
-    llenarKeys();
     llenarGeneros(); 
+    llenarKeys();
     llenarLista();
   }, []);
   
@@ -102,14 +102,20 @@ export default function SearchProduct() {
     setFiltros({...filtros,search:!tester ? null:tester.search.slice(1)})
   },[tester])
 
-  const llenarKeys = async ()=>{
-    const list = await getKeys()
-    setKeys(list)
-  }
   const llenarGeneros = async ()=>{
-    const list = await getGeneros()
-    setGeneros(list)
+    await unDocumentoCallback("generos", "docGenero", (retorno) => {
+      setGeneros(retorno.result.generos);
+    });    
   }
+
+
+  const llenarKeys = async ()=>{
+    await unDocumentoCallback("keys", "dogKeys", (retorno) => {
+      setKeys(retorno.result);
+      console.log(keys)
+    });    
+  }
+
 
   const llenarLista = async () => {
     setLoading(true);
@@ -163,7 +169,7 @@ export default function SearchProduct() {
                     
                   {generos.length ?
                     generos.map(i =>(
-                        <Form.Check className={s.gencheck} key={i.data().nombre} onClick={onPene} type="switch" id="custom-switch" name={i.data().nombre} label={i.data().nombre}/>  
+                        <Form.Check className={s.gencheck} key={i.nombre} onClick={onPene} type="switch" id="custom-switch" name={i.nombre} label={i.nombre}/>  
                                   
                         )) : null  //ACA SE DEBE MOSTRAR AL USUARIO QUE NO EXISTEN GENEROS EN CASO DE BUSQUEDA O AL INICIAR
                   }
@@ -180,7 +186,7 @@ export default function SearchProduct() {
                     {
               keys.length ?
                 keys.map(i =>(
-                          <option className={s.option} key={i.data().nombre} value={i.data().nombre}>{i.data().nombre}</option>    
+                          <option className={s.option} key={i.nombre} value={i.nombre}>{i.nombre}</option>    
                           
                 )) : null  //ACA SE DEBE MOSTRAR AL USUARIO QUE NO EXISTEN GENEROS EN CASO DE BUSQUEDA O AL INICIAR
           }
