@@ -70,6 +70,26 @@ export const unDocumento = async (nombreCollecion, id) => {
         return retorno;
     }
 };
+export const unDocumentoCallback = async (nombreCollecion, id, funcionCallback) => {
+    try {
+        const docRef = allDb.doc(db, nombreCollecion, id);
+        const docSnap = await allDb.getDoc(docRef);
+        if (docSnap.exists()) {
+            retorno.result = docSnap.data();
+            retorno.result.id = docSnap.id;
+            retorno.confirma = true;
+            retorno.mensaje = 'Consulta Exitosa';
+        } else {
+            retorno.result = docSnap;
+            retorno.mensaje = 'La Consulta fue exitosa pero esta no encontro lo que buscabas';
+        }
+    } catch (error) {
+        retorno.mensaje = error.message;
+    } finally {
+        funcionCallback(retorno)
+    }
+};
+
 
 /**
  * Este metodo consulta y trae varios documento en espesifico el cual necesita una coleccion y una clausula where de los attibutos que necesita comparar.
