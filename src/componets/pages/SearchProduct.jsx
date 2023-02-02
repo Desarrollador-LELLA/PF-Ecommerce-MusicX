@@ -7,8 +7,7 @@ import { useLocation } from "react-router-dom";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCompactDisc, faGaugeSimple, faMusic, faTag } from "@fortawesome/free-solid-svg-icons";
 import { Spinner } from "react-bootstrap";
-import { todosDocumentos
- } from "../../utils/metodosFirebase";
+import { todosDocumentos } from "../../utils/metodosFirebase";
 import { getKeys } from "../../utils/keysActions";
 import { getGeneros } from "../../utils/generosActions";
 import { Pagination } from "react-bootstrap";
@@ -19,6 +18,7 @@ import Row from "react-bootstrap/Row";
 import { Link } from "react-router-dom";
 import { filterProducts } from "../../utils/searchFunction";
 import a from "../../css/ProductCards.module.css"
+
 
 const INITIAL_PAGINADO = {
   coleccion: "productos",
@@ -60,19 +60,37 @@ export default function SearchProduct() {
   const onPene = (e)=>{
     if(filtros.generos.includes(e.target.name)){
       setFiltros({...filtros,generos:filtros.generos.filter(el => el!== e.target.name)})
+      setEstadoInicial({
+        ...estadoInicial,
+        paginaActual: 1,
+      });
     } else
     setFiltros({...filtros,generos:[...filtros.generos,e.target.name]})
+    setEstadoInicial({
+      ...estadoInicial,
+      paginaActual: 1,
+    });
   }
   const onChangeKey = (e)=>{
       setFiltros({...filtros,keyF:e.target.value})
+      setEstadoInicial({
+        ...estadoInicial,
+        paginaActual: 1,
+      });
   }
   const onChangeBPMMin = (e)=>{
-    console.log(e.target.value)
     setFiltros({...filtros,bpmMin:e.target.value})
+    setEstadoInicial({
+      ...estadoInicial,
+      paginaActual: 1,
+    });
   }
   const onChangeBPMMax = (e)=>{
-    console.log(e.target.value)
     setFiltros({...filtros,bpmMax:e.target.value})
+    setEstadoInicial({
+      ...estadoInicial,
+      paginaActual: 1,
+    });
   }
   useEffect(() => {
     llenarKeys();
@@ -222,9 +240,11 @@ export default function SearchProduct() {
           ))
         ) : <h1>{"No se encontraron Beats :("}</h1>}
       </Row>
-      <Pagination>
+      <div className={s.paginationcontainer}>
+      <Pagination className={s.paginationcontainer}>
         <Pagination.Prev onClick={anterior} />
         <Pagination.Item
+        className={s.button}
           onClick={cambiarPagina}
           active={paginasBar[0] === estadoInicial.paginaActual ? true : false}
         >
@@ -268,6 +288,7 @@ export default function SearchProduct() {
         )}
         {<Pagination.Next onClick={siguiente} />}
       </Pagination>
+      </div>
     </div>
       </div>
     </div>

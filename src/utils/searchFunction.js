@@ -20,7 +20,7 @@ export const filterProducts = ({ opDesc, opAsce, opAZ, opZA, opSinOrden, search,
     }
     if(keyF){
         if(keyF==="All"){
-            nuevaLista=lista.slice()
+            
         }else if(keyF){
             nuevaLista = nuevaLista.filter((z)=>{
                 return z.key.includes(keyF)
@@ -29,7 +29,14 @@ export const filterProducts = ({ opDesc, opAsce, opAZ, opZA, opSinOrden, search,
     }
     if(bpmMin){
       nuevaLista = nuevaLista.filter((x) => {
-        return x.tiempo >= bpmMin.toString()
+        return x.tiempo >= parseInt(bpmMin)
+      });
+    }
+     if(bpmMax){
+      console.log(bpmMax)
+      
+      nuevaLista = nuevaLista.filter((x) => {
+        return x.tiempo < parseInt(bpmMin)
       });
     }
 
@@ -61,5 +68,6 @@ export const filterProducts = ({ opDesc, opAsce, opAZ, opZA, opSinOrden, search,
     if (opSinOrden) {
       return nuevaLista;
     }
+    console.log(nuevaLista)
     return nuevaLista;
   };

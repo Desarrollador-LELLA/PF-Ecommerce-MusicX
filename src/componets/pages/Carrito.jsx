@@ -1,19 +1,20 @@
 import { Link, useNavigate } from "react-router-dom";
-import { db } from "../../firebaseInicial/firebase";
-import { collection, getDocs } from "firebase/firestore";
 import styleCarrito from "../../css/Carrito.module.css";
 import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import * as actions from "../../redux/actions/carritoAction";
 import PaypalButton from "../com/Paypal";
 import {PayPalScriptProvider} from "@paypal/react-paypal-js";
+import {actualizaDocumento} from  "../../utils/metodosFirebase"
 
 const Carrito = () => {
     const infoTotal = [];
     const productos = useSelector((store) => store.carrito.productos);
+    const idUser = useSelector((store) => store.auth.usuarioAuth.id);
     const dispatch = useDispatch();
     const navegar = useNavigate();
-    
+    console.log(productos)
+
     const products = () => {
         return productos.map((producto) => {
             return {
@@ -21,7 +22,7 @@ const Carrito = () => {
                 description: producto.nombre,
                 amount: {
                     currency: "USD",
-                    value: producto.valor.toString()
+                    value: producto.licencias.precio.toString()
                 }
             }
         })
@@ -33,14 +34,16 @@ const Carrito = () => {
 
     const totalCalculator = () => {
         return Math.floor(productos.reduce(
-                    (accumulator, currentValue) => accumulator + Number(currentValue.valor),
+                    (accumulator, currentValue) => accumulator + Number(currentValue.licencias.precio),
                        0 )).toString()
     }
 
     productos.forEach((producto) => infoTotal.push(`${producto.nombre} (1)`));
     
-    const handleBiblioteca = () => {
-        dispatch(actions.addBiblioteca(productos))
+    const handleBiblioteca = async () => {
+        const dos = await actualizaDocumento("usuarios", idUser, {
+          data: { biblioteca: [...productos] }
+        });
     }
     
     const biblioteca = useSelector((state) => state.carrito.biblioteca);
@@ -64,7 +67,7 @@ const Carrito = () => {
                                 <h2>Autor:{data.autor}</h2>
                                 <h2>Tiempo:{data.tiempo}</h2>
                             </div>
-                            <h2>{data.valor} USD</h2>
+                            <h2>{data.licencias.precio} USD</h2>
                             <button onClick={() => handleQuitarProducto(data.id)}><strong>X</strong></button>
                         </div>
                     );
