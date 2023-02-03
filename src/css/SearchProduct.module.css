@@ -1,4 +1,6 @@
-.dadcontainer{
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@500;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Unbounded:wght@900&display=swap');.dadcontainer{
+
     display: flex;
     flex-direction: row;
 }
@@ -12,16 +14,20 @@
 }
 
 .titlefilter{
-    font-family: 'Dela Gothic One';
+    font-family: 'Unbounded', cursive;
 font-style: normal;
 font-weight: 400;
 font-size: 40px;
 line-height: 35px;
 text-align: center;
 color: #09bfc9;
-  text-shadow: 0.4em 0.4em 0.2em black;
+  text-shadow: 0.8em 0.6em 0.2em black;
+  transition: 1s;
 }
-
+.titlefilter:hover{
+  color: #ae33b3;
+  text-shadow: 0.4em 0.4em 0.2em rgb(43, 89, 107);
+}
 .containerfilters{
     width: 30vh;
     height: 55vw;
@@ -39,23 +45,28 @@ font-size: 48px;
 color: #394545;
 text-align: center;
 margin: 1.5%;
+font-family: 'Unbounded', cursive;
 }
 
 .acordion{
     background-color: transparent;
     border-color: rgb(44, 61, 66);
     margin: 1%;
+    font-family: 'Unbounded', cursive;
+    
 }
 .acordion button{
+  font-family: 'Unbounded', cursive;
     background-color: transparent;
     color: #537472;
     margin: 1%;
     transition: 1s;
 }
 .acordion button:hover{
-    background-color: #223738;
+    background-color: #412142;
     color: #3c7e79;
     margin: 1%;
+    text-shadow: 0.8em 0.6em 0.2em black;
 }
 .acordion::after{
     background-color: transparent;
@@ -79,6 +90,7 @@ margin: 1.5%;
     align-items: center;
     justify-content: center;
     flex-direction: row;
+    font-family: 'Unbounded', cursive;
   }
 
   .paginationcontainer ul li a{
@@ -98,6 +110,7 @@ margin: 1.5%;
 .input{
     background-color: transparent;
     border-color: #1b3536;
+    font-family: 'Unbounded', cursive;
     
 }
 .input:focus{
@@ -114,6 +127,7 @@ margin: 1.5%;
     font-size: 16px;
     width: 100%;
     color: #09bfc9;
+    font-family: 'Unbounded', cursive;
   }
 
 
