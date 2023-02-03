@@ -8,11 +8,12 @@ import DropdownButton from 'react-bootstrap/DropdownButton';
 import Dropdown from 'react-bootstrap/Dropdown';
 import { useDispatch } from "react-redux";
 import { paginacion } from '../../utils/libreria';
-import { todosDocumentos, mostrarImgen, obtienePaginado, siguientePaginado, anteriorPaginado, cambiaPaginado, crearDocumento, unDocumento, actualizaDocumento } from '../../utils/metodosFirebase';
+import { todosDocumentos, mostrarImgen, unDocumento, obtienePaginado, siguientePaginado, anteriorPaginado, cambiaPaginado, crearDocumento, unDocumentoCallback, actualizaDocumento } from '../../utils/metodosFirebase';
 import icGenero from "../images/ic_genero.svg"
 
 
 const INITIAL_PAGINADO = {
+  id: "docGenero",
   coleccion: 'generos',
   ordenarPor: 'nombre',
   whereFiltros: null,
@@ -43,11 +44,10 @@ const Generos = () => {
 
   const llenarLista = async () => {
     setLoading(true);
-    const list = await todosDocumentos(estadoInicial.coleccion, estadoInicial.ordenarPor, estadoInicial.whereFiltros, () => {
-      setLoading(false);
+    await unDocumentoCallback(estadoInicial.coleccion, estadoInicial.id, (retorno) => {
+      setEstadoInicial({ ...estadoInicial, lista: retorno.result.generos });
+      setLoading(false)
     });
-    console.log(list);
-    setEstadoInicial({ ...estadoInicial, lista: list.result });
   };
 
   const cambiarPagina = (e) => {
@@ -130,17 +130,16 @@ const Generos = () => {
       setAbrirModalEditar(true);
     }
   };
-//BUSCAR
-  const filterProducts = ({ opDesc, opAsce, opAZ, opZA, opSinOrden, search,generos,keyF}, lista) => {
-    
+  //BUSCAR
+  const filterProducts = ({ opDesc, opAsce, opAZ, opZA, opSinOrden, search, generos, keyF }, lista) => {
+
     let nuevaLista = lista.slice();
 
-    if (search){
-        nuevaLista = nuevaLista.filter((ele) =>
-        {
-         return ele.nombre.toLowerCase().includes(search.toLowerCase())|| ele.autor.toLowerCase().includes(search.toLowerCase())||ele.descripcion.toLowerCase().includes(search.toLowerCase())
-        }
-        );
+    if (search) {
+      nuevaLista = nuevaLista.filter((ele) => {
+        return ele.nombre.toLowerCase().includes(search.toLowerCase()) || ele.autor.toLowerCase().includes(search.toLowerCase()) || ele.descripcion.toLowerCase().includes(search.toLowerCase())
+      }
+      );
     }
     return nuevaLista;
   };
@@ -225,15 +224,15 @@ const Generos = () => {
     <Container>
       {/* MODAL CREAR GENERO */}
       <Modal show={abrirModalCrear} onHide={handleCloseAbrirModalCrear} backdrop="static" keyboard={false}>
-        <Modal.Header   className="bg-dark" closeButton>
+        <Modal.Header className="bg-dark" closeButton>
           <Modal.Title className="text-bg-dark p-1" >Crear genero</Modal.Title>
         </Modal.Header>
         <Modal.Body className="text-bg-dark" >
           <FloatingLabel controlId="floatingInput" label="Genero " className="text-dark" >
-            <Form.Control   type="text" placeholder="rock an roll" onChange={handleOnChangeNombreCrear} value={nombreCrear} />
+            <Form.Control type="text" placeholder="rock an roll" onChange={handleOnChangeNombreCrear} value={nombreCrear} />
           </FloatingLabel>
         </Modal.Body>
-        <Modal.Footer  className="bg-dark">
+        <Modal.Footer className="bg-dark">
           {
             error ?
               <div class="alert alert-danger" role="alert">{error}</div>
@@ -245,7 +244,7 @@ const Generos = () => {
       </Modal>
       {/* MODAL EDITAR GENERO */}
       <Modal show={abrirModalEditar} onHide={handleClose2} backdrop="static" keyboard={false}>
-        <Modal.Header closeButton  className="bg-dark">
+        <Modal.Header closeButton className="bg-dark">
           <Modal.Title className="text-bg-dark p-3">Editar Genero</Modal.Title>
         </Modal.Header>
         <Modal.Body
@@ -254,7 +253,7 @@ const Generos = () => {
             <Form.Control type="text" placeholder="rock an roll" onChange={handleOnChangeNombreEditar} value={generoEditar.nombre} />
           </FloatingLabel>
         </Modal.Body>
-        <Modal.Footer  className="bg-dark">
+        <Modal.Footer className="bg-dark">
           <div class="btn-group" role="group" aria-label="Basic mixed styles example">
             <button type="button" className={generoEditar.habilitado ? "btn btn-success" : "btn btn-danger"} onClick={habilarADesabilitar}>{generoEditar.habilitado ? "habilitado" : "desahabilitado"}</button>
           </div>

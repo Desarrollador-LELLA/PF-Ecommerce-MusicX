@@ -18,7 +18,7 @@ import Row from "react-bootstrap/Row";
 import { Link } from "react-router-dom";
 import { filterProducts } from "../../utils/searchFunction";
 import a from "../../css/ProductCards.module.css"
-
+import { unDocumentoCallback } from "../../utils/metodosFirebase";
 
 const INITIAL_PAGINADO = {
   coleccion: "productos",
@@ -92,24 +92,31 @@ export default function SearchProduct() {
       paginaActual: 1,
     });
   }
+  const llenarKeys = async ()=>{
+    await unDocumentoCallback("keys", "dogKeys", (retorno) => {
+      setKeys(retorno.result.keys)
+      console.log('HIJO DE PERRA 1', retorno)
+    });  
+  }
   useEffect(() => {
-    llenarKeys();
-    llenarGeneros(); 
     llenarLista();
+    llenarGeneros(); 
+    llenarKeys();
   }, []);
+
   
   useEffect(()=>{
     setFiltros({...filtros,search:!tester ? null:tester.search.slice(1)})
   },[tester])
 
-  const llenarKeys = async ()=>{
-    const list = await getKeys()
-    setKeys(list)
-  }
   const llenarGeneros = async ()=>{
-    const list = await getGeneros()
-    setGeneros(list)
+    await unDocumentoCallback("generos", "docGenero", (retorno) => {
+      setGeneros(retorno.result.generos);
+    });    
   }
+
+
+
 
   const llenarLista = async () => {
     setLoading(true);
@@ -163,7 +170,7 @@ export default function SearchProduct() {
                     
                   {generos.length ?
                     generos.map(i =>(
-                        <Form.Check className={s.gencheck} key={i.data().nombre} onClick={onPene} type="switch" id="custom-switch" name={i.data().nombre} label={i.data().nombre}/>  
+                        <Form.Check className={s.gencheck} key={i.nombre} onClick={onPene} type="switch" id="custom-switch" name={i.nombre} label={i.nombre}/>  
                                   
                         )) : null  //ACA SE DEBE MOSTRAR AL USUARIO QUE NO EXISTEN GENEROS EN CASO DE BUSQUEDA O AL INICIAR
                   }
@@ -171,7 +178,7 @@ export default function SearchProduct() {
                 </Accordion.Body>
               </Accordion.Item>
               <Accordion.Item className={s.acordion} eventKey="1">
-                <Accordion.Header><FontAwesomeIcon icon="fa-thin fa-piano" /><FontAwesomeIcon icon={faMusic}/>KEY</Accordion.Header>
+                <Accordion.Header><FontAwesomeIcon icon={faMusic}/>KEY</Accordion.Header>
                 <Accordion.Body>
                 <Form >
                   <Form.Select onChange={onChangeKey} aria-label="Default select example">
@@ -180,7 +187,7 @@ export default function SearchProduct() {
                     {
               keys.length ?
                 keys.map(i =>(
-                          <option className={s.option} key={i.data().nombre} value={i.data().nombre}>{i.data().nombre}</option>    
+                          <option className={s.option} key={i.id} value={i.nombre}>{i.nombre}</option>    
                           
                 )) : null  //ACA SE DEBE MOSTRAR AL USUARIO QUE NO EXISTEN GENEROS EN CASO DE BUSQUEDA O AL INICIAR
           }

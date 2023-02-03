@@ -1,5 +1,16 @@
 import React, { useState, useEffect } from "react";
-import { Button, Card, Container, Form, Modal, ModalBody, ModalHeader, ModalFooter, InputGroup, ListGroup } from "react-bootstrap";
+import {
+  Button,
+  Card,
+  Container,
+  Form,
+  Modal,
+  ModalBody,
+  ModalHeader,
+  ModalFooter,
+  InputGroup,
+  ListGroup,
+} from "react-bootstrap";
 import css from "../../css/detailproducto.module.css"; // import Ronaldo
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
@@ -11,8 +22,11 @@ import { getGeneros } from "../../utils/generosActions";
 import { todosDocumentos } from "../../utils/metodosFirebase";
 
 //      Subir imagenes    -   KUC
-import { actualizaDocumento, crearDocumento, subirArchivoMetodo } from "../../utils/metodosFirebase";
-
+import {
+  actualizaDocumento,
+  crearDocumento,
+  subirArchivoMetodo,
+} from "../../utils/metodosFirebase";
 
 const ProductoCreate = () => {
   //Estados Roanaldo -----------------------------
@@ -63,7 +77,6 @@ const ProductoCreate = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-
   //  Aqui traigo los keys
   const [keys, setKeys] = useState([]);
 
@@ -98,7 +111,6 @@ const ProductoCreate = () => {
   useEffect(() => {
     llenarGeneros();
   }, []);
-
 
   //  Segundo ejemplo
   const [imageUpload, setImageUpload] = useState(null);
@@ -179,6 +191,7 @@ const ProductoCreate = () => {
       const parrafo = document.getElementById("ParrafoDescripcion");
       tipoLicencias.forEach((element) => {
         if (element.nombre === e.target.value) {
+          console.log("LINEA 173");
           parrafo.innerHTML = element.descripcion;
         }
       });
@@ -224,7 +237,6 @@ const ProductoCreate = () => {
   };
   //-------------------------------handlers Roanldo termian -----------------------------
 
-
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setProducto({
@@ -260,8 +272,7 @@ const ProductoCreate = () => {
         const extension = imagen.type.substring(6, imagen.type.length);
         const extensionArchivo = archivo.map((archi) => {
           return archi.type.substring(6, archi.type.length);
-        }
-        );
+        });
         let ruta = `productos/${prod.result.id}/beat.${extension}`;
         let rutaArchivo = extensionArchivo.map(
           (archi, i) => {
@@ -288,12 +299,10 @@ const ProductoCreate = () => {
           data: { licencias: LicenCreadas },
         });
       }
-    }
-    catch (err) {
+    } catch (err) {
       console.log("Error generado 2 :", err);
     }
   };
-
 
   return (
     <div>
@@ -361,7 +370,6 @@ const ProductoCreate = () => {
                       null
                   }
               </Form.Select>
-
             </div>
             <div className="form-group input-group input-group-text my-3 d-flex justify-content-between">
               <Form.Label>Key producto :</Form.Label>
@@ -516,5 +524,3 @@ const ProductoCreate = () => {
 };
 
 export default ProductoCreate;
-
-
