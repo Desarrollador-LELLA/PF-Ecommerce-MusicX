@@ -204,6 +204,20 @@ export const actualizaDocumento = async (nombreCollecion, id, { data }) => {
     return retorno;
   }
 };
+export const actualizaDocumentoArray = async (nombreCollecion, id, { data }) => {
+    try {
+        const docRef = allDb.doc(db, nombreCollecion, id);
+        const r = await allDb.updateDoc(docRef, data);
+
+        retorno.result.id = 'docRef.id';
+        retorno.confirma = true;
+        retorno.mensaje = 'Consulta Exitosa';
+    } catch (error) {
+        retorno.mensaje = error.message;
+    } finally {
+        return retorno;
+    }
+};
 
 /**
  * Este metodo consulta y trae varios documento en espesifico el cual necesita una coleccion y una clausula where de los attibutos que necesita comparar.
