@@ -25,9 +25,12 @@
 
 .card_keys {
     background: linear-gradient(120deg, rgb(80, 0, 90) 10%, rgb(0, 43, 51) 60%, rgb(66, 0, 66) 90%);
-    /* border-radius: 20px; */
-    /* -webkit-border-radius: 20px;
-    -moz-border-radius: 20px;
-    -ms-border-radius: 20px;
-    -o-border-radius: 20px; */
+}
+
+.placeholder_img {
+    background: rgb(0, 0, 0);
+    animation-name: gixaxb;
+    animation-duration: 3s;
+    animation-iteration-count: infinite;
+    animation-timing-function: linear;
 }
