@@ -74,26 +74,14 @@ export const LimpiarDetalleProd = () => {
   };
 };
 
-export const addBiblioteca = async (productos, idUser) => {
+export const addBiblioteca = (productos, idUser) => {
   return async (dispatch) => {
-    let data = [];
-    console.log(data);
-    await productos.forEach((producto) => {
-      let refproducto = allDb.doc(
-        db,
-        "productos",
-        "S1w7b89f34NzpjUdJCIQZNVA6XM2"
-      );
-      let product = allDb.getDoc(refproducto);
-      data.push(product.data());
-      console.log(producto.id);
-    });
-
-    console.log(productos, typeof productos);
     const usuario = allDb.doc(db, "usuarios", idUser);
-    await updateDoc(usuario, { biblioteca: productos });
+    const userData = await allDb.getDoc(usuario);
+    const bibliotecaPrev = userData.data().biblioteca;
+    await updateDoc(usuario, {biblioteca: [...bibliotecaPrev, ...productos]})
     dispatch({
-      type: ADD_BIBLIOTECA,
+      type: ADD_BIBLIOTECA
     });
   };
 };
