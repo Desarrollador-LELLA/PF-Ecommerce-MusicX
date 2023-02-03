@@ -92,21 +92,25 @@ const ProductoCreate = () => {
   const [imageUpload, setImageUpload] = useState(null);
   const [imageUrls, setImageUrls] = useState([]);
 
+  
   const ValidoProducto = ({ nombre, autor, descripcion, precio, key, tiempo, imagen }) => {
       const e = {};
       let valido = true;
       const regex = /^[0-9].*$/;
 
-      if (nombre.toString().trim().length === 0) {
+      if (nombre.toString().trim().length === 0)
+      {
           e.nombre = "El nombre esta Vacio";
           valido = false;
       }
-      else if (nombre.length > 50) {
+      else if (nombre.length > 50)
+      {
           e.nombre = "El nombre no puede tener mas de 50 Caracteres";
           valido = false;
       }
 
-      if (autor.toString().trim().length === 0) {
+      if (autor.toString().trim().length === 0)
+      {
           e.autor = "El autor esta Vacio";
           valido = false;
       }
@@ -115,7 +119,8 @@ const ProductoCreate = () => {
           valido = false;
       }
 
-      if (descripcion.toString().trim().length === 0) {
+      if (descripcion.toString().trim().length === 0)
+      {
           e.descripcion = "La descripcion esta vacio";
           valido = false;
       }
@@ -124,7 +129,8 @@ const ProductoCreate = () => {
           valido = false;
       }
 
-      if (key.toString().trim().length === 0) {
+      if (key.toString().trim().length === 0)
+      {
           e.key = "El Key esta vacio";
           valido = false;
       }
@@ -133,15 +139,18 @@ const ProductoCreate = () => {
           valido = false;
       }
 
-      if (tiempo.toString().trim().length === 0) {
+      if (tiempo.toString().trim().length === 0)
+      {
           e.tiempo = "El Tiempo esta Vacio";
           valido = false;
       }
-      else if (regex.test(tiempo) !== true) {
+      else if (regex.test(tiempo) !== true)
+      {
           e.tiempo = "El Tiempo debe ser un numero";
           valido = false;
       }
-      else if (tiempo.value === 0) {
+      else if (tiempo.value === 0)
+      {
           e.tiempo = "El Tiempo debe ser mayor a cero";
           valido = false;
       }
