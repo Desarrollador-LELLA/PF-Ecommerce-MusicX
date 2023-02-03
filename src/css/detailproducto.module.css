@@ -32,6 +32,19 @@
 
   height: 200px;
 }
+.divLicenciasCrear {
+  border-top: solid 2px;
+  border-color: #ffffff;
+  margin-top: 1px;
+  padding: 2px;
+  overflow-y: scroll;
+  height: 200px;
+}
+.cardProductoCrear {
+  color: #111111;
+  background: #f8f9fa;
+  margin: 5px;
+}
 .cardProducto {
   color: #f7d0de;
   background: rgba(119, 43, 80, 0.74);
