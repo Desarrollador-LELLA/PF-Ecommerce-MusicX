@@ -8,8 +8,9 @@ import DropdownButton from 'react-bootstrap/DropdownButton';
 import Dropdown from 'react-bootstrap/Dropdown';
 import { useDispatch } from "react-redux";
 import { paginacion } from '../../utils/libreria';
-import { todosDocumentos, mostrarImgen, unDocumento, obtienePaginado, siguientePaginado, anteriorPaginado, cambiaPaginado, crearDocumento, unDocumentoCallback, actualizaDocumento } from '../../utils/metodosFirebase';
+import { actualizaDocumentoArray, mostrarImgen, unDocumento, obtienePaginado, siguientePaginado, anteriorPaginado, cambiaPaginado, crearDocumento, unDocumentoCallback, actualizaDocumento } from '../../utils/metodosFirebase';
 import icGenero from "../images/ic_genero.svg"
+import { arrayUnion } from "firebase/firestore";
 
 
 const INITIAL_PAGINADO = {
@@ -94,7 +95,7 @@ const Generos = () => {
 
   //MODAL EDITAR GENERO
   const confirmarEdicion = async () => {
-    const resultado = await actualizaDocumento(estadoInicial.coleccion, generoEditar.id, { data: { nombre: generoEditar.nombre, habilitado: generoEditar.habilitado } })
+    const resultado = await actualizaDocumentoArray(estadoInicial.coleccion, estadoInicial.id, { data: { generos: arrayUnion({ id: 1, nombre: 'nombre', habilitado:true }) } })
     if (resultado.confirma) {
       setGeneroEditar({});
       // setError(null);
