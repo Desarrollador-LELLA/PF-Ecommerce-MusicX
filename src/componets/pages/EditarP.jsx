@@ -96,9 +96,9 @@ const EditarU = () => {
                                         Guardar
                                     </Button>
                                     <div>
-                                       <link  to="#">
-                                        <Button className='' type='submit' variant='dark' onClick={"#"} > Volver</Button>
-                                        </link>
+                                  
+                                        <Button className='mb-3' type='submit' variant='dark' onClick={() => navegar(-1)} > Volver</Button>
+                                      
                                     </div>
                                 </>
                         }
