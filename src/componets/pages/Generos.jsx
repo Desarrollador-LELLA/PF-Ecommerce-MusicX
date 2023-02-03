@@ -32,6 +32,7 @@ const Generos = () => {
   const [errorr, setErrorr] = useState(null);
   const [abrirModalCrear, setAbrirModalCrear] = useState(false);
   const [nombreCrear, setNombreCrear] = useState("");
+  const [idCrear, setIdCrear] = useState("");
   const [habilitado, setHabilitado] = useState(true);
   const [buscarGenero, setBuscarGenero] = useState("");
   const [listaMostrar, setListaMostrar] = useState([]);
@@ -73,34 +74,55 @@ const Generos = () => {
     setNombreCrear("");
     setError(null);
     setAbrirModalCrear(false);
+    setIdCrear("")
   };
 
   function handleOnChangeNombreCrear(e) {
     setNombreCrear(e.target.value);
   }
   async function handleCrearGenero(e) {
-    const resultado = await crearDocumento(estadoInicial.coleccion, { data: { nombre: nombreCrear, habilitado } });
     if (validate()) {
-      setAbrirModalCrear(false);
-      setNombreCrear("");
+      const siExisteId = estadoInicial.lista.find(x => x.id === idCrear)
+      if (siExisteId) {
+        alert("si existe");
+      }
+      else {
+        const resultado = await actualizaDocumentoArray(estadoInicial.coleccion, estadoInicial.id, { data: { generos: arrayUnion({ id: idCrear, nombre: nombreCrear, habilitado: true }) } })
 
-      if (resultado.confirma) {
-        llenarLista();
-        setAbrirModalCrear(false);
-        setNombreCrear("");
+        if (resultado.confirma) {
+          setNombreCrear("");
+          setIdCrear("");
+          setAbrirModalCrear(false);
+          llenarLista();
+
+        }
+
       }
     }
+
   }
+
+  function handleOnChangeIdCrear(e) {
+    setIdCrear(e.target.value);
+  }
+
 
 
   //MODAL EDITAR GENERO
   const confirmarEdicion = async () => {
-    const resultado = await actualizaDocumentoArray(estadoInicial.coleccion, estadoInicial.id, { data: { generos: arrayUnion({ id: 1, nombre: 'nombre', habilitado:true }) } })
-    if (resultado.confirma) {
-      setGeneroEditar({});
-      // setError(null);
-      setAbrirModalEditar(false);
-      llenarLista();
+    const listaNueva = estadoInicial.lista.filter((x,i)=>i !== generoEditar.index)
+    if (listaNueva.find(x => x.id === generoEditar.id)) {
+      alert("el id ya existe")
+    } else {
+      listaNueva.push({ id: generoEditar.id, nombre: generoEditar.nombre, habilitado: generoEditar.habilitado })
+      const resultado = await actualizaDocumentoArray(estadoInicial.coleccion, estadoInicial.id, { data: { generos: listaNueva } })
+      if (resultado.confirma) {
+        setGeneroEditar({});
+        // setError(null);
+        setAbrirModalEditar(false);
+        llenarLista();
+
+      }
 
     }
   }
@@ -117,17 +139,22 @@ const Generos = () => {
     setGeneroEditar({ ...generoEditar, nombre: e.target.value });
 
   }
+  function handleOnChangeIdEditar(e) {
+    setGeneroEditar({ ...generoEditar, id: e.target.value });
+
+  }
+
 
   //FORMULARIO EN GENERAL
   function handleSort(e) {
     e.preventDefault();
   };
 
-  const handleShow2 = async (edidatId) => {
-    console.log(edidatId);
-    const objetoGenero = await unDocumento(estadoInicial.coleccion, edidatId);
+  const handleShow2 = async (idIndex) => {
+    const objetoGenero = await unDocumento(estadoInicial.coleccion, estadoInicial.id);
+
     if (objetoGenero.confirma) {
-      setGeneroEditar(objetoGenero.result);
+      setGeneroEditar({ ...objetoGenero.result.generos[idIndex], index: idIndex });
       setAbrirModalEditar(true);
     }
   };
@@ -145,16 +172,6 @@ const Generos = () => {
     return nuevaLista;
   };
 
-  function handleSort(e) {
-    e.preventDefault();
-  };
-
-
-  function handleVolver(e) {
-    e.preventDefault();
-    // dispatch(lista[e]);
-  };
-
   function buscar(e) {
     setBuscarGenero(e.target.value);
   }
@@ -165,13 +182,6 @@ const Generos = () => {
     }
   };
 
-  const handleCreate = () => {
-    if (validate()) {
-      // lista.push(nombre)
-      setAbrirModalCrear(false);
-      setNombreCrear("");
-    }
-  };
 
   const validate = () => {
     if (nombreCrear === "") {
@@ -229,9 +239,13 @@ const Generos = () => {
           <Modal.Title className="text-bg-dark p-1" >Crear genero</Modal.Title>
         </Modal.Header>
         <Modal.Body className="text-bg-dark" >
+          <FloatingLabel controlId="floatingInput" label="id " className="text-dark" >
+            <Form.Control type="number" placeholder="1-1000" onChange={handleOnChangeIdCrear} value={idCrear} />
+          </FloatingLabel>
           <FloatingLabel controlId="floatingInput" label="Genero " className="text-dark" >
             <Form.Control type="text" placeholder="rock an roll" onChange={handleOnChangeNombreCrear} value={nombreCrear} />
           </FloatingLabel>
+
         </Modal.Body>
         <Modal.Footer className="bg-dark">
           {
@@ -250,6 +264,10 @@ const Generos = () => {
         </Modal.Header>
         <Modal.Body
           className="text-dark p-1">
+          <FloatingLabel controlId="floatingInput" label="id " className="text-dark" >
+            <Form.Control type="number" placeholder="1-1000" onChange={handleOnChangeIdEditar} value={generoEditar.id} />
+          </FloatingLabel>
+
           <FloatingLabel controlId="floatingInput" label="Genero" className="text-dark" >
             <Form.Control type="text" placeholder="rock an roll" onChange={handleOnChangeNombreEditar} value={generoEditar.nombre} />
           </FloatingLabel>
@@ -318,7 +336,7 @@ const Generos = () => {
                         <Card.Title className='text-light'>
                           {i.nombre}
                         </Card.Title>
-                        <Button variant="outline-secondary mb-3" onClick={() => handleShow2(i.id)}>Editar</Button>
+                        <Button variant="outline-secondary mb-3" onClick={() => handleShow2(estadoInicial.lista.findIndex(x => x.id === i.id))}>Editar</Button>
                         <Badge bg={i.habilitado ? "success" : "danger"}>
                           {i.habilitado ? "Habilitado" : "Deshabilitado"}
                         </Badge>
