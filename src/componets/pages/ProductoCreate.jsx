@@ -8,7 +8,7 @@ import { db, storage, allStor, stor } from "../../firebaseInicial/firebase";
 import { collection, addDoc } from "firebase/firestore";
 import { getKeys } from "../../utils/keysActions";
 import { getGeneros } from "../../utils/generosActions";
-
+import { todosDocumentos } from "../../utils/metodosFirebase";
 
 //      Subir imagenes    -   KUC
 import { actualizaDocumento, crearDocumento, subirArchivoMetodo } from "../../utils/metodosFirebase";
@@ -68,7 +68,6 @@ const ProductoCreate = () => {
   const [keys, setKeys] = useState([]);
 
   const llenarKeys = async () => {
-    console.log('LINEA 71');
     // const list = await getKeys();
     // setKeys(list);
   };
@@ -76,16 +75,27 @@ const ProductoCreate = () => {
   //  Aqui traigo los generos
   const [generos, setGeneros] = useState([]);
 
+  //  YO USO ESTO PARA CARGAR GENEROS, SI LA COPIE
+  //  EN LA FUNCION DE GENEROS USAN COSAS COM SE LOADING Y ESO
+  //  YO LA ARME DESDE CERO
+  //  no, si yo copio y pego tendria que traerme un monton de cosas
+  //  ENTONCES, MIRA ESTO
+
   const llenarGeneros = async () => {
-    console.log('LINEA 80');
     // const list = await getGeneros();
     // setGeneros(list);
+    
+    //  YO ME ACTUALICE EN LA TARDE
+    //  TU MODIFICASTE METODOS FIREBASE ?
+    
+    let lista = [];
+    const list = await todosDocumentos("generos", "nombre", null, false);
+    setGeneros({ ...generos, lista: list.result});
   };
+
 
   //  Aqui cargale los selectbox
   useEffect(() => {
-    console.log('LINEA 87');
-    llenarKeys();
     llenarGeneros();
   }, []);
 
@@ -168,9 +178,7 @@ const ProductoCreate = () => {
     if (e.target.id === "ListaTipo") {
       const parrafo = document.getElementById("ParrafoDescripcion");
       tipoLicencias.forEach((element) => {
-        console.log('LINEA 171');
         if (element.nombre === e.target.value) {
-          console.log('LINEA 173');
           parrafo.innerHTML = element.descripcion;
         }
       });
@@ -179,7 +187,6 @@ const ProductoCreate = () => {
   const handlerAgregarLicen = (e) => {
     const filtradoTipoLicencia = EstadoTipoLi.filter(
       (licen) => {
-        console.log('LINEA 182');
         return licen.nombre !== licencia.TipoLicencia;
       }
     );
@@ -197,7 +204,6 @@ const ProductoCreate = () => {
   const handlerEliminar = (e) => {
     const filtrado = LicenCreadas.filter(
       (licen) => {
-        console.log('LINEA 200');
         return licen.TipoLicencia !== e.target.id;
       }
     );
@@ -253,27 +259,23 @@ const ProductoCreate = () => {
 
         const extension = imagen.type.substring(6, imagen.type.length);
         const extensionArchivo = archivo.map((archi) => {
-          console.log('LINEA 257');
           return archi.type.substring(6, archi.type.length);
         }
         );
         let ruta = `productos/${prod.result.id}/beat.${extension}`;
         let rutaArchivo = extensionArchivo.map(
           (archi, i) => {
-            console.log('LINEA 265');
             return `productos/${prod.result.id}/${LicenCreadas[i].TipoLicencia}.${extensionArchivo[i]}`;
           } //[ruta1, ruta2]
         );
 
         subirArchivoMetodo(ruta, (url) => {
-          console.log(url);
           actualizaDocumento("productos", prod.result.id, {
             data: { imagen: url },
           });
         });
 
         for (let i = 0; i < LicenCreadas.length; i++) {
-          console.log('LINEA 278');
           const uno = await subirArchivoMetodo(
             rutaArchivo[i],
             archivo[i],
@@ -282,7 +284,6 @@ const ProductoCreate = () => {
             }
           );
         }
-        console.log(LicenCreadas);
         const dos = await actualizaDocumento("productos", prod.result.id, {
           data: { licencias: LicenCreadas },
         });
@@ -300,123 +301,109 @@ const ProductoCreate = () => {
         <Card className={`${style.registroProducto} m-auto`}>
           <Form className="card card-body" onSubmit={(e) => handleSubmit(e)}>
             <div className={style.productoCreate_title}>
-              Creacion de Producto (Admin)
+                Creacion de Producto (Admin)
             </div>
             <div className="form-group input-group input-group-text my-3 d-flex justify-content-between">
               <Form.Label>Nombre producto :</Form.Label>
               <Form.Control
-                name="nombre"
-                type="text"
-                className={`${style.textbox}`}
-                placeholder="Ingrese nombre producto"
-                onChange={handleInputChange}
-                isInvalid={!!errores.nombre}
+                  name="nombre"
+                  type="text"
+                  className={`${style.textbox}`}
+                  placeholder="Ingrese nombre producto"
+                  onChange={handleInputChange}
+                  isInvalid={!!errores.nombre}
               />
               <Form.Control.Feedback type={"invalid"}>
-                {errores.nombre}
+                  {errores.nombre}
               </Form.Control.Feedback>
             </div>
             <div className="form-group input-group input-group-text my-3 d-flex justify-content-between">
               <Form.Label>Autor producto :</Form.Label>
               <Form.Control
-                name="autor"
-                type="text"
-                className={`${style.textbox}`}
-                placeholder="Ingrese autor producto"
-                onChange={handleInputChange}
-                isInvalid={!!errores.autor}
+                  name="autor"
+                  type="text"
+                  className={`${style.textbox}`}
+                  placeholder="Ingrese autor producto"
+                  onChange={handleInputChange}
+                  isInvalid={!!errores.autor}
               />
               <Form.Control.Feedback type={"invalid"}>
-                {errores.autor}
+                  {errores.autor}
               </Form.Control.Feedback>
             </div>
             <div className="form-group input-group input-group-text my-3 d-flex justify-content-between">
-              <Form.Label>Descripcion producto :</Form.Label>
-              <Form.Control
-                name="descripcion"
-                type="text"
-                className={`${style.textbox}`}
-                placeholder="Ingrese descripcion producto"
-                onChange={handleInputChange}
-                isInvalid={!!errores.descripcion}
-              />
-              <Form.Control.Feedback type={"invalid"}>
-                {errores.descripcion}
-              </Form.Control.Feedback>
+                <Form.Label>Descripcion producto :</Form.Label>
+                <Form.Control
+                    name="descripcion"
+                    type="text"
+                    className={`${style.textbox}`}
+                    placeholder="Ingrese descripcion producto"
+                    onChange={handleInputChange}
+                    isInvalid={!!errores.descripcion}
+                />
+                <Form.Control.Feedback type={"invalid"}>
+                  {errores.descripcion}
+                </Form.Control.Feedback>
             </div>
             <div className="form-group input-group input-group-text my-3 d-flex justify-content-between">
               <Form.Label>Genero producto :</Form.Label>
 
               <Form.Select name="genero" className={`${style.selectbox}`}>
-                <option hidden>Select genero</option>
-                <option value="All">All</option>
-                {
-                  generos.length ?
-                    generos.map(e => (
-                      <option key={e.data().nombre} value={e.data().nombre}>
-                        {e.data().nombre}
-                      </option>
-                    )) :
-                    null
-                }
+                  <option hidden>Select genero</option>
+                  <option value="All">All</option>
+                  {
+                      generos.length ?
+                      generos.map(e => (
+                          <option key={e.data().nombre} value={e.data().nombre}>
+                              {e.data().nombre}
+                          </option>
+                      )) :
+                      null
+                  }
               </Form.Select>
-
 
             </div>
             <div className="form-group input-group input-group-text my-3 d-flex justify-content-between">
               <Form.Label>Key producto :</Form.Label>
-              {/* 
-                          <Form.Control
-                              name="key"
-                              type="text"
-                              className={`${style.textbox}`}
-                              placeholder="Ingrese key producto"
-                              onChange={handleInputChange}
-                              isInvalid={!!errores.key}
-                          />
-                          <Form.Control.Feedback type={"invalid"}>
-                              {errores.key}
-                          </Form.Control.Feedback>
-                          */}
               <Form.Select name="key" className={`${style.selectbox}`}>
-                <option hidden>Select key</option>
-                <option value="All">All</option>
-                {
-                  keys.length ?
-                    keys.map(e => (
-                      <option key={e.data().nombre} value={e.data().nombre}>
-                        {e.data().nombre}
-                      </option>
-                    )) :
-                    null
-                }
+                  <option hidden>Select key</option>
+                  <option value="All">All</option>
+                  {
+                      keys.length ?
+                      keys.map(e => (
+                          <option key={e.data().nombre} value={e.data().nombre}>
+                              {e.data().nombre}
+                          </option>
+                      )) :
+                      null
+                  }
               </Form.Select>
             </div>
             <div className="form-group input-group input-group-text my-3 d-flex justify-content-between">
-              <Form.Label>Tiempo producto :</Form.Label>
-              <Form.Control
-                name="tiempo"
-                type="number"
-                className={`${style.textbox}`}
-                placeholder="Ingrese tiempo producto"
-                onChange={handleInputChange}
-                isInvalid={!!errores.tiempo}
-              />
-              <Form.Control.Feedback type={"invalid"}>
-                {errores.tiempo}
-              </Form.Control.Feedback>
+                <Form.Label>Tiempo producto :</Form.Label>
+                <Form.Control
+                    name="tiempo"
+                    type="number"
+                    className={`${style.textbox}`}
+                    placeholder="Ingrese tiempo producto"
+                    onChange={handleInputChange}
+                    isInvalid={!!errores.tiempo}
+                />
+                <Form.Control.Feedback type={"invalid"}>
+                    {errores.tiempo}
+                </Form.Control.Feedback>
             </div>
             <div className="form-group input-group input-group-text my-3 d-flex justify-content-between">
-              <Form.Label>Imagen producto :</Form.Label>
-              <Form.Control
-                type="file"
-                accept="image/png, image/jpg, image/jpeg"
-                onChange={handleSubirImagen}
-              />
-              <br />
-              <Form.Control.Feedback type={"invalid"}>
-                {errores.imagen}
-              </Form.Control.Feedback>
+                <Form.Label>Imagen producto :</Form.Label>
+                <Form.Control
+                    type="file"
+                    accept="image/png, image/jpg, image/jpeg"
+                    onChange={handleSubirImagen}
+                />
+                <br />
+                <Form.Control.Feedback type={"invalid"}>
+                    {errores.imagen}
+                </Form.Control.Feedback>
             </div>
             {
               // LISTA DE LICENCIAS ------- RONALDO ----------------------------------------------------------------------
