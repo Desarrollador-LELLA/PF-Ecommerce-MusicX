@@ -82,29 +82,20 @@ const ProductoCreate = () => {
   const [keys, setKeys] = useState([]);
 
   const llenarKeys = async () => {
-    // const list = await getKeys();
-    // setKeys(list);
+      // const list = await getKeys();
+      // setKeys(list);
   };
 
   //  Aqui traigo los generos
   const [generos, setGeneros] = useState([]);
 
-  //  YO USO ESTO PARA CARGAR GENEROS, SI LA COPIE
-  //  EN LA FUNCION DE GENEROS USAN COSAS COM SE LOADING Y ESO
-  //  YO LA ARME DESDE CERO
-  //  no, si yo copio y pego tendria que traerme un monton de cosas
-  //  ENTONCES, MIRA ESTO
-
   const llenarGeneros = async () => {
-    // const list = await getGeneros();
-    // setGeneros(list);
-
-    //  YO ME ACTUALICE EN LA TARDE
-    //  TU MODIFICASTE METODOS FIREBASE ?
-
-    let lista = [];
-    const list = await todosDocumentos("generos", "nombre", null, false);
-    setGeneros({ ...generos, lista: list.result });
+      // const list = await getGeneros();
+      // setGeneros(list);
+          
+      let lista_generos = [];
+      const list = await todosDocumentos("generos", "nombre", null, false);
+      setGeneros({ ...generos, lista_generos: list.result});
   };
 
   //  Aqui cargale los selectbox
@@ -112,68 +103,68 @@ const ProductoCreate = () => {
     llenarGeneros();
   }, []);
 
+
   //  Segundo ejemplo
   const [imageUpload, setImageUpload] = useState(null);
   const [imageUrls, setImageUrls] = useState([]);
 
-  const ValidoProducto = ({
-    nombre,
-    autor,
-    descripcion,
-    precio,
-    key,
-    tiempo,
-    imagen,
-  }) => {
-    const e = {};
-    let valido = true;
-    const regex = /^[0-9].*$/;
+  const ValidoProducto = ({ nombre, autor, descripcion, precio, key, tiempo, imagen }) => {
+      const e = {};
+      let valido = true;
+      const regex = /^[0-9].*$/;
 
-    if (nombre.toString().trim().length === 0) {
-      e.nombre = "El nombre esta Vacio";
-      valido = false;
-    } else if (nombre.length > 30) {
-      e.nombre = "El nombre no puede tener mas de 30 Caracteres";
-      valido = false;
-    }
+      if (nombre.toString().trim().length === 0) {
+          e.nombre = "El nombre esta Vacio";
+          valido = false;
+      }
+      else if (nombre.length > 30) {
+          e.nombre = "El nombre no puede tener mas de 30 Caracteres";
+          valido = false;
+      }
 
-    if (autor.toString().trim().length === 0) {
-      e.autor = "El autor esta Vacio";
-      valido = false;
-    } else if (autor.length > 30) {
-      e.autor = "El autor no puede tener mas de 30 Caracteres";
-      valido = false;
-    }
+      if (autor.toString().trim().length === 0) {
+          e.autor = "El autor esta Vacio";
+          valido = false;
+      }
+      else if (autor.length > 30) {
+          e.autor = "El autor no puede tener mas de 30 Caracteres";
+          valido = false;
+      }
 
-    if (descripcion.toString().trim().length === 0) {
-      e.descripcion = "La descripcion esta vacio";
-      valido = false;
-    } else if (descripcion.length > 30) {
-      e.descripcion = "La descripcion no puede tener mas de 30 Caracteres";
-      valido = false;
-    }
+      if (descripcion.toString().trim().length === 0) {
+          e.descripcion = "La descripcion esta vacio";
+          valido = false;
+      }
+      else if (descripcion.length > 30) {
+          e.descripcion = "La descripcion no puede tener mas de 30 Caracteres";
+          valido = false;
+      }
 
-    if (key.toString().trim().length === 0) {
-      e.key = "El Key esta vacio";
-      valido = false;
-    } else if (key.length > 30) {
-      e.key = "El Key no puede tener mas de 30 Caracteres";
-      valido = false;
-    }
+      if (key.toString().trim().length === 0) {
+          e.key = "El Key esta vacio";
+          valido = false;
+      }
+      else if (key.length > 30) {
+          e.key = "El Key no puede tener mas de 30 Caracteres";
+          valido = false;
+      }
 
-    if (tiempo.toString().trim().length === 0) {
-      e.tiempo = "El Tiempo esta Vacio";
-      valido = false;
-    } else if (regex.test(tiempo) !== true) {
-      e.tiempo = "El Tiempo debe ser un numero";
-      valido = false;
-    } else if (tiempo.value === 0) {
-      e.tiempo = "El Tiempo debe ser mayor a cero";
-      valido = false;
-    }
+      if (tiempo.toString().trim().length === 0) {
+          e.tiempo = "El Tiempo esta Vacio";
+          valido = false;
+      }
+      else if (regex.test(tiempo) !== true) {
+          e.tiempo = "El Tiempo debe ser un numero";
+          valido = false;
+      }
+      else if (tiempo.value === 0) {
+          e.tiempo = "El Tiempo debe ser mayor a cero";
+          valido = false;
+      }
 
-    return { ...e, valido };
+      return { ...e, valido };
   };
+
 
   //-------------------------------handlers Roanldo comienza -----------------------------
 
@@ -265,22 +256,22 @@ const ProductoCreate = () => {
   //-------------------------------handlers Roanldo termian -----------------------------
 
   const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    setProducto({
-      ...producto,
-      [name]: value,
+      const { name, value } = e.target;
+      setProducto({
+          ...producto,
+          [name]: value,
     });
 
     setErrores(
-      ValidoProducto({
-        ...producto,
-        [e.target.name]: e.target.value,
-      })
+        ValidoProducto({
+            ...producto,
+            [e.target.name]: e.target.value,
+        })
     );
   };
 
   const handleSubirImagen = async (e) => {
-    setImagen(e.target.files[0]);
+      setImagen(e.target.files[0]);
   };
   const handlerSbubirArchivo = async (e) => {
     console.log(e.target.files[0]);
@@ -289,48 +280,52 @@ const ProductoCreate = () => {
   };
 
   const handleSubmit = async (e) => {
-    try {
-      e.preventDefault();
+      try
+      {
+          e.preventDefault();
 
-      if (errores.valido) {
-        /*      TERCER CODIGO       */
-        let prod = await crearDocumento("productos", {
-          data: { ...producto },
-        });
+          if (errores.valido)
+          {
+              /*      TERCER CODIGO       */
+              let prod = await crearDocumento("productos", {
+                data: { ...producto },
+              });
 
-        const extension = imagen.type.substring(6, imagen.type.length);
-        const extensionArchivo = archivo.map((archi) => {
-          return archi.type.substring(6, archi.type.length);
-        });
-        let ruta = `productos/${prod.result.id}/beat.${extension}`;
-        let rutaArchivo = extensionArchivo.map(
-          (archi, i) => {
-            return `productos/${prod.result.id}/${LicenCreadas[i].TipoLicencia}.${extensionArchivo[i]}`;
-          } //[ruta1, ruta2]
-        );
+              const extension = imagen.type.substring(6, imagen.type.length);
+              const extensionArchivo = archivo.map((archi) => {
+                return archi.type.substring(6, archi.type.length);
+              });
+              let ruta = `productos/${prod.result.id}/beat.${extension}`;
+              let rutaArchivo = extensionArchivo.map(
+                (archi, i) => {
+                  return `productos/${prod.result.id}/${LicenCreadas[i].TipoLicencia}.${extensionArchivo[i]}`;
+                } //[ruta1, ruta2]
+              );
 
-        subirArchivoMetodo(ruta, (url) => {
-          actualizaDocumento("productos", prod.result.id, {
-            data: { imagen: url },
-          });
-        });
+              subirArchivoMetodo(ruta, (url) => {
+                actualizaDocumento("productos", prod.result.id, {
+                  data: { imagen: url },
+                });
+              });
 
-        for (let i = 0; i < LicenCreadas.length; i++) {
-          const uno = await subirArchivoMetodo(
-            rutaArchivo[i],
-            archivo[i],
-            (url) => {
-              LicenCreadas[i].url = url; // [url1 , url2 ]
-            }
-          );
-        }
-        const dos = await actualizaDocumento("productos", prod.result.id, {
-          data: { licencias: LicenCreadas },
-        });
+              for (let i = 0; i < LicenCreadas.length; i++) {
+                const uno = await subirArchivoMetodo(
+                  rutaArchivo[i],
+                  archivo[i],
+                  (url) => {
+                    LicenCreadas[i].url = url; // [url1 , url2 ]
+                  }
+                );
+              }
+              const dos = await actualizaDocumento("productos", prod.result.id, {
+                data: { licencias: LicenCreadas },
+              });
+          }
       }
-    } catch (err) {
-      console.log("Error generado 2 :", err);
-    }
+      catch (err)
+      {
+          console.log("Error generado 2 :", err);
+      }
   };
 
   return (
@@ -342,32 +337,32 @@ const ProductoCreate = () => {
               Creacion de Producto (Admin)
             </div>
             <div className="form-group input-group input-group-text my-3 d-flex justify-content-between">
-              <Form.Label>Nombre producto :</Form.Label>
-              <Form.Control
-                name="nombre"
-                type="text"
-                className={`${style.textbox}`}
-                placeholder="Ingrese nombre producto"
-                onChange={handleInputChange}
-                isInvalid={!!errores.nombre}
-              />
-              <Form.Control.Feedback type={"invalid"}>
-                {errores.nombre}
-              </Form.Control.Feedback>
+                <Form.Label>Nombre producto :</Form.Label>
+                <Form.Control
+                    name="nombre"
+                    type="text"
+                    className={`${style.textbox}`}
+                    placeholder="Ingrese nombre producto"
+                    onChange={handleInputChange}
+                    isInvalid={!!errores.nombre}
+                />
+                <Form.Control.Feedback type={"invalid"}>
+                    {errores.nombre}
+                </Form.Control.Feedback>
             </div>
             <div className="form-group input-group input-group-text my-3 d-flex justify-content-between">
-              <Form.Label>Autor producto :</Form.Label>
-              <Form.Control
-                name="autor"
-                type="text"
-                className={`${style.textbox}`}
-                placeholder="Ingrese autor producto"
-                onChange={handleInputChange}
-                isInvalid={!!errores.autor}
-              />
-              <Form.Control.Feedback type={"invalid"}>
-                {errores.autor}
-              </Form.Control.Feedback>
+                <Form.Label>Autor producto :</Form.Label>
+                <Form.Control
+                    name="autor"
+                    type="text"
+                    className={`${style.textbox}`}
+                    placeholder="Ingrese autor producto"
+                    onChange={handleInputChange}
+                    isInvalid={!!errores.autor}
+                />
+                <Form.Control.Feedback type={"invalid"}>
+                    {errores.autor}
+                </Form.Control.Feedback>
             </div>
             <div className="form-group input-group input-group-text my-3 d-flex justify-content-between">
               <Form.Label>Descripcion producto :</Form.Label>
@@ -384,33 +379,36 @@ const ProductoCreate = () => {
               </Form.Control.Feedback>
             </div>
             <div className="form-group input-group input-group-text my-3 d-flex justify-content-between">
-              <Form.Label>Genero producto :</Form.Label>
-
-              <Form.Select name="genero" className={`${style.selectbox}`}>
-                <option hidden>Select genero</option>
-                <option value="All">All</option>
-                {generos.length
-                  ? generos.map((e) => (
-                      <option key={e.data().nombre} value={e.data().nombre}>
-                        {e.data().nombre}
-                      </option>
-                    ))
-                  : null}
-              </Form.Select>
+                <Form.Label>Genero producto :</Form.Label>
+                <Form.Select name="genero" className={`${style.selectbox}`}>
+                    <option hidden>Select genero</option>
+                    <option value="All">All</option>
+                    {
+                        generos.length ?
+                        generos.map(e => (
+                            <option key={e.data().nombre} value={e.data().nombre}>
+                                {e.data().nombre}
+                            </option>
+                        )) :
+                        null
+                    }
+                </Form.Select>
             </div>
             <div className="form-group input-group input-group-text my-3 d-flex justify-content-between">
-              <Form.Label>Key producto :</Form.Label>
-              <Form.Select name="key" className={`${style.selectbox}`}>
-                <option hidden>Select key</option>
-                <option value="All">All</option>
-                {keys.length
-                  ? keys.map((e) => (
-                      <option key={e.data().nombre} value={e.data().nombre}>
-                        {e.data().nombre}
-                      </option>
-                    ))
-                  : null}
-              </Form.Select>
+                <Form.Label>Key producto :</Form.Label>
+                <Form.Select name="key" className={`${style.selectbox}`}>
+                    <option hidden>Select key</option>
+                    <option value="All">All</option>
+                    {
+                        keys.length ?
+                        keys.map(e => (
+                            <option key={e.data().nombre} value={e.data().nombre}>
+                                {e.data().nombre}
+                            </option>
+                        )) :
+                        null
+                    }
+                </Form.Select>
             </div>
             <div className="form-group input-group input-group-text my-3 d-flex justify-content-between">
               <Form.Label>Tiempo producto :</Form.Label>
@@ -443,7 +441,7 @@ const ProductoCreate = () => {
             }
             <div>
               <Button className={`btn btn-secondary`} onClick={handlePopUp}>
-                Agregar Licencia
+                  Agregar Licencia
               </Button>
               <div className={`${css.divLicenciasCrear} shadow-sm `}>
                 <ListGroup>
@@ -472,14 +470,11 @@ const ProductoCreate = () => {
             {
               // LISTA DE LICENCIAS ------- RONALDO ----------------------------------------------------------------------
             }
+
             <div className="form-group input-group input-group-text my-3">
-              <Button
-                className={`${style.button} text-center btn btn-primary`}
-                type="submit"
-                variant="primary"
-              >
-                Registrar
-              </Button>
+                <Button className={`${style.button} text-center btn btn-primary`} type="submit" variant="primary" >
+                    Registrar
+                </Button>
             </div>
           </Form>
         </Card>
@@ -492,9 +487,9 @@ const ProductoCreate = () => {
             <Form.Group className="mb-3">
               <Form.Label>Tipo Licencia</Form.Label>
               <Form.Select
-                id="ListaTipo"
-                name="TipoLicencia"
-                onChange={handlerLicencia}
+                  id="ListaTipo"
+                  name="TipoLicencia"
+                  onChange={handlerLicencia}
               >
                 <option id="opSelector">Seleccionar</option>
                 {EstadoTipoLi?.map((licen, i) => (
@@ -527,7 +522,7 @@ const ProductoCreate = () => {
                 <InputGroup.Text>Col</InputGroup.Text>
               </InputGroup>
               <Form.Label>
-                <p id="ParrafoDescripcion"></p>
+                  <p id="ParrafoDescripcion"></p>
               </Form.Label>
             </Form.Group>
             <div className="form-group input-group   d-flex justify-content-center">
@@ -540,7 +535,7 @@ const ProductoCreate = () => {
                 Agregar Licencia
               </Button>
               <Button variant="primary" type="button" onClick={handlePopUp}>
-                Cerrar
+                  Cerrar
               </Button>
             </div>
           </Form>
