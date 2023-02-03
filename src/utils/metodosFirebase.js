@@ -200,7 +200,6 @@ export const actualizaDocumento = async (nombreCollecion, id, { data }) => {
     retorno.mensaje = "Consulta Exitosa";
   } catch (error) {
     retorno.mensaje = error.message;
-    console.log(error.message);
   } finally {
     return retorno;
   }
@@ -256,6 +255,22 @@ export const todosDocumentos = async (
     loading();
     return retorno;
   }
+};
+
+export const PasswordChange = async (newPassword, resultado) => {
+  const user = auth.currentUser;
+  await allAuth.updatePassword(user, newPassword)
+    .then(() => {
+        retorno.result = [];
+        retorno.confirma = true;
+        retorno.mensaje = "Cambio de contraseña exitoso";
+        resultado(retorno)
+    })
+    .catch((error) => {
+        retorno.result = [];
+        retorno.mensaje = error.message;
+        resultado(retorno)
+    });
 };
 
 // EL PAGINADO ME LA MAMA

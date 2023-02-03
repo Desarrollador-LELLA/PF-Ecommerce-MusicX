@@ -85,6 +85,35 @@ export const ValidoEditarU = ({ nombre, apellido, descripcion }) => {
     return { ...e, valido };
 };
 
+export const ValidoKey = ({ id, nombre }) => {
+    const e = {};
+    let valido = true;
+
+    if (id.toString().trim().length === 0) {
+        e.id = 'El ID esta Vacio';
+        valido = false;
+    } else if (typeof altura === 'number'){
+        e.id = 'El ID tiene que ser un Numero';
+        valido = false;
+    } else if (id.includes('.')) {
+        e.id = 'El ID tiene que ser un Numero Entero';
+        valido = false;
+    } else if (parseInt(id) < 1 || parseInt(id) > 1000) {
+        e.id = 'El ID debe estar entre 1 al 1000';
+        valido = false;
+    }
+
+    if (nombre.toString().trim().length === 0) {
+        e.nombre = 'El Nombre esta Vacio';
+        valido = false;
+    } else if (nombre.length > 20) {
+        e.nombre = 'El Nombre no puede tener mas de 20 Caracteres';
+        valido = false;
+    }
+
+    return { ...e, valido };
+};
+
 const usuarioGogle = {
     "user": {
         "uid": "W6rZmnbVQlZNytnNqk3WFsOLFVx1",
