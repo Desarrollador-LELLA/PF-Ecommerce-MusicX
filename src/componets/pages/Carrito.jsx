@@ -5,7 +5,6 @@ import { useSelector, useDispatch } from "react-redux";
 import * as actions from "../../redux/actions/carritoAction";
 import PaypalButton from "../com/Paypal";
 import { PayPalScriptProvider } from "@paypal/react-paypal-js";
-import { actualizaDocumento } from "../../utils/metodosFirebase";
 
 const Carrito = () => {
   const infoTotal = [];
@@ -13,8 +12,6 @@ const Carrito = () => {
   const idUser = useSelector((store) => store.auth.usuarioAuth.id);
   const dispatch = useDispatch();
   const navegar = useNavigate();
-  console.log("Producto que me trae del store", productos);
-  console.log("Id que me trae del usuario", idUser);
 
   const products = () => {
     return productos.map((producto) => {
@@ -45,16 +42,9 @@ const Carrito = () => {
 
   productos.forEach((producto) => infoTotal.push(`${producto.nombre} (1)`));
 
-  const handleBiblioteca = async () => {
-    console.log("se ejecuta el handlerbiblioteca", productos[0]);
-    const dos = await actualizaDocumento("usuarios", idUser, {
-      data: {
-        biblioteca: productos,
-      },
-    });
+  const handleBiblioteca = () => {
+        dispatch(actions.addBiblioteca(productos, idUser))  
   };
-
-  const biblioteca = useSelector((state) => state.carrito.biblioteca);
 
   return (
     <div className={styleCarrito.container}>
