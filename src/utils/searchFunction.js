@@ -1,5 +1,5 @@
 
-export const filterProducts = ({ opDesc, opAsce, opAZ, opZA, opSinOrden, search,generos,keyF,bpmMin,bpmMax}, lista) => {
+export const filterProducts = ({ opDesc, opAsce, opAZ, opZA, opSinOrden, search,generos,keyF,bpmMin,bpmMax,precioMin,precioMax}, lista) => {
     
     let nuevaLista = lista.slice();
 
@@ -33,7 +33,17 @@ export const filterProducts = ({ opDesc, opAsce, opAZ, opZA, opSinOrden, search,
     }
      if(bpmMax){
       nuevaLista = nuevaLista.filter((x) => {
-        return x.tiempo < parseInt(bpmMin)
+        return x.tiempo <= parseInt(bpmMax)
+      });
+    }
+    if(precioMin){
+      nuevaLista = nuevaLista.filter((x) => {
+        return x.licencias[0].precio >= parseInt(precioMin)
+      });
+    }
+     if(precioMax){
+      nuevaLista = nuevaLista.filter((x) => {
+        return x.licencias[0].precio <= parseInt(precioMax)
       });
     }
 
