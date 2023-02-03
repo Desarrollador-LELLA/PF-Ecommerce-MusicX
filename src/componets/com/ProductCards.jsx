@@ -82,7 +82,7 @@ export default function ProductCards(props) {
         ) : estadoInicial.lista.length ? (
           estadoInicial.lista.slice(inicio, fin).map((x) => (
             <Col key={x.id} className={s.card}>
-              <Card className={`my-2 ${s.cardcont}`}>
+              <Card className={`my-2 ${s.cardcont} h-100`}>
                 <div className={s.contcards}>
                   <Link to={`/${x.id}`}>
                     <Card.Img

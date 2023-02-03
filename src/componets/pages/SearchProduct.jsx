@@ -5,7 +5,7 @@ import Accordion from "react-bootstrap/Accordion";
 import Form from "react-bootstrap/Form";
 import { useLocation } from "react-router-dom";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCompactDisc, faGaugeSimple, faMusic, faTag } from "@fortawesome/free-solid-svg-icons";
+import { faCompactDisc, faGaugeSimple, faMusic, faTag,faDollarSign } from "@fortawesome/free-solid-svg-icons";
 import { Spinner } from "react-bootstrap";
 import { todosDocumentos } from "../../utils/metodosFirebase";
 import { getKeys } from "../../utils/keysActions";
@@ -39,7 +39,9 @@ const FILTROS ={
   generos:[],
   keyF:null,
   bpmMin:null,
-  bpmMax:null
+  bpmMax:null,
+  precioMin:null,
+  precioMax:null
 }
 
 export default function SearchProduct() {
@@ -92,23 +94,38 @@ export default function SearchProduct() {
       paginaActual: 1,
     });
   }
-  const llenarKeys = async ()=>{
-    await unDocumentoCallback("keys", "dogKeys", (retorno) => {
-      setKeys(retorno.result.keys)
-      console.log('HIJO DE PERRA 1', retorno)
-    });  
+
+  const onChangePriceMin = (e)=>{
+    setFiltros({...filtros,precioMin:e.target.value})
+    setEstadoInicial({
+      ...estadoInicial,
+      paginaActual: 1,
+    });
   }
+  const onChangePriceMax = (e)=>{
+    setFiltros({...filtros,precioMax:e.target.value})
+    setEstadoInicial({
+      ...estadoInicial,
+      paginaActual: 1,
+    });
+  }
+
   useEffect(() => {
     llenarLista();
     llenarGeneros(); 
     llenarKeys();
   }, []);
-
+  
   
   useEffect(()=>{
     setFiltros({...filtros,search:!tester ? null:tester.search.slice(1)})
   },[tester])
-
+  
+  const llenarKeys = async ()=>{
+    await unDocumentoCallback("keys", "dogKeys", (retorno) => {
+      setKeys(retorno.result.keys)
+    });  
+  }
   const llenarGeneros = async ()=>{
     await unDocumentoCallback("generos", "docGenero", (retorno) => {
       setGeneros(retorno.result.generos);
@@ -211,7 +228,24 @@ export default function SearchProduct() {
                   aria-label="Recipient's username"
                   aria-describedby="basic-addon2"/>
                 </Accordion.Body>
-              </Accordion.Item > 
+              </Accordion.Item >
+              <Accordion.Item className={s.acordion} eventKey="3">
+                <Accordion.Header> <FontAwesomeIcon icon={faDollarSign}/>Precio</Accordion.Header>
+                <Accordion.Body>
+                <Form.Control
+                  onChange={onChangePriceMin}
+                  type="number"
+                  placeholder="Min"
+                  aria-label="Recipient's username"
+                  aria-describedby="basic-addon2"/>
+                  <Form.Control
+                  onChange={onChangePriceMax}
+                  placeholder="Max"
+                  type="number"
+                  aria-label="Recipient's username"
+                  aria-describedby="basic-addon2"/>
+                </Accordion.Body>
+              </Accordion.Item >  
             </Accordion>
           </div>
         </div>
@@ -222,7 +256,7 @@ export default function SearchProduct() {
         ) : filteredProducts.length ? (
           filteredProducts.slice(inicio, fin).map((x) => (
             <Col key={x.id} className={a.card}>
-              <Card className={`my-2 ${a.cardcont}`}>
+              <Card  className={`my-2 ${a.cardcont} h-100`}>
                 <div className={a.contcards}>
                   <Link to={`/${x.id}`}>
                     <Card.Img
