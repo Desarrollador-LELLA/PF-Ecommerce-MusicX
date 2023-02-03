@@ -30,6 +30,7 @@ import {
 
 const ProductoCreate = () => {
   //Estados Roanaldo -----------------------------
+
   const tipoLicencias = [
     {
       nombre: "Licencia Tipo 1",
@@ -97,15 +98,14 @@ const ProductoCreate = () => {
   const llenarGeneros = async () => {
     // const list = await getGeneros();
     // setGeneros(list);
-    
+
     //  YO ME ACTUALICE EN LA TARDE
     //  TU MODIFICASTE METODOS FIREBASE ?
-    
+
     let lista = [];
     const list = await todosDocumentos("generos", "nombre", null, false);
-    setGeneros({ ...generos, lista: list.result});
+    setGeneros({ ...generos, lista: list.result });
   };
-
 
   //  Aqui cargale los selectbox
   useEffect(() => {
@@ -176,12 +176,37 @@ const ProductoCreate = () => {
   };
 
   //-------------------------------handlers Roanldo comienza -----------------------------
+
+  function validar() {
+    const lista = document.getElementById("ListaTipo");
+    const agregarArchivo = document.getElementById("AgregarArchivo");
+    const precio = document.getElementById("Precio");
+    const AgregarLicencia = document.getElementById("AgregarLicencia");
+    const selector = document.getElementById("opSelector");
+    AgregarLicencia.disabled = true;
+    let aux = false;
+    if (lista.value !== "Seleccionar") {
+      agregarArchivo.disabled = false;
+      selector?.remove();
+    }
+
+    if (!agregarArchivo.value) {
+      AgregarLicencia.disabled = true;
+    } else if (!precio.value) {
+      AgregarLicencia.disabled = true;
+    } else {
+      AgregarLicencia.disabled = false;
+      aux = true;
+    }
+    return aux;
+  }
   const handlePopUp = () => {
     setPopUp({
       state: !popUp.state,
     });
   };
   const handlerLicencia = (e) => {
+    validar();
     const { name, value } = e.target;
     setLicencia({
       ...licencia,
@@ -197,12 +222,12 @@ const ProductoCreate = () => {
       });
     }
   };
+
   const handlerAgregarLicen = (e) => {
-    const filtradoTipoLicencia = EstadoTipoLi.filter(
-      (licen) => {
-        return licen.nombre !== licencia.TipoLicencia;
-      }
-    );
+    if (!validar()) return alert("llene los campos");
+    const filtradoTipoLicencia = EstadoTipoLi.filter((licen) => {
+      return licen.nombre !== licencia.TipoLicencia;
+    });
     setEstadoTipoLi(filtradoTipoLicencia);
     setLicenCreadas([
       ...LicenCreadas,
@@ -215,11 +240,13 @@ const ProductoCreate = () => {
     handlePopUp();
   };
   const handlerEliminar = (e) => {
-    const filtrado = LicenCreadas.filter(
-      (licen) => {
-        return licen.TipoLicencia !== e.target.id;
-      }
+    const eliArchivo = archivo.filter(
+      (obj, i) => i !== parseInt(e.target.value)
     );
+    setArchivo(eliArchivo);
+    const filtrado = LicenCreadas.filter((licen) => {
+      return licen.TipoLicencia !== e.target.id;
+    });
     setLicenCreadas(filtrado);
     switch (e.target.id) {
       case tipoLicencias[0].nombre:
@@ -256,7 +283,9 @@ const ProductoCreate = () => {
     setImagen(e.target.files[0]);
   };
   const handlerSbubirArchivo = async (e) => {
+    console.log(e.target.files[0]);
     await setArchivo([...archivo, e.target.files[0]]);
+    validar();
   };
 
   const handleSubmit = async (e) => {
@@ -310,108 +339,104 @@ const ProductoCreate = () => {
         <Card className={`${style.registroProducto} m-auto`}>
           <Form className="card card-body" onSubmit={(e) => handleSubmit(e)}>
             <div className={style.productoCreate_title}>
-                Creacion de Producto (Admin)
+              Creacion de Producto (Admin)
             </div>
             <div className="form-group input-group input-group-text my-3 d-flex justify-content-between">
               <Form.Label>Nombre producto :</Form.Label>
               <Form.Control
-                  name="nombre"
-                  type="text"
-                  className={`${style.textbox}`}
-                  placeholder="Ingrese nombre producto"
-                  onChange={handleInputChange}
-                  isInvalid={!!errores.nombre}
+                name="nombre"
+                type="text"
+                className={`${style.textbox}`}
+                placeholder="Ingrese nombre producto"
+                onChange={handleInputChange}
+                isInvalid={!!errores.nombre}
               />
               <Form.Control.Feedback type={"invalid"}>
-                  {errores.nombre}
+                {errores.nombre}
               </Form.Control.Feedback>
             </div>
             <div className="form-group input-group input-group-text my-3 d-flex justify-content-between">
               <Form.Label>Autor producto :</Form.Label>
               <Form.Control
-                  name="autor"
-                  type="text"
-                  className={`${style.textbox}`}
-                  placeholder="Ingrese autor producto"
-                  onChange={handleInputChange}
-                  isInvalid={!!errores.autor}
+                name="autor"
+                type="text"
+                className={`${style.textbox}`}
+                placeholder="Ingrese autor producto"
+                onChange={handleInputChange}
+                isInvalid={!!errores.autor}
               />
               <Form.Control.Feedback type={"invalid"}>
-                  {errores.autor}
+                {errores.autor}
               </Form.Control.Feedback>
             </div>
             <div className="form-group input-group input-group-text my-3 d-flex justify-content-between">
-                <Form.Label>Descripcion producto :</Form.Label>
-                <Form.Control
-                    name="descripcion"
-                    type="text"
-                    className={`${style.textbox}`}
-                    placeholder="Ingrese descripcion producto"
-                    onChange={handleInputChange}
-                    isInvalid={!!errores.descripcion}
-                />
-                <Form.Control.Feedback type={"invalid"}>
-                  {errores.descripcion}
-                </Form.Control.Feedback>
+              <Form.Label>Descripcion producto :</Form.Label>
+              <Form.Control
+                name="descripcion"
+                type="text"
+                className={`${style.textbox}`}
+                placeholder="Ingrese descripcion producto"
+                onChange={handleInputChange}
+                isInvalid={!!errores.descripcion}
+              />
+              <Form.Control.Feedback type={"invalid"}>
+                {errores.descripcion}
+              </Form.Control.Feedback>
             </div>
             <div className="form-group input-group input-group-text my-3 d-flex justify-content-between">
               <Form.Label>Genero producto :</Form.Label>
 
               <Form.Select name="genero" className={`${style.selectbox}`}>
-                  <option hidden>Select genero</option>
-                  <option value="All">All</option>
-                  {
-                      generos.length ?
-                      generos.map(e => (
-                          <option key={e.data().nombre} value={e.data().nombre}>
-                              {e.data().nombre}
-                          </option>
-                      )) :
-                      null
-                  }
+                <option hidden>Select genero</option>
+                <option value="All">All</option>
+                {generos.length
+                  ? generos.map((e) => (
+                      <option key={e.data().nombre} value={e.data().nombre}>
+                        {e.data().nombre}
+                      </option>
+                    ))
+                  : null}
               </Form.Select>
             </div>
             <div className="form-group input-group input-group-text my-3 d-flex justify-content-between">
               <Form.Label>Key producto :</Form.Label>
               <Form.Select name="key" className={`${style.selectbox}`}>
-                  <option hidden>Select key</option>
-                  <option value="All">All</option>
-                  {
-                      keys.length ?
-                      keys.map(e => (
-                          <option key={e.data().nombre} value={e.data().nombre}>
-                              {e.data().nombre}
-                          </option>
-                      )) :
-                      null
-                  }
+                <option hidden>Select key</option>
+                <option value="All">All</option>
+                {keys.length
+                  ? keys.map((e) => (
+                      <option key={e.data().nombre} value={e.data().nombre}>
+                        {e.data().nombre}
+                      </option>
+                    ))
+                  : null}
               </Form.Select>
             </div>
             <div className="form-group input-group input-group-text my-3 d-flex justify-content-between">
-                <Form.Label>Tiempo producto :</Form.Label>
-                <Form.Control
-                    name="tiempo"
-                    type="number"
-                    className={`${style.textbox}`}
-                    placeholder="Ingrese tiempo producto"
-                    onChange={handleInputChange}
-                    isInvalid={!!errores.tiempo}
-                />
-                <Form.Control.Feedback type={"invalid"}>
-                    {errores.tiempo}
-                </Form.Control.Feedback>
+              <Form.Label>Tiempo producto :</Form.Label>
+              <Form.Control
+                name="tiempo"
+                type="number"
+                className={`${style.textbox}`}
+                placeholder="Ingrese tiempo producto"
+                onChange={handleInputChange}
+                isInvalid={!!errores.tiempo}
+              />
+              <Form.Control.Feedback type={"invalid"}>
+                {errores.tiempo}
+              </Form.Control.Feedback>
             </div>
             <div className="form-group input-group input-group-text my-3 d-flex justify-content-between">
-                <Form.Label>Imagen producto :</Form.Label>
-                <Form.Control
-                    type="file"
-                    accept="image/png, image/jpg, image/jpeg"
-                    onChange={handleSubirImagen}
-                />
-                <br />
-                <Form.Control.Feedback type={"invalid"}>
-                    {errores.imagen}
-                </Form.Control.Feedback>
+              <Form.Label>Imagen producto :</Form.Label>
+              <Form.Control
+                type="file"
+                accept="image/png, image/jpg, image/jpeg"
+                onChange={handleSubirImagen}
+              />
+              <br />
+              <Form.Control.Feedback type={"invalid"}>
+                {errores.imagen}
+              </Form.Control.Feedback>
             </div>
             {
               // LISTA DE LICENCIAS ------- RONALDO ----------------------------------------------------------------------
@@ -420,11 +445,11 @@ const ProductoCreate = () => {
               <Button className={`btn btn-secondary`} onClick={handlePopUp}>
                 Agregar Licencia
               </Button>
-              <div className={`${css.divLicencias} shadow-sm `}>
+              <div className={`${css.divLicenciasCrear} shadow-sm `}>
                 <ListGroup>
                   {LicenCreadas?.map((obj, indx) => (
                     <div key={indx}>
-                      <Card className={`${css.cardProducto}`}>
+                      <Card className={`${css.cardProductoCrear}`}>
                         <Card.Body id={indx}>
                           <h4>{obj.TipoLicencia}</h4>
                           {`Descripcion: ${obj.descripcion} Valor: ${obj.precio}`}
@@ -433,6 +458,7 @@ const ProductoCreate = () => {
                             className="float-end btn btn-primary"
                             id={obj.TipoLicencia}
                             onClick={handlerEliminar}
+                            value={indx}
                           >
                             X
                           </Button>
@@ -470,32 +496,33 @@ const ProductoCreate = () => {
                 name="TipoLicencia"
                 onChange={handlerLicencia}
               >
-                <option>Seleccionar</option>
-                {EstadoTipoLi?.map((licen) => (
-                  <option>{licen.nombre}</option>
+                <option id="opSelector">Seleccionar</option>
+                {EstadoTipoLi?.map((licen, i) => (
+                  <option key={i}>{licen.nombre}</option>
                 ))}
               </Form.Select>
             </Form.Group>
-            <Form.Group controlId="formFileSm" className="mb-3">
+            <Form.Group className="mb-3">
               <Form.Label>Sube el archivo para tu licencia</Form.Label>
               <Form.Control
+                id="AgregarArchivo"
                 onChange={handlerSbubirArchivo}
                 name="archivo"
                 type="file"
                 size="sm"
+                disabled
               />
             </Form.Group>
-            <Form.Group
-              className="mb-3"
-              controlId="exampleForm.ControlTextarea1"
-            >
+            <Form.Group className="mb-3">
               <Form.Label>Precio Licencia</Form.Label>
               <InputGroup className="mb-3">
                 <InputGroup.Text>$</InputGroup.Text>
                 <Form.Control
+                  id="Precio"
                   onChange={handlerLicencia}
                   name="precio"
                   aria-label="Amount (to the nearest dollar)"
+                  type="number"
                 />
                 <InputGroup.Text>Col</InputGroup.Text>
               </InputGroup>
@@ -505,6 +532,7 @@ const ProductoCreate = () => {
             </Form.Group>
             <div className="form-group input-group   d-flex justify-content-center">
               <Button
+                id="AgregarLicencia"
                 variant="primary"
                 type="button"
                 onClick={handlerAgregarLicen}
