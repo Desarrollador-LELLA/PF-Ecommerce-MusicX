@@ -92,11 +92,18 @@ export default function SearchProduct() {
       paginaActual: 1,
     });
   }
+  const llenarKeys = async ()=>{
+    await unDocumentoCallback("keys", "dogKeys", (retorno) => {
+      setKeys(retorno.result.keys)
+      console.log('HIJO DE PERRA 1', retorno)
+    });  
+  }
   useEffect(() => {
+    llenarLista();
     llenarGeneros(); 
     llenarKeys();
-    llenarLista();
   }, []);
+
   
   useEffect(()=>{
     setFiltros({...filtros,search:!tester ? null:tester.search.slice(1)})
@@ -109,12 +116,6 @@ export default function SearchProduct() {
   }
 
 
-  const llenarKeys = async ()=>{
-    await unDocumentoCallback("keys", "dogKeys", (retorno) => {
-      setKeys(retorno.result);
-      console.log(keys)
-    });    
-  }
 
 
   const llenarLista = async () => {
@@ -177,7 +178,7 @@ export default function SearchProduct() {
                 </Accordion.Body>
               </Accordion.Item>
               <Accordion.Item className={s.acordion} eventKey="1">
-                <Accordion.Header><FontAwesomeIcon icon="fa-thin fa-piano" /><FontAwesomeIcon icon={faMusic}/>KEY</Accordion.Header>
+                <Accordion.Header><FontAwesomeIcon icon={faMusic}/>KEY</Accordion.Header>
                 <Accordion.Body>
                 <Form >
                   <Form.Select onChange={onChangeKey} aria-label="Default select example">
@@ -186,7 +187,7 @@ export default function SearchProduct() {
                     {
               keys.length ?
                 keys.map(i =>(
-                          <option className={s.option} key={i.nombre} value={i.nombre}>{i.nombre}</option>    
+                          <option className={s.option} key={i.id} value={i.nombre}>{i.nombre}</option>    
                           
                 )) : null  //ACA SE DEBE MOSTRAR AL USUARIO QUE NO EXISTEN GENEROS EN CASO DE BUSQUEDA O AL INICIAR
           }
