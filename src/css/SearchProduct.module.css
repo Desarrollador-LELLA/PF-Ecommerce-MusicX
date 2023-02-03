@@ -21,11 +21,12 @@ font-size: 40px;
 line-height: 35px;
 text-align: center;
 color: #09bfc9;
-  text-shadow: 0.4em 0.4em 0.2em black;
+  text-shadow: 0.8em 0.6em 0.2em black;
   transition: 1s;
 }
 .titlefilter:hover{
   color: #ae33b3;
+  text-shadow: 0.4em 0.4em 0.2em rgb(43, 89, 107);
 }
 .containerfilters{
     width: 30vh;
