@@ -5,11 +5,18 @@ import {
   ADD_PRODUCTOS,
   ADD_PRODUCTO,
   LIMPIAR_PRODUCTO_DETALLE,
-  ADD_BIBLIOTECA
+  ADD_BIBLIOTECA,
 } from "../types/carritoTypes.js";
 
 import { allDb, db } from "../../firebaseInicial/firebase";
-import { collection, getDocs , addDoc, setDoc, doc, updateDoc} from "firebase/firestore";
+import {
+  collection,
+  getDocs,
+  addDoc,
+  setDoc,
+  doc,
+  updateDoc,
+} from "firebase/firestore";
 
 export const pagarCarrito = () => {
   return "Aun no se hace";
@@ -51,12 +58,11 @@ export const getProductos = () => {
   };
 };
 
-export const addProducto = (producto, valor) => {
+export const addProducto = (producto) => {
   return {
     type: ADD_PRODUCTO,
     payload: {
       producto,
-      valor,
     },
   };
 };
@@ -69,22 +75,25 @@ export const LimpiarDetalleProd = () => {
 };
 
 export const addBiblioteca = async (productos, idUser) => {
-    return async (dispatch) => {
-        let data = [];
-        console.log(data)
-        await productos.forEach((producto) => {
-            let refproducto = allDb.doc(db, "productos", 
-"S1w7b89f34NzpjUdJCIQZNVA6XM2")
-            let product = allDb.getDoc(refproducto)
-            data.push(product.data())
-            console.log(producto.id)
-        })
+  return async (dispatch) => {
+    let data = [];
+    console.log(data);
+    await productos.forEach((producto) => {
+      let refproducto = allDb.doc(
+        db,
+        "productos",
+        "S1w7b89f34NzpjUdJCIQZNVA6XM2"
+      );
+      let product = allDb.getDoc(refproducto);
+      data.push(product.data());
+      console.log(producto.id);
+    });
 
-        console.log(productos, typeof productos) 
-        const usuario = allDb.doc(db, "usuarios", idUser);
-        await updateDoc(usuario, {biblioteca: productos})
-        dispatch({
-            type: ADD_BIBLIOTECA 
-        })
-    }
-}
+    console.log(productos, typeof productos);
+    const usuario = allDb.doc(db, "usuarios", idUser);
+    await updateDoc(usuario, { biblioteca: productos });
+    dispatch({
+      type: ADD_BIBLIOTECA,
+    });
+  };
+};

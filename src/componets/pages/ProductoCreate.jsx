@@ -1,5 +1,16 @@
 import React, { useState, useEffect } from "react";
-import { Button, Card, Container, Form, Modal, ModalBody, ModalHeader, ModalFooter, InputGroup, ListGroup } from "react-bootstrap";
+import {
+  Button,
+  Card,
+  Container,
+  Form,
+  Modal,
+  ModalBody,
+  ModalHeader,
+  ModalFooter,
+  InputGroup,
+  ListGroup,
+} from "react-bootstrap";
 import css from "../../css/detailproducto.module.css"; // import Ronaldo
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
@@ -9,10 +20,12 @@ import { collection, addDoc } from "firebase/firestore";
 import { getKeys } from "../../utils/keysActions";
 import { getGeneros } from "../../utils/generosActions";
 
-
 //      Subir imagenes    -   KUC
-import { actualizaDocumento, crearDocumento, subirArchivoMetodo } from "../../utils/metodosFirebase";
-
+import {
+  actualizaDocumento,
+  crearDocumento,
+  subirArchivoMetodo,
+} from "../../utils/metodosFirebase";
 
 const ProductoCreate = () => {
   //Estados Roanaldo -----------------------------
@@ -63,12 +76,11 @@ const ProductoCreate = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-
   //  Aqui traigo los keys
   const [keys, setKeys] = useState([]);
 
   const llenarKeys = async () => {
-    console.log('LINEA 71');
+    console.log("LINEA 71");
     // const list = await getKeys();
     // setKeys(list);
   };
@@ -77,18 +89,17 @@ const ProductoCreate = () => {
   const [generos, setGeneros] = useState([]);
 
   const llenarGeneros = async () => {
-    console.log('LINEA 80');
+    console.log("LINEA 80");
     // const list = await getGeneros();
     // setGeneros(list);
   };
 
   //  Aqui cargale los selectbox
   useEffect(() => {
-    console.log('LINEA 87');
+    console.log("LINEA 87");
     llenarKeys();
     llenarGeneros();
   }, []);
-
 
   //  Segundo ejemplo
   const [imageUpload, setImageUpload] = useState(null);
@@ -168,21 +179,19 @@ const ProductoCreate = () => {
     if (e.target.id === "ListaTipo") {
       const parrafo = document.getElementById("ParrafoDescripcion");
       tipoLicencias.forEach((element) => {
-        console.log('LINEA 171');
+        console.log("LINEA 171");
         if (element.nombre === e.target.value) {
-          console.log('LINEA 173');
+          console.log("LINEA 173");
           parrafo.innerHTML = element.descripcion;
         }
       });
     }
   };
   const handlerAgregarLicen = (e) => {
-    const filtradoTipoLicencia = EstadoTipoLi.filter(
-      (licen) => {
-        console.log('LINEA 182');
-        return licen.nombre !== licencia.TipoLicencia;
-      }
-    );
+    const filtradoTipoLicencia = EstadoTipoLi.filter((licen) => {
+      console.log("LINEA 182");
+      return licen.nombre !== licencia.TipoLicencia;
+    });
     setEstadoTipoLi(filtradoTipoLicencia);
     setLicenCreadas([
       ...LicenCreadas,
@@ -195,12 +204,10 @@ const ProductoCreate = () => {
     handlePopUp();
   };
   const handlerEliminar = (e) => {
-    const filtrado = LicenCreadas.filter(
-      (licen) => {
-        console.log('LINEA 200');
-        return licen.TipoLicencia !== e.target.id;
-      }
-    );
+    const filtrado = LicenCreadas.filter((licen) => {
+      console.log("LINEA 200");
+      return licen.TipoLicencia !== e.target.id;
+    });
     setLicenCreadas(filtrado);
     switch (e.target.id) {
       case tipoLicencias[0].nombre:
@@ -217,7 +224,6 @@ const ProductoCreate = () => {
     }
   };
   //-------------------------------handlers Roanldo termian -----------------------------
-
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -253,14 +259,13 @@ const ProductoCreate = () => {
 
         const extension = imagen.type.substring(6, imagen.type.length);
         const extensionArchivo = archivo.map((archi) => {
-          console.log('LINEA 257');
+          console.log("LINEA 257");
           return archi.type.substring(6, archi.type.length);
-        }
-        );
+        });
         let ruta = `productos/${prod.result.id}/beat.${extension}`;
         let rutaArchivo = extensionArchivo.map(
           (archi, i) => {
-            console.log('LINEA 265');
+            console.log("LINEA 265");
             return `productos/${prod.result.id}/${LicenCreadas[i].TipoLicencia}.${extensionArchivo[i]}`;
           } //[ruta1, ruta2]
         );
@@ -273,7 +278,7 @@ const ProductoCreate = () => {
         });
 
         for (let i = 0; i < LicenCreadas.length; i++) {
-          console.log('LINEA 278');
+          console.log("LINEA 278");
           const uno = await subirArchivoMetodo(
             rutaArchivo[i],
             archivo[i],
@@ -287,12 +292,10 @@ const ProductoCreate = () => {
           data: { licencias: LicenCreadas },
         });
       }
-    }
-    catch (err) {
+    } catch (err) {
       console.log("Error generado 2 :", err);
     }
   };
-
 
   return (
     <div>
@@ -350,18 +353,14 @@ const ProductoCreate = () => {
               <Form.Select name="genero" className={`${style.selectbox}`}>
                 <option hidden>Select genero</option>
                 <option value="All">All</option>
-                {
-                  generos.length ?
-                    generos.map(e => (
+                {generos.length
+                  ? generos.map((e) => (
                       <option key={e.data().nombre} value={e.data().nombre}>
                         {e.data().nombre}
                       </option>
-                    )) :
-                    null
-                }
+                    ))
+                  : null}
               </Form.Select>
-
-
             </div>
             <div className="form-group input-group input-group-text my-3 d-flex justify-content-between">
               <Form.Label>Key producto :</Form.Label>
@@ -381,15 +380,13 @@ const ProductoCreate = () => {
               <Form.Select name="key" className={`${style.selectbox}`}>
                 <option hidden>Select key</option>
                 <option value="All">All</option>
-                {
-                  keys.length ?
-                    keys.map(e => (
+                {keys.length
+                  ? keys.map((e) => (
                       <option key={e.data().nombre} value={e.data().nombre}>
                         {e.data().nombre}
                       </option>
-                    )) :
-                    null
-                }
+                    ))
+                  : null}
               </Form.Select>
             </div>
             <div className="form-group input-group input-group-text my-3 d-flex justify-content-between">
@@ -529,5 +526,3 @@ const ProductoCreate = () => {
 };
 
 export default ProductoCreate;
-
-
