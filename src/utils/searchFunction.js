@@ -4,7 +4,6 @@ export const filterProducts = ({ opDesc, opAsce, opAZ, opZA, opSinOrden, search,
     let nuevaLista = lista.slice();
 
     if (search != "undefined"){
-      console.log(search)
         nuevaLista = nuevaLista.filter((ele) =>
         {
          return ele.nombre.toLowerCase().includes(search.toLowerCase())|| ele.autor.toLowerCase().includes(search.toLowerCase())||ele.descripcion.toLowerCase().includes(search.toLowerCase())
@@ -33,8 +32,6 @@ export const filterProducts = ({ opDesc, opAsce, opAZ, opZA, opSinOrden, search,
       });
     }
      if(bpmMax){
-      console.log(bpmMax)
-      
       nuevaLista = nuevaLista.filter((x) => {
         return x.tiempo < parseInt(bpmMin)
       });
@@ -68,6 +65,5 @@ export const filterProducts = ({ opDesc, opAsce, opAZ, opZA, opSinOrden, search,
     if (opSinOrden) {
       return nuevaLista;
     }
-    console.log(nuevaLista)
     return nuevaLista;
   };

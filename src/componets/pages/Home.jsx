@@ -5,6 +5,7 @@ import Paginate from "../com/Paginate";
 import { LimpiarDetalleProd } from "../../redux/actions/carritoAction";
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
+import { unDocumentoCallback } from "../../utils/metodosFirebase";
 
 const Home = () => {
   const dispatch = useDispatch();
