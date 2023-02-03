@@ -6,6 +6,7 @@ import { LimpiarDetalleProd } from "../../redux/actions/carritoAction";
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { unDocumentoCallback } from "../../utils/metodosFirebase";
+import { Container, Row } from "react-bootstrap";
 
 const Home = () => {
   const dispatch = useDispatch();
@@ -15,21 +16,15 @@ const Home = () => {
   });
   return (
     <div className={s.contendor}>
-      <p className={s.topbeats}>
-        <span data-text="T">T</span>
-        <span data-text="O">O</span>
-        <span data-text="P">P</span>
-        <span data-text="-">-</span>
-        <span data-text="B">B</span>
-        <span data-text="E">E</span>
-        <span data-text="A">A</span>
-        <span data-text="T">T</span>
-        <span data-text="S">S</span>
-        <span data-text="!">!</span>
-      </p>
-      <TopBeats />
-      <ProductCards/>
-     
+       <Container className={s.topbeats}>
+        <h1>TOP BEATS!</h1>
+      </Container>
+      <Container>
+  <Row>
+    <TopBeats className="d-flex flex-wrap justify-content-center"/>
+    <ProductCards className="d-flex flex-wrap justify-content-center"/>
+  </Row>
+</Container>
     </div>
   );
 };

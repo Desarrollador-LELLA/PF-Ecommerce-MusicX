@@ -19,6 +19,7 @@ font-size: 40px;
 line-height: 35px;
 text-align: center;
 color: #09bfc9;
+  text-shadow: 0.4em 0.4em 0.2em black;
 }
 
 .containerfilters{
@@ -49,8 +50,13 @@ margin: 1.5%;
     background-color: transparent;
     color: #537472;
     margin: 1%;
+    transition: 1s;
 }
-
+.acordion button:hover{
+    background-color: #223738;
+    color: #3c7e79;
+    margin: 1%;
+}
 .acordion::after{
     background-color: transparent;
 }
@@ -89,3 +95,39 @@ margin: 1.5%;
     background: linear-gradient(180deg, rgba(213, 50, 233, 0.253) 1.04%, rgba(76, 95, 99, 0.1056) 66.67%, rgba(204, 34, 207, 0.066) 100%);
   }
 
+.input{
+    background-color: transparent;
+    border-color: #1b3536;
+    
+}
+.input:focus{
+    background-color: transparent;
+    
+}
+
+.select {
+    appearance: none;
+    background-color: transparent;
+    border-color: #1b3536;
+    border-radius: 4px;
+    padding: 10px;
+    font-size: 16px;
+    width: 100%;
+    color: #09bfc9;
+  }
+
+
+  .option {
+    font-size: 16px;
+    padding: 10px;
+    background-color: linear-gradient(180deg, rgba(213, 50, 233, 0.253) 1.04%, rgba(76, 95, 99, 0.1056) 66.67%, rgba(204, 34, 207, 0.066) 100%);
+  }
+
+  .select:focus {
+    box-shadow: 0 0 10px #326474;
+  }
+  
+  .option:checked {
+    background-color: #ddd;
+  }
+  

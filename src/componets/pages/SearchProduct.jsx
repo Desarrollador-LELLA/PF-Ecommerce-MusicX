@@ -198,7 +198,7 @@ export default function SearchProduct() {
                 <Accordion.Header><FontAwesomeIcon icon={faMusic}/>KEY</Accordion.Header>
                 <Accordion.Body>
                 <Form >
-                  <Form.Select onChange={onChangeKey} aria-label="Default select example">
+                  <Form.Select className={s.select} onChange={onChangeKey} aria-label="Default select example">
                     <option hidden>Select KEY</option>
                     <option value="All">All</option>
                     {
@@ -216,6 +216,7 @@ export default function SearchProduct() {
                 <Accordion.Header> <FontAwesomeIcon icon={faGaugeSimple}/>BPM</Accordion.Header>
                 <Accordion.Body>
                 <Form.Control
+                className={s.input}
                   onChange={onChangeBPMMin}
                   type="number"
                   placeholder="Min"
@@ -223,6 +224,7 @@ export default function SearchProduct() {
                   aria-describedby="basic-addon2"/>
                   <Form.Control
                   onChange={onChangeBPMMax}
+                  className={s.input}
                   placeholder="Max"
                   type="number"
                   aria-label="Recipient's username"
@@ -233,12 +235,14 @@ export default function SearchProduct() {
                 <Accordion.Header> <FontAwesomeIcon icon={faDollarSign}/>Precio</Accordion.Header>
                 <Accordion.Body>
                 <Form.Control
+                className={s.input}
                   onChange={onChangePriceMin}
                   type="number"
                   placeholder="Min"
                   aria-label="Recipient's username"
                   aria-describedby="basic-addon2"/>
                   <Form.Control
+                  className={s.input}
                   onChange={onChangePriceMax}
                   placeholder="Max"
                   type="number"
