@@ -34,13 +34,17 @@ const ProductoCreate = () => {
         "Esta licencia te permitirá obtener todas las credenciales y derechos sobre el beat con todos sus niveles de archivo",
     },
   ];
+
   const [EstadoTipoLi, setEstadoTipoLi] = useState(tipoLicencias);
   const [licencia, setLicencia] = useState({});
   const [LicenCreadas, setLicenCreadas] = useState([]);
+
   const [popUp, setPopUp] = useState({
-    state: false,
+      state: false,
   });
+
   const [archivo, setArchivo] = useState([]);
+
   //Estados Roanaldo fin-----------------------------
 
   const navegar = useNavigate();
@@ -266,6 +270,7 @@ const ProductoCreate = () => {
   const handleSubirImagen = async (e) => {
       setImagen(e.target.files[0]);
   };
+
   const handlerSbubirArchivo = async (e) => {
       console.log(e.target.files[0]);
       await setArchivo([...archivo, e.target.files[0]]);
