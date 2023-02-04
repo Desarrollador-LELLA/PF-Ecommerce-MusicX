@@ -79,9 +79,16 @@ export const addBiblioteca = (productos, idUser) => {
     const usuario = allDb.doc(db, "usuarios", idUser);
     const userData = await allDb.getDoc(usuario);
     const bibliotecaPrev = userData.data().biblioteca;
-    await updateDoc(usuario, {biblioteca: [...bibliotecaPrev, ...productos]})
+
+    if (!userData.data().biblioteca) {
+        await setDoc(usuario, {...userData.data(), biblioteca: []});
+        await updateDoc(usuario, {biblioteca: [...productos]})
+    }  
+    else {
+        await updateDoc(usuario, {biblioteca: [...bibliotecaPrev, ...productos]})
+    }
     dispatch({
-      type: ADD_BIBLIOTECA
+    type: ADD_BIBLIOTECA
     });
   };
 };
