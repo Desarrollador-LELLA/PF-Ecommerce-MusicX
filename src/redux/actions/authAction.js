@@ -121,16 +121,9 @@ const getUserById = (id) => async (dispatch) => {
     const docRef = allDb.doc(db, 'usuarios', id);
     const user = await allDb.getDoc(docRef);
     if (user.exists()) {
-      const userData = {
-        id: user.get('id'),
-        nombre: user.get('nombre'),
-        apellido: user.get('apellido'),
-        imagen: user.get('imagen'),
-        rol: user.get('rol')
-      };
       dispatch({
         type: AUTH_SET_USER,
-        payload: userData,
+        payload: user.data(),
       });
     } else {
     }
