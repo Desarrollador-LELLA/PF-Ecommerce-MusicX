@@ -26,6 +26,7 @@ import {
   crearDocumento,
   subirArchivoMetodo,
 } from "../../utils/metodosFirebase";
+import { wait } from "@testing-library/user-event/dist/utils";
 
 const ProductoCreate = () => {
   //Estados Roanaldo -----------------------------
@@ -147,11 +148,8 @@ const ProductoCreate = () => {
       valido = false;
     }
 
-    if (key.toString().trim().length === 0) {
+    if (!key) {
       e.key = "El Key esta vacio";
-      valido = false;
-    } else if (key.length > 50) {
-      e.key = "El Key no puede tener mas de 50 Caracteres";
       valido = false;
     }
 
@@ -165,7 +163,7 @@ const ProductoCreate = () => {
       e.tiempo = "El Tiempo debe ser mayor a cero";
       valido = false;
     }
-
+    console.log(e);
     return { ...e, valido };
   };
 
@@ -289,6 +287,10 @@ const ProductoCreate = () => {
     try {
       e.preventDefault();
 
+      let dataImagen = "";
+      let dataAudio = "";
+
+      console.log("errores " + errores.valido);
       if (errores.valido) {
         /*      TERCER CODIGO       */
         let prod = await crearDocumento("productos", {
@@ -296,7 +298,7 @@ const ProductoCreate = () => {
         });
 
         const extension = imagen.type.substring(6, imagen.type.length);
-        const extensionAudio = imagen.type.substring(6, audio.type.length);
+        const extensionAudio = audio.type.substring(6, audio.type.length);
         const extensionArchivo = archivo.map((archi) => {
           return archi.type.substring(6, archi.type.length);
         });
@@ -306,26 +308,29 @@ const ProductoCreate = () => {
           return `productos/${prod.result.id}/${LicenCreadas[i].TipoLicencia}.${extensionArchivo[i]}`;
         });
 
-        subirArchivoMetodo(ruta, (url) => {
-          actualizaDocumento("productos", prod.result.id, {
-            data: { imagen: url },
-          });
+        await subirArchivoMetodo(ruta, imagen, (url) => {
+          console.log("url imagen " + url);
+          dataImagen = url;
         });
 
         let rutaAudio = `productos/${prod.result.id}/audio.${extensionAudio}`;
-        subirArchivoMetodo(rutaAudio, (url) => {
-          actualizaDocumento("productos", prod.result.id, {
-            data: { audio: url },
-          });
+        await subirArchivoMetodo(rutaAudio, audio, (url) => {
+          console.log("url audio " + url);
+          dataAudio = url;
         });
 
         for (let i = 0; i < LicenCreadas.length; i++) {
-          subirArchivoMetodo(rutaArchivo[i], archivo[i], (url) => {
+          await subirArchivoMetodo(rutaArchivo[i], archivo[i], (url) => {
+            console.log("url Archivo " + url);
             LicenCreadas[i].url = url; // [url1 , url2 ]
           });
         }
-        actualizaDocumento("productos", prod.result.id, {
-          data: { licencias: LicenCreadas },
+        await actualizaDocumento("productos", prod.result.id, {
+          data: {
+            imagen: dataImagen,
+            audio: dataAudio,
+            licencias: LicenCreadas,
+          },
         });
 
         alert("Producto creado !!!");
@@ -388,7 +393,11 @@ const ProductoCreate = () => {
             </div>
             <div className="form-group input-group input-group-text my-3 d-flex justify-content-between">
               <Form.Label>Genero producto :</Form.Label>
-              <Form.Select name="genero" className={`${style.selectbox}`}>
+              <Form.Select
+                name="genero"
+                className={`${style.selectbox}`}
+                onChange={handleInputChange}
+              >
                 <option hidden>Select genero</option>
                 <option value="All">All</option>
                 {generos.length
@@ -402,7 +411,11 @@ const ProductoCreate = () => {
             </div>
             <div className="form-group input-group input-group-text my-3 d-flex justify-content-between">
               <Form.Label>Key producto :</Form.Label>
-              <Form.Select name="key" className={`${style.selectbox}`}>
+              <Form.Select
+                name="key"
+                className={`${style.selectbox}`}
+                onChange={handleInputChange}
+              >
                 <option hidden>Select key</option>
                 <option value="All">All</option>
                 {keys.length
@@ -444,7 +457,7 @@ const ProductoCreate = () => {
               <Form.Label>Audio Producto :</Form.Label>
               <Form.Control
                 type="file"
-                accept="audio/mp3"
+                accept="audio/mp3 , audio/wav"
                 onChange={handleAudio}
               />
               <br />
