@@ -52,7 +52,7 @@ function App() {
         <Route index element={<Home />} />
         <Route path=":id" element={<DetailProduct />} />
         <Route path="AboutUs" element={<AboutUs />} />
-        <Route path="carrito" element={<Carrito />} />
+        <Route path="carrito" element ={authenticatedAuth ? <Carrito/> : <Navigate to = "/iniciarsesion" />} />
         <Route path='SearchProduct' element={<SearchProduct/>}/>
         {/* CONDICIONALES CLIENTES */}
         <Route path="registro" element={!authenticatedAuth ? <Registro /> : <Navigate to="/" />} />
