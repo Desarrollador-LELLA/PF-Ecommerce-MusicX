@@ -91,6 +91,7 @@ const ProductoLista = () => {
                 habilitado: !valor
             });
             setUltimo(ultimo = ultimo + 1);
+            llenarLista();
         }
         catch(err)
         {
