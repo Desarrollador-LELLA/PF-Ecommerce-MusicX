@@ -26,8 +26,8 @@ const Carrito = () => {
     });
   };
 
-  const handleQuitarProducto = (id) => {
-    dispatch(actions.quitarProducto(id));
+  const handleQuitarProducto = (id, licencia) => {
+    dispatch(actions.quitarProducto(id, licencia));
   };
 
   const totalCalculator = () => {
@@ -43,7 +43,9 @@ const Carrito = () => {
   productos.forEach((producto) => infoTotal.push(`${producto.nombre} (1)`));
 
   const handleBiblioteca = () => {
-        dispatch(actions.addBiblioteca(productos, idUser))  
+        dispatch(actions.addBiblioteca(productos, idUser));
+        dispatch(actions.LimpiarDetalleCarrito());
+        dispatch(actions.enviarCorreo(idUser))
   };
 
   return (
@@ -64,7 +66,7 @@ const Carrito = () => {
                 <h2>Tiempo:{data.tiempo}</h2>
               </div>
               <h2>{data.licencias.precio} USD</h2>
-              <button onClick={() => handleQuitarProducto(data.id)}>
+              <button onClick={() => handleQuitarProducto(data.id, data.licencias)}>
                 <strong>X</strong>
               </button>
             </div>

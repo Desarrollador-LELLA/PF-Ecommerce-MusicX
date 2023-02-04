@@ -1,11 +1,12 @@
 import {
   ELIMINAR_PRODUCTO,
-  PAGAR,
+  ENVIAR_CORREO,
   DETALLE_UN_PRODUCTO,
   ADD_PRODUCTOS,
   ADD_PRODUCTO,
   LIMPIAR_PRODUCTO_DETALLE,
   ADD_BIBLIOTECA,
+  LIMPIAR_DETALLE_CARRITO
 } from "../types/carritoTypes.js";
 
 import { allDb, db } from "../../firebaseInicial/firebase";
@@ -17,20 +18,20 @@ import {
   doc,
   updateDoc,
 } from "firebase/firestore";
-
-export const pagarCarrito = () => {
-  return "Aun no se hace";
-};
+import nodemailer from "../../utils/nodemailer/nodemailer"
 
 //RECIBE EL ID EL PRODUCTO AGREGADO AL CARRITO PARA PASARSELO AL REDUCER Y QUE LO ELIMINE.
-export const quitarProducto = (id) => {
+export const quitarProducto = (id, licencia) => {
   return (dispatch) => {
     dispatch({
       type: ELIMINAR_PRODUCTO,
-      payload: id,
-    });
-  };
+      payload: {
+          id,
+          licencia
+    }
+  });
 };
+}
 
 export const getProducto = (id) => {
   return async (dispatch) => {
@@ -74,6 +75,13 @@ export const LimpiarDetalleProd = () => {
   };
 };
 
+export const LimpiarDetalleCarrito = () => {
+  return {
+    type: LIMPIAR_DETALLE_CARRITO,
+    payload: {}
+  };
+};
+
 export const addBiblioteca = (productos, idUser) => {
   return async (dispatch) => {
     const usuario = allDb.doc(db, "usuarios", idUser);
@@ -92,3 +100,16 @@ export const addBiblioteca = (productos, idUser) => {
     });
   };
 };
+
+export const enviarCorreo = (idUser) => {
+  return async (dispatch) => {
+    const usuario = doc(db, "usuarios", idUser);
+    const userData = await allDb.getDoc(usuario);
+    const correo = userData.data().correo;
+    await nodemailer("diegoamundaray2017@gmail.com");
+    dispatch({
+        type: ENVIAR_CORREO
+    })
+  }
+}
+
