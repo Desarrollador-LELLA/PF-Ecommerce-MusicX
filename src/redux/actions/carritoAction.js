@@ -18,7 +18,7 @@ import {
   doc,
   updateDoc,
 } from "firebase/firestore";
-import nodemailer from "../../utils/nodemailer/nodemailer"
+
 
 //RECIBE EL ID EL PRODUCTO AGREGADO AL CARRITO PARA PASARSELO AL REDUCER Y QUE LO ELIMINE.
 export const quitarProducto = (id, licencia) => {
@@ -106,7 +106,7 @@ export const enviarCorreo = (idUser) => {
     const usuario = doc(db, "usuarios", idUser);
     const userData = await allDb.getDoc(usuario);
     const correo = userData.data().correo;
-    await nodemailer("diegoamundaray2017@gmail.com");
+    
     dispatch({
         type: ENVIAR_CORREO
     })
