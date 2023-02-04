@@ -321,6 +321,9 @@ const ProductoCreate = () => {
               const dos = await actualizaDocumento("productos", prod.result.id, {
                   data: { licencias: LicenCreadas },
               });
+
+              alert("Producto creado !!!");
+              navegar("/producto_lista");
           }
       }
       catch (err)
