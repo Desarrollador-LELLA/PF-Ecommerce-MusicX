@@ -85,7 +85,6 @@ const ProductoLista = () => {
     const handleHabilitar = async (id, valor) => {
         try
         {
-            console.log("ACTUAL", id, valor);
             const docRef = doc(db, "productos", id);
             await updateDoc(docRef, {
                 habilitado: !valor
@@ -125,7 +124,7 @@ const ProductoLista = () => {
                             loading ? <Spinner animation="border" variant="light" /> : 
                             estadoInicial.lista.length ?
                                 estadoInicial.lista.slice(inicio, fin).map((e) => (                                        
-                                    <tr className={ `${ style.tr_sombreado }` }>
+                                    <tr className={ `${ style.tr_sombreado }` } key={e.id}>
                                         <td>{ e.nombre }</td>
                                         <td>{ e.descripcion }</td>
                                         <td>{ e.key }</td>

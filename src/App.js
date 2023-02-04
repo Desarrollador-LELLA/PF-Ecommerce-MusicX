@@ -31,9 +31,7 @@ function App() {
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged((user) => {
       dispatch(loadingAction(true));
-      console.log('ENTRO A CONSULTAR AL USUARIO GUARDADO OLOGEADO')
       if (user) {
-        console.log('SI HAY UN USUARIO LOGEADO')
         dispatch(getUserById(user.uid));
         if (!user.emailVerified) {
           dispatch(needVerificationAction());

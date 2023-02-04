@@ -7,7 +7,7 @@ const CardLoading = () => {
     return (
         <>
             {Array.from({ length: 6 }).map((_, idx) => (
-                <Col kay={idx}>
+                <Col key={idx}>
                     <Card className={`${s.card_keys} h-100 border-0`}>
                         <Card.Body>
                             <Card.Img src={iconoGenero} className={`${s.placeholder_img} rounded-circle p-3`} />

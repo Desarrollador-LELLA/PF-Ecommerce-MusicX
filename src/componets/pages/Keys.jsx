@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { Card, Col, Container, Pagination, Row, Image, Modal, Button, Spinner, Badge, FloatingLabel, Form } from 'react-bootstrap';
 import s from '../../css/keys.module.css';
 import { paginacion } from '../../utils/libreria';
-import { actualizaDocumento, unDocumentoCallback } from '../../utils/metodosFirebase';
+import { actualizaDocumento, unDocumentoCallback, unDocumento } from '../../utils/metodosFirebase';
 import { ValidoKey } from '../../utils/validaciones';
 import CardLoading from '../com/CardLoading';
 import iconoGenero from '../images/ic_keys.svg';
@@ -20,6 +20,7 @@ const INITIAL_STATE_KEY = {
     id: '',
     nombre: '',
     habilitado: true,
+    index: -1
 };
 
 const Keys = () => {
@@ -52,6 +53,8 @@ const Keys = () => {
     };
 
     const abrirCerrarModalEditar = () => {
+        setKey(INITIAL_STATE_KEY);
+        setErrores({});
         setModalEditar(!modalEditar);
     };
 
@@ -90,36 +93,81 @@ const Keys = () => {
 
         if (errores.valido) {
             //setLoading(true);
-            console.log('VALIDADO');
             crearKeyMetodo();
-        } else {
-            console.log('NO VALIDADO');
+        }
+    };
+
+    const onSubmitEditar = (e) => {
+        e.preventDefault();
+        // if (errorAuth) {
+        //     dispatch(errorAction(''));
+        // }
+
+        if (errores.valido) {
+            //setLoading(true);
+            editarKeyMetodo();
         }
     };
 
     const crearKeyMetodo = async () => {
-        const resultado = await actualizaDocumento(estadoInicial.coleccion, estadoInicial.id, { data: { keys: arrayUnion({ id: key.id, nombre: key.nombre, habilitado: key.habilitado }) } });
-        if (resultado.confirma) {
-            abrirCerrarModalCrear();
-            llenarLista();
+        const siExisteId = estadoInicial.lista.find(x => x.id === key.id);
+        if (siExisteId) {
+            alert("si existe");
+        } else {
+            const resultado = await actualizaDocumento(estadoInicial.coleccion, estadoInicial.id, { data: { keys: arrayUnion({ id: key.id, nombre: key.nombre, habilitado: key.habilitado }) } });
+            if (resultado.confirma) {
+                abrirCerrarModalCrear();
+                llenarLista();
+            }
         }
+    };
+
+    const editarKeyMetodo = async () => {
+        // const resultado = await actualizaDocumento(estadoInicial.coleccion, estadoInicial.id, { data: { keys: arrayUnion({ id: key.id, nombre: key.nombre, habilitado: key.habilitado }) } });
+        // if (resultado.confirma) {
+        //     abrirCerrarModalCrear();
+        //     llenarLista();
+        // }
+
+        const listaNueva = estadoInicial.lista.filter((x, i) => i !== key.index);
+        if (listaNueva.find(x => x.id === key.id)) {
+            alert("el id ya existe");
+        } else {
+            listaNueva.push({ id: key.id, nombre: key.nombre, habilitado: key.habilitado });
+            const resultado = await actualizaDocumento(estadoInicial.coleccion, estadoInicial.id, { data: { keys: listaNueva } });
+            if (resultado.confirma) {
+                abrirCerrarModalEditar();
+                llenarLista();
+            }
+        }
+    };
+
+    const editarSeleccion = async (idIndex) => {
+        const objetoKey = await unDocumento(estadoInicial.coleccion, estadoInicial.id);
+
+        if (objetoKey.confirma) {
+            setKey({ ...objetoKey.result.keys[idIndex], index: idIndex });
+            setModalEditar(!modalEditar);
+        }
+    };
+
+    const habilarADesabilitar = () => {
+        setKey({ ...key, habilitado: !key.habilitado });
     };
 
     return (
         <>
             <Container fluid>
                 {/* BOTON MODAL CREAR KEY */}
-                {console.log(key)}
                 <h1 className={`${s.text_color_keys} text-center p-3 fw-bold`}>Administracion de Keys</h1>
                 <Button variant='success mb-3' onClick={abrirCerrarModalCrear}>Crear Key</Button>
-                <Button variant='success mb-3' onClick={abrirCerrarModalEditar}>Editar Key</Button>
-                <Row xs={2} sm={4} md={5} lg={6} xl={7} xxl={8} className="g-4">
+                <Row xs={2} sm={4} md={5} lg={6} xl={7} xxl={8} className="g-4 mb-3">
                     {
                         loading ? <CardLoading /> :
                             estadoInicial.lista.length ?
                                 estadoInicial.lista.slice(inicio, fin).map((x) => (
                                     <Col key={x.id}>
-                                        <Card className={`${s.card_keys} h-100 border-0`}>
+                                        <Card className={`${s.card_keys} h-100 border-0`} onClick={() => editarSeleccion(estadoInicial.lista.findIndex(i => i.id === x.id))}>
                                             <Card.Body className='d-grid'>
                                                 <Card.Img src={iconoGenero} className={`${s.img_keys} rounded-circle p-3`} />
                                                 <Card.Text className={`${s.text_color_keys} fw-bold`}>ID {x.id}</Card.Text>
@@ -164,27 +212,33 @@ const Keys = () => {
                         </FloatingLabel>
                     </Modal.Body>
                     <Modal.Footer>
-                        <Button variant="secondary" onClick={abrirCerrarModalCrear}>
-                            Close
-                        </Button>
+                        <Button variant="secondary" onClick={abrirCerrarModalCrear}>Cancelar</Button>
                         <Button type='submit' variant="primary" onClick={onChangeKey}>Craer</Button>
                     </Modal.Footer>
                 </Form>
             </Modal>
             {/* MODAL EDITAR KEY */}
             <Modal show={modalEditar} onHide={abrirCerrarModalEditar} backdrop="static" keyboard={false}>
-                <Modal.Header closeButton>
-                    <Modal.Title>Editar Key</Modal.Title>
-                </Modal.Header>
-                <Modal.Body>
-                    Este Modal NO esta Listo HDP!!!!!
-                </Modal.Body>
-                <Modal.Footer>
-                    <Button variant="secondary" onClick={abrirCerrarModalEditar}>
-                        Close
-                    </Button>
-                    <Button variant="primary">Understood</Button>
-                </Modal.Footer>
+                <Form onSubmit={onSubmitEditar}>
+                    <Modal.Header closeButton>
+                        <Modal.Title>Editar Key</Modal.Title>
+                    </Modal.Header>
+                    <Modal.Body>
+                        <FloatingLabel className='mb-3' controlId='floatingInput' label='ID'>
+                            <Form.Control name='id' type='number' placeholder='1 - 1000' onChange={onChangeKey} value={key.id} isInvalid={!!errores.id} />
+                            <Form.Control.Feedback type={'invalid'}>{errores.id}</Form.Control.Feedback>
+                        </FloatingLabel>
+                        <FloatingLabel className='mb-3' controlId='floatingInput' label='Nombre'>
+                            <Form.Control name='nombre' type='text' placeholder='C# algo' onChange={onChangeKey} value={key.nombre} isInvalid={!!errores.nombre} />
+                            <Form.Control.Feedback type='invalid'>{errores.nombre}</Form.Control.Feedback>
+                        </FloatingLabel>
+                    </Modal.Body>
+                    <Modal.Footer>
+                        <Button type="button" variant={key.habilitado ? "btn btn-success" : "btn btn-danger"} onClick={habilarADesabilitar}>{key.habilitado ? "habilitado" : "desahabilitado"}</Button>
+                        <Button variant="secondary" onClick={abrirCerrarModalEditar}>Cancelar</Button>
+                        <Button type='submit' variant="primary" onClick={onChangeKey}>Editar</Button>
+                    </Modal.Footer>
+                </Form>
             </Modal>
         </>
     );

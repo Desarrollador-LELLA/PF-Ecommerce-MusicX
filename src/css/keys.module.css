@@ -25,6 +25,7 @@
 
 .card_keys {
     background: linear-gradient(120deg, rgb(80, 0, 90) 10%, rgb(0, 43, 51) 60%, rgb(66, 0, 66) 90%);
+    cursor: pointer;
 }
 
 .placeholder_img {

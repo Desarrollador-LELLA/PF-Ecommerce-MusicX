@@ -214,7 +214,6 @@ export const actualizaDocumentoArray = async (nombreCollecion, id, { data }) => 
         retorno.mensaje = 'Consulta Exitosa';
     } catch (error) {
         retorno.mensaje = error.message;
-        console.log(error.message);
     } finally {
         return retorno;
     }
