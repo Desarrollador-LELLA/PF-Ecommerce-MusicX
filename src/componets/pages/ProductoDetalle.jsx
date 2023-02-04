@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Button, Card, Container, Form } from 'react-bootstrap';
+import { Button, Card, Container, Form, ListGroup } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
 import { detalle_producto_admin } from '../../redux/actions/productoAction';
 import style from '../../css/ProductoDetalle.module.css';
@@ -46,15 +46,26 @@ const ProductoDetalle = () => {
 
     const [errores, setErrores] = useState({});
     const navigate = useNavigate();
+
+
+
+    const [selected, setSelected] = useState("All");
+
+
+    //  Aqui uso el ID traido para llenar los datos
     const params = useParams();
     const id = params.id.trim();
 
     const detallado = async () => {
         let ayuda = await detalle_producto_admin(id);
-        console.log("Ayuda", ayuda);
-        console.log("Detalle", detalle);
         setDetalle({ ...ayuda });
+        
+        /*
+        console.log("Ayuda", ayuda);
+        console.log("Detalle", detalle);        
         console.log("Detalle 2", detalle);
+        console.log("Hoy", ayuda.licencias);
+        */
     }
 
 
@@ -132,6 +143,7 @@ const ProductoDetalle = () => {
         setImagen(e.target.files[0]);
     };
 
+
     /*      Uso de useEffect         */
     useEffect( () => {
         detallado();
@@ -149,6 +161,29 @@ const ProductoDetalle = () => {
             [name]: value
         });
     };
+
+
+    /*
+    function handlerLicencia(e) {
+        let btnSelec = document.getElementById(e.target.id).parentNode;
+        let boton = document.getElementById(e.target.id).childNodes;
+        boton[1].style.display = "block";
+        btnSelec.setAttribute(
+        "Class",
+        `card ${css.cardProducto} ${css.cardSelect}`
+        );
+        precioTotal(e.target.id);
+        for (let i = 0; i < arryAux.length; i++) {
+        if (i != e.target.id) {
+            let btnNoSelect = document.getElementById(i).parentNode;
+            let botonNoSelect = document.getElementById(i).childNodes;
+            botonNoSelect[1].style.display = "none";
+            btnNoSelect.setAttribute("Class", `card ${css.cardProducto}`);
+        }
+        }
+    }
+    */
+
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -169,6 +204,9 @@ const ProductoDetalle = () => {
         <div>
             <Container className='my-3'>
                 <Card className={ `${ style.detalleProducto } m-auto` } >
+                    {
+                        console.log("Ultimate", detalle)
+                    }
                     <Form className='card card-body' onSubmit={ e => handleSubmit(e) }>
                         <div className={ style.productoDetail_title }>Detalle de Producto (Admin)</div>
                         <div className='form-group input-group input-group-text my-3 d-flex justify-content-between'>
@@ -205,23 +243,19 @@ const ProductoDetalle = () => {
 
                         <div className='form-group input-group input-group-text my-3 d-flex justify-content-between'>
                             <Form.Label>Key producto :</Form.Label>
-                            <Form.Select name="key" className={`${style.selectbox}`}>
+                            <Form.Select name="key" className={`${style.selectbox}`} selected={ setSelected } >
                                 <option hidden>Select key</option>
                                 <option value="All">All</option>
                                 {
                                     keys.length ?
                                     keys.map(e => (
-                                        <option key={e.nombre} value={e.nombre}>
+                                        <option key={e.nombre} value={e.nombre} >
                                             {e.nombre}
                                         </option>
                                     )) :
                                     null
                                 }
                             </Form.Select>
-                            {/*
-                            <Form.Control name='key' type='text' value={ detalle?.key } className={ `${ style.textbox }` } onChange={ handleInputChange } />                                
-                            <Form.Control.Feedback type={'invalid'}>{ errores.nombre }</Form.Control.Feedback>
-                            */}
                         </div>
                         <div className='form-group input-group input-group-text my-3 d-flex justify-content-between'>
                             <Form.Label>Tiempo producto :</Form.Label>
@@ -230,10 +264,6 @@ const ProductoDetalle = () => {
                         </div>
                         <div className='form-group input-group input-group-text my-3 d-flex justify-content-between'>
                             <Form.Label>Imagen producto :</Form.Label>
-                            {/*
-                            <Form.Control name='imagen' type='text' value={ detalle?.imagen } className={ `${ style.textbox }` } onChange={ handleInputChange } />
-                            <Form.Control.Feedback type={'invalid'}>{ errores.imagen }</Form.Control.Feedback>
-                            */}
                             <Form.Control
                                 className={`${style.filebox}`}
                                 type="file"
@@ -249,7 +279,52 @@ const ProductoDetalle = () => {
                         <div className='form-group input-group input-group-text my-3 d-flex justify-content-between'>
                             <img src={detalle?.imagen} alt='' width="80px" height="80px" />
                         </div>
-                        <div>
+                        <p>Lista de licencias</p>
+                        <div className=''>
+                            <ListGroup>
+                                {
+                                    detalle.licencias?.map((obj, index) => (
+                                        <Card>
+                                            <Card.Body id={ index } value={obj.precio}>
+                                                { obj.TipoLicencia } - { obj.descripcion }
+                                            </Card.Body>
+                                        </Card>
+                                    ))
+                                }
+                            </ListGroup>
+                        </div>
+
+                        {/* 
+                        <div className={`${css.divLicencias} shadow-sm `}>
+                            <ListGroup>
+                            {
+                                productoUnoDetalle.licencias?.map((obj, indx) => (
+                                    <div key={indx} onClick={(e) => handlerLicencia(e)}>
+                                    <Card className={`${css.cardProducto}`}>
+                                        <Card.Body id={indx} value={obj.precio}>
+                                        {`${obj.TipoLicencia}  ${obj.descripcion}' `}
+                                        <Button
+                                            id={indx}
+                                            name="boton"
+                                            Style="display: none"
+                                            className={`float-end btn btn-light ${css.btonLicencia} `}
+                                            onClick={(e) =>
+                                            handleAddToCart(productoUnoDetalle, e)
+                                            }
+                                            value={obj.precio}
+                                        >
+                                            ${obj.precio}
+                                        </Button>
+                                        </Card.Body>
+                                    </Card>
+                                    </div>
+                                ))
+                            }
+                            </ListGroup>
+                        </div>
+                        */}
+
+                        <div className='form-group input-group d-flex justify-content-center my-3'>
                             <Button className={`${style.button} text-center btn btn-primary float-end`} type='submit' variant='primary'>Editar</Button>
                         </div>
                     </Form>
