@@ -84,7 +84,7 @@ const siguiente = () => {
                     )) : <h1 >No hay beat</h1>
         }
     </Row>
-    <Pagination className='justify-content-center' >
+    <Pagination className={styles.paginado} >
         <Pagination.Prev onClick={anterior} />
         <Pagination.Item onClick={cambiarPagina} active={paginasBar[0] === estadoInicial.paginaActual ? true : false}>{paginasBar[0]}</Pagination.Item>
         {paginasBar[1] && <Pagination.Ellipsis />}

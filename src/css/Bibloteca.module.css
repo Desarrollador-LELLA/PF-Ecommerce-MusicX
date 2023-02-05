@@ -35,10 +35,15 @@
   color: #8a4883;
 }
 
-
-
-
-
+.paginado{
+  display: flex;
+    text-align: center;
+    align-items: center;
+    justify-content: center;
+    flex-direction: row;
+    font-family: 'Unbounded', cursive;
+    margin: 20px;
+}
 
 
 
