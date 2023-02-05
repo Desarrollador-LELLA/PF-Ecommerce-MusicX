@@ -10,6 +10,7 @@ import {
   ModalFooter,
   InputGroup,
   ListGroup,
+  ButtonGroup,
 } from "react-bootstrap";
 import css from "../../css/detailproducto.module.css"; // import Ronaldo
 import { useDispatch } from "react-redux";
@@ -60,7 +61,7 @@ const ProductoCreate = () => {
   const [popUp, setPopUp] = useState({
     state: false,
   });
-
+  const [addGeneros, setAddGeneros] = useState([]);
   const [archivo, setArchivo] = useState([]);
   const [audio, setAudio] = useState(null);
 
@@ -254,6 +255,15 @@ const ProductoCreate = () => {
       }
     }
   };
+  const handlerAgregarGenero = (e) => {
+    if (e.target.value === "All") return;
+    setAddGeneros([...addGeneros, e.target.value]);
+    setGeneros(generos.filter((gen) => gen.nombre !== e.target.value));
+  };
+  const handlerEliminarGenero = (e) => {
+    setGeneros([...generos, { nombre: e.target.value }]);
+    setAddGeneros(addGeneros.filter((genero) => genero !== e.target.value));
+  };
   //-------------------------------handlers Roanldo termian -----------------------------
 
   const handleInputChange = (e) => {
@@ -294,7 +304,7 @@ const ProductoCreate = () => {
       if (errores.valido) {
         /*      TERCER CODIGO       */
         let prod = await crearDocumento("productos", {
-          data: { ...producto },
+          data: { ...producto, genero: addGeneros },
         });
 
         const extension = imagen.type.substring(6, imagen.type.length);
@@ -396,7 +406,7 @@ const ProductoCreate = () => {
               <Form.Select
                 name="genero"
                 className={`${style.selectbox}`}
-                onChange={handleInputChange}
+                onChange={handlerAgregarGenero}
               >
                 <option hidden>Select genero</option>
                 <option value="All">All</option>
@@ -408,6 +418,17 @@ const ProductoCreate = () => {
                     ))
                   : null}
               </Form.Select>
+            </div>
+            <div>
+              <ButtonGroup aria-label="Basic example">
+                {addGeneros?.map((genero) => (
+                  <Button
+                    value={genero}
+                    onClick={handlerEliminarGenero}
+                    variant="secondary"
+                  >{`${genero} X`}</Button>
+                ))}
+              </ButtonGroup>
             </div>
             <div className="form-group input-group input-group-text my-3 d-flex justify-content-between">
               <Form.Label>Key producto :</Form.Label>
