@@ -277,45 +277,54 @@ const ProductoDetalle = () => {
         const selector = document.getElementById("opSelector");
         AgregarLicencia.disabled = true;
         let aux = false;
-        if (lista.value !== "Seleccionar") {
+        if (lista.value !== "Seleccionar")
+        {
           agregarArchivo.disabled = false;
           selector?.remove();
         }
     
-        if (!agregarArchivo.value) {
+        if (!agregarArchivo.value)
+        {
           AgregarLicencia.disabled = true;
-        } else if (!precio.value) {
+        }
+        else if (!precio.value)
+        {
           AgregarLicencia.disabled = true;
-        } else {
+        }
+        else
+        {
           AgregarLicencia.disabled = false;
           aux = true;
         }
         return aux;
     }
 
+
     const handlerLicencia = (e) => {
         validar();
         const { name, value } = e.target;
         setLicencia({
-          ...licencia,
-          [name]: value,
+            ...licencia,
+            [name]: value,
         });
+
         if (e.target.id === "ListaTipo") {
-          const parrafo = document.getElementById("ParrafoDescripcion");
-          tipoLicencias.forEach((element) => {
-            if (element.nombre === e.target.value) {
-              console.log("LINEA 173");
-              parrafo.innerHTML = element.descripcion;
-            }
-          });
+            const parrafo = document.getElementById("ParrafoDescripcion");
+            tipoLicencias.forEach((element) => {
+                if (element.nombre === e.target.value) {
+                console.log("LINEA 173");
+                parrafo.innerHTML = element.descripcion;
+                }
+            });
         }
-      };
+    };
     
       const handlerAgregarLicen = (e) => {
         if (!validar()) return alert("llene los campos");
         const filtradoTipoLicencia = EstadoTipoLi.filter((licen) => {
-          return licen.nombre !== licencia.TipoLicencia;
+            return licen.nombre !== licencia.TipoLicencia;
         });
+
         setEstadoTipoLi(filtradoTipoLicencia);
         setLicenCreadas([
           ...LicenCreadas,
@@ -334,7 +343,6 @@ const ProductoDetalle = () => {
     };
 
     
-   
     return (
         <div>
             <Container className='my-3'>
@@ -395,26 +403,18 @@ const ProductoDetalle = () => {
                         </div>
                         <div className='form-group input-group input-group-text my-3 d-flex justify-content-between'>
                             <Form.Label>Imagen producto :</Form.Label>
-                            <Form.Control
-                                className={`${style.filebox}`}
-                                type="file"
-                                accept="image/png, image/jpg, image/jpeg"
-                                onChange={ handleSubirImagen }
-                            />
+                            <Form.Control className={`${style.filebox}`} type="file" accept="image/png, image/jpg, image/jpeg" onChange={ handleSubirImagen } />
                             <br />
                             <Form.Control.Feedback type={"invalid"}>
                                 {errores.imagen}
                             </Form.Control.Feedback>
-
                         </div>
                         <div className='form-group input-group input-group-text my-3 d-flex justify-content-between'>
                             <img src={detalle?.imagen} alt='' width="80px" height="80px" />
                         </div>
 
-
-
                         <div>
-                            <Button className={`btn btn-secondary`} onClick={ handlePopUp }>
+                            <Button className={`btn btn-secondary`} onClick={ handlePopUp } >
                                 Agregar Licencia
                             </Button>
                             {/* 
@@ -461,67 +461,53 @@ const ProductoDetalle = () => {
                             </ListGroup>
                         </div>
 
-
                         <div className='form-group input-group d-flex justify-content-center my-3'>
-                            <Button className={`${style.button} text-center btn btn-primary float-end`} type='submit' variant='primary'>Editar</Button>
+                            <Button className={`${style.button} text-center btn btn-primary float-end`} type='submit' variant='primary'>
+                                Editar
+                            </Button>
                         </div>
                     </Form>
                 </Card>
             </Container>
-
 
             <Modal show={popUp.state}>
                 <ModalHeader>Incerta las Licencias</ModalHeader>
                 <ModalBody>
                 <Form>
                     <Form.Group className="mb-3">
-                    <Form.Label>Tipo Licencia</Form.Label>
-                    <Form.Select
-                        id="ListaTipo"
-                        name="TipoLicencia"
-                        onChange={ handlerLicencia }
-                    >
-                        <option id="opSelector">Seleccionar</option>
-                        {EstadoTipoLi?.map((licen, i) => (
-                        <option key={i}>{licen.nombre}</option>
-                        ))}
-                    </Form.Select>
+                        <Form.Label>Tipo Licencia</Form.Label>
+                        <Form.Select id="ListaTipo" name="TipoLicencia" onChange={ handlerLicencia } >
+                            <option id="opSelector">Seleccionar</option>
+                            {
+                                EstadoTipoLi?.map((licen, i) => (
+                                    <option key={i}>{licen.nombre}</option>
+                                ))
+                            }
+                        </Form.Select>
                     </Form.Group>
                     <Form.Group className="mb-3">
-                    <Form.Label>Sube el archivo para tu licencia</Form.Label>
-                    <Form.Control
-                        id="AgregarArchivo"
-                        onChange={ handlerSbubirArchivo }
-                        name="archivo"
-                        type="file"
-                        size="sm"
-                        disabled
-                    />
+                        <Form.Label>Sube el archivo para tu licencia</Form.Label>
+                        <Form.Control id="AgregarArchivo" onChange={ handlerSbubirArchivo } name="archivo" type="file" size="sm" disabled />
                     </Form.Group>
                     <Form.Group className="mb-3">
-                    <Form.Label>Precio Licencia</Form.Label>
-                    <InputGroup className="mb-3">
-                        <InputGroup.Text>$</InputGroup.Text>
-                        <Form.Control
-                        id="Precio"
-                        onChange={ handlerLicencia }
-                        name="precio"
-                        aria-label="Amount (to the nearest dollar)"
-                        type="number"
-                        />
-                        <InputGroup.Text>Col</InputGroup.Text>
-                    </InputGroup>
-                    <Form.Label>
-                        <p id="ParrafoDescripcion"></p>
-                    </Form.Label>
+                        <Form.Label>Precio Licencia</Form.Label>
+                        <InputGroup className="mb-3">
+                            <InputGroup.Text>$</InputGroup.Text>
+                            <Form.Control
+                            id="Precio"
+                            onChange={ handlerLicencia }
+                            name="precio"
+                            aria-label="Amount (to the nearest dollar)"
+                            type="number"
+                            />
+                            <InputGroup.Text>Col</InputGroup.Text>
+                        </InputGroup>
+                        <Form.Label>
+                            <p id="ParrafoDescripcion"></p>
+                        </Form.Label>
                     </Form.Group>
                     <div className="form-group input-group   d-flex justify-content-center">
-                    <Button
-                        id="AgregarLicencia"
-                        variant="primary"
-                        type="button"
-                        onClick={ handlerAgregarLicen }
-                    >
+                    <Button id="AgregarLicencia" variant="primary" type="button" onClick={ handlerAgregarLicen } >
                         Agregar Licencia
                     </Button>
                     <Button variant="primary" type="button" onClick={handlePopUp}>
