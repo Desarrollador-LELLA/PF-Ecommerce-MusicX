@@ -21,7 +21,9 @@ const Home = () => {
       </Container>
       <Container>
   <Row>
-    <TopBeats className="d-flex flex-wrap justify-content-center"/>
+    <div className={`d-flex flex-wrap justify-content-center ${s.containerTopBeats}`}>
+    <TopBeats/>
+    </div>
     <ProductCards className="d-flex flex-wrap justify-content-center"/>
   </Row>
 </Container>
