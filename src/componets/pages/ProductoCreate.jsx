@@ -232,6 +232,7 @@ const ProductoCreate = () => {
     setLicencia({});
     handlePopUp();
   };
+
   const handlerEliminar = (e) => {
     const eliArchivo = archivo.filter(
       (obj, i) => i !== parseInt(e.target.value)
@@ -255,11 +256,13 @@ const ProductoCreate = () => {
       }
     }
   };
+  
   const handlerAgregarGenero = (e) => {
     if (e.target.value === "All") return;
     setAddGeneros([...addGeneros, e.target.value]);
     setGeneros(generos.filter((gen) => gen.nombre !== e.target.value));
   };
+  
   const handlerEliminarGenero = (e) => {
     setGeneros([...generos, { nombre: e.target.value }]);
     setAddGeneros(addGeneros.filter((genero) => genero !== e.target.value));
@@ -284,9 +287,11 @@ const ProductoCreate = () => {
   const handleSubirImagen = async (e) => {
     setImagen(e.target.files[0]);
   };
+  
   const handleAudio = (e) => {
     setAudio(e.target.files[0]);
   };
+  
   const handlerSbubirArchivo = async (e) => {
     await setArchivo([...archivo, e.target.files[0]]);
     validar();
@@ -351,6 +356,7 @@ const ProductoCreate = () => {
     }
   };
 
+  
   return (
     <div>
       <Container className="my-3">

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Button, Card, Container, Form, ListGroup, Modal, ModalBody, ModalHeader, ModalFooter, InputGroup  } from 'react-bootstrap';
+import { Button, Card, Container, Form, ListGroup, Modal, ModalBody, ModalHeader, ModalFooter, InputGroup, ButtonGroup } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
 import { detalle_producto_admin } from '../../redux/actions/productoAction';
 import style from '../../css/ProductoDetalle.module.css';
@@ -17,6 +17,8 @@ const ProductoDetalle = () => {
         descripcion: "",
         key: "",
         tiempo: 0,
+        licencias: [],
+        genero: [],
         imagen: ""
     });
 
@@ -153,28 +155,6 @@ const ProductoDetalle = () => {
     };
 
 
-    /*
-    function handlerLicencia(e) {
-        let btnSelec = document.getElementById(e.target.id).parentNode;
-        let boton = document.getElementById(e.target.id).childNodes;
-        boton[1].style.display = "block";
-        btnSelec.setAttribute(
-        "Class",
-        `card ${css.cardProducto} ${css.cardSelect}`
-        );
-        precioTotal(e.target.id);
-        for (let i = 0; i < arryAux.length; i++) {
-        if (i != e.target.id) {
-            let btnNoSelect = document.getElementById(i).parentNode;
-            let botonNoSelect = document.getElementById(i).childNodes;
-            botonNoSelect[1].style.display = "none";
-            btnNoSelect.setAttribute("Class", `card ${css.cardProducto}`);
-        }
-        }
-    }
-    */
-
-
     const handleSubmit = async (e) => {
         e.preventDefault();
         try
@@ -229,11 +209,12 @@ const ProductoDetalle = () => {
         });
     };
     
-    const handlerEliminar = (e) => {
+    const handlerEliminarLicencia = (e) => {
 
         const copia_licencia =  detalle.licencias.slice();
         copia_licencia.splice(e, 1);
         setDetalle({ ...detalle, licencias: copia_licencia });
+        console.log("Today : ", detalle.licencias);
 
 
         /*
@@ -311,20 +292,37 @@ const ProductoDetalle = () => {
         if (e.target.id === "ListaTipo") {
             const parrafo = document.getElementById("ParrafoDescripcion");
             tipoLicencias.forEach((element) => {
-                if (element.nombre === e.target.value) {
-                console.log("LINEA 173");
+                if (element.nombre === e.target.value)
+                {
                 parrafo.innerHTML = element.descripcion;
                 }
             });
         }
     };
     
-      const handlerAgregarLicen = (e) => {
+    const handlerAgregarLicen = (e) => {
         if (!validar()) return alert("llene los campos");
+        
         const filtradoTipoLicencia = EstadoTipoLi.filter((licen) => {
             return licen.nombre !== licencia.TipoLicencia;
         });
 
+        //  setDetalle({ ...detalle, licencias: [ ...detalle.licencias, { url: archivo[0], precio: licencia.precio }] });        
+
+        const copia_licencias = detalle.licencias.slice();
+        copia_licencias.push({ TipoLicencia: "", descripcion: "", precio: licencia.precio, url: archivo });
+        setDetalle({ ...detalle, licencias: copia_licencias });
+
+
+        //setDetalle({ ...detalle, licencias: [ { ...detalle.licencias }, { descripcion: "licencia.descripcion", precio: "licencia.precio" }] });
+        console.log("Linea 1 - filtradoTipoLicencia :", filtradoTipoLicencia);
+        console.log("Linea 2 - archivo :", archivo);
+        console.log("Linea 3 - detalle :", detalle);
+        console.log("Linea 4 - licencia :", licencia);
+
+
+
+        /*
         setEstadoTipoLi(filtradoTipoLicencia);
         setLicenCreadas([
           ...LicenCreadas,
@@ -333,19 +331,48 @@ const ProductoDetalle = () => {
             descripcion: document.getElementById("ParrafoDescripcion").innerHTML,
           },
         ]);
+        */
+
         setLicencia({});
         handlePopUp();
     };
 
     const handlerSbubirArchivo = async (e) => {
-        await setArchivo([...archivo, e.target.files[0]]);
+        await setArchivo([ ...archivo, e.target.files[0] ]);
         validar();
+    };
+
+
+    //  Agregar o quitar generos
+    const [addGeneros, setAddGeneros] = useState([]);
+
+    const handlerAgregarGenero = (e) => {
+        if (e.target.value === "All") return;
+        setAddGeneros([...addGeneros, e.target.value]);
+        setGeneros(generos.filter((gen) => gen.nombre !== e.target.value));
+    };
+
+    const handlerEliminarGenero = (e) => {
+        setGeneros([...generos, { nombre: e.target.value }]);
+        setAddGeneros(addGeneros.filter((genero) => genero !== e.target.value));
+
+        const copia_genero = detalle.genero.slice();
+        copia_genero.splice(e, 1);
+
+        /*
+        const copia_licencia =  detalle.licencias.slice();
+        copia_licencia.splice(e, 1);
+        setDetalle({ ...detalle, licencias: copia_licencia });
+        */
     };
 
     
     return (
         <div>
             <Container className='my-3'>
+                {
+                    console.log("Ultimate :", detalle)
+                }
                 <Card className={ `${ style.detalleProducto } m-auto` } >
                     <Form className='card card-body' onSubmit={ e => handleSubmit(e) }>
                         <div className={ style.productoDetail_title }>Detalle de Producto (Admin)</div>
@@ -366,8 +393,8 @@ const ProductoDetalle = () => {
                         </div>
                         <div className="form-group input-group input-group-text my-3 d-flex justify-content-between">
                             <Form.Label>Genero producto :</Form.Label>
-                            <Form.Select name="genero" className={`${style.selectbox}`}>
-                                <option hidden>Select genero</option>
+                            <Form.Select name="genero" className={`${style.selectbox}`} onChange={ handlerAgregarGenero } >
+                                <option hidden>Seleccionar genero</option>
                                 <option value="All">All</option>
                                 {
                                     generos.length ?
@@ -380,6 +407,48 @@ const ProductoDetalle = () => {
                                 }
                             </Form.Select>
                         </div>
+                        <div>
+                            <ButtonGroup aria-label="Basic example">
+                                {
+                                    addGeneros?.map((genero) => (
+                                        <Button value={ genero } onClick={ handlerEliminarGenero } variant="secondary" >
+                                            { `${genero} X` }
+                                        </Button>
+                                    ))
+                                }
+                            </ButtonGroup>
+                            <ButtonGroup aria-label="Basic example">
+                                {
+                                    detalle.genero?.map((genero) => (
+                                        <Button value={ genero } onClick={ handlerEliminarGenero } variant="secondary" className='mr-2' >
+                                            { `${genero} X` }
+                                        </Button>
+                                    ))
+                                }
+                            </ButtonGroup>
+                        </div>
+
+
+                        {/*
+                        <div className=''>
+                            <ListGroup>
+                                {
+                                    detalle.licencias?.map((obj, index) => (
+                                        <Card key={ index } >
+                                            <Card.Body value={obj.precio}>
+                                                { obj.TipoLicencia } - { obj.descripcion }
+                                                <Button name="boton" className="float-end btn btn-primary" onClick={ () => handlerEliminar(index) } >
+                                                    X
+                                                </Button>
+                                            </Card.Body>
+                                        </Card>
+                                    ))
+                                }
+                            </ListGroup>
+                        </div>
+                        */}
+
+
                         <div className='form-group input-group input-group-text my-3 d-flex justify-content-between'>
                             <Form.Label>Key producto :</Form.Label>
                             <Form.Select name="key" className={`${style.selectbox}`} value={ detalle.key } >
@@ -451,7 +520,7 @@ const ProductoDetalle = () => {
                                         <Card key={ index } >
                                             <Card.Body value={obj.precio}>
                                                 { obj.TipoLicencia } - { obj.descripcion }
-                                                <Button name="boton" className="float-end btn btn-primary" onClick={ () => handlerEliminar(index) } >
+                                                <Button name="boton" className="float-end btn btn-primary" onClick={ () => handlerEliminarLicencia(index) } >
                                                     X
                                                 </Button>
                                             </Card.Body>
@@ -470,8 +539,10 @@ const ProductoDetalle = () => {
                 </Card>
             </Container>
 
+
+            {/*         Formulario d eLicencias         */}
             <Modal show={popUp.state}>
-                <ModalHeader>Incerta las Licencias</ModalHeader>
+                <ModalHeader>Inserta las Licencias</ModalHeader>
                 <ModalBody>
                 <Form>
                     <Form.Group className="mb-3">
@@ -479,9 +550,14 @@ const ProductoDetalle = () => {
                         <Form.Select id="ListaTipo" name="TipoLicencia" onChange={ handlerLicencia } >
                             <option id="opSelector">Seleccionar</option>
                             {
-                                EstadoTipoLi?.map((licen, i) => (
-                                    <option key={i}>{licen.nombre}</option>
-                                ))
+                                EstadoTipoLi?.map((licen, i) => {
+                                    if( detalle.licencias.every( x => x.TipoLicencia !== licen.nombre ) )
+                                    {
+                                        return <option key={i}>
+                                            { licen.nombre }
+                                        </option>
+                                    }
+                                })
                             }
                         </Form.Select>
                     </Form.Group>
