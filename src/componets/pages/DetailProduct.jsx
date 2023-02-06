@@ -101,7 +101,7 @@ export default function DetailProduct() {
               <div className={css.divgeneros}>
                 {productoUnoDetalle.genero?.map((e) => (
                   <h3 className={` ${css.generos} ${css.tituloProducto}`}>
-                    {` ${e} `}
+                    {e}
                   </h3>
                 ))}
               </div>
