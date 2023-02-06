@@ -11,6 +11,8 @@ import { paginacion } from '../../utils/libreria';
 import { actualizaDocumentoArray, mostrarImgen, unDocumento, obtienePaginado, siguientePaginado, anteriorPaginado, cambiaPaginado, crearDocumento, unDocumentoCallback, actualizaDocumento } from '../../utils/metodosFirebase';
 import icGenero from "../images/ic_genero.svg"
 import { arrayUnion } from "firebase/firestore";
+import { busqueda } from '../../utils/searchFunction';
+
 
 
 const INITIAL_PAGINADO = {
@@ -25,8 +27,10 @@ const INITIAL_PAGINADO = {
 
 const Generos = () => {
   const [estadoInicial, setEstadoInicial] = useState(INITIAL_PAGINADO);
+  const [buscarGenero, setBuscarGenero] = useState("");
   const [loading, setLoading] = useState(false);
-  const { cantPaginas, fin, inicio, paginasBar } = paginacion(estadoInicial.lista.length, estadoInicial.paginaActual, estadoInicial.itemPorPagina);
+  const listaBuscar = busqueda(estadoInicial.lista,buscarGenero)
+  const { cantPaginas, fin, inicio, paginasBar } = paginacion(listaBuscar.length, estadoInicial.paginaActual, estadoInicial.itemPorPagina);
 
   const [error, setError] = useState(null);
   const [errorr, setErrorr] = useState(null);
@@ -34,7 +38,6 @@ const Generos = () => {
   const [nombreCrear, setNombreCrear] = useState("");
   const [idCrear, setIdCrear] = useState("");
   const [habilitado, setHabilitado] = useState(true);
-  const [buscarGenero, setBuscarGenero] = useState("");
   const [listaMostrar, setListaMostrar] = useState([]);
   const dispatch = useDispatch();
   const [abrirModalEditar, setAbrirModalEditar] = useState(false);
@@ -110,6 +113,8 @@ const Generos = () => {
 
   //MODAL EDITAR GENERO
   const confirmarEdicion = async () => {
+    if (generoEditar.id==null) return alert ("ingrese un id valido mayor a 0")
+    if (generoEditar.nombre== "") return alert ("ingrese un nombre valido")
     const listaNueva = estadoInicial.lista.filter((x,i)=>i !== generoEditar.index)
     if (listaNueva.find(x => x.id === generoEditar.id)) {
       alert("el id ya existe")
@@ -159,20 +164,21 @@ const Generos = () => {
     }
   };
   //BUSCAR
-  const filterProducts = ({ opDesc, opAsce, opAZ, opZA, opSinOrden, search, generos, keyF }, lista) => {
+  // const busqueda = (lista, search) => {
 
-    let nuevaLista = lista.slice();
+  //   let nuevaLista = lista.slice();
 
-    if (search) {
-      nuevaLista = nuevaLista.filter((ele) => {
-        return ele.nombre.toLowerCase().includes(search.toLowerCase()) || ele.autor.toLowerCase().includes(search.toLowerCase()) || ele.descripcion.toLowerCase().includes(search.toLowerCase())
-      }
-      );
-    }
-    return nuevaLista;
-  };
+  //   if (search) {
+  //     nuevaLista = nuevaLista.filter((ele) => {
+  //       return ele.nombre.toLowerCase().includes(search.toLowerCase())
+  //     }
+  //     );
+  //   }
+  //   return nuevaLista;
+  // };
 
   function buscar(e) {
+    setEstadoInicial({...estadoInicial,paginaActual:1})
     setBuscarGenero(e.target.value);
   }
 
@@ -239,7 +245,7 @@ const Generos = () => {
           <Modal.Title className="text-bg-dark p-1" >Crear genero</Modal.Title>
         </Modal.Header>
         <Modal.Body className="text-bg-dark" >
-          <FloatingLabel controlId="floatingInput" label="id " className="text-dark" >
+          <FloatingLabel controlId="floatingInput" label="id " className="text-dark mb-3" >
             <Form.Control type="number" placeholder="1-1000" onChange={handleOnChangeIdCrear} value={idCrear} />
           </FloatingLabel>
           <FloatingLabel controlId="floatingInput" label="Genero " className="text-dark" >
@@ -262,13 +268,12 @@ const Generos = () => {
         <Modal.Header closeButton className="bg-dark">
           <Modal.Title className="text-bg-dark p-3">Editar Genero</Modal.Title>
         </Modal.Header>
-        <Modal.Body
-          className="text-dark p-1">
-          <FloatingLabel controlId="floatingInput" label="id " className="text-dark" >
+        <Modal.Body  className="text-bg-dark">
+          <FloatingLabel controlId="floatingInput"  label="id " className="text-dark mb-3" >
             <Form.Control type="number" placeholder="1-1000" onChange={handleOnChangeIdEditar} value={generoEditar.id} />
           </FloatingLabel>
 
-          <FloatingLabel controlId="floatingInput" label="Genero" className="text-dark" >
+          <FloatingLabel controlId="floatingInput" label="Genero" className="text-dark-bg-dark" >
             <Form.Control type="text" placeholder="rock an roll" onChange={handleOnChangeNombreEditar} value={generoEditar.nombre} />
           </FloatingLabel>
         </Modal.Body>
@@ -306,7 +311,7 @@ const Generos = () => {
             onChange={(e) => buscar(e)}
           />
 
-          <Button variant="outline-secondary" type="submit" onClick={(e) => onClickBuscar(e)}>
+          <Button variant="outline-secondary" type="submit" onClick={(e) => onClickBuscar(e)} disabled>
             Buscar Genero
           </Button>
 
@@ -327,16 +332,19 @@ const Generos = () => {
         <Row xs={2} sm={3} md={3} lg={4} xl={5} xxl={6}>
           {
             loading ? <Spinner animation="border" variant="light" /> :
-              estadoInicial.lista.length ?
-                estadoInicial.lista.slice(inicio, fin).map(i => (
+             listaBuscar.length ?
+               listaBuscar.slice(inicio, fin).map(i => (
                   <Col className='my-2'>
                     <Card className={`${s.card_genero} h-100`} onClick={e => { " handleClick(e)"; }}>
                       <Card.Img className={`${s.img_genero} rounded-circle`} src={icGenero} variant="top" />
                       <Card.Body className='d-grid'>
+                        <Card.Text className='text-light'>
+                          {i.id}
+                        </Card.Text>
                         <Card.Title className='text-light'>
                           {i.nombre}
                         </Card.Title>
-                        <Button variant="outline-secondary mb-3" onClick={() => handleShow2(estadoInicial.lista.findIndex(x => x.id === i.id))}>Editar</Button>
+                        <Button variant="outline-secondary mb-3" onClick={() => handleShow2(listaBuscar.findIndex(x => x.id === i.id))}>Editar</Button>
                         <Badge bg={i.habilitado ? "success" : "danger"}>
                           {i.habilitado ? "Habilitado" : "Deshabilitado"}
                         </Badge>
