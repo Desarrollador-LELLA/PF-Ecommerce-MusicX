@@ -320,8 +320,6 @@ const ProductoDetalle = () => {
         console.log("Linea 3 - detalle :", detalle);
         console.log("Linea 4 - licencia :", licencia);
 
-
-
         /*
         setEstadoTipoLi(filtradoTipoLicencia);
         setLicenCreadas([
@@ -358,12 +356,7 @@ const ProductoDetalle = () => {
 
         const copia_genero = detalle.genero.slice();
         copia_genero.splice(e, 1);
-
-        /*
-        const copia_licencia =  detalle.licencias.slice();
-        copia_licencia.splice(e, 1);
-        setDetalle({ ...detalle, licencias: copia_licencia });
-        */
+        
     };
 
     
@@ -623,5 +616,4 @@ const object = {
     "key": "E min",
     "imagen": "https://firebasestorage.googleapis.com/v0/b/orion-proyect.appspot.com/o/productos%2F2NHPtswsVuL0aywYpk46%2Fbeat.png?alt=media&token=48d655ff-c0b5-4b68-95d5-8a5d6500aabf"
 }
-
 
