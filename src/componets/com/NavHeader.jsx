@@ -31,6 +31,7 @@ const NavHeader = () => {
 
     return (
         <Navbar collapseOnSelect expand="lg" variant="dark" className={`${s.navbar}`} sticky="top">
+            {console.log(productos)}
             <Container fluid>
                 <Link to='/' className={`${s.navbar_brand} navbar-brand`}>
                     <img alt="" src={icLogo} width="50" height="50" className="d-inline-block align-top" />
@@ -117,7 +118,7 @@ const NavHeader = () => {
                                                         </Card.Header>
                                                         <Card.Body className={`${s.card_body}`}></Card.Body>
                                                         <Card.Footer className={`${s.card_fooster} text-end`}>
-                                                            <Card.Text>{`$${x.precio}`}</Card.Text>
+                                                            <Card.Text>{`$${x.licencias.precio}`}</Card.Text>
                                                         </Card.Footer>
                                                     </Card.ImgOverlay>
                                                 </Card>
@@ -131,7 +132,8 @@ const NavHeader = () => {
                                 }
                             </div>
                             <Dropdown.Divider />
-                            <Dropdown.ItemText>{`Total $ ${productos.reduce((a, b) => a + b.precio, 0)}`}</Dropdown.ItemText>
+                            <Dropdown.ItemText>{`Total $ ${productos.reduce((a, b) => a + Number(b.licencias.precio), 0)}`}</Dropdown.ItemText>
+                            {console.log(productos.reduce((a, b) => a + Number(b.licencias.precio), 0))}
                         </Dropdown.Menu>
                     </Dropdown>
                 </Nav>
