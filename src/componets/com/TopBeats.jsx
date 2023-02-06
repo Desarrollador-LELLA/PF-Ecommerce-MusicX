@@ -17,6 +17,7 @@ export default function TopBeats() {
   }, []);
 
   return (
+    <div className={s.dadcontainer}>
     <>
       {productos.length && (
         <>
@@ -57,20 +58,21 @@ export default function TopBeats() {
               <Image
                 fluid="true"
                 className="d-block w-100"
-                src={productos[1].data().imagen}
+                src={productos[2].data().imagen}
                 alt="Third slide"
               />
 
               <Carousel.Caption>
-                <Link to={productos[1].id}>
-                  <h3 className="display-1">{productos[1].data().nombre}</h3>
+                <Link to={productos[2].id}>
+                  <h3 className="display-1">{productos[2].data().nombre}</h3>
                 </Link>
-                <p className="display-4">BY:{productos[1].data().autor}</p>
+                <p className="display-4">BY:{productos[2].data().autor}</p>
               </Carousel.Caption>
             </Carousel.Item>
           </Carousel>
         </>
       )}
     </>
+    </div>
   );
 }

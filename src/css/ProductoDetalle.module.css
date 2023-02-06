@@ -36,9 +36,24 @@
 
 .filebox
 {
-    max-width: 500px;
+    max-width: 600px;
 }
 
+
+.cardProductoCrear {
+  color: #111111;
+  background: #f8f9fa;
+  margin: 5px;
+}
+
+.divLicenciasCrear {
+  border-top: solid 2px;
+  border-color: #ffffff;
+  margin-top: 1px;
+  padding: 2px;
+  overflow-y: scroll;
+  height: 200px;
+}
 
 
 

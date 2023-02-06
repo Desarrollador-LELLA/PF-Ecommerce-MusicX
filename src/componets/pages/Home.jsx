@@ -56,8 +56,10 @@ const Home = () => {
       <Container>
         <Button onClick={envio}>ESTE BOTON SOLO TIENE 300 SOLICITUDES NO PRECIONAR SOLO PARA DIEGO</Button>
         <Row>
-          <TopBeats className="d-flex flex-wrap justify-content-center" />
-          <ProductCards className="d-flex flex-wrap justify-content-center" />
+          <div className={`d-flex flex-wrap justify-content-center ${s.containerTopBeats}`}>
+          <TopBeats/>
+          </div>
+          <ProductCards className="d-flex flex-wrap justify-content-center"/>
         </Row>
       </Container>
     </div>
