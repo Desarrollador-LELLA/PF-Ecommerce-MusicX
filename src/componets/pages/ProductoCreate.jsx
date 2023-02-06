@@ -317,7 +317,7 @@ const ProductoCreate = () => {
         let rutaArchivo = extensionArchivo.map((archi, i) => {
           return `productos/${prod.result.id}/${LicenCreadas[i].TipoLicencia}.${extensionArchivo[i]}`;
         });
-
+        console.log("rutas", rutaArchivo);
         await subirArchivoMetodo(ruta, imagen, (url) => {
           console.log("url imagen " + url);
           dataImagen = url;
