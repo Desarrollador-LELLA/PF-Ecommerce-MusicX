@@ -77,3 +77,16 @@ export const filterProducts = ({ opDesc, opAsce, opAZ, opZA, opSinOrden, search,
     }
     return nuevaLista;
   };
+
+  export const busqueda = (lista, search) => {
+
+    let nuevaLista = lista.slice();
+
+    if (search) {
+      nuevaLista = nuevaLista.filter((ele) => {
+        return ele.nombre.toLowerCase().includes(search.toLowerCase())
+      }
+      );
+    }
+    return nuevaLista;
+  };
