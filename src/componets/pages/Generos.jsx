@@ -110,6 +110,8 @@ const Generos = () => {
 
   //MODAL EDITAR GENERO
   const confirmarEdicion = async () => {
+    if (generoEditar.id==null) return alert ("ingrese un id valido mayor a 0")
+    if (generoEditar.nombre== "") return alert ("ingrese un nombre valido")
     const listaNueva = estadoInicial.lista.filter((x,i)=>i !== generoEditar.index)
     if (listaNueva.find(x => x.id === generoEditar.id)) {
       alert("el id ya existe")
@@ -264,11 +266,11 @@ const Generos = () => {
         </Modal.Header>
         <Modal.Body
           className="text-dark p-1">
-          <FloatingLabel controlId="floatingInput" label="id " className="text-dark" >
+          <FloatingLabel controlId="floatingInput"  label="id " className="text-dark" >
             <Form.Control type="number" placeholder="1-1000" onChange={handleOnChangeIdEditar} value={generoEditar.id} />
           </FloatingLabel>
 
-          <FloatingLabel controlId="floatingInput" label="Genero" className="text-dark" >
+          <FloatingLabel controlId="floatingInput" label="Genero" className="text-dark-bg-dark" >
             <Form.Control type="text" placeholder="rock an roll" onChange={handleOnChangeNombreEditar} value={generoEditar.nombre} />
           </FloatingLabel>
         </Modal.Body>
