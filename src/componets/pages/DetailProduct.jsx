@@ -4,7 +4,7 @@ import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import css from "../../css/detailproducto.module.css";
 import ListGroup from "react-bootstrap/ListGroup";
-import Card from "react-bootstrap/Card";
+import { Card } from "react-bootstrap";
 import Button from "react-bootstrap/Button";
 import { useState, useEffect } from "react";
 import { getProducto, addProducto } from "../../redux/actions/carritoAction";
@@ -76,7 +76,7 @@ export default function DetailProduct() {
     }
   }
   function precioTotal(i) {
-    setPresioProducto(arryAux[i].valor);
+    setPresioProducto(productoUnoDetalle.licencias[i].precio);
   }
 
   return (
@@ -94,12 +94,16 @@ export default function DetailProduct() {
                 />
                 <div className={css.hover}>
                   <audio controls controlsList="nodownload">
-                    <source
-                      src="https://firebasestorage.googleapis.com/v0/b/orion-proyect.appspot.com/o/BOM%20BAP%20TYPE%201%2FBASE%20BOMBAP%20TYPE.wav?alt=media&token=cde04954-46db-44aa-bbd6-1f7e1a97e3d0"
-                      type="audio/wav"
-                    />
+                    <source src={productoUnoDetalle.audio} type="audio/wav" />
                   </audio>
                 </div>
+              </div>
+              <div className={css.divgeneros}>
+                {productoUnoDetalle.genero?.map((e) => (
+                  <h3 className={` ${css.generos} ${css.tituloProducto}`}>
+                    {` ${e} `}
+                  </h3>
+                ))}
               </div>
             </Col>
             <Col>
