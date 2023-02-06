@@ -45,9 +45,19 @@
     margin: 20px;
 }
 
+.nohay{
+  display: flex;
+    text-align: center;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+  
+}
 
 
-
+.reproducir audio {
+  visibility: hidden;
+}
 
 
 
