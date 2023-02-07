@@ -76,11 +76,12 @@ export default function ProductCards(props) {
   };
   return (
     <div className={`${s.productcards} container`}>
-      <Row xs={1} sm={2} md={3} lg={4} xl={4} xxl={4} className="g-5">
+      <Row xs={1} sm={2} md={3} lg={4} xl={4} xxl={4} className={`g-5 ${s.cont}`}>
         {loading ? (
           <Spinner animation="border" variant="light" />
         ) : estadoInicial.lista.length ? (
           estadoInicial.lista.slice(inicio, fin).map((x) => (
+            x.habilitado?
             <Col key={x.id} className={s.card}>
               <Card className={`my-2 ${s.cardcont} h-100`}>
                 <div className={s.contcards}>
@@ -104,6 +105,7 @@ export default function ProductCards(props) {
                 </Card.Body>
               </Card>
             </Col>
+            :null
           ))
         ) : null}
       </Row>

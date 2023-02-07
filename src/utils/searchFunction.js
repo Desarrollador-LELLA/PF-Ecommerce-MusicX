@@ -13,7 +13,7 @@ export const filterProducts = ({ opDesc, opAsce, opAZ, opZA, opSinOrden, search,
     if(generos.length){
         nuevaLista = nuevaLista.filter((x) => {
             return generos.every((p) => {
-              return x.generos?.includes(p);
+              return x.genero?.includes(p);
             });
           });
     }
@@ -74,6 +74,19 @@ export const filterProducts = ({ opDesc, opAsce, opAZ, opZA, opSinOrden, search,
     }
     if (opSinOrden) {
       return nuevaLista;
+    }
+    return nuevaLista;
+  };
+
+  export const busqueda = (lista, search) => {
+
+    let nuevaLista = lista.slice();
+
+    if (search) {
+      nuevaLista = nuevaLista.filter((ele) => {
+        return ele.nombre.toLowerCase().includes(search.toLowerCase())
+      }
+      );
     }
     return nuevaLista;
   };

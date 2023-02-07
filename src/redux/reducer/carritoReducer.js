@@ -5,7 +5,7 @@ import {
   ADD_PRODUCTOS,
   ADD_PRODUCTO,
   ADD_BIBLIOTECA,
-  LIMPIAR_DETALLE_CARRITO
+  LIMPIAR_DETALLE_CARRITO,
 } from "../types/carritoTypes.js";
 
 const initialState = {
@@ -17,10 +17,16 @@ const initialState = {
 const carritoReducer = (state = initialState, action) => {
   switch (action.type) {
     case ELIMINAR_PRODUCTO:
+      console.log("actionEliminar", action.payload);
+      let productosCarritoFiltrados = state.productos.filter(
+        (producto) =>
+          producto.id !== action.payload.id ||
+          producto.licencias.TipoLicencia !==
+            action.payload.licencia.TipoLicencia
+      );
       return {
         ...state,
-        productos: state.productos.filter((producto) => 
-            producto.licencias.TipoLicencia !== action.payload.licencia.TipoLicencia)
+        productos: productosCarritoFiltrados,
       };
     case ADD_PRODUCTOS:
       return {
@@ -28,11 +34,24 @@ const carritoReducer = (state = initialState, action) => {
         productos: action.payload,
       };
     case ADD_PRODUCTO:
-          let productosFiltrados = state.productos.find((producto) => producto.licencias.TipoLicencia === action.payload.producto.licencias.TipoLicencia);
-          let productosAdd = !productosFiltrados ? [...state.productos, { ...action.payload.producto }] : state.productos;
+      let productoID = state.productos.find(
+        (producto) => producto.id === action.payload.producto.id
+      );
+
+      let productosFiltrados = productoID
+        ? state.productos.find(
+            (producto) =>
+              producto.licencias.TipoLicencia ===
+              action.payload.producto.licencias.TipoLicencia
+          )
+        : false;
+
+      let productosAdd = !productosFiltrados
+        ? [...state.productos, { ...action.payload.producto }]
+        : state.productos;
       return {
         ...state,
-        productos: productosAdd
+        productos: productosAdd,
       };
     case DETALLE_UN_PRODUCTO:
       return {
@@ -40,10 +59,10 @@ const carritoReducer = (state = initialState, action) => {
         productoUnoDetalle: action.payload,
       };
     case LIMPIAR_DETALLE_CARRITO:
-          return {
-            ...state,
-            productos: []
-          }
+      return {
+        ...state,
+        productos: [],
+      };
     default: {
       return state;
     }

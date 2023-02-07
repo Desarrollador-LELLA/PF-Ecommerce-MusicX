@@ -57,6 +57,7 @@
 }
 
 
+
 .reproducir audio {
   visibility: hidden;
 }
@@ -67,6 +68,34 @@
 
 
 
+
+
+
+.reproducir audio {
+  visibility: hidden;
+}
+
+
+
+
+.descarga a {
+  background:
+    linear-gradient(
+      to right,
+      rgb(16, 36, 36),
+      rgb(9, 19, 19)
+    ),
+    linear-gradient(
+      to right,
+      rgb(86, 27, 163),
+      rgba(255, 0, 180, 1),
+      rgb(193, 10, 213)
+  );
+  background-size: 100% 3px, 0 3px;
+  background-position: 100% 100%, 0 100%;
+  background-repeat: no-repeat;
+  transition: background-size 400ms;
+}
 
 
 

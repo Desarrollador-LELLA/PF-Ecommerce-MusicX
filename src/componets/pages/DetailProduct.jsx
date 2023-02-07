@@ -4,12 +4,13 @@ import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import css from "../../css/detailproducto.module.css";
 import ListGroup from "react-bootstrap/ListGroup";
-import Card from "react-bootstrap/Card";
+import { Card } from "react-bootstrap";
 import Button from "react-bootstrap/Button";
 import { useState, useEffect } from "react";
 import { getProducto, addProducto } from "../../redux/actions/carritoAction";
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
+import { async } from "@firebase/util";
 
 export default function DetailProduct() {
   const dispatch = useDispatch();
@@ -17,35 +18,11 @@ export default function DetailProduct() {
   const { id } = useParams();
   const [presioProducto, setPresioProducto] = useState("");
   const { productoUnoDetalle } = useSelector((state) => state.carrito);
-  const arryAux = [
-    {
-      nombre: "Licencia 5852: Esta licencia te entregará archivo .mp3",
-      id: "akshdsad3568",
-      valor: 100,
-    },
-    {
-      nombre: "Licencia 2: Esta licencia te entregará un archivo .wav",
-      id: "aks1hd8",
-      valor: 200,
-    },
-    {
-      nombre:
-        "Licencia 3: Esta licencia te entregará un archivo .zip o .rar descomprimible que contendrá la pista dividida en canales por stems",
-      id: "aks3hd8",
-      valor: 300,
-    },
-    {
-      nombre:
-        "Licencia 4: Esta licencia te entregará los derechos completos del beat y ya no estará disponible para la venta (los usuarios que hayan obtenido cualquier licencia de este producto mantendrán sus derechos)",
-      id: "aksh4d8",
-      valor: 400,
-    },
-    { nombre: "Licencia 5: no definido aún...", id: "aksh2d8", valor: 500 },
-  ];
+  const [audio, setAudio] = useState(false);
 
   useEffect(() => {
-    dispatch(getProducto(id));
-  }, [dispatch]);
+    dispatch(getProducto(id, setAudio));
+  }, []);
 
   function handleAddToCart(producto, e) {
     const productoAgregar = {
@@ -66,7 +43,7 @@ export default function DetailProduct() {
       `card ${css.cardProducto} ${css.cardSelect}`
     );
     precioTotal(e.target.id);
-    for (let i = 0; i < arryAux.length; i++) {
+    for (let i = 0; i < productoUnoDetalle.licencias.length; i++) {
       if (i != e.target.id) {
         let btnNoSelect = document.getElementById(i).parentNode;
         let botonNoSelect = document.getElementById(i).childNodes;
@@ -76,77 +53,90 @@ export default function DetailProduct() {
     }
   }
   function precioTotal(i) {
-    setPresioProducto(arryAux[i].valor);
+    setPresioProducto(productoUnoDetalle.licencias[i].precio);
   }
 
   return (
     <div>
-      <div>
-        <Container>
-          <Button onClick={() => navegar("/")}>Volver</Button>
-          <Row>
-            <Col>
-              <div className={css.box}>
-                <img
-                  className={`${css.imagenportada} img-fluid`}
-                  src={productoUnoDetalle.imagen}
-                  alt=""
-                />
-                <div className={css.hover}>
-                  <audio controls controlsList="nodownload">
-                    <source
-                      src="https://firebasestorage.googleapis.com/v0/b/orion-proyect.appspot.com/o/BOM%20BAP%20TYPE%201%2FBASE%20BOMBAP%20TYPE.wav?alt=media&token=cde04954-46db-44aa-bbd6-1f7e1a97e3d0"
-                      type="audio/wav"
-                    />
-                  </audio>
-                </div>
-              </div>
-            </Col>
-            <Col>
+      {audio ? (
+        <div>
+          <div>
+            <Container ntainer>
+              <Button onClick={() => navegar("/")}>Volver</Button>
               <Row>
-                <Col Style="padding-left: 30px;">
-                  <h1 className={css.tituloProducto}>
-                    {`${productoUnoDetalle.nombre} - ${productoUnoDetalle.autor}`}
-                  </h1>
+                <Col>
+                  <div className={css.box}>
+                    <img
+                      className={`${css.imagenportada} img-fluid`}
+                      src={productoUnoDetalle.imagen}
+                      alt=""
+                    />
+                    <div className={css.hover}>
+                      <audio controls>
+                        <source
+                          src={productoUnoDetalle.audio}
+                          type="audio/mpeg"
+                        />{" "}
+                      </audio>
+                    </div>
+                  </div>
+                  <div className={css.divgeneros}>
+                    {productoUnoDetalle.genero?.map((e) => (
+                      <h3 className={` ${css.generos} ${css.tituloProducto}`}>
+                        {e}
+                      </h3>
+                    ))}
+                  </div>
+                </Col>
+                <Col>
+                  <Row>
+                    <Col Style="padding-left: 30px;">
+                      <h1 className={css.tituloProducto}>
+                        {`${productoUnoDetalle.nombre} - ${productoUnoDetalle.autor}`}
+                      </h1>
 
-                  <p className={`text-break ${css.texto}`}>
-                    {productoUnoDetalle.descripcion}
-                    <br />
-                    valor: ${presioProducto ? presioProducto : 0}
-                  </p>
+                      <p className={`text-break ${css.texto}`}>
+                        {productoUnoDetalle.descripcion}
+                        <br />
+                        valor: ${presioProducto ? presioProducto : 0}
+                      </p>
+                    </Col>
+                  </Row>
+                  <p className={`text-center ${css.texto}`}>Lista Licencias</p>
+                  <div className={`${css.divLicencias} shadow-sm `}>
+                    <ListGroup>
+                      {productoUnoDetalle.licencias?.map((obj, indx) => (
+                        <div key={indx} onClick={(e) => handlerLicencia(e)}>
+                          <Card className={`${css.cardProducto}`}>
+                            <Card.Body id={indx} value={obj.precio}>
+                              {`${obj.TipoLicencia}  ${obj.descripcion}' `}
+                              <Button
+                                id={indx}
+                                name="boton"
+                                Style="display: none"
+                                className={`float-end btn btn-light ${css.btonLicencia} `}
+                                onClick={(e) =>
+                                  handleAddToCart(productoUnoDetalle, e)
+                                }
+                                value={obj.precio}
+                              >
+                                ${obj.precio}
+                              </Button>
+                            </Card.Body>
+                          </Card>
+                        </div>
+                      ))}
+                    </ListGroup>
+                  </div>
                 </Col>
               </Row>
-              <p className={`text-center ${css.texto}`}>Lista Licencias</p>
-              <div className={`${css.divLicencias} shadow-sm `}>
-                <ListGroup>
-                  {productoUnoDetalle.licencias?.map((obj, indx) => (
-                    <div key={indx} onClick={(e) => handlerLicencia(e)}>
-                      <Card className={`${css.cardProducto}`}>
-                        <Card.Body id={indx} value={obj.precio}>
-                          {`${obj.TipoLicencia}  ${obj.descripcion}' `}
-                          <Button
-                            id={indx}
-                            name="boton"
-                            Style="display: none"
-                            className={`float-end btn btn-light ${css.btonLicencia} `}
-                            onClick={(e) =>
-                              handleAddToCart(productoUnoDetalle, e)
-                            }
-                            value={obj.precio}
-                          >
-                            ${obj.precio}
-                          </Button>
-                        </Card.Body>
-                      </Card>
-                    </div>
-                  ))}
-                </ListGroup>
-              </div>
-            </Col>
-          </Row>
-        </Container>
-        <div className={css.espaciado}></div>
-      </div>
+            </Container>
+            <div className={css.espaciado}></div>
+          </div>{" "}
+        </div>
+      ) : (
+        <div> LOADINGGGGGGGG..............</div>
+      )}
     </div>
   );
 }
