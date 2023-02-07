@@ -103,7 +103,6 @@ const ProductoCreate = () => {
             tipoLicencias.forEach((element) => {
                 if (element.nombre === e.target.value)
                 {
-                    console.log("LINEA 173");
                     parrafo.innerHTML = element.descripcion;
                 }
             });
@@ -323,10 +322,8 @@ const ProductoCreate = () => {
           let dataImagen = "";
           let dataAudio = "";
 
-          console.log("errores " + errores.valido);
           if (errores.valido)
           {
-              /*      TERCER CODIGO       */
               let prod = await crearDocumento("productos", {
                   data: { ...producto, genero: addGeneros },
               });
@@ -383,126 +380,126 @@ const ProductoCreate = () => {
             <Container className="my-3">
                 <Card className={`${style.registroProducto} m-auto`}>
                     <Form className="card card-body" onSubmit={(e) => handleSubmit(e)}>
-                      <div className={style.productoCreate_title}>
-                          Creacion de Producto (Admin)
-                      </div>
-                      <div className="form-group input-group input-group-text my-3 d-flex justify-content-between">
-                          <Form.Label>Nombre producto :</Form.Label>
-                          <Form.Control name="nombre" type="text" className={`${style.textbox}`} placeholder="Ingrese nombre producto" onChange={handleInputChange} isInvalid={!!errores.nombre} />
-                          <Form.Control.Feedback type={"invalid"}>
-                              { errores.nombre }
-                          </Form.Control.Feedback>
-                      </div>
-                      <div className="form-group input-group input-group-text my-3 d-flex justify-content-between">
-                          <Form.Label>Autor producto :</Form.Label>
-                          <Form.Control name="autor" type="text" className={`${style.textbox}`} placeholder="Ingrese autor producto" onChange={handleInputChange} isInvalid={!!errores.autor} />
-                          <Form.Control.Feedback type={"invalid"}>
-                              { errores.autor }
-                          </Form.Control.Feedback>
-                      </div>
-                      <div className="form-group input-group input-group-text my-3 d-flex justify-content-between">
-                          <Form.Label>Descripcion producto :</Form.Label>
-                          <Form.Control name="descripcion" type="text" className={`${style.textbox}`} placeholder="Ingrese descripcion producto" onChange={handleInputChange} isInvalid={!!errores.descripcion} />
-                          <Form.Control.Feedback type={"invalid"}>
-                              { errores.descripcion }
-                          </Form.Control.Feedback>
-                      </div>
-                      <div className="form-group input-group input-group-text my-3 d-flex justify-content-between">
-                          <Form.Label>Genero producto :</Form.Label>
-                          <Form.Select name="genero" className={`${style.selectbox}`} onChange={ handlerAgregarGenero } >
-                              <option hidden>Select genero</option>
-                              <option value="All">All</option>
-                              {
-                                  generos.length ?
-                                      generos.map((e) => (
-                                        <option key={e.nombre} value={e.nombre}>
-                                          {e.nombre}
-                                        </option>
-                                      ))
-                                  : null
-                              }
-                          </Form.Select>
-                      </div>
-                      <div>
-                          <ButtonGroup aria-label="Basic example">
-                              {
-                                  addGeneros?.map((genero) => (
-                                      <Button value={genero} onClick={ handlerEliminarGenero } variant="secondary" >
-                                          {`${genero} X`}
-                                      </Button>
-                                  ))
-                              }
-                          </ButtonGroup>
-                      </div>
-                      <div className="form-group input-group input-group-text my-3 d-flex justify-content-between">
-                          <Form.Label>Key producto :</Form.Label>
-                          <Form.Select name="key" className={`${style.selectbox}`} onChange={ handleInputChange } >
-                              <option hidden>Select key</option>
-                              <option value="All">All</option>
-                              {
-                                  keys.length ?
-                                      keys.map((e) => (
+                        <div className={style.productoCreate_title}>
+                            Creacion de Producto (Admin)
+                        </div>
+                        <div className="form-group input-group input-group-text my-3 d-flex justify-content-between">
+                            <Form.Label>Nombre producto :</Form.Label>
+                            <Form.Control name="nombre" type="text" className={`${style.textbox}`} placeholder="Ingrese nombre producto" onChange={handleInputChange} isInvalid={!!errores.nombre} />
+                            <Form.Control.Feedback type={"invalid"}>
+                                { errores.nombre }
+                            </Form.Control.Feedback>
+                        </div>
+                        <div className="form-group input-group input-group-text my-3 d-flex justify-content-between">
+                            <Form.Label>Autor producto :</Form.Label>
+                            <Form.Control name="autor" type="text" className={`${style.textbox}`} placeholder="Ingrese autor producto" onChange={handleInputChange} isInvalid={!!errores.autor} />
+                            <Form.Control.Feedback type={"invalid"}>
+                                { errores.autor }
+                            </Form.Control.Feedback>
+                        </div>
+                        <div className="form-group input-group input-group-text my-3 d-flex justify-content-between">
+                            <Form.Label>Descripcion producto :</Form.Label>
+                            <Form.Control name="descripcion" type="text" className={`${style.textbox}`} placeholder="Ingrese descripcion producto" onChange={handleInputChange} isInvalid={!!errores.descripcion} />
+                            <Form.Control.Feedback type={"invalid"}>
+                                { errores.descripcion }
+                            </Form.Control.Feedback>
+                        </div>
+                        <div className="form-group input-group input-group-text my-3 d-flex justify-content-between">
+                            <Form.Label>Genero producto :</Form.Label>
+                            <Form.Select name="genero" className={`${style.selectbox}`} onChange={ handlerAgregarGenero } >
+                                <option hidden>Select genero</option>
+                                <option value="All">All</option>
+                                {
+                                    generos.length ?
+                                        generos.map((e) => (
                                           <option key={e.nombre} value={e.nombre}>
                                             {e.nombre}
                                           </option>
-                                      ))
-                                  : null
-                              }
-                          </Form.Select>
-                      </div>
-                      <div className="form-group input-group input-group-text my-3 d-flex justify-content-between">
-                          <Form.Label>Tiempo producto :</Form.Label>
-                          <Form.Control name="tiempo" type="number" className={`${style.textbox}`} placeholder="Ingrese tiempo producto" onChange={ handleInputChange } isInvalid={!!errores.tiempo} />
-                          <Form.Control.Feedback type={"invalid"}>
-                              { errores.tiempo }
-                          </Form.Control.Feedback>
-                      </div>
-                      <div className="form-group input-group input-group-text my-3 d-flex justify-content-between">
-                          <Form.Label>Imagen producto :</Form.Label>
-                          <Form.Control type="file" accept="image/png, image/jpg, image/jpeg" onChange={ handleSubirImagen } />
-                          <br />
-                          <Form.Control.Feedback type={"invalid"}>
-                              { errores.imagen }
-                          </Form.Control.Feedback>
-                      </div>
-                      <div className="form-group input-group input-group-text my-3 d-flex justify-content-between">
-                          <Form.Label>Audio Producto :</Form.Label>
-                          <Form.Control type="file" accept="audio/mp3 , audio/wav" onChange={ handleAudio } />
-                          <br />
-                          <Form.Control.Feedback type={"invalid"}>
-                              { errores.imagen }
-                          </Form.Control.Feedback>
-                      </div>
-                      {
-                        // LISTA DE LICENCIAS ------- RONALDO ----------------------------------------------------------------------
-                      }
-                      <div>
-                        <Button className={`btn btn-secondary`} onClick={handlePopUp}>
-                            Agregar Licencia
-                        </Button>
-                        <div className={`${css.divLicenciasCrear} shadow-sm `}>
-                            <ListGroup>
+                                        ))
+                                    : null
+                                }
+                            </Form.Select>
+                        </div>
+                        <div>
+                            <ButtonGroup aria-label="Basic example">
                                 {
-                                    LicenCreadas?.map((obj, indx) => (
-                                        <div key={indx}>
-                                            <Card className={`${css.cardProductoCrear}`}>
-                                                <Card.Body id={indx}>
-                                                    <h4>{obj.TipoLicencia}</h4>
-                                                    { `Descripcion: ${obj.descripcion} Valor: ${obj.precio}` }
-                                                    <Button name="boton" className="float-end btn btn-primary" id={obj.TipoLicencia} onClick={handlerEliminar} value={indx} >
-                                                        X
-                                                    </Button>
-                                                </Card.Body>
-                                            </Card>
-                                        </div>
+                                    addGeneros?.map((genero) => (
+                                        <Button value={genero} onClick={ handlerEliminarGenero } variant="secondary" >
+                                            {`${genero} X`}
+                                        </Button>
                                     ))
                                 }
-                            </ListGroup>
+                            </ButtonGroup>
                         </div>
-                      </div>
-                      {
-                        // LISTA DE LICENCIAS ------- RONALDO ----------------------------------------------------------------------
-                      }
+                        <div className="form-group input-group input-group-text my-3 d-flex justify-content-between">
+                            <Form.Label>Key producto :</Form.Label>
+                            <Form.Select name="key" className={`${style.selectbox}`} onChange={ handleInputChange } >
+                                <option hidden>Select key</option>
+                                <option value="All">All</option>
+                                {
+                                    keys.length ?
+                                        keys.map((e) => (
+                                            <option key={e.nombre} value={e.nombre}>
+                                              {e.nombre}
+                                            </option>
+                                        ))
+                                    : null
+                                }
+                            </Form.Select>
+                        </div>
+                        <div className="form-group input-group input-group-text my-3 d-flex justify-content-between">
+                            <Form.Label>Tiempo producto :</Form.Label>
+                            <Form.Control name="tiempo" type="number" className={`${style.textbox}`} placeholder="Ingrese tiempo producto" onChange={ handleInputChange } isInvalid={!!errores.tiempo} />
+                            <Form.Control.Feedback type={"invalid"}>
+                                { errores.tiempo }
+                            </Form.Control.Feedback>
+                        </div>
+                        <div className="form-group input-group input-group-text my-3 d-flex justify-content-between">
+                            <Form.Label>Imagen producto :</Form.Label>
+                            <Form.Control type="file" accept="image/png, image/jpg, image/jpeg" onChange={ handleSubirImagen } />
+                            <br />
+                            <Form.Control.Feedback type={"invalid"}>
+                                { errores.imagen }
+                            </Form.Control.Feedback>
+                        </div>
+                        <div className="form-group input-group input-group-text my-3 d-flex justify-content-between">
+                            <Form.Label>Audio Producto :</Form.Label>
+                            <Form.Control type="file" accept="audio/mp3 , audio/wav" onChange={ handleAudio } />
+                            <br />
+                            <Form.Control.Feedback type={"invalid"}>
+                                { errores.imagen }
+                            </Form.Control.Feedback>
+                        </div>
+                        {
+                          // LISTA DE LICENCIAS ------- RONALDO ----------------------------------------------------------------------
+                        }
+                        <div>
+                          <Button className={`btn btn-secondary`} onClick={handlePopUp}>
+                              Agregar Licencia
+                          </Button>
+                          <div className={`${css.divLicenciasCrear} shadow-sm `}>
+                              <ListGroup>
+                                  {
+                                      LicenCreadas?.map((obj, indx) => (
+                                          <div key={indx}>
+                                              <Card className={`${css.cardProductoCrear}`}>
+                                                  <Card.Body id={indx}>
+                                                      <h4>{obj.TipoLicencia}</h4>
+                                                      { `Descripcion: ${obj.descripcion} Valor: ${obj.precio}` }
+                                                      <Button name="boton" className="float-end btn btn-primary" id={obj.TipoLicencia} onClick={handlerEliminar} value={indx} >
+                                                          X
+                                                      </Button>
+                                                  </Card.Body>
+                                              </Card>
+                                          </div>
+                                      ))
+                                  }
+                              </ListGroup>
+                          </div>
+                        </div>
+                        {
+                          // LISTA DE LICENCIAS ------- RONALDO ----------------------------------------------------------------------
+                        }
 
                         <div className="form-group input-group input-group-text my-3">
                             <Button className={`${style.button} text-center btn btn-primary`} type="submit" variant="primary" >
