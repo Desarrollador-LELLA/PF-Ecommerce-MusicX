@@ -13,7 +13,7 @@ export const filterProducts = ({ opDesc, opAsce, opAZ, opZA, opSinOrden, search,
     if(generos.length){
         nuevaLista = nuevaLista.filter((x) => {
             return generos.every((p) => {
-              return x.generos?.includes(p);
+              return x.genero?.includes(p);
             });
           });
     }

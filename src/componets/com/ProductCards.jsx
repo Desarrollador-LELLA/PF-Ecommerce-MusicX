@@ -81,6 +81,7 @@ export default function ProductCards(props) {
           <Spinner animation="border" variant="light" />
         ) : estadoInicial.lista.length ? (
           estadoInicial.lista.slice(inicio, fin).map((x) => (
+            x.habilitado?
             <Col key={x.id} className={s.card}>
               <Card className={`my-2 ${s.cardcont} h-100`}>
                 <div className={s.contcards}>
@@ -104,6 +105,7 @@ export default function ProductCards(props) {
                 </Card.Body>
               </Card>
             </Col>
+            :null
           ))
         ) : null}
       </Row>
