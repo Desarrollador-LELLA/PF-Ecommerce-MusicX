@@ -10,7 +10,6 @@ import { useState, useEffect } from "react";
 import { getProducto, addProducto } from "../../redux/actions/carritoAction";
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
-import { async } from "@firebase/util";
 
 export default function DetailProduct() {
   const dispatch = useDispatch();
@@ -18,10 +17,10 @@ export default function DetailProduct() {
   const { id } = useParams();
   const [presioProducto, setPresioProducto] = useState("");
   const { productoUnoDetalle } = useSelector((state) => state.carrito);
-  const [audio, setAudio] = useState(false);
+  const [loadding, setLoadding] = useState(false);
 
   useEffect(() => {
-    dispatch(getProducto(id, setAudio));
+    dispatch(getProducto(id, setLoadding));
   }, []);
 
   function handleAddToCart(producto, e) {
@@ -58,7 +57,7 @@ export default function DetailProduct() {
 
   return (
     <div>
-      {audio ? (
+      {loadding ? (
         <div>
           <div>
             <Container ntainer>
