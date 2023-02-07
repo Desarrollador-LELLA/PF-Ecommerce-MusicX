@@ -178,7 +178,7 @@ export default function SearchProduct() {
 
   return (
     <div>
-      <h1 className={s.searched}>{tester.search =="?undefined" ? "":tester.search.slice(1).replaceAll('%20', ' ')}...</h1>
+      <h1 className={s.searched}>{tester.search =="?undefined" ? "":tester.search.slice(1).replaceAll('%20', ' ').toUpperCase()}...</h1>
       <div className={s.dadcontainer}>
         <div className={s.filtercontainer}>
           <div>
