@@ -5,6 +5,7 @@ import { paginacion } from '../../utils/libreria';
 import { todosDocumentos, mostrarImgen, obtienePaginado, siguientePaginado, anteriorPaginado, cambiaPaginado, unDocumento } from '../../utils/metodosFirebase';
 import styles from "../../css/Bibloteca.module.css"
 import { useSelector } from 'react-redux';
+import { async } from '@firebase/util';
 
 const INITIAL_BIBLIOTECA = {
   lista: [],
@@ -36,6 +37,10 @@ export default function Bibloteca() {
 
   };
 
+  const playaudio = async () =>{
+     const  audio = document.getElementById("audioMusica")
+      audio.play()
+  }
 
 
   const cambiarPagina = (e) => {
@@ -71,8 +76,8 @@ export default function Bibloteca() {
                 <Col key={x.id}>
                   <Card className={`${styles.card_biblioteca} h-100`}>
                     <div className={styles.reproducir}>
-                      <Card.Img variant="top" className={`${styles.img_biblioteca} rounded-circle p-4`} src={x.imagen} />
-                      <audio controls controlsList="nodownload">
+                      <Card.Img onMouseOver={() => playaudio} variant="top" className={`${styles.img_biblioteca} rounded-circle p-4`} src={x.imagen} />
+                      <audio id='audioMusica' controls controlsList="nodownload">
                         <source src={x.audio} type="audio/wav" />
                       </audio>
                     </div>
@@ -80,9 +85,7 @@ export default function Bibloteca() {
                     <Card.Body>
                       <Card.Title className={`${styles.cardtitulo_biblioteca}`}>{x.nombre}</Card.Title>
                       <Card.Text className={`${styles.cardtext_biblioteca}`}>
-                        This is a longer card with supporting text below as a natural
-                        lead-in to additional content. This content is a little bit
-                        longer.
+                        {x.licencias.descripcion}
                       </Card.Text>
                     </Card.Body>
                   </Card>
