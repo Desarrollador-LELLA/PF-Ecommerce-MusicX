@@ -6,7 +6,7 @@ import {
   ADD_PRODUCTO,
   LIMPIAR_PRODUCTO_DETALLE,
   ADD_BIBLIOTECA,
-  LIMPIAR_DETALLE_CARRITO
+  LIMPIAR_DETALLE_CARRITO,
 } from "../types/carritoTypes.js";
 
 import { allDb, db } from "../../firebaseInicial/firebase";
@@ -19,21 +19,20 @@ import {
   updateDoc,
 } from "firebase/firestore";
 
-
 //RECIBE EL ID EL PRODUCTO AGREGADO AL CARRITO PARA PASARSELO AL REDUCER Y QUE LO ELIMINE.
 export const quitarProducto = (id, licencia) => {
   return (dispatch) => {
     dispatch({
       type: ELIMINAR_PRODUCTO,
       payload: {
-          id,
-          licencia
-    }
-  });
+        id,
+        licencia,
+      },
+    });
+  };
 };
-}
 
-export const getProducto = (id) => {
+export const getProducto = (id, audio) => {
   return async (dispatch) => {
     const docRef = allDb.doc(db, "productos", `${id}`);
     const docSnap = await allDb.getDoc(docRef);
@@ -41,6 +40,7 @@ export const getProducto = (id) => {
       type: DETALLE_UN_PRODUCTO,
       payload: { ...docSnap.data(), id: docSnap.id },
     });
+    audio(true);
   };
 };
 
@@ -78,7 +78,7 @@ export const LimpiarDetalleProd = () => {
 export const LimpiarDetalleCarrito = () => {
   return {
     type: LIMPIAR_DETALLE_CARRITO,
-    payload: {}
+    payload: {},
   };
 };
 
@@ -89,14 +89,15 @@ export const addBiblioteca = (productos, idUser) => {
     const bibliotecaPrev = userData.data().biblioteca;
 
     if (!userData.data().biblioteca) {
-        await setDoc(usuario, {...userData.data(), biblioteca: []});
-        await updateDoc(usuario, {biblioteca: [...productos]})
-    }  
-    else {
-        await updateDoc(usuario, {biblioteca: [...bibliotecaPrev, ...productos]})
+      await setDoc(usuario, { ...userData.data(), biblioteca: [] });
+      await updateDoc(usuario, { biblioteca: [...productos] });
+    } else {
+      await updateDoc(usuario, {
+        biblioteca: [...bibliotecaPrev, ...productos],
+      });
     }
     dispatch({
-    type: ADD_BIBLIOTECA
+      type: ADD_BIBLIOTECA,
     });
   };
 };
@@ -106,10 +107,9 @@ export const enviarCorreo = (idUser) => {
     const usuario = doc(db, "usuarios", idUser);
     const userData = await allDb.getDoc(usuario);
     const correo = userData.data().correo;
-    
-    dispatch({
-        type: ENVIAR_CORREO
-    })
-  }
-}
 
+    dispatch({
+      type: ENVIAR_CORREO,
+    });
+  };
+};
