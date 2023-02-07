@@ -98,6 +98,7 @@ const ProductDetalle = () => {
             ...licencia,
             [name]: value,
         });
+
         if (e.target.id === "ListaTipo")
         {
             const parrafo = document.getElementById("ParrafoDescripcion");
@@ -139,10 +140,6 @@ const ProductDetalle = () => {
         const filtrado = LicenCreadas.filter((licen) => {
             return licen.TipoLicencia !== e.target.id;
         });
-        /*
-        console.log("LicenCreadas", LicenCreadas);
-        console.log("filtrado", filtrado);
-        */
 
         setLicenCreadas(filtrado);
         setEstadoTipoLi(EstadoTipoLi.filter( x => x.nombre !== e.target.id ));
@@ -369,56 +366,56 @@ const ProductDetalle = () => {
     const handleSubmit = async (e) => {
         try
         {
-          e.preventDefault();
+            e.preventDefault();
 
-          let dataImagen = "";
-          let dataAudio = "";
+            let dataImagen = "";
+            let dataAudio = "";
 
-          if (errores.valido)
-          {
-              let prod = await crearDocumento("productos", {
-                  data: { ...producto, genero: addGeneros },
-              });
+            if (errores.valido)
+            {
+                let prod = await crearDocumento("productos", {
+                    data: { ...producto, genero: addGeneros },
+                });
 
-              const extension = imagen.type.substring(6, imagen.type.length);
-              const extensionAudio = audio.type.substring(6, audio.type.length);
-              const extensionArchivo = archivo.map((archi) => {
-                  return archi.type.substring(6, archi.type.length);
-              });
+                const extension = imagen.type.substring(6, imagen.type.length);
+                const extensionAudio = audio.type.substring(6, audio.type.length);
+                const extensionArchivo = archivo.map((archi) => {
+                    return archi.type.substring(6, archi.type.length);
+                });
 
-              let ruta = `productos/${prod.result.id}/beat.${extension}`;
-              let rutaArchivo = extensionArchivo.map((archi, i) => {
-                  return `productos/${prod.result.id}/${LicenCreadas[i].TipoLicencia}.${extensionArchivo[i]}`;
-              });
+                let ruta = `productos/${prod.result.id}/beat.${extension}`;
+                let rutaArchivo = extensionArchivo.map((archi, i) => {
+                    return `productos/${prod.result.id}/${LicenCreadas[i].TipoLicencia}.${extensionArchivo[i]}`;
+                });
 
-              await subirArchivoMetodo(ruta, imagen, (url) => {
-                  //console.log("url imagen " + url);
-                  dataImagen = url;
-              });
+                await subirArchivoMetodo(ruta, imagen, (url) => {
+                    //console.log("url imagen " + url);
+                    dataImagen = url;
+                });
 
-              let rutaAudio = `productos/${prod.result.id}/audio.${extensionAudio}`;
-              await subirArchivoMetodo(rutaAudio, audio, (url) => {
-                  //console.log("url audio " + url);
-                  dataAudio = url;
-              });
+                let rutaAudio = `productos/${prod.result.id}/audio.${extensionAudio}`;
+                await subirArchivoMetodo(rutaAudio, audio, (url) => {
+                    //console.log("url audio " + url);
+                    dataAudio = url;
+                });
 
-              for (let i = 0; i < LicenCreadas.length; i++) {
-                  await subirArchivoMetodo(rutaArchivo[i], archivo[i], (url) => {
-                      //console.log("url Archivo " + url);
-                      LicenCreadas[i].url = url; // [url1 , url2 ]
-                  });
-              }
-              await actualizaDocumento("productos", prod.result.id, {
-                  data: {
-                      imagen: dataImagen,
-                      audio: dataAudio,
-                      licencias: LicenCreadas,
-                  },
-              });
+                for (let i = 0; i < LicenCreadas.length; i++) {
+                    await subirArchivoMetodo(rutaArchivo[i], archivo[i], (url) => {
+                        //console.log("url Archivo " + url);
+                        LicenCreadas[i].url = url; // [url1 , url2 ]
+                    });
+                }
+                await actualizaDocumento("productos", prod.result.id, {
+                    data: {
+                        imagen: dataImagen,
+                        audio: dataAudio,
+                        licencias: LicenCreadas,
+                    },
+                });
 
-              alert("Producto editado !!!");
-              navegar("/producto_lista");
-          }
+                alert("Producto editado !!!");
+                navegar("/producto_lista");
+            }
         }
         catch (err)
         {
@@ -439,21 +436,21 @@ const ProductDetalle = () => {
                             <Form.Label>Nombre producto :</Form.Label>
                             <Form.Control name="nombre" type="text" value={ producto?.nombre } className={`${style.textbox}`} placeholder="Ingrese nombre producto" onChange={handleInputChange} isInvalid={!!errores.nombre} />
                             <Form.Control.Feedback type={"invalid"}>
-                                {errores.nombre}
+                                { errores.nombre }
                             </Form.Control.Feedback>
                         </div>
                         <div className="form-group input-group input-group-text my-3 d-flex justify-content-between">
                             <Form.Label>Autor producto :</Form.Label>
                             <Form.Control name="autor" type="text" value={ producto?.autor } className={`${style.textbox}`} placeholder="Ingrese autor producto" onChange={handleInputChange} isInvalid={!!errores.autor} />
                             <Form.Control.Feedback type={"invalid"}>
-                                {errores.autor}
+                                { errores.autor }
                             </Form.Control.Feedback>
                         </div>
                         <div className="form-group input-group input-group-text my-3 d-flex justify-content-between">
                             <Form.Label>Descripcion producto :</Form.Label>
                             <Form.Control name="descripcion" type="text" value={ producto?.descripcion } className={`${style.textbox}`} placeholder="Ingrese descripcion producto" onChange={handleInputChange} isInvalid={!!errores.descripcion} />
                             <Form.Control.Feedback type={"invalid"}>
-                                {errores.descripcion}
+                                { errores.descripcion }
                             </Form.Control.Feedback>
                         </div>
                         <div className="form-group input-group input-group-text my-3 d-flex justify-content-between">
@@ -592,7 +589,7 @@ const ProductDetalle = () => {
                               <p id="ParrafoDescripcion"></p>
                           </Form.Label>
                       </Form.Group>
-                      <div className="form-group input-group   d-flex justify-content-center">
+                      <div className="form-group input-group d-flex justify-content-center">
                           <Button id="AgregarLicencia" variant="primary" type="button" onClick={ handlerAgregarLicen } >
                               Agregar Licencia
                           </Button>
