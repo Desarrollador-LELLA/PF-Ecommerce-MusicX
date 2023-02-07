@@ -3,15 +3,25 @@ tr, td
     font-size: 14px;
 }
 
+.thead_dark
+{
+    line-height: 50px;
+    background-color: slategrey;
+    color: gold;
+    padding-top: 0px;
+    margin-top: 0px;
+}
+
 .tr
 {
-    /*
-    background-color: black;
-    color: white;
-    */
     height: 50px;
     line-height: 50px;
     border-top-left-radius: 30px;
+}
+
+.td_left
+{
+    padding-left: 20px;
 }
 
 .td_centrado
@@ -29,6 +39,8 @@ tr, td
 {
     width: 70px;
     height: 70px;
+    display: block;
+    margin: 0 auto;
 }
 
 .boton
@@ -38,6 +50,13 @@ tr, td
     line-height: 30px !important;
     border-radius: 10px;
     font-size: 14px;
+}
+
+.button_left
+{
+    display: block;
+    margin: 0 auto;
+    text-decoration: none;
 }
 
 .btn_Crear
