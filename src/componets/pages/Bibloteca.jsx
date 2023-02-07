@@ -80,13 +80,11 @@ export default function Bibloteca() {
                   <Card className={`${styles.card_biblioteca} h-100`}>
                     <div className={styles.reproducir}>
                       <Card.Img onMouseOver={() => playaudio} variant="top" className={`${styles.img_biblioteca} rounded-circle p-4`} src={x.imagen} />
-                      <audio id='audioMusica' controls controlsList="nodownload">
-                        <source src={x.audio} type="audio/wav" />
-                      </audio>
+                      
                     </div>
-                    <a className={styles.descarga} href={x.licencias.url} download={`${x.nombre}.rar`}> <i className={styles.icono}><FontAwesomeIcon icon={faCircleArrowDown}  /></i> </a>
+                    
                     <Card.Body>
-                      <Card.Title className={`${styles.cardtitulo_biblioteca}`}>{x.nombre}</Card.Title>
+                      <Card.Title className={`${styles.cardtitulo_biblioteca}`}>{x.nombre}<a className={styles.descarga} href={x.licencias.url} download={`${x.nombre}.rar`}> <i className={styles.icono}><FontAwesomeIcon icon={faCircleArrowDown}  /></i> </a></Card.Title>
                       <Card.Text className={`${styles.cardtext_biblioteca}`}>
                        {x.licencias.TipoLicencia} {x.licencias.descripcion}
                       </Card.Text>
