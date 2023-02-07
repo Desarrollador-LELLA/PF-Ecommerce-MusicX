@@ -8,8 +8,6 @@ tr, td
     line-height: 50px;
     background-color: slategrey;
     color: gold;
-    padding-top: 0px;
-    margin-top: 0px;
 }
 
 .tr
@@ -70,15 +68,15 @@ tr, td
     margin-bottom: 10px;
 }
 
-.table_listado
-{
-    margin-top: 10px;
-}
-
 .paginacion
 {
     margin-top: 20px;
     display: flex;
     justify-content: center;
+}
+
+.link
+{
+    text-decoration: none;
 }
 
