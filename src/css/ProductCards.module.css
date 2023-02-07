@@ -10,11 +10,10 @@
 }
 
 .cardcont{
-
     background: linear-gradient(180deg, rgba(213, 50, 233, 0.253) 1.04%, rgba(76, 95, 99, 0.1056) 66.67%, rgba(204, 34, 207, 0.066) 100%);
     border-radius: 50px;
-
 }
+
 .cardimg{
     border-radius: 100%;
     display: inline-block;
@@ -26,15 +25,12 @@
   display: inline-block;
   padding: 3%;
   width: 110%;
+  animation-name: gixaxb;
+  animation-duration: 5s;
+  animation-iteration-count: infinite;
+  animation-timing-function: linear;
 } 
 
-.cardimg:hover{
-    animation-name: gixaxb;
-    animation-duration: 5s;
-    animation-iteration-count: infinite;
-    animation-timing-function: linear;
-
-}
 @keyframes gixaxb{
     from{
         transform: rotate(0deg);

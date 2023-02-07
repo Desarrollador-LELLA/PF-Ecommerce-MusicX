@@ -76,7 +76,7 @@ export default function ProductCards(props) {
   };
   return (
     <div className={`${s.productcards} container`}>
-      <Row xs={1} sm={2} md={3} lg={4} xl={4} xxl={4} className="g-5">
+      <Row xs={1} sm={2} md={3} lg={4} xl={4} xxl={4} className={`g-5 ${s.cont}`}>
         {loading ? (
           <Spinner animation="border" variant="light" />
         ) : estadoInicial.lista.length ? (
