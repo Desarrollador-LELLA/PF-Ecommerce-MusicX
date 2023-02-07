@@ -105,7 +105,7 @@ const ProductoLista = () => {
                 <Button className={ `${ style.btn_Crear }` } onClick={() => navegar('/producto_create')}>Crear</Button>
                 <Button className={ `${ style.btn_Volver }` } onClick={() => navegar(-1)}>Volver</Button>
                 <Card className=''>
-                    <table className={ `${ style.table_listado } table` }>
+                    <table className="table">
                         <thead className={ `${ style.thead_dark }` }>
                             <tr className={ `${ style.tr } ` }>
                                 <td className='text-center'>Nombre</td>
@@ -133,13 +133,12 @@ const ProductoLista = () => {
                                             <img className={ `${ style.imagen }` } src={ e.imagen } alt='' />
                                         </td>
                                         <td>
-                                            
-                                            <Link to={ `/producto_detalle/${ e.id }` }>
+                                            <Link className={ `${ style.link }` } to={ `/producto_detalle/${ e.id }` }>
                                                 <Button className={ `btn btn-primary text-center ${ style.button_left }` } >Editar</Button>
                                             </Link>
                                         </td>
                                         <td>
-                                            <Link>
+                                            <Link className={ `${ style.link }` }>
                                                 <Button id={ e.id } className={ `${ style.button_left }` }  variant= { e.habilitado ? 'danger' : 'warning' } onClick={ x => handleHabilitar(e.id, e.habilitado) } >
                                                     { e.habilitado ? "Deshabilitar" : "Habilitar" }
                                                 </Button>
