@@ -149,17 +149,41 @@ const ProductDetalle = () => {
 
         switch (e.target.id) {
             case tipoLicencias[0].nombre:
-                if(EstadoTipoLi.find( x => x.nombre === tipoLicencias[0].nombre)) return
-                return setEstadoTipoLi([tipoLicencias[0], ...EstadoTipoLi]);
+                if(EstadoTipoLi.find( x => x.nombre === tipoLicencias[0].nombre))
+                {
+                    return setEstadoTipoLi([...EstadoTipoLi]);
+                }
+                else
+                {
+                    return setEstadoTipoLi([tipoLicencias[0], ...EstadoTipoLi]);
+                }
             case tipoLicencias[1].nombre:
-                if(EstadoTipoLi.find( x => x.nombre === tipoLicencias[1].nombre)) return
-                return setEstadoTipoLi([tipoLicencias[1], ...EstadoTipoLi]);
+                if(EstadoTipoLi.find( x => x.nombre === tipoLicencias[1].nombre))
+                {
+                    return setEstadoTipoLi([...EstadoTipoLi]);
+                }
+                else
+                {
+                    return setEstadoTipoLi([tipoLicencias[1], ...EstadoTipoLi]);
+                }
             case tipoLicencias[2].nombre:
-                if(EstadoTipoLi.find( x => x.nombre === tipoLicencias[2].nombre)) return
-                return setEstadoTipoLi([tipoLicencias[2], ...EstadoTipoLi]);
+                if(EstadoTipoLi.find( x => x.nombre === tipoLicencias[2].nombre))
+                {
+                    return setEstadoTipoLi([...EstadoTipoLi]);
+                }
+                else
+                {
+                    return setEstadoTipoLi([tipoLicencias[2], ...EstadoTipoLi]);
+                }
             case tipoLicencias[3].nombre:
-                if(EstadoTipoLi.find( x => x.nombre === tipoLicencias[3].nombre)) return
-                return setEstadoTipoLi([tipoLicencias[3], ...EstadoTipoLi]);
+                if(EstadoTipoLi.find( x => x.nombre === tipoLicencias[3].nombre))
+                {
+                    return setEstadoTipoLi([...EstadoTipoLi]);
+                }
+                else
+                {
+                    return setEstadoTipoLi([tipoLicencias[3], ...EstadoTipoLi]);
+                }
             default: {
                 return;
             }
