@@ -1,5 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@500;600&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Unbounded:wght@900&display=swap');.dadcontainer{
+@import url('https://fonts.googleapis.com/css2?family=Unbounded:wght@900&display=swap');
+
+.dadcontainer{
 
     display: flex;
     flex-direction: row;
@@ -29,6 +31,10 @@ color: #09bfc9;
   text-shadow: 0.4em 0.4em 0.2em rgb(43, 89, 107);
 }
 .containerfilters{
+  display: flex;
+  flex-direction: column;
+    align-items: center;
+    gap: 1vh;
     width: 30vh;
     height: 55vw;
     background: linear-gradient(180deg, rgba(69, 69, 69, 0.253) 1.04%, rgba(78, 82, 83, 0.0264) 45.83%, rgba(117, 115, 117, 0.066) 100%);
@@ -111,7 +117,7 @@ font-family: 'Unbounded', cursive;
     background-color: transparent;
     border-color: #1b3536;
     font-family: 'Unbounded', cursive;
-    
+    color: #09bfc9;
 }
 .input:focus{
     background-color: transparent;
@@ -145,3 +151,17 @@ font-family: 'Unbounded', cursive;
     background-color: #ddd;
   }
   
+  .buttonreset{
+    transition: 0.8s;
+    width: 6vh;
+    height: 4vh;
+  }
+
+
+  .buttonreset:hover{
+
+    background-color: rgba(108, 39, 114, 0.267);
+    color: #09bfc9;
+    border-color: #412142;
+    width: 15vh;
+  }

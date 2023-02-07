@@ -50,14 +50,13 @@ const Home = () => {
 
   return (
     <div className={s.contendor}>
-      <Container className={s.topbeats}>
-        <h1 className="justify-content-center">TOP BEATS!</h1>
-      </Container>
       <Container>
-        <Button onClick={envio}>ESTE BOTON SOLO TIENE 300 SOLICITUDES NO PRECIONAR SOLO PARA DIEGO</Button>
         <Row>
           <div className={`d-flex flex-wrap justify-content-center ${s.containerTopBeats}`}>
           <TopBeats/>
+      <Container className={s.topbeats}>
+        <h1 className="justify-content-center">TOP BEATS!</h1>
+      </Container>
           </div>
           <ProductCards className="d-flex flex-wrap justify-content-center"/>
         </Row>
