@@ -32,7 +32,7 @@ export const quitarProducto = (id, licencia) => {
   };
 };
 
-export const getProducto = (id, audio) => {
+export const getProducto = (id, audio, licen) => {
   return async (dispatch) => {
     const docRef = allDb.doc(db, "productos", `${id}`);
     const docSnap = await allDb.getDoc(docRef);
@@ -40,6 +40,7 @@ export const getProducto = (id, audio) => {
       type: DETALLE_UN_PRODUCTO,
       payload: { ...docSnap.data(), id: docSnap.id },
     });
+    licen(docSnap.data().licencias);
     audio(true);
   };
 };
