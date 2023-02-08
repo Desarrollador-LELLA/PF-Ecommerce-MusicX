@@ -9,7 +9,7 @@ service cloud.firestore {
     }
     match /productos/{productoId} {
       allow read: if true;
-      allow update: if request.auth != null && (request.resource.data.diff(resource.data).affectedKeys().hasOnly(['like'])); 
+      allow write, create, update: if request.auth != null && request.resource.data.keys().hasAll(['like']);
       allow read, write, create, update: if request.auth != null && get(/databases/$(database)/documents/usuarios/$(request.auth.uid)).data.rol == 'Admin';
       allow read, write, create, update, delete: if request.auth != null && get(/databases/$(database)/documents/usuarios/$(request.auth.uid)).data.rol == 'Super-Admin';
     }

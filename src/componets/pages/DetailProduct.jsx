@@ -4,14 +4,19 @@ import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import css from "../../css/detailproducto.module.css";
 import ListGroup from "react-bootstrap/ListGroup";
-import { Card, Spinner } from "react-bootstrap";
+import { Card, Spinner, Image } from "react-bootstrap";
 import Button from "react-bootstrap/Button";
 import { useState, useEffect } from "react";
 import { getProducto, addProducto } from "../../redux/actions/carritoAction";
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
+import icMeGusta from '../images/ic_megusta.svg';
+import icNoMeGusta from '../images/ic_nomegusta.svg';
+import { actualizaDocumento } from "../../utils/metodosFirebase";
+import { arrayRemove, arrayUnion } from "firebase/firestore";
 
 export default function DetailProduct() {
+
   const dispatch = useDispatch();
   const navegar = useNavigate();
   const { id } = useParams();
@@ -20,6 +25,7 @@ export default function DetailProduct() {
   const { productoUnoDetalle } = useSelector((state) => state.carrito);
   const [loadding, setLoadding] = useState(false);
   const [licenNoCompra, setLicenNoCompra] = useState();
+  const [loadingGusta, setLoadingGusta] = useState(false)
 
   useEffect(() => {
     dispatch(getProducto(id, setLoadding, handlerLicenciasNoCompradas));
@@ -30,7 +36,6 @@ export default function DetailProduct() {
       ...producto,
       licencias: producto.licencias[e.target.id],
     };
-    console.log("producto a agregar ", productoAgregar, producto);
     dispatch(addProducto(productoAgregar));
     // alert("PRODUCTO AGREGADO AL CARRITO");
   }
@@ -38,7 +43,6 @@ export default function DetailProduct() {
     setLicenNoCompra(e);
     let auxBiblio = usuarioAuth.biblioteca;
     if (!auxBiblio) return;
-    console.log("compara", licenNoCompra, auxBiblio, productoUnoDetalle.nombre);
     for (let i = 0; i < auxBiblio.length; i++) {
       if (auxBiblio[i].nombre == productoUnoDetalle.nombre) {
         //1
@@ -46,12 +50,6 @@ export default function DetailProduct() {
           if (licen.TipoLicencia !== auxBiblio[i].licencias.TipoLicencia) {
             return licen;
           }
-          console.log(
-            "compara",
-            licen.TipoLicencia,
-            auxBiblio[i].licencias.TipoLicencia,
-            "en " + i
-          );
           return false;
         });
         setLicenNoCompra(aux);
@@ -81,14 +79,45 @@ export default function DetailProduct() {
     setPresioProducto(productoUnoDetalle.licencias[i].precio);
   }
 
+  const megusta = async () => {
+    setLoadingGusta(true)
+    if (productoUnoDetalle?.like?.megusta?.includes(usuarioAuth.id)) {
+      const retorno = await actualizaDocumento('productos', id, { data: { 'like.megusta': arrayRemove(usuarioAuth.id) } });
+      if (retorno.confirma) {
+        dispatch(getProducto(id, setLoadding, handlerLicenciasNoCompradas));
+      }
+    } else {
+      const retorno = await actualizaDocumento('productos', id, { data: { 'like.megusta': arrayUnion(usuarioAuth.id), 'like.nomegusta': arrayRemove(usuarioAuth.id) } });
+      if (retorno.confirma) {
+        dispatch(getProducto(id, setLoadding, handlerLicenciasNoCompradas));
+      }
+    }
+    setLoadingGusta(false)
+  };
+
+  const nomegusta = async () => {
+    setLoadingGusta(true)
+    if (productoUnoDetalle?.like?.nomegusta?.includes(usuarioAuth.id)) {
+      const retorno = await actualizaDocumento('productos', id, { data: { 'like.nomegusta': arrayRemove(usuarioAuth.id) } });
+      if (retorno.confirma) {
+        dispatch(getProducto(id, setLoadding, handlerLicenciasNoCompradas));
+      }
+    } else {
+      const retorno = await actualizaDocumento('productos', id, { data: { 'like.nomegusta': arrayUnion(usuarioAuth.id), 'like.megusta': arrayRemove(usuarioAuth.id) } });
+      if (retorno.confirma) {
+        dispatch(getProducto(id, setLoadding, handlerLicenciasNoCompradas));
+      }
+    }
+    setLoadingGusta(false)
+  };
+
   return (
     <div>
       {loadding ? (
         <div>
-          {console.log(licenNoCompra)}
           <div>
             <Container ntainer>
-              <Button onClick={() => navegar("/")}>Volver</Button>
+              <Button className="my-3" onClick={() => navegar(-1)}>Volver</Button>
               <Row>
                 <Col>
                   <div className={css.box}>
@@ -156,6 +185,8 @@ export default function DetailProduct() {
                   </div>
                 </Col>
               </Row>
+              <Button className="me-3" onClick={megusta} disabled={loadingGusta}><Image src={icMeGusta} /><span className="mx-3">{productoUnoDetalle?.like?.megusta ? productoUnoDetalle.like.megusta.length : 0}</span></Button>
+              <Button onClick={nomegusta}><span className="mx-3" disabled={loadingGusta}>{productoUnoDetalle?.like?.nomegusta ? productoUnoDetalle.like.nomegusta.length : 0}</span><Image src={icNoMeGusta} /></Button>
             </Container>
             <div className={css.espaciado}></div>
           </div>{" "}
