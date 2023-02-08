@@ -63,8 +63,14 @@
 }
 
 
+.descarga{
+text-decoration: none;
+color: rgb(74, 20, 125);
+}
 
-
+.descarga:hover{
+  color: rgb(125, 8, 172);
+}
 
 
 

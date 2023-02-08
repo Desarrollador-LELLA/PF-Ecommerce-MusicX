@@ -4,7 +4,7 @@ import css from "../../css/detailproducto.module.css"; // import Ronaldo
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import style from "../../css/productoCreate.module.css";
-import { todosDocumentos, unDocumentoCallback } from "../../utils/metodosFirebase";
+import { unDocumentoCallback } from "../../utils/metodosFirebase";
 
 //      Subir imagenes    -   KUC
 import { actualizaDocumento, crearDocumento, subirArchivoMetodo } from "../../utils/metodosFirebase";
