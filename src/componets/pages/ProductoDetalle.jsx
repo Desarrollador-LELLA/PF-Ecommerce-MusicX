@@ -144,6 +144,8 @@ const ProductDetalle = () => {
         setLicenCreadas(filtrado);
         setEstadoTipoLi(EstadoTipoLi.filter( x => x.nombre !== e.target.id ));
 
+        console.log("EstadoTipoLi", EstadoTipoLi);
+
         switch (e.target.id) {
             case tipoLicencias[0].nombre:
                 if(EstadoTipoLi.find( x => x.nombre === tipoLicencias[0].nombre))
@@ -223,7 +225,9 @@ const ProductDetalle = () => {
         let ayuda = await detalle_producto_admin(id);
         setProducto({ ...ayuda });
         setLicenCreadas(ayuda.licencias);
+        setAddGeneros(ayuda.genero);
     }
+    
 
     const navegar = useNavigate();
     const [imagen, setImagen] = useState(null);
@@ -270,7 +274,7 @@ const ProductDetalle = () => {
     const [imageUrls, setImageUrls] = useState([]);
 
 
-    const ValidoProducto = ({ nombre, autor, descripcion, precio, key, tiempo, imagen }) => {
+    const ValidoProducto = ({ nombre, autor, descripcion, precio, key, tiempo }) => {
         const e = {};
         let valido = true;
         const regex = /^[0-9].*$/;
@@ -362,20 +366,25 @@ const ProductDetalle = () => {
         validar();
     };
 
+
     //    Aqui se edita el producto
     const handleSubmit = async (e) => {
         try
         {
             e.preventDefault();
-
             let dataImagen = "";
             let dataAudio = "";
 
             if (errores.valido)
             {
+                let prod = await actualizaDocumento("productos", id, {
+                    data: { ...producto, genero: addGeneros },
+                });
+                /*
                 let prod = await crearDocumento("productos", {
                     data: { ...producto, genero: addGeneros },
                 });
+                */
 
                 const extension = imagen.type.substring(6, imagen.type.length);
                 const extensionAudio = audio.type.substring(6, audio.type.length);
@@ -405,13 +414,16 @@ const ProductDetalle = () => {
                         LicenCreadas[i].url = url; // [url1 , url2 ]
                     });
                 }
-                await actualizaDocumento("productos", prod.result.id, {
+
+                await actualizaDocumento("productos", id, {
                     data: {
                         imagen: dataImagen,
                         audio: dataAudio,
                         licencias: LicenCreadas,
                     },
                 });
+
+                console.log(errores.valido);
 
                 alert("Producto editado !!!");
                 navegar("/producto_lista");
@@ -421,6 +433,7 @@ const ProductDetalle = () => {
         {
             console.log("Error generado 2 :", err);
         }
+        console.log(errores);
     };
 
 
@@ -461,8 +474,8 @@ const ProductDetalle = () => {
                                 {
                                     generos.length ?
                                         generos.map((e) => (
-                                            <option key={e.nombre} value={e.nombre}>
-                                            {e.nombre}
+                                            <option key={e.nombre} value={e.nombre}  >
+                                                {e.nombre}
                                             </option>
                                         ))
                                     : null
@@ -505,7 +518,10 @@ const ProductDetalle = () => {
                         </div>
                         <div className="form-group input-group input-group-text my-3 d-flex justify-content-between">
                             <Form.Label>Imagen producto :</Form.Label>
-                            <Form.Control type="file" accept="image/png, image/jpg, image/jpeg" onChange={ handleSubirImagen } />
+                            <Form.Control type="file" accept="image/png, image/jpg, image/jpeg" onChange={ handleSubirImagen } />                            
+                            <div className='form-group input-group input-group-text my-3 d-flex justify-content-between'>
+                                <img src={producto?.imagen} alt='' width="80px" height="80px" />
+                            </div>
                             <br />
                             <Form.Control.Feedback type={"invalid"}>
                                 { errores.imagen }
@@ -523,7 +539,7 @@ const ProductDetalle = () => {
                             // LISTA DE LICENCIAS ------- RONALDO ----------------------------------------------------------------------
                         }
                         <div>
-                            <Button className={`btn btn-secondary`} onClick={handlePopUp}>
+                            <Button className={`btn btn-secondary mt-3`} onClick={handlePopUp}>
                                 Agregar Licencia
                             </Button>
                             <div className={`${css.divLicenciasCrear} shadow-sm `}>
@@ -568,9 +584,13 @@ const ProductDetalle = () => {
                           <Form.Select id="ListaTipo" name="TipoLicencia" onChange={ handlerLicencia } >
                               <option id="opSelector">Seleccionar</option>
                               {
-                                  EstadoTipoLi?.map((licen, i) => (
-                                      <option key={i}>{ licen.nombre }</option>
-                                  ))
+                                  EstadoTipoLi.map((licen, i) => {
+                                      if(LicenCreadas.find( x => x.TipoLicencia === licen.nombre))
+                                      {
+                                         return   
+                                      }
+                                      return <option key={i}>{ licen.nombre }</option>
+                                  })
                               }
                           </Form.Select>
                       </Form.Group>
@@ -601,6 +621,9 @@ const ProductDetalle = () => {
                 </ModalBody>
                 <ModalFooter></ModalFooter>
             </Modal>
+            {
+            console.log("LicenCreadas 10", LicenCreadas)
+            }
         </div>
     );
 };
