@@ -52,7 +52,89 @@ color: #394545;
 text-align: center;
 margin: 1.5%;
 font-family: 'Unbounded', cursive;
+animation: rainbow 10s linear;
+animation-iteration-count: infinite;
+opacity: 30%;
 }
+
+@keyframes rainbow-bg{
+  100%,0%{
+    background-color: rgb(124, 54, 54);
+  }
+  8%{
+    background-color: rgb(55, 169, 177);
+  }
+  16%{
+    background-color: rgb(214, 83, 231);
+  }
+  25%{
+    background-color: rgb(107, 50, 173);
+  }
+  33%{
+    background-color: rgb(83, 23, 48);
+  }
+  41%{
+    background-color: rgb(92, 35, 80);
+  }
+  50%{
+    background-color: rgb(0,255,255);
+  }
+  58%{
+    background-color: rgb(0,127,255);
+  }
+  66%{
+    background-color: rgb(87, 30, 88);
+  }
+  75%{
+    background-color: rgb(127,0,255);
+  }
+  83%{
+    background-color: rgb(100, 27, 100);
+  }
+  91%{
+    background-color: rgb(163, 35, 99);
+  }
+}
+
+@keyframes rainbow{
+  100%,0%{
+    color: rgb(196, 32, 174);
+  }
+  8%{
+    color: rgb(137, 54, 158);
+  }
+  16%{
+    color: rgb(85, 29, 122);
+  }
+  25%{
+    color: rgb(40, 65, 82);
+  }
+  33%{
+    color: rgb(37, 118, 124);
+  }
+  41%{
+    color: rgb(42, 110, 112);
+  }
+  50%{
+    color: rgb(0,255,255);
+  }
+  58%{
+    color: rgb(30, 80, 76);
+  }
+  66%{
+    color: rgb(33, 57, 85);
+  }
+  75%{
+    color: rgb(127,0,255);
+  }
+  83%{
+    color: rgb(255,0,255);
+  }
+  91%{
+    color: rgb(128, 36, 82);
+  }
+}
+
 
 .acordion{
     background-color: transparent;
