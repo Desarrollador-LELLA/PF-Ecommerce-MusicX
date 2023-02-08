@@ -378,11 +378,6 @@ const ProductDetalle = () => {
                 let prod = await actualizaDocumento("productos", id, {
                     data: { ...producto, genero: addGeneros },
                 });
-                /*
-                let prod = await crearDocumento("productos", {
-                    data: { ...producto, genero: addGeneros },
-                });
-                */
 
                 const extension = imagen.type.substring(6, imagen.type.length);
                 const extensionAudio = audio.type.substring(6, audio.type.length);
@@ -537,7 +532,7 @@ const ProductDetalle = () => {
                             // LISTA DE LICENCIAS ------- RONALDO ----------------------------------------------------------------------
                         }
                         <div>
-                            <Button className={`btn btn-secondary mt-3`} onClick={handlePopUp}>
+                            <Button className={`btn btn-secondary mt-3`} onClick={ handlePopUp }>
                                 Agregar Licencia
                             </Button>
                             <div className={`${css.divLicenciasCrear} shadow-sm `}>
