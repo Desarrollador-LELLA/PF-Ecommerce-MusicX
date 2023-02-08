@@ -1,12 +1,11 @@
 import { Link, useNavigate } from "react-router-dom";
 import styleCarrito from "../../css/Carrito.module.css";
+import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import * as actions from "../../redux/actions/carritoAction";
 import PaypalButton from "../com/Paypal";
 import { PayPalScriptProvider } from "@paypal/react-paypal-js";
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import {faTrashCan} from "@fortawesome/free-solid-svg-icons";
-import swal from 'sweetalert';
+import uuid from 'react-uuid';
 
 const Carrito = () => {
   const infoTotal = [];
@@ -14,11 +13,11 @@ const Carrito = () => {
   const idUser = useSelector((store) => store.auth.usuarioAuth.id);
   const dispatch = useDispatch();
   const navegar = useNavigate();
-    
+  var id = uuid()
   const products = () => {
-    return productos?.map((producto) => { 
+    return productos.map((producto) => { 
       return {
-        reference_id: Math.floor(Math.random() * producto.licencias.precio),
+        reference_id: id,
         description: producto.nombre,
         amount: {
           currency: "USD",
@@ -28,43 +27,21 @@ const Carrito = () => {
     });
   };
 
-  const productosPaypal = products();
-
   const handleQuitarProducto = (id, licencia) => {
     dispatch(actions.quitarProducto(id, licencia));
   };
 
   const totalCalculator = () => {
-    return productos.reduce(
+    return Math.floor(
+      productos.reduce(
         (accumulator, currentValue) =>
           accumulator + Number(currentValue.licencias.precio),
         0
-      ).toString();
+      )
+    ).toString();
   };
-  
-  const amount = totalCalculator()
-  productos.forEach((producto) => infoTotal.push(`${producto.nombre} (1)`));
 
-  const handleAlert = () => {
-    setTimeout(function(){
-      swal("Tu compra ha sido exitosa",'Ya puedes mirar tus productos en la biblioteca', 'success', {
-        buttons: {
-            cancel: 'ir mas Tarde',
-            catch: {
-                text: 'ir a Biblioteca',
-                value: "catch",
-            },
-        },
-        })
-        .then((value) => {
-        switch (value) {
-           case "catch":
-            navegar('/bibloteca');
-            break;
-           default:
-            swal("Gracias por adquirir nuestros productos!");
-         }
-    });    }, 1800);;  }
+  productos.forEach((producto) => infoTotal.push(`${producto.nombre} (1)`));
 
   const handleBiblioteca = () => {
         dispatch(actions.addBiblioteca(productos, idUser));
@@ -79,8 +56,8 @@ const Carrito = () => {
           <h3>Volver</h3>
         </Link>
       </div>
-        {productos.length ? <div className={styleCarrito.productContainer}>
-        {productos?.map((data) => {
+      <div className={styleCarrito.productContainer}>
+        {productos.map((data) => {
           return (
             <div className={styleCarrito.product}>
               <img src={data.imagen} alt="" width="150px" />
@@ -94,14 +71,12 @@ const Carrito = () => {
                 </div>
               <h2>{data.licencias.precio} USD</h2>
               <button onClick={() => handleQuitarProducto(data.id, data.licencias)}>
-                <FontAwesomeIcon icon={faTrashCan} />
+                <strong>X</strong>
               </button>
             </div>
           );
         })}
-        </div>
-            : <h2 className={styleCarrito.noProducts}>Aun no has añadido productos al carrito :(</h2>}
-      
+      </div>
       <div className={styleCarrito.navCount}>
         <div>
           <h1>
@@ -112,16 +87,21 @@ const Carrito = () => {
           <p>{infoTotal.join(" , ")}</p>
         </div>
         <div className={styleCarrito.paypalButton}>
-            <PayPalScriptProvider options={{ "client-id": "AViYeevPmBZP9zuIlYewQ3mT85uwwkbkwAlll9jDrEoFafYxRMI7o2omsscx3EbICY0fpkSE5VY0fXIO", "merchant-id": "WEMW3RY93ABLA" }}>
+          {productos ? 
+            <div><PayPalScriptProvider options={{ "client-id": "test", "merchant-id": "WEMW3RY93ABLA" }}>
             <PaypalButton
               currency={"USD"}
               showSpinner={false}
-              amount={amount}
-              products={productosPaypal}
+              amount={totalCalculator()}
+              products={products()}
+              productos={productos}
               handleBiblioteca={handleBiblioteca}
-              handleAlert={handleAlert}
             />
-        </PayPalScriptProvider> 
+        </PayPalScriptProvider>
+        </div> :
+          <h3>Añade productos a tu carrito</h3>
+            
+            }
         </div>
       </div>
     </div>
