@@ -4,11 +4,11 @@ import css from "../../css/detailproducto.module.css"; // import Ronaldo
 import { useDispatch } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 import style from "../../css/productoCreate.module.css";
-import { todosDocumentos, unDocumentoCallback } from "../../utils/metodosFirebase";
+import { unDocumentoCallback } from "../../utils/metodosFirebase";
 import { detalle_producto_admin } from '../../redux/actions/productoAction';
 
 //      Subir imagenes    -   KUC
-import { actualizaDocumento, crearDocumento, subirArchivoMetodo } from "../../utils/metodosFirebase";
+import { actualizaDocumento, subirArchivoMetodo } from "../../utils/metodosFirebase";
 import { wait } from "@testing-library/user-event/dist/utils";
 
 
@@ -263,8 +263,6 @@ const ProductDetalle = () => {
     /*      Uso de useEffect         */    
     useEffect(() => {
         detallado();
-
-        //    Aqui cargale los selectbox
         llenarGeneros();
         llenarKeys();
     }, []);
