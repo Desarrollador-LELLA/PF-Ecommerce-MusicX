@@ -16,7 +16,7 @@ const Carrito = () => {
   const navegar = useNavigate();
     
   const products = () => {
-    return productos?.map((producto) => { 
+    return productos.map((producto) => { 
       return {
         reference_id: Math.floor(Math.random() * producto.licencias.precio),
         description: producto.nombre,
@@ -80,7 +80,7 @@ const Carrito = () => {
         </Link>
       </div>
         {productos.length ? <div className={styleCarrito.productContainer}>
-        {productos?.map((data) => {
+        {productos.map((data) => {
           return (
             <div className={styleCarrito.product}>
               <img src={data.imagen} alt="" width="150px" />
