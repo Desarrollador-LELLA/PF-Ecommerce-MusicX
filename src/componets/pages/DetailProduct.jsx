@@ -4,24 +4,25 @@ import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import css from "../../css/detailproducto.module.css";
 import ListGroup from "react-bootstrap/ListGroup";
-import { Card } from "react-bootstrap";
+import { Card, Spinner } from "react-bootstrap";
 import Button from "react-bootstrap/Button";
 import { useState, useEffect } from "react";
 import { getProducto, addProducto } from "../../redux/actions/carritoAction";
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
-import { async } from "@firebase/util";
 
 export default function DetailProduct() {
   const dispatch = useDispatch();
   const navegar = useNavigate();
   const { id } = useParams();
+  const { usuarioAuth } = useSelector((state) => state.auth);
   const [presioProducto, setPresioProducto] = useState("");
   const { productoUnoDetalle } = useSelector((state) => state.carrito);
-  const [audio, setAudio] = useState(false);
+  const [loadding, setLoadding] = useState(false);
+  const [licenNoCompra, setLicenNoCompra] = useState();
 
   useEffect(() => {
-    dispatch(getProducto(id, setAudio));
+    dispatch(getProducto(id, setLoadding, handlerLicenciasNoCompradas));
   }, []);
 
   function handleAddToCart(producto, e) {
@@ -33,6 +34,30 @@ export default function DetailProduct() {
     dispatch(addProducto(productoAgregar));
     // alert("PRODUCTO AGREGADO AL CARRITO");
   }
+  const handlerLicenciasNoCompradas = (e) => {
+    setLicenNoCompra(e);
+    let auxBiblio = usuarioAuth.biblioteca;
+    if (!auxBiblio) return;
+    console.log("compara", licenNoCompra, auxBiblio, productoUnoDetalle.nombre);
+    for (let i = 0; i < auxBiblio.length; i++) {
+      if (auxBiblio[i].nombre == productoUnoDetalle.nombre) {
+        //1
+        let aux = licenNoCompra.filter((licen) => {
+          if (licen.TipoLicencia !== auxBiblio[i].licencias.TipoLicencia) {
+            return licen;
+          }
+          console.log(
+            "compara",
+            licen.TipoLicencia,
+            auxBiblio[i].licencias.TipoLicencia,
+            "en " + i
+          );
+          return false;
+        });
+        setLicenNoCompra(aux);
+      }
+    }
+  };
 
   function handlerLicencia(e) {
     let btnSelec = document.getElementById(e.target.id).parentNode;
@@ -58,8 +83,9 @@ export default function DetailProduct() {
 
   return (
     <div>
-      {audio ? (
+      {loadding ? (
         <div>
+          {console.log(licenNoCompra)}
           <div>
             <Container ntainer>
               <Button onClick={() => navegar("/")}>Volver</Button>
@@ -105,7 +131,7 @@ export default function DetailProduct() {
                   <p className={`text-center ${css.texto}`}>Lista Licencias</p>
                   <div className={`${css.divLicencias} shadow-sm `}>
                     <ListGroup>
-                      {productoUnoDetalle.licencias?.map((obj, indx) => (
+                      {licenNoCompra?.map((obj, indx) => (
                         <div key={indx} onClick={(e) => handlerLicencia(e)}>
                           <Card className={`${css.cardProducto}`}>
                             <Card.Body id={indx} value={obj.precio}>
@@ -135,7 +161,7 @@ export default function DetailProduct() {
           </div>{" "}
         </div>
       ) : (
-        <div> LOADINGGGGGGGG..............</div>
+        <Spinner animation="grow" />
       )}
     </div>
   );
