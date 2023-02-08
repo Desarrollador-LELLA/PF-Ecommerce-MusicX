@@ -26,7 +26,7 @@ const INITIAL_PAGINADO = {
   ordenarPor: "nombre",
   whereFiltros: null,
   lista: [],
-  itemPorPagina: 12,
+  itemPorPagina: 8,
   paginaActual: 1,
 };
 
