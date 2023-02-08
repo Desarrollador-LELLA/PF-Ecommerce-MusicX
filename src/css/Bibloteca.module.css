@@ -53,6 +53,7 @@
     align-items: center;
     justify-content: center;
     width: 100%;
+    height: 100%;
   
 }
 
@@ -80,7 +81,6 @@ color: rgb(74, 20, 125);
 .reproducir audio {
   visibility: hidden;
 }
-
 
 
 

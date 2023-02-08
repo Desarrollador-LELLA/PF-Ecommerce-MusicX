@@ -68,7 +68,7 @@ export default function Bibloteca() {
 
 
   return (
-    <Container className='my-3' fluid>
+    <Container className='my-3 d-flex justify-content-between flex-column' fluid>
       {console.log(estadoInicial)}
       <h1 className={styles.titulo}> Biblioteca</h1>
       <Row xs={2} sm={3} md={3} lg={4} xl={5} xxl={6} className="g-4 d-flex justify-content-center">
