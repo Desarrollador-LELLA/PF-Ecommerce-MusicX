@@ -6,12 +6,12 @@ import {
 import * as actions from "../../redux/actions/carritoAction";
 import {useDispatch} from "react-redux";
 
-const PaypalButton = ({ currency, showSpinner , amount, products, productos, handleBiblioteca}) => {
+const PaypalButton = ({ currency, showSpinner , amount, products, productos, handleBiblioteca, handleAlert}) => {
     const [{ options, isPending }, dispatch] = usePayPalScriptReducer();
     const style = { layout: 'horizontal',
-    color:  'gold',
+    color:  'white',
     shape:  'rect',
-    label:  'paypal',
+    label:  'pay',
     height: 55,
     };
 
@@ -30,6 +30,7 @@ const PaypalButton = ({ currency, showSpinner , amount, products, productos, han
     const onApprove = (data, actions) => {
                 return actions.order.capture().then(() => {
                     handleBiblioteca() 
+                    handleAlert()
                     
                 });
         }
@@ -49,7 +50,7 @@ const PaypalButton = ({ currency, showSpinner , amount, products, productos, han
             { (showSpinner && isPending) && <div className="spinner" /> }
             <PayPalButtons
                 style={style}
-                disabled={false}
+                disabled={products.length ? false : true}
                 forceReRender={[amount, currency, style]}
                 fundingSource={undefined}
                 createOrder={createOrder}
