@@ -12,7 +12,7 @@ import { todosDocumentos } from '../../utils/metodosFirebase';
 
 const ProductoLista = () => {
     
-    //      Codigo de listado de productos con su paginacion
+    //      Listado de productos con su paginacion
     const paginado = {
         coleccion: 'productos',
         ordenarPor: 'nombre',
@@ -54,32 +54,6 @@ const ProductoLista = () => {
         setEstadoInicial({ ...estadoInicial, paginaActual: estadoInicial.paginaActual + 1 });
     };
 
-    //  ***************************************************************************************************************
-
-
-    const navegar = useNavigate()
-
-    /*
-    const [producto, setProducto] = useState({
-        nombre: "",
-        descripcion: "",
-        precio: 0,
-        key: "",
-        tiempo: 0,
-        imagen: ""
-    });
-
-    const [listado, setListado] = useState([]);
-
-    const lista = async () => {
-        let ayuda = await listado_producto_by_admin();
-        setListado(ayuda);
-    }
-
-    const navigate = useNavigate();
-    */
-
-
     let [ultimo, setUltimo] = useState(1);
 
     const handleHabilitar = async (id, valor) => {
@@ -98,12 +72,14 @@ const ProductoLista = () => {
         }
     }
 
+    const navigate = useNavigate();
+
 
     return (
         <div>
             <Container className='my-3'>
-                <Button className={ `${ style.btn_Crear }` } onClick={() => navegar('/producto_create')}>Crear</Button>
-                <Button className={ `${ style.btn_Volver }` } onClick={() => navegar(-1)}>Volver</Button>
+                <Button className={ `${ style.btn_Crear }` } onClick={() => navigate('/producto_create')}>Crear</Button>
+                <Button className={ `${ style.btn_Volver }` } onClick={() => navigate(-1)}>Volver</Button>
                 <Card className=''>
                     <table className="table">
                         <thead className={ `${ style.thead_dark }` }>
