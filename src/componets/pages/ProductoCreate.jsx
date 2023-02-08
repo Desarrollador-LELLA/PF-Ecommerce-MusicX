@@ -4,7 +4,7 @@ import css from "../../css/detailproducto.module.css"; // import Ronaldo
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import style from "../../css/productoCreate.module.css";
-import { todosDocumentos, unDocumentoCallback } from "../../utils/metodosFirebase";
+import { unDocumentoCallback } from "../../utils/metodosFirebase";
 
 //      Subir imagenes    -   KUC
 import { actualizaDocumento, crearDocumento, subirArchivoMetodo } from "../../utils/metodosFirebase";
@@ -187,7 +187,6 @@ const ProductoCreate = () => {
 
     const dispatch = useDispatch();
     const navigate = useNavigate();
-
     
     //    Aqui traigo los keys
     const [keys, setKeys] = useState([]);
@@ -198,7 +197,6 @@ const ProductoCreate = () => {
         });
     };
 
-
     //    Aqui traigo los generos
     const [generos, setGeneros] = useState([]);
 
@@ -207,7 +205,6 @@ const ProductoCreate = () => {
             setGeneros(retorno.result.generos);
         });
     };
-
 
     /*      Uso de useEffect         */
     useEffect(() => {
@@ -287,6 +284,7 @@ const ProductoCreate = () => {
 
     const handleInputChange = (e) => {
         const { name, value } = e.target;
+
         setProducto({
             ...producto,
             [name]: value,
@@ -318,7 +316,6 @@ const ProductoCreate = () => {
         try
         {
           e.preventDefault();
-
           let dataImagen = "";
           let dataAudio = "";
 
@@ -356,6 +353,7 @@ const ProductoCreate = () => {
                       LicenCreadas[i].url = url; // [url1 , url2 ]
                   });
               }
+
               await actualizaDocumento("productos", prod.result.id, {
                   data: {
                       imagen: dataImagen,
@@ -557,4 +555,3 @@ const ProductoCreate = () => {
 };
 
 export default ProductoCreate;
-

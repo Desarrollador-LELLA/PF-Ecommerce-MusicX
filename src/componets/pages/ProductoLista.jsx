@@ -12,8 +12,7 @@ import { todosDocumentos } from '../../utils/metodosFirebase';
 
 const ProductoLista = () => {
     
-    //      Codigo de paginancion
-
+    //      Listado de productos con su paginacion
     const paginado = {
         coleccion: 'productos',
         ordenarPor: 'nombre',
@@ -55,31 +54,6 @@ const ProductoLista = () => {
         setEstadoInicial({ ...estadoInicial, paginaActual: estadoInicial.paginaActual + 1 });
     };
 
-
-    //  ***************************************************************************************************************
-
-
-
-    const navegar = useNavigate()
-
-    const [producto, setProducto] = useState({
-        nombre: "",
-        descripcion: "",
-        precio: 0,
-        key: "",
-        tiempo: 0,
-        imagen: ""
-    });
-
-    const [listado, setListado] = useState([]);
-
-    const lista = async () => {
-        let ayuda = await listado_producto_by_admin();
-        setListado(ayuda);
-    }
-
-
-    const navigate = useNavigate();
     let [ultimo, setUltimo] = useState(1);
 
     const handleHabilitar = async (id, valor) => {
@@ -98,21 +72,20 @@ const ProductoLista = () => {
         }
     }
 
+    const navigate = useNavigate();
+
 
     return (
         <div>
             <Container className='my-3'>
-                <Button className={ `${ style.btn_Crear }` } onClick={() => navegar('/producto_create')}>Crear</Button>
-                <Button className={ `${ style.btn_Volver }` } onClick={() => navegar(-1)}>Volver</Button>
+                <Button className={ `${ style.btn_Crear }` } onClick={() => navigate('/producto_create')}>Crear</Button>
+                <Button className={ `${ style.btn_Volver }` } onClick={() => navigate(-1)}>Volver</Button>
                 <Card className=''>
-                    <table className={ `${ style.table_listado } table` }>
-                        <thead className='thead-dark'>
+                    <table className="table">
+                        <thead className={ `${ style.thead_dark }` }>
                             <tr className={ `${ style.tr } ` }>
                                 <td className='text-center'>Nombre</td>
                                 <td className='text-center'>Descripcion</td>
-                                {/*
-                                <td className='text-center'>Precio</td>
-                                */}
                                 <td className='text-center'>Key</td>
                                 <td className='text-center'>Tiempo</td>
                                 <td className='text-center'>Habilitado</td>
@@ -125,25 +98,24 @@ const ProductoLista = () => {
                             estadoInicial.lista.length ?
                                 estadoInicial.lista.slice(inicio, fin).map((e) => (                                        
                                     <tr className={ `${ style.tr_sombreado }` } key={e.id}>
-                                        <td>{ e.nombre }</td>
+                                        <td className={ `${ style.td_left }` }>{ e.nombre }</td>
                                         <td>{ e.descripcion }</td>
-                                        <td>{ e.key }</td>
-                                        <td>{ e.tiempo }</td>
-                                        <td>
+                                        <td className='text-center'>{ e.key }</td>
+                                        <td className='text-center'>{ e.tiempo }</td>
+                                        <td className='text-center'>
                                             { e.habilitado ? "Si" : "No" }
                                         </td>
                                         <td>
                                             <img className={ `${ style.imagen }` } src={ e.imagen } alt='' />
                                         </td>
                                         <td>
-                                            
-                                            <Link to={ `/producto_detalle/${ e.id }` }>
-                                                <Button className='btn btn-primary'>Editar</Button>
+                                            <Link className={ `${ style.link }` } to={ `/producto_detalle/${ e.id }` }>
+                                                <Button className={ `btn btn-primary text-center ${ style.button_left }` } >Editar</Button>
                                             </Link>
                                         </td>
                                         <td>
-                                            <Link>
-                                                <Button id={ e.id } variant= { e.habilitado ? 'danger' : 'warning' } onClick={ x => handleHabilitar(e.id, e.habilitado) }>
+                                            <Link className={ `${ style.link }` }>
+                                                <Button id={ e.id } className={ `${ style.button_left }` }  variant= { e.habilitado ? 'danger' : 'warning' } onClick={ x => handleHabilitar(e.id, e.habilitado) } >
                                                     { e.habilitado ? "Deshabilitar" : "Habilitar" }
                                                 </Button>
                                             </Link>

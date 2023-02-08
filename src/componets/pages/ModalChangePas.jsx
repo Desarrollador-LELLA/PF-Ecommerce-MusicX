@@ -4,7 +4,7 @@ import { FloatingLabel, Placeholder } from 'react-bootstrap';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import Modal from 'react-bootstrap/Modal';
-import s from '../../css/InicioSesionCard.module.css';
+import s from '../../css/ModalChangePas.module.css';
 import { validatePass } from "../../utils/InicioSesionErrors"
 import { errorAction } from "../../redux/actions/authAction";
 import { PasswordChange } from '../../utils/metodosFirebase';
@@ -49,31 +49,30 @@ function ModalChangePas({ show, handleClose }) {
 
     return (
         <>
-            <Modal className={`my-3 ${s.container}`} show={show} onHide={handleClose}>
+            <Modal className={`${s.editarmodal}`}  show={show} onHide={handleClose}>
 
-                <Modal.Header className={`my-3 ${s.container}`}>
-                    <Modal.Title>Cambiar contraseña</Modal.Title>
+                <Modal.Header className={`${s.w}`}>
+                    <Modal.Title className={`my-3 ${s.h}`}>Cambiar contraseña</Modal.Title>
                 </Modal.Header>
-                <Modal.Body>
-                    <Form>
+                <Modal.Body className={`${s.body}`}>
+                    <Form className={`${s.t}`}> 
                         {loading ?
 
                             <>
                                 <Placeholder as='p' animation='glow' >
-                                    <Placeholder.Button xs={12} bg="black" bsPrefix={`${s.placeholderglow2} placeholder`} />
+                                    <Placeholder.Button xs={12} bg="black" bsPrefix={`${s.placeholderglow3} placeholder`} />
                                 </Placeholder>
                             </>
                             :
                             <>
-
-                                <FloatingLabel className='mb-3' controlId='floatingPassword' label='Nueva contraseña'>
+                                <FloatingLabel className={`mb-2${s.p}`} controlId='floatingPassword' label='Nueva contraseña'>
                                     <Form.Control onChange={handleChangeContraseña} type='password' placeholder='Nueva contraseña' isInvalid={!!errors.contraseña} />
                                     <Form.Control.Feedback type='invalid'>{errors.contraseña}</Form.Control.Feedback>
                                 </FloatingLabel>
                             </>}
                     </Form>
                 </Modal.Body>
-                <Modal.Footer>
+                <Modal.Footer className={`${s.footer}`}>
 
                     <Button className='float-end mb-3' variant='dark' onClick={handleClose}>
                         Cerrar

@@ -5,6 +5,10 @@ import { paginacion } from '../../utils/libreria';
 import { todosDocumentos, mostrarImgen, obtienePaginado, siguientePaginado, anteriorPaginado, cambiaPaginado, unDocumento } from '../../utils/metodosFirebase';
 import styles from "../../css/Bibloteca.module.css"
 import { useSelector } from 'react-redux';
+import { async } from '@firebase/util';
+import descarga from "../images/descarga.png"
+import { faCircleArrowDown } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 const INITIAL_BIBLIOTECA = {
   lista: [],
@@ -36,6 +40,10 @@ export default function Bibloteca() {
 
   };
 
+  const playaudio = async () =>{
+     const  audio = document.getElementById("audioMusica")
+      audio.play()
+  }
 
 
   const cambiarPagina = (e) => {
@@ -71,18 +79,14 @@ export default function Bibloteca() {
                 <Col key={x.id}>
                   <Card className={`${styles.card_biblioteca} h-100`}>
                     <div className={styles.reproducir}>
-                      <Card.Img variant="top" className={`${styles.img_biblioteca} rounded-circle p-4`} src={x.imagen} />
-                      <audio controls controlsList="nodownload">
-                        <source src={x.audio} type="audio/wav" />
-                      </audio>
+                      <Card.Img onMouseOver={() => playaudio} variant="top" className={`${styles.img_biblioteca} rounded-circle p-4`} src={x.imagen} />
+                      
                     </div>
-                    <a className={styles.descarga} href={x.licencias.url} download={`${x.nombre}.rar`}>Download Text</a>
+                    
                     <Card.Body>
-                      <Card.Title className={`${styles.cardtitulo_biblioteca}`}>{x.nombre}</Card.Title>
+                      <Card.Title className={`${styles.cardtitulo_biblioteca}`}>{x.nombre}<a className={styles.descarga} href={x.licencias.url} download={`${x.nombre}.rar`}> <i className={styles.icono}><FontAwesomeIcon icon={faCircleArrowDown}  /></i> </a></Card.Title>
                       <Card.Text className={`${styles.cardtext_biblioteca}`}>
-                        This is a longer card with supporting text below as a natural
-                        lead-in to additional content. This content is a little bit
-                        longer.
+                       {x.licencias.TipoLicencia} {x.licencias.descripcion}
                       </Card.Text>
                     </Card.Body>
                   </Card>
