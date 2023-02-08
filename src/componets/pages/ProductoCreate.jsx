@@ -25,6 +25,7 @@ import {
   crearDocumento,
   subirArchivoMetodo,
 } from "../../utils/metodosFirebase";
+import { wait } from "@testing-library/user-event/dist/utils";
 
 const ProductoCreate = () => {
   //    -------------------------------     Estados de Ronaldo -----------------------------
@@ -553,7 +554,7 @@ const ProductoCreate = () => {
                       role="status"
                       aria-hidden="true"
                     />
-                    <span className="visually-hidden">Loading...</span>
+                    <span className="visually-hidden">Creando...</span>
                   </Button>{" "}
                   <Button variant="primary" disabled>
                     <Spinner
@@ -563,7 +564,7 @@ const ProductoCreate = () => {
                       role="status"
                       aria-hidden="true"
                     />
-                    Loading...
+                    Creando...
                   </Button>
                 </div>
               )}

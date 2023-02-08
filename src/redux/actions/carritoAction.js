@@ -32,9 +32,9 @@ export const quitarProducto = (id, licencia) => {
   };
 };
 
-export const getProducto = (id) => {
+export const getProducto = (Id) => {
   return async (dispatch) => {
-    const docRef = allDb.doc(db, "productos", `${id}`);
+    const docRef = allDb.doc(db, "productos", `${Id}`);
     const docSnap = await allDb.getDoc(docRef);
     dispatch({
       type: DETALLE_UN_PRODUCTO,

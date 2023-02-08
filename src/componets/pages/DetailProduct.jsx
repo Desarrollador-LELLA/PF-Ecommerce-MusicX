@@ -22,7 +22,7 @@ export default function DetailProduct() {
   const { usuarioAuth } = useSelector((state) => state.auth);
   const [presioProducto, setPresioProducto] = useState("");
   const { productoUnoDetalle } = useSelector((state) => state.carrito);
-  const [loadding, setLoadding] = useState(false);
+  const [loading, setLoadding] = useState(false);
   const [licenNoCompra, setLicenNoCompra] = useState();
   const [loadingGusta, setLoadingGusta] = useState(false);
 
@@ -127,7 +127,7 @@ export default function DetailProduct() {
 
   return (
     <div>
-      {loadding ? (
+      {loading ? (
         <div>
           <div>
             <Container ntainer>

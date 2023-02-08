@@ -612,7 +612,7 @@ const ProductDetalle = () => {
                       role="status"
                       aria-hidden="true"
                     />
-                    <span className="visually-hidden">Loading...</span>
+                    <span className="visually-hidden">Editando...</span>
                   </Button>{" "}
                   <Button variant="primary" disabled>
                     <Spinner
@@ -622,7 +622,7 @@ const ProductDetalle = () => {
                       role="status"
                       aria-hidden="true"
                     />
-                    Loading...
+                    Editando...
                   </Button>
                 </div>
               )}
