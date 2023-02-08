@@ -18,7 +18,7 @@ import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import style from "../../css/productoCreate.module.css";
 import { unDocumentoCallback } from "../../utils/metodosFirebase";
-
+// push
 //      Subir imagenes    -   KUC
 import {
   actualizaDocumento,

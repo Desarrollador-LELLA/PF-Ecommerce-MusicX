@@ -25,6 +25,7 @@ export default function DetailProduct() {
   const [loading, setLoadding] = useState(false);
   const [licenNoCompra, setLicenNoCompra] = useState();
   const [loadingGusta, setLoadingGusta] = useState(false);
+  //push
 
   useEffect(() => {
     dispatch(getProducto(id)).then(() => {

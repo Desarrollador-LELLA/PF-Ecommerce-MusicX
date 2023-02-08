@@ -18,7 +18,7 @@ import {
   doc,
   updateDoc,
 } from "firebase/firestore";
-
+//puhs
 //RECIBE EL ID EL PRODUCTO AGREGADO AL CARRITO PARA PASARSELO AL REDUCER Y QUE LO ELIMINE.
 export const quitarProducto = (id, licencia) => {
   return (dispatch) => {
