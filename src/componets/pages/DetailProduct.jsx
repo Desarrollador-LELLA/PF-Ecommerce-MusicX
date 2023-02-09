@@ -137,6 +137,9 @@ export default function DetailProduct() {
                     </div>
                   </div>
                   <div className={css.divgeneros}>
+                    <h3 className={` ${css.generos} ${css.tituloProducto}`}>
+                      {productoUnoDetalle.key}
+                    </h3>
                     {productoUnoDetalle.genero?.map((e) => (
                       <h3 className={` ${css.generos} ${css.tituloProducto}`}>
                         {e}
