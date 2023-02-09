@@ -430,11 +430,16 @@ const ProductoCreate = () => {
                 <option hidden>Select genero</option>
                 <option value="All">All</option>
                 {generos.length
-                  ? generos.map((e) => (
-                      <option key={e.nombre} value={e.nombre}>
-                        {e.nombre}
-                      </option>
-                    ))
+                  ? generos.map((e) => {
+                      if (e.habilitado) {
+                        return (
+                          <option key={e.nombre} value={e.nombre}>
+                            {e.nombre}
+                          </option>
+                        );
+                      }
+                      return false;
+                    })
                   : null}
               </Form.Select>
             </div>
@@ -461,11 +466,16 @@ const ProductoCreate = () => {
                 <option hidden>Select key</option>
                 <option value="All">All</option>
                 {keys.length
-                  ? keys.map((e) => (
-                      <option key={e.nombre} value={e.nombre}>
-                        {e.nombre}
-                      </option>
-                    ))
+                  ? keys.map((e) => {
+                      if (e.habilitado) {
+                        return (
+                          <option key={e.nombre} value={e.nombre}>
+                            {e.nombre}
+                          </option>
+                        );
+                      }
+                      return false;
+                    })
                   : null}
               </Form.Select>
             </div>

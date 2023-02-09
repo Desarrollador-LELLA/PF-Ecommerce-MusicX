@@ -34,19 +34,19 @@ const carritoReducer = (state = initialState, action) => {
         productos: action.payload,
       };
     case ADD_PRODUCTO:
-      let productoID = state.productos.find(
-        (producto) => producto.id === action.payload.producto.id
-      );
+      let existe = false;
+      state.productos.forEach((producto) => {
+        if (producto.id === action.payload.producto.id) {
+          if (
+            producto.licencias.TipoLicencia ===
+            action.payload.producto.licencias.TipoLicencia
+          ) {
+            existe = true;
+          }
+        }
+      });
 
-      let productosFiltrados = productoID
-        ? state.productos.find(
-            (producto) =>
-              producto.licencias.TipoLicencia ===
-              action.payload.producto.licencias.TipoLicencia
-          )
-        : false;
-
-      let productosAdd = !productosFiltrados
+      let productosAdd = !existe
         ? [...state.productos, { ...action.payload.producto }]
         : state.productos;
       return {
