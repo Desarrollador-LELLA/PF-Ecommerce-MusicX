@@ -11,9 +11,9 @@
 
 .containerTopBeats{
   position: sticky;
-  height: 30%;
   align-items: center;
 }
+
 .topbeats {
   display: flex;
   justify-content: center;
@@ -21,8 +21,6 @@
   margin-top: 2%;
   font-family: 'Unbounded', cursive;
   color: #1f9999;
-  width: 60rem;
-  height: 6rem;
 }
 .topbeats h1{
   font-size: 200%;
@@ -39,24 +37,22 @@
 
 .lastest{
   color: #1f9999;
-  font-size: 300%;
+  font-size: 290%;
   text-shadow: 0.4em 0.4em 0.2em black;
   transition: 0.5s;
   font-family: 'Unbounded', cursive;
+  margin-top: 1%;
+  margin-bottom: 2%;
 }
 
 .lastest:hover{
-  font-size: 400%;
+  font-size: 500%;
   text-shadow: 0.4em 0.4em 0.2em rgb(78, 37, 78);
 }
 
 
 
-.last{
-  font-size: 200%;
-  text-shadow: 0.4em 0.4em 0.2em black;
-  transition: 1s;
-}
+
 
 .last:hover{
   position: absolute;

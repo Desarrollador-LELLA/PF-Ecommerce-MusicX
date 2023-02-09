@@ -4,21 +4,19 @@
 .carrusel {
   margin: auto;
   align-items: center;
-
 }
 .carrusel h3 {
   font-family: 'Unbounded', cursive;
   font-style: normal;
-  font-weight: 400;
-  font-size: 430%;
+  font-size: 6vh;
   line-height: 52px;
   text-align: center;
-
+  text-shadow: 0.5em -0.5em 0.2em rgba(0, 0, 0, 0.884);
   background: linear-gradient(
     180deg,
-    rgba(163, 55, 190, 0.233) 1.56%,
+    rgba(163, 55, 190, 0.692) 1.56%,
     #13d1eb 59.9%,
-    rgba(37, 73, 71, 0.322) 100%
+    rgba(37, 73, 71, 0.685) 100%
   );
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -34,10 +32,6 @@
 }
 .carrusel a {
   text-decoration: none;
-}
-
-.carrusel div {
- 
 }
 
 .carrusel p {
@@ -57,7 +51,9 @@
 }
 
 .carrusel img {
+  object-fit: cover;
   border-radius: 10%;
+  height: 75vh;
 }
 
 .carrusel h3:hover{
