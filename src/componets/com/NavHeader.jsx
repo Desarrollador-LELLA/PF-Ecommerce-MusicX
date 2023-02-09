@@ -107,8 +107,8 @@ const NavHeader = () => {
                             <div className={`${s.dropdown_contenedor}`}>
                                 {
                                     productos.length ?
-                                        productos.map(x => (
-                                            <Dropdown.ItemText key={x.id}>
+                                        productos.map((x, i) => (
+                                            <Dropdown.ItemText key={i}>
                                                 <Card>
                                                     <Card.Img alt="Card image" src={x.imagen} />
                                                     <Card.ImgOverlay className={`${s.card_overlay}`}>

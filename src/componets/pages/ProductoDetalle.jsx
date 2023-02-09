@@ -258,7 +258,7 @@ const ProductDetalle = () => {
     }, []);
 
 
-    const ValidoProducto = ({ nombre, autor, descripcion, precio, key, tiempo, imagen }) => {
+    const ValidoProducto = ({ nombre, autor, descripcion, precio, key, tiempo }) => {
         const e = {};
         let valido = true;
         const regex = /^[0-9].*$/;
@@ -357,10 +357,9 @@ const ProductDetalle = () => {
             e.preventDefault();
             let dataImagen = "";
             let dataAudio = "";
-
+            console.log('afuera', errores)
             if (errores.valido)
             {
-                //setLoadingProducto(false);
                 let prod = await actualizaDocumento("productos", id, {
                     data: { ...producto, genero: addGeneros },
                 });
@@ -375,6 +374,7 @@ const ProductDetalle = () => {
 
                 for (let i = 0; i < LicenCreadas.length; i++) {
                     await subirArchivoMetodo(rutaArchivo[i], archivo[i], (url) => {
+                        console.log('LA METO AQUI')
                         LicenCreadas[i].url = url;
                     });
                 }
@@ -420,15 +420,14 @@ const ProductDetalle = () => {
         catch (err)
         {
             //setLoadingProducto(true);
-            console.log("Error generado 2 :", err);
             alert("ocurrio un error, revisa todo los campos");
         }
-        console.log(errores);
     };
 
 
     return (
         <div>
+            {console.log(errores)}
             <Container className="my-3">
                 <Card className={`${style.registroProducto} m-auto`}>
                     <Form className="card card-body" onSubmit={(e) => handleSubmit(e)}>
@@ -464,7 +463,7 @@ const ProductDetalle = () => {
                                 {
                                     generos.length ?
                                         generos.map((e) => (
-                                            <option key={e.nombre} value={e.nombre}  >
+                                            <option key={e.id} value={e.nombre}  >
                                                 {e.nombre}
                                             </option>
                                         ))
@@ -475,8 +474,8 @@ const ProductDetalle = () => {
                         <div>
                             <ButtonGroup aria-label="Basic example">
                                 {
-                                    addGeneros?.map((genero) => (
-                                        <Button value={genero} onClick={ handlerEliminarGenero } variant="secondary" >
+                                    addGeneros?.map((genero, idx) => (
+                                        <Button key={idx} value={genero} onClick={ handlerEliminarGenero } variant="secondary" >
                                             {`${genero} X`}
                                         </Button>
                                     ))
@@ -491,7 +490,7 @@ const ProductDetalle = () => {
                                 {
                                     keys.length ?
                                         keys.map((e) => (
-                                            <option key={e.nombre} value={e.nombre}>
+                                            <option key={e.id} value={e.nombre}>
                                                 {e.nombre}
                                             </option>
                                         ))
