@@ -1,104 +1,70 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@500;600&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Unbounded:wght@900&display=swap');
 
-/* .img_biblioteca {
-  background: black;
-} */
-.img_biblioteca:hover{
+.img_biblioteca:hover {
   animation-name: gixaxb;
   animation-duration: 5s;
   animation-iteration-count: infinite;
   animation-timing-function: linear;
 }
 
-@keyframes gixaxb{
-  from{
-      transform: rotate(0deg);
-  }to{
-      transform: rotate(360deg);
+@keyframes gixaxb {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
   }
 }
-
-
 
 .card_biblioteca {
   background: linear-gradient(180deg, rgba(220, 18, 247, 0.253) 1.04%, rgba(76, 95, 99, 0.1056) 66.67%, rgba(204, 34, 207, 0.066) 100%);
   border-radius: 50px;
-  
+
 }
 
-
-.cardtitulo_biblioteca{
-  color: rgba(35, 204, 204, 0.59);color: rgba(35, 204, 204, 0.59);
+.cardtitulo_biblioteca {
+  color: rgba(35, 204, 204, 0.59);
+  color: rgba(35, 204, 204, 0.59);
 }
 
-
-.cardtext_biblioteca{
+.cardtext_biblioteca {
   color: #8a4883;
 }
 
-.paginado{
-  display: flex;
-    text-align: center;
-    align-items: center;
-    justify-content: center;
-    flex-direction: row;
-    font-family: 'Unbounded', cursive;
-    margin: 20px;
+.paginado {
+  font-family: 'Unbounded', cursive;
 }
 
-.nohay{
+.nohay {
   display: flex;
-    text-align: center;
-    align-items: center;
-    justify-content: center;
-    width: 100%;
-  
+  text-align: center;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+
 }
-
-
 
 .reproducir audio {
   visibility: hidden;
 }
 
-
-.descarga{
-text-decoration: none;
-color: rgb(74, 20, 125);
+.descarga {
+  text-decoration: none;
+  color: rgb(74, 20, 125);
 }
 
-.descarga:hover{
+.descarga:hover {
   color: rgb(125, 8, 172);
 }
 
-
-
-
-
-
 .reproducir audio {
   visibility: hidden;
 }
 
-
-
-
-
-
-
-/* .contenedor {
-  display: flex;
-  flex-direction: column;
-  gap: 100px;
-} */
-
-
-
-
 .titulo {
   font-size: 60px;
-  padding: 20px;
   width: 100%;
   height: 15%;
   text-align: center;
@@ -107,9 +73,3 @@ color: rgb(74, 20, 125);
   color: #2B7E74;
   text-align: center;
 }
-
-
-
-
-
-
