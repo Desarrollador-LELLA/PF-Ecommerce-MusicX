@@ -73,8 +73,6 @@
   color: rgba(115, 201, 201, 0.59);
 }
 .divgeneros {
-  display: flex;
-  justify-content: center;
 }
 .generos {
   padding: 0 10px 0 10px;
