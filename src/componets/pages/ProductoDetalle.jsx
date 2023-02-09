@@ -48,7 +48,6 @@ const ProductDetalle = () => {
     const [addGeneros, setAddGeneros] = useState([]);
     const [archivo, setArchivo] = useState([]);
     const [audio, setAudio] = useState(null);
-
     //    -------------------------------     Estados Ronaldo fin          -----------------------------
 
     //    -------------------------------     Handlers Ronaldo comienza     -----------------------------
