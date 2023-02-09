@@ -1,18 +1,5 @@
 import React, { useState, useEffect } from "react";
-import {
-  Button,
-  Card,
-  Container,
-  Form,
-  Modal,
-  ModalBody,
-  ModalHeader,
-  ModalFooter,
-  InputGroup,
-  ListGroup,
-  ButtonGroup,
-  Spinner,
-} from "react-bootstrap";
+import { Button, Card, Container, Form, Modal, ModalBody, ModalHeader, ModalFooter, InputGroup, ListGroup, ButtonGroup, Spinner } from "react-bootstrap";
 import css from "../../css/detailproducto.module.css"; // import Ronaldo
 import { useDispatch } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
@@ -21,10 +8,7 @@ import { unDocumentoCallback } from "../../utils/metodosFirebase";
 import { detalle_producto_admin } from "../../redux/actions/productoAction";
 
 //      Subir imagenes    -   KUC
-import {
-  actualizaDocumento,
-  subirArchivoMetodo,
-} from "../../utils/metodosFirebase";
+import { actualizaDocumento,  subirArchivoMetodo } from "../../utils/metodosFirebase";
 import { wait } from "@testing-library/user-event/dist/utils";
 
 const ProductDetalle = () => {
