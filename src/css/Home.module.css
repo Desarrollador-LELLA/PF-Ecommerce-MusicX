@@ -3,8 +3,6 @@
 
 
 .contendor {
-  display: flex;
-  flex-direction: column;
   align-items: center;
   background: #171316;
   justify-content: center;
@@ -12,10 +10,8 @@
 }
 
 .containerTopBeats{
-  display: flex;
   position: sticky;
   height: 30%;
-  flex-direction: column;
   align-items: center;
 }
 .topbeats {
@@ -69,7 +65,7 @@
 }
 
 .topcar{
-
+margin: 0;
 }
 
 @media (min-width: 20em) {
