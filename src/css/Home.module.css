@@ -23,13 +23,14 @@
   color: #1f9999;
 }
 .topbeats h1{
+
   font-size: 200%;
   text-shadow: 0.4em 0.4em 0.2em black;
   transition: 0.5s;
 }
 
 .topbeats h1:hover{
-  position: absolute;
+
   font-size: 300%;
   text-shadow: 0.4em 0.4em 0.2em rgb(78, 37, 78);
 }
