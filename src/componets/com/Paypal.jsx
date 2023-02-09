@@ -47,7 +47,7 @@ const PaypalButton = ({ currency, showSpinner , amount, products, productos, han
     }, [currency, showSpinner]);
 
 
-    return (<>
+    return (
             <PayPalScriptProvider options={{ "client-id": "AViYeevPmBZP9zuIlYewQ3mT85uwwkbkwAlll9jDrEoFafYxRMI7o2omsscx3EbICY0fpkSE5VY0fXIO", "merchant-id": "WEMW3RY93ABLA" }}>
             { (showSpinner && isPending) && <div className="spinner" /> }
             <PayPalButtons
@@ -59,7 +59,7 @@ const PaypalButton = ({ currency, showSpinner , amount, products, productos, han
                 onApprove={onApprove}
             />
             </PayPalScriptProvider>
-        </>
+        
     );
 }
 

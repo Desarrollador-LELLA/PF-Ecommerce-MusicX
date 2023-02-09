@@ -9,11 +9,9 @@ import Dropdown from 'react-bootstrap/Dropdown';
 import { useDispatch } from "react-redux";
 import { paginacion } from '../../utils/libreria';
 import { actualizaDocumentoArray, mostrarImgen, unDocumento, obtienePaginado, siguientePaginado, anteriorPaginado, cambiaPaginado, crearDocumento, unDocumentoCallback, actualizaDocumento } from '../../utils/metodosFirebase';
-import icGenero from "../images/ic_genero.svg"
+import icGenero from "../images/ic_genero.svg";
 import { arrayUnion } from "firebase/firestore";
 import { busqueda } from '../../utils/searchFunction';
-
-
 
 const INITIAL_PAGINADO = {
   id: "docGenero",
@@ -29,7 +27,7 @@ const Generos = () => {
   const [estadoInicial, setEstadoInicial] = useState(INITIAL_PAGINADO);
   const [buscarGenero, setBuscarGenero] = useState("");
   const [loading, setLoading] = useState(false);
-  const listaBuscar = busqueda(estadoInicial.lista,buscarGenero)
+  const listaBuscar = busqueda(estadoInicial.lista, buscarGenero);
   const { cantPaginas, fin, inicio, paginasBar } = paginacion(listaBuscar.length, estadoInicial.paginaActual, estadoInicial.itemPorPagina);
 
   const [error, setError] = useState(null);
@@ -51,7 +49,7 @@ const Generos = () => {
     setLoading(true);
     await unDocumentoCallback(estadoInicial.coleccion, estadoInicial.id, (retorno) => {
       setEstadoInicial({ ...estadoInicial, lista: retorno.result.generos });
-      setLoading(false)
+      setLoading(false);
     });
   };
 
@@ -77,7 +75,7 @@ const Generos = () => {
     setNombreCrear("");
     setError(null);
     setAbrirModalCrear(false);
-    setIdCrear("")
+    setIdCrear("");
   };
 
   function handleOnChangeNombreCrear(e) {
@@ -85,21 +83,18 @@ const Generos = () => {
   }
   async function handleCrearGenero(e) {
     if (validate()) {
-      const siExisteId = estadoInicial.lista.find(x => x.id === idCrear)
+      const siExisteId = estadoInicial.lista.find(x => x.id === idCrear);
       if (siExisteId) {
         alert("si existe");
       }
       else {
-        const resultado = await actualizaDocumentoArray(estadoInicial.coleccion, estadoInicial.id, { data: { generos: arrayUnion({ id: idCrear, nombre: nombreCrear, habilitado: true }) } })
-
+        const resultado = await actualizaDocumentoArray(estadoInicial.coleccion, estadoInicial.id, { data: { generos: arrayUnion({ id: idCrear, nombre: nombreCrear, habilitado: true }) } });
         if (resultado.confirma) {
           setNombreCrear("");
           setIdCrear("");
           setAbrirModalCrear(false);
           llenarLista();
-
         }
-
       }
     }
 
@@ -109,31 +104,29 @@ const Generos = () => {
     setIdCrear(e.target.value);
   }
 
-
-
   //MODAL EDITAR GENERO
   const confirmarEdicion = async () => {
-    if (generoEditar.id==null) return alert ("ingrese un id valido mayor a 0")
-    if (generoEditar.nombre== "") return alert ("ingrese un nombre valido")
-    const listaNueva = estadoInicial.lista.filter((x,i)=>i !== generoEditar.index)
+    if (generoEditar.id == null) return alert("ingrese un id valido mayor a 0");
+    if (generoEditar.nombre == "") return alert("ingrese un nombre valido");
+    const listaNueva = estadoInicial.lista.filter((x, i) => i !== generoEditar.index);
     if (listaNueva.find(x => x.id === generoEditar.id)) {
-      alert("el id ya existe")
+      alert("el id ya existe");
     } else {
-      listaNueva.push({ id: generoEditar.id, nombre: generoEditar.nombre, habilitado: generoEditar.habilitado })
-      const resultado = await actualizaDocumentoArray(estadoInicial.coleccion, estadoInicial.id, { data: { generos: listaNueva } })
+      listaNueva.push({ id: generoEditar.id, nombre: generoEditar.nombre, habilitado: generoEditar.habilitado });
+      const resultado = await actualizaDocumentoArray(estadoInicial.coleccion, estadoInicial.id, { data: { generos: listaNueva } });
       if (resultado.confirma) {
         setGeneroEditar({});
         // setError(null);
         setAbrirModalEditar(false);
         llenarLista();
-
       }
-
     }
-  }
+  };
+
   const habilarADesabilitar = () => {
-    setGeneroEditar({ ...generoEditar, habilitado: !generoEditar.habilitado })
-  }
+    setGeneroEditar({ ...generoEditar, habilitado: !generoEditar.habilitado });
+  };
+
   const handleClose2 = () => {
     setNombreCrear("");
     setError(null);
@@ -142,13 +135,10 @@ const Generos = () => {
 
   function handleOnChangeNombreEditar(e) {
     setGeneroEditar({ ...generoEditar, nombre: e.target.value });
-
   }
   function handleOnChangeIdEditar(e) {
     setGeneroEditar({ ...generoEditar, id: e.target.value });
-
   }
-
 
   //FORMULARIO EN GENERAL
   function handleSort(e) {
@@ -157,37 +147,21 @@ const Generos = () => {
 
   const handleShow2 = async (idIndex) => {
     const objetoGenero = await unDocumento(estadoInicial.coleccion, estadoInicial.id);
-
     if (objetoGenero.confirma) {
       setGeneroEditar({ ...objetoGenero.result.generos[idIndex], index: idIndex });
       setAbrirModalEditar(true);
     }
   };
-  //BUSCAR
-  // const busqueda = (lista, search) => {
-
-  //   let nuevaLista = lista.slice();
-
-  //   if (search) {
-  //     nuevaLista = nuevaLista.filter((ele) => {
-  //       return ele.nombre.toLowerCase().includes(search.toLowerCase())
-  //     }
-  //     );
-  //   }
-  //   return nuevaLista;
-  // };
 
   function buscar(e) {
-    setEstadoInicial({...estadoInicial,paginaActual:1})
+    setEstadoInicial({ ...estadoInicial, paginaActual: 1 });
     setBuscarGenero(e.target.value);
   }
 
   const onClickBuscar = () => {
     if (validar()) {
-      // setListaMostrar(lista.filter(x => x === buscarGenero))
     }
   };
-
 
   const validate = () => {
     if (nombreCrear === "") {
@@ -207,7 +181,6 @@ const Generos = () => {
     if (listaMostrar === "") {
       setErrorr("Debe completar el campo");
       return false;
-
     }
 
     if (listaMostrar.length < 3 || listaMostrar.length >= 20) {
@@ -251,7 +224,6 @@ const Generos = () => {
           <FloatingLabel controlId="floatingInput" label="Genero " className="text-dark" >
             <Form.Control type="text" placeholder="rock an roll" onChange={handleOnChangeNombreCrear} value={nombreCrear} />
           </FloatingLabel>
-
         </Modal.Body>
         <Modal.Footer className="bg-dark">
           {
@@ -268,11 +240,10 @@ const Generos = () => {
         <Modal.Header closeButton className="bg-dark">
           <Modal.Title className="text-bg-dark p-3">Editar Genero</Modal.Title>
         </Modal.Header>
-        <Modal.Body  className="text-bg-dark">
-          <FloatingLabel controlId="floatingInput"  label="id " className="text-dark mb-3" >
+        <Modal.Body className="text-bg-dark">
+          <FloatingLabel controlId="floatingInput" label="id " className="text-dark mb-3" >
             <Form.Control type="number" placeholder="1-1000" onChange={handleOnChangeIdEditar} value={generoEditar.id} />
           </FloatingLabel>
-
           <FloatingLabel controlId="floatingInput" label="Genero" className="text-dark-bg-dark" >
             <Form.Control type="text" placeholder="rock an roll" onChange={handleOnChangeNombreEditar} value={generoEditar.nombre} />
           </FloatingLabel>
@@ -299,7 +270,6 @@ const Generos = () => {
           <span data-text="S">S</span>
           <span data-text="!">!</span>
         </p>
-
       </div>
       {/* BUSCADOR DE GENEROS */}
       <div className='container-fluid'>
@@ -310,15 +280,12 @@ const Generos = () => {
             aria-describedby="basic-addon2"
             onChange={(e) => buscar(e)}
           />
-
           <Button variant="outline-secondary" type="submit" onClick={(e) => onClickBuscar(e)} disabled>
             Buscar Genero
           </Button>
-
           <Button variant="outline-secondary" onClick={handleAbrirModalCrear} >
             Crear Genero
           </Button>
-
         </InputGroup>
         {
           errorr ?
@@ -327,13 +294,12 @@ const Generos = () => {
             </div>
             : null
         }
-
         {/* LISTADO DE GENEROS MAP */}
         <Row xs={2} sm={3} md={3} lg={4} xl={5} xxl={6}>
           {
             loading ? <Spinner animation="border" variant="light" /> :
-             listaBuscar.length ?
-               listaBuscar.slice(inicio, fin).map(i => (
+              listaBuscar.length ?
+                listaBuscar.slice(inicio, fin).map(i => (
                   <Col className='my-2'>
                     <Card className={`${s.card_genero} h-100`} onClick={e => { " handleClick(e)"; }}>
                       <Card.Img className={`${s.img_genero} rounded-circle`} src={icGenero} variant="top" />
@@ -355,7 +321,6 @@ const Generos = () => {
           }
         </Row>
       </div>
-
       <Pagination className='justify-content-center' >
         <Pagination.Prev onClick={anterior} className={s.paginado_genero} />
         <Pagination.Item className={s.paginado_genero} onClick={cambiarPagina} active={paginasBar[0] === estadoInicial.paginaActual ? true : false}>{paginasBar[0]} </Pagination.Item >
