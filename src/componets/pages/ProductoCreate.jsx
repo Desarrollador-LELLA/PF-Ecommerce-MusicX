@@ -1,18 +1,5 @@
 import React, { useState, useEffect } from "react";
-import {
-  Button,
-  Card,
-  Container,
-  Form,
-  Modal,
-  ModalBody,
-  ModalHeader,
-  ModalFooter,
-  InputGroup,
-  ListGroup,
-  ButtonGroup,
-  Spinner,
-} from "react-bootstrap";
+import { Button, Card, Container, Form, Modal, ModalBody, ModalHeader, ModalFooter, InputGroup, ListGroup, ButtonGroup, Spinner } from "react-bootstrap";
 import css from "../../css/detailproducto.module.css"; // import Ronaldo
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
@@ -20,11 +7,7 @@ import style from "../../css/productoCreate.module.css";
 import { unDocumentoCallback } from "../../utils/metodosFirebase";
 
 //      Subir imagenes    -   KUC
-import {
-  actualizaDocumento,
-  crearDocumento,
-  subirArchivoMetodo,
-} from "../../utils/metodosFirebase";
+import { actualizaDocumento, crearDocumento, subirArchivoMetodo } from "../../utils/metodosFirebase";
 import { wait } from "@testing-library/user-event/dist/utils";
 
 const ProductoCreate = () => {
@@ -430,11 +413,16 @@ const ProductoCreate = () => {
                 <option hidden>Select genero</option>
                 <option value="All">All</option>
                 {generos.length
-                  ? generos.map((e) => (
-                      <option key={e.nombre} value={e.nombre}>
-                        {e.nombre}
-                      </option>
-                    ))
+                  ? generos.map((e) => {
+                      if (e.habilitado) {
+                        return (
+                          <option key={e.nombre} value={e.nombre}>
+                            {e.nombre}
+                          </option>
+                        );
+                      }
+                      return false;
+                    })
                   : null}
               </Form.Select>
             </div>
@@ -461,11 +449,16 @@ const ProductoCreate = () => {
                 <option hidden>Select key</option>
                 <option value="All">All</option>
                 {keys.length
-                  ? keys.map((e) => (
-                      <option key={e.nombre} value={e.nombre}>
-                        {e.nombre}
-                      </option>
-                    ))
+                  ? keys.map((e) => {
+                      if (e.habilitado) {
+                        return (
+                          <option key={e.nombre} value={e.nombre}>
+                            {e.nombre}
+                          </option>
+                        );
+                      }
+                      return false;
+                    })
                   : null}
               </Form.Select>
             </div>

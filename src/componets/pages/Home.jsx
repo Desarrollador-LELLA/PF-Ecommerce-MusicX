@@ -50,7 +50,7 @@ const Home = () => {
 
   return (
     <div className={s.contendor}>
-      <Container>
+      <Container className={s.ahg}>
         <Row>
           <div className={`d-flex flex-wrap justify-content-center ${s.containerTopBeats}`}>
           <h1 className={s.lastest}>RECIENTES!</h1>

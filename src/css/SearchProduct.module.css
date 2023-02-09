@@ -4,7 +4,6 @@
 .dadcontainer{
 
     display: flex;
-    flex-direction: row;
 }
 .filtercontainer{
     background: #1D1015;
