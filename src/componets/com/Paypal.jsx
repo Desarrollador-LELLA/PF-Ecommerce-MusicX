@@ -1,8 +1,7 @@
 import { useEffect } from "react";
 import {
     PayPalButtons,
-    usePayPalScriptReducer,
-    PayPalScriptProvider
+    usePayPalScriptReducer
 } from "@paypal/react-paypal-js";
 import * as actions from "../../redux/actions/carritoAction";
 import {useDispatch} from "react-redux";
@@ -48,7 +47,6 @@ const PaypalButton = ({ currency, showSpinner , amount, products, productos, han
 
 
     return (<>
-            <PayPalScriptProvider options={{ "client-id": "AViYeevPmBZP9zuIlYewQ3mT85uwwkbkwAlll9jDrEoFafYxRMI7o2omsscx3EbICY0fpkSE5VY0fXIO", "merchant-id": "WEMW3RY93ABLA" }}>
             { (showSpinner && isPending) && <div className="spinner" /> }
             <PayPalButtons
                 style={style}
@@ -58,7 +56,6 @@ const PaypalButton = ({ currency, showSpinner , amount, products, productos, han
                 createOrder={createOrder}
                 onApprove={onApprove}
             />
-            </PayPalScriptProvider>
         </>
     );
 }

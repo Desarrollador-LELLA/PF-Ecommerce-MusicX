@@ -6,7 +6,7 @@ import Form from "react-bootstrap/Form";
 import { useLocation } from "react-router-dom";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCompactDisc, faGaugeSimple, faMusic, faTag,faDollarSign } from "@fortawesome/free-solid-svg-icons";
-import { Spinner } from "react-bootstrap";
+import { Button, Spinner } from "react-bootstrap";
 import { todosDocumentos } from "../../utils/metodosFirebase";
 import { getKeys } from "../../utils/keysActions";
 import { getGeneros } from "../../utils/generosActions";
@@ -19,13 +19,14 @@ import { Link } from "react-router-dom";
 import { filterProducts } from "../../utils/searchFunction";
 import a from "../../css/ProductCards.module.css"
 import { unDocumentoCallback } from "../../utils/metodosFirebase";
+import { faRotateRight } from "@fortawesome/free-solid-svg-icons";
 
 const INITIAL_PAGINADO = {
   coleccion: "productos",
   ordenarPor: "nombre",
   whereFiltros: null,
   lista: [],
-  itemPorPagina: 12,
+  itemPorPagina: 8,
   paginaActual: 1,
 };
 
@@ -67,12 +68,14 @@ export default function SearchProduct() {
         paginaActual: 1,
       });
     } else
+
     setFiltros({...filtros,generos:[...filtros.generos,e.target.name]})
     setEstadoInicial({
       ...estadoInicial,
       paginaActual: 1,
     });
   }
+
   const onChangeKey = (e)=>{
       setFiltros({...filtros,keyF:e.target.value})
       setEstadoInicial({
@@ -108,6 +111,9 @@ export default function SearchProduct() {
       ...estadoInicial,
       paginaActual: 1,
     });
+  }
+  const resetFiltros=(e)=>{
+    window.location.reload();
   }
 
   useEffect(() => {
@@ -172,7 +178,7 @@ export default function SearchProduct() {
 
   return (
     <div>
-      <h1 className={s.searched}>{tester.search =="?undefined" ? "":tester.search.slice(1)}...</h1>
+      <h1 className={s.searched}>{tester.search =="?undefined" ? "":tester.search.slice(1).replaceAll('%20', ' ').toUpperCase()}...</h1>
       <div className={s.dadcontainer}>
         <div className={s.filtercontainer}>
           <div>
@@ -187,9 +193,7 @@ export default function SearchProduct() {
                     
                   {generos.length ?
                     generos.map(i =>(
-                      i.habilitado? 
-                        <Form.Check  className={s.gencheck} key={i.nombre} onClick={onPene} type="switch" id="custom-switch" name={i.nombre} label={i.nombre}/>  
-                       :null
+                        <Form.Check className={s.gencheck} key={i.nombre} onClick={onPene} type="switch" id="custom-switch" name={i.nombre} label={i.nombre}/>  
                         )) : null  //ACA SE DEBE MOSTRAR AL USUARIO QUE NO EXISTEN GENEROS EN CASO DE BUSQUEDA O AL INICIAR
                   }
                   </Form>
@@ -205,9 +209,7 @@ export default function SearchProduct() {
                     {
               keys.length ?
                 keys.map(i =>(
-                  i.habilitado?
                           <option className={s.option} key={i.id} value={i.nombre}>{i.nombre}</option>    
-                          :null
                 )) : null  //ACA SE DEBE MOSTRAR AL USUARIO QUE NO EXISTEN GENEROS EN CASO DE BUSQUEDA O AL INICIAR
           }
                   </Form.Select>
@@ -253,6 +255,7 @@ export default function SearchProduct() {
                 </Accordion.Body>
               </Accordion.Item >  
             </Accordion>
+            <Button variant="outline-secondary" className={s.buttonreset} onClick={resetFiltros}><FontAwesomeIcon className={s.iconreset} icon={faRotateRight}/></Button>
           </div>
         </div>
         <div className={`${a.productcards} container`}>

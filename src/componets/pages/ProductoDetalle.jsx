@@ -4,11 +4,11 @@ import css from "../../css/detailproducto.module.css"; // import Ronaldo
 import { useDispatch } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 import style from "../../css/productoCreate.module.css";
-import { todosDocumentos, unDocumentoCallback } from "../../utils/metodosFirebase";
+import { unDocumentoCallback } from "../../utils/metodosFirebase";
 import { detalle_producto_admin } from '../../redux/actions/productoAction';
 
 //      Subir imagenes    -   KUC
-import { actualizaDocumento, crearDocumento, subirArchivoMetodo } from "../../utils/metodosFirebase";
+import { actualizaDocumento, subirArchivoMetodo } from "../../utils/metodosFirebase";
 import { wait } from "@testing-library/user-event/dist/utils";
 
 
@@ -48,7 +48,6 @@ const ProductDetalle = () => {
     const [addGeneros, setAddGeneros] = useState([]);
     const [archivo, setArchivo] = useState([]);
     const [audio, setAudio] = useState(null);
-
     //    -------------------------------     Estados Ronaldo fin          -----------------------------
 
     //    -------------------------------     Handlers Ronaldo comienza     -----------------------------
@@ -98,6 +97,7 @@ const ProductDetalle = () => {
             ...licencia,
             [name]: value,
         });
+
         if (e.target.id === "ListaTipo")
         {
             const parrafo = document.getElementById("ParrafoDescripcion");
@@ -139,13 +139,11 @@ const ProductDetalle = () => {
         const filtrado = LicenCreadas.filter((licen) => {
             return licen.TipoLicencia !== e.target.id;
         });
-        /*
-        console.log("LicenCreadas", LicenCreadas);
-        console.log("filtrado", filtrado);
-        */
 
         setLicenCreadas(filtrado);
         setEstadoTipoLi(EstadoTipoLi.filter( x => x.nombre !== e.target.id ));
+
+        console.log("EstadoTipoLi", EstadoTipoLi);
 
         switch (e.target.id) {
             case tipoLicencias[0].nombre:
@@ -226,18 +224,12 @@ const ProductDetalle = () => {
         let ayuda = await detalle_producto_admin(id);
         setProducto({ ...ayuda });
         setLicenCreadas(ayuda.licencias);
+        setAddGeneros(ayuda.genero);
     }
-
+    
     const navegar = useNavigate();
     const [imagen, setImagen] = useState(null);
-
-
-    const [url, setURL] = useState(null);
     const [errores, setErrores] = useState({});
-
-    const dispatch = useDispatch();
-    const navigate = useNavigate();
-
     
     //    Aqui traigo los keys
     const [keys, setKeys] = useState([]);
@@ -259,21 +251,14 @@ const ProductDetalle = () => {
     };
 
 
-    /*      Uso de useEffect         */    
+    /*      Uso de useEffect para cargar el detalle y los select box         */
     useEffect(() => {
         detallado();
-
-        //    Aqui cargale los selectbox
         llenarGeneros();
         llenarKeys();
     }, []);
 
-    //  Segundo ejemplo
-    const [imageUpload, setImageUpload] = useState(null);
-    const [imageUrls, setImageUrls] = useState([]);
-
-
-    const ValidoProducto = ({ nombre, autor, descripcion, precio, key, tiempo, imagen }) => {
+    const ValidoProducto = ({ nombre, autor, descripcion, precio, key, tiempo }) => {
         const e = {};
         let valido = true;
         const regex = /^[0-9].*$/;
@@ -365,65 +350,67 @@ const ProductDetalle = () => {
         validar();
     };
 
+
     //    Aqui se edita el producto
     const handleSubmit = async (e) => {
         try
         {
-          e.preventDefault();
+            e.preventDefault();
+            let dataImagen = "";
+            let dataAudio = "";
 
-          let dataImagen = "";
-          let dataAudio = "";
+            if (errores.valido)
+            {
+                let prod = await actualizaDocumento("productos", id, {
+                    data: { ...producto, genero: addGeneros },
+                });
 
-          if (errores.valido)
-          {
-              let prod = await crearDocumento("productos", {
-                  data: { ...producto, genero: addGeneros },
-              });
+                const extension = imagen.type.substring(6, imagen.type.length);
+                const extensionAudio = audio.type.substring(6, audio.type.length);
+                const extensionArchivo = archivo.map((archi) => {
+                    return archi.type.substring(6, archi.type.length);
+                });
 
-              const extension = imagen.type.substring(6, imagen.type.length);
-              const extensionAudio = audio.type.substring(6, audio.type.length);
-              const extensionArchivo = archivo.map((archi) => {
-                  return archi.type.substring(6, archi.type.length);
-              });
+                let ruta = `productos/${prod.result.id}/beat.${extension}`;
+                let rutaArchivo = extensionArchivo.map((archi, i) => {
+                    return `productos/${prod.result.id}/${LicenCreadas[i].TipoLicencia}.${extensionArchivo[i]}`;
+                });
 
-              let ruta = `productos/${prod.result.id}/beat.${extension}`;
-              let rutaArchivo = extensionArchivo.map((archi, i) => {
-                  return `productos/${prod.result.id}/${LicenCreadas[i].TipoLicencia}.${extensionArchivo[i]}`;
-              });
+                await subirArchivoMetodo(ruta, imagen, (url) => {
+                    //console.log("url imagen " + url);
+                    dataImagen = url;
+                });
 
-              await subirArchivoMetodo(ruta, imagen, (url) => {
-                  //console.log("url imagen " + url);
-                  dataImagen = url;
-              });
+                let rutaAudio = `productos/${prod.result.id}/audio.${extensionAudio}`;
+                await subirArchivoMetodo(rutaAudio, audio, (url) => {
+                    //console.log("url audio " + url);
+                    dataAudio = url;
+                });
 
-              let rutaAudio = `productos/${prod.result.id}/audio.${extensionAudio}`;
-              await subirArchivoMetodo(rutaAudio, audio, (url) => {
-                  //console.log("url audio " + url);
-                  dataAudio = url;
-              });
+                for (let i = 0; i < LicenCreadas.length; i++) {
+                    await subirArchivoMetodo(rutaArchivo[i], archivo[i], (url) => {
+                        //console.log("url Archivo " + url);
+                        LicenCreadas[i].url = url; // [url1 , url2 ]
+                    });
+                }
 
-              for (let i = 0; i < LicenCreadas.length; i++) {
-                  await subirArchivoMetodo(rutaArchivo[i], archivo[i], (url) => {
-                      //console.log("url Archivo " + url);
-                      LicenCreadas[i].url = url; // [url1 , url2 ]
-                  });
-              }
-              await actualizaDocumento("productos", prod.result.id, {
-                  data: {
-                      imagen: dataImagen,
-                      audio: dataAudio,
-                      licencias: LicenCreadas,
-                  },
-              });
+                await actualizaDocumento("productos", id, {
+                    data: {
+                        imagen: dataImagen,
+                        audio: dataAudio,
+                        licencias: LicenCreadas,
+                    },
+                });
 
-              alert("Producto editado !!!");
-              navegar("/producto_lista");
-          }
+                alert("Producto editado !!!");
+                navegar("/producto_lista");
+            }
         }
         catch (err)
         {
             console.log("Error generado 2 :", err);
         }
+        console.log(errores);
     };
 
 
@@ -439,21 +426,21 @@ const ProductDetalle = () => {
                             <Form.Label>Nombre producto :</Form.Label>
                             <Form.Control name="nombre" type="text" value={ producto?.nombre } className={`${style.textbox}`} placeholder="Ingrese nombre producto" onChange={handleInputChange} isInvalid={!!errores.nombre} />
                             <Form.Control.Feedback type={"invalid"}>
-                                {errores.nombre}
+                                { errores.nombre }
                             </Form.Control.Feedback>
                         </div>
                         <div className="form-group input-group input-group-text my-3 d-flex justify-content-between">
                             <Form.Label>Autor producto :</Form.Label>
                             <Form.Control name="autor" type="text" value={ producto?.autor } className={`${style.textbox}`} placeholder="Ingrese autor producto" onChange={handleInputChange} isInvalid={!!errores.autor} />
                             <Form.Control.Feedback type={"invalid"}>
-                                {errores.autor}
+                                { errores.autor }
                             </Form.Control.Feedback>
                         </div>
                         <div className="form-group input-group input-group-text my-3 d-flex justify-content-between">
                             <Form.Label>Descripcion producto :</Form.Label>
                             <Form.Control name="descripcion" type="text" value={ producto?.descripcion } className={`${style.textbox}`} placeholder="Ingrese descripcion producto" onChange={handleInputChange} isInvalid={!!errores.descripcion} />
                             <Form.Control.Feedback type={"invalid"}>
-                                {errores.descripcion}
+                                { errores.descripcion }
                             </Form.Control.Feedback>
                         </div>
                         <div className="form-group input-group input-group-text my-3 d-flex justify-content-between">
@@ -464,8 +451,8 @@ const ProductDetalle = () => {
                                 {
                                     generos.length ?
                                         generos.map((e) => (
-                                            <option key={e.nombre} value={e.nombre}>
-                                            {e.nombre}
+                                            <option key={e.nombre} value={e.nombre}  >
+                                                {e.nombre}
                                             </option>
                                         ))
                                     : null
@@ -508,7 +495,10 @@ const ProductDetalle = () => {
                         </div>
                         <div className="form-group input-group input-group-text my-3 d-flex justify-content-between">
                             <Form.Label>Imagen producto :</Form.Label>
-                            <Form.Control type="file" accept="image/png, image/jpg, image/jpeg" onChange={ handleSubirImagen } />
+                            <Form.Control type="file" accept="image/png, image/jpg, image/jpeg" onChange={ handleSubirImagen } />                            
+                            <div className='form-group input-group input-group-text my-3 d-flex justify-content-between'>
+                                <img src={producto?.imagen} alt='' width="80px" height="80px" />
+                            </div>
                             <br />
                             <Form.Control.Feedback type={"invalid"}>
                                 { errores.imagen }
@@ -526,7 +516,7 @@ const ProductDetalle = () => {
                             // LISTA DE LICENCIAS ------- RONALDO ----------------------------------------------------------------------
                         }
                         <div>
-                            <Button className={`btn btn-secondary`} onClick={handlePopUp}>
+                            <Button className={`btn btn-secondary mt-3`} onClick={ handlePopUp }>
                                 Agregar Licencia
                             </Button>
                             <div className={`${css.divLicenciasCrear} shadow-sm `}>
@@ -561,7 +551,6 @@ const ProductDetalle = () => {
                     </Form>
                 </Card>
             </Container>
-
             <Modal show={popUp.state}>
                 <ModalHeader>Incerta las Licencias</ModalHeader>
                 <ModalBody>
@@ -571,9 +560,13 @@ const ProductDetalle = () => {
                           <Form.Select id="ListaTipo" name="TipoLicencia" onChange={ handlerLicencia } >
                               <option id="opSelector">Seleccionar</option>
                               {
-                                  EstadoTipoLi?.map((licen, i) => (
-                                      <option key={i}>{ licen.nombre }</option>
-                                  ))
+                                  EstadoTipoLi.map((licen, i) => {
+                                      if(LicenCreadas.find( x => x.TipoLicencia === licen.nombre))
+                                      {
+                                         return   
+                                      }
+                                      return <option key={i}>{ licen.nombre }</option>
+                                  })
                               }
                           </Form.Select>
                       </Form.Group>
@@ -592,7 +585,7 @@ const ProductDetalle = () => {
                               <p id="ParrafoDescripcion"></p>
                           </Form.Label>
                       </Form.Group>
-                      <div className="form-group input-group   d-flex justify-content-center">
+                      <div className="form-group input-group d-flex justify-content-center">
                           <Button id="AgregarLicencia" variant="primary" type="button" onClick={ handlerAgregarLicen } >
                               Agregar Licencia
                           </Button>

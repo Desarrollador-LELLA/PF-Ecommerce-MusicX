@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@500;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Unbounded:wght@900&display=swap');
 
 /* .img_biblioteca {
   background: black;
@@ -55,12 +57,29 @@
 }
 
 
+
 .reproducir audio {
   visibility: hidden;
 }
 
 
+.descarga{
+text-decoration: none;
+color: rgb(74, 20, 125);
+}
 
+.descarga:hover{
+  color: rgb(125, 8, 172);
+}
+
+
+
+
+
+
+.reproducir audio {
+  visibility: hidden;
+}
 
 
 
@@ -83,20 +102,14 @@
   width: 100%;
   height: 15%;
   text-align: center;
-  font-family: Poppins,sans-serif;
+  font-family: 'Unbounded', cursive;
   font-style: normal;
   color: #2B7E74;
   text-align: center;
 }
 
-/* .elementos {
-  display: flex;
-  width: 100%;
-  height: 100%;
-  justify-content: center;
-  gap: 50px;
-  flex-wrap: wrap;
- 
-} */
 
-/* s */
+
+
+
+

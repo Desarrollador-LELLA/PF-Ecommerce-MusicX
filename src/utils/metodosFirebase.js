@@ -8,7 +8,7 @@ import {
   allStor,
 } from "../firebaseInicial/firebase";
 
-const retorno = { mensaje: "", result: {}, confirma: false };
+let retorno = { mensaje: "", result: {}, confirma: false };
 
 export const subirArchivo = async (archivoSeleccionado, idUsuario) => {
   if (archivoSeleccionado == null) return;
