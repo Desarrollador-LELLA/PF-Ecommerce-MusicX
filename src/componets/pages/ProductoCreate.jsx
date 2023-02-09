@@ -182,11 +182,7 @@ const ProductoCreate = () => {
         tiempo: 0,
     });
 
-    const [url, setURL] = useState(null);
     const [errores, setErrores] = useState({});
-
-    const dispatch = useDispatch();
-    const navigate = useNavigate();
     
     //    Aqui traigo los keys
     const [keys, setKeys] = useState([]);
@@ -212,11 +208,6 @@ const ProductoCreate = () => {
         llenarGeneros();
         llenarKeys();
     }, []);
-
-    //  Segundo ejemplo
-    const [imageUpload, setImageUpload] = useState(null);
-    const [imageUrls, setImageUrls] = useState([]);
-
 
     const ValidoProducto = ({ nombre, autor, descripcion, precio, key, tiempo, imagen }) => {
         const e = {};

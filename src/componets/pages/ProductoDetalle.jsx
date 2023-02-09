@@ -228,17 +228,9 @@ const ProductDetalle = () => {
         setAddGeneros(ayuda.genero);
     }
     
-
     const navegar = useNavigate();
     const [imagen, setImagen] = useState(null);
-
-
-    const [url, setURL] = useState(null);
     const [errores, setErrores] = useState({});
-
-    const dispatch = useDispatch();
-    const navigate = useNavigate();
-
     
     //    Aqui traigo los keys
     const [keys, setKeys] = useState([]);
@@ -260,17 +252,12 @@ const ProductDetalle = () => {
     };
 
 
-    /*      Uso de useEffect         */    
+    /*      Uso de useEffect para cargar el detalle y los select box         */
     useEffect(() => {
         detallado();
         llenarGeneros();
         llenarKeys();
     }, []);
-
-    //  Segundo ejemplo
-    const [imageUpload, setImageUpload] = useState(null);
-    const [imageUrls, setImageUrls] = useState([]);
-
 
     const ValidoProducto = ({ nombre, autor, descripcion, precio, key, tiempo }) => {
         const e = {};
@@ -415,8 +402,6 @@ const ProductDetalle = () => {
                         licencias: LicenCreadas,
                     },
                 });
-
-                console.log(errores.valido);
 
                 alert("Producto editado !!!");
                 navegar("/producto_lista");
@@ -567,7 +552,6 @@ const ProductDetalle = () => {
                     </Form>
                 </Card>
             </Container>
-
             <Modal show={popUp.state}>
                 <ModalHeader>Incerta las Licencias</ModalHeader>
                 <ModalBody>
@@ -614,9 +598,6 @@ const ProductDetalle = () => {
                 </ModalBody>
                 <ModalFooter></ModalFooter>
             </Modal>
-            {
-            console.log("LicenCreadas 10", LicenCreadas)
-            }
         </div>
     );
 };
