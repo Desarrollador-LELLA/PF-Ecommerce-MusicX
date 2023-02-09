@@ -53,7 +53,10 @@ const Home = () => {
       <Container>
         <Row>
           <div className={`d-flex flex-wrap justify-content-center ${s.containerTopBeats}`}>
+          <h1 className={s.lastest}>RECIENTES!</h1>
+          <Container className={s.topcar}>
           <TopBeats/>
+          </Container>
       <Container className={s.topbeats}>
         <h1 className="justify-content-center">TOP BEATS!</h1>
       </Container>

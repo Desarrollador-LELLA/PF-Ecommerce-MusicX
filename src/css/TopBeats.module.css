@@ -4,7 +4,8 @@
 .carrusel {
   margin: auto;
   align-items: center;
-  width: 50vw;
+
+
 }
 .carrusel h3 {
   font-family: 'Unbounded', cursive;
@@ -37,7 +38,7 @@
 }
 
 .carrusel div {
-  padding: 30px;
+ 
 }
 
 .carrusel p {
@@ -57,7 +58,6 @@
 }
 
 .carrusel img {
-  padding: 2%;
   border-radius: 10%;
 }
 
