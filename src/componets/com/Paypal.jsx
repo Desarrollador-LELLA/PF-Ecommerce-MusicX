@@ -25,7 +25,7 @@ const PaypalButton = ({ currency, showSpinner , amount, products, productos, han
                             }
                         }).then((orderId) => {
                             return orderId;
-                        });
+                        })
                 }
 
     const onApprove = (data, actions) => {
