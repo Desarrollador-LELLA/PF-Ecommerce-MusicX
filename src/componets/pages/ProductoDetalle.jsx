@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Button, Card, Container, Form, Modal, ModalBody, ModalHeader, ModalFooter, InputGroup, ListGroup, ButtonGroup } from "react-bootstrap";
+import { Button, Card, Container, Form, Modal, ModalBody, ModalHeader, ModalFooter, InputGroup, ListGroup, ButtonGroup, Spinner } from "react-bootstrap";
 import css from "../../css/detailproducto.module.css"; // import Ronaldo
 import { useDispatch } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
@@ -48,6 +48,8 @@ const ProductDetalle = () => {
     const [addGeneros, setAddGeneros] = useState([]);
     const [archivo, setArchivo] = useState([]);
     const [audio, setAudio] = useState(null);
+    //const [loadingPro, setLoadingProducto] = useState(true);
+
     //    -------------------------------     Estados Ronaldo fin          -----------------------------
 
     //    -------------------------------     Handlers Ronaldo comienza     -----------------------------
@@ -61,6 +63,7 @@ const ProductDetalle = () => {
         const selector = document.getElementById("opSelector");
         AgregarLicencia.disabled = true;
         let aux = false;
+        
         if (lista.value !== "Seleccionar")
         {
             agregarArchivo.disabled = false;
@@ -142,8 +145,6 @@ const ProductDetalle = () => {
 
         setLicenCreadas(filtrado);
         setEstadoTipoLi(EstadoTipoLi.filter( x => x.nombre !== e.target.id ));
-
-        console.log("EstadoTipoLi", EstadoTipoLi);
 
         switch (e.target.id) {
             case tipoLicencias[0].nombre:
@@ -240,7 +241,6 @@ const ProductDetalle = () => {
         });
     };
 
-
     //    Aqui traigo los generos
     const [generos, setGeneros] = useState([]);
 
@@ -250,7 +250,6 @@ const ProductDetalle = () => {
         });
     };
 
-
     /*      Uso de useEffect para cargar el detalle y los select box         */
     useEffect(() => {
         detallado();
@@ -258,14 +257,15 @@ const ProductDetalle = () => {
         llenarKeys();
     }, []);
 
-    const ValidoProducto = ({ nombre, autor, descripcion, precio, key, tiempo }) => {
+
+    const ValidoProducto = ({ nombre, autor, descripcion, precio, key, tiempo, imagen }) => {
         const e = {};
         let valido = true;
         const regex = /^[0-9].*$/;
 
         if (nombre.toString().trim().length === 0)
         {
-            e.nombre = "El nombre esta Vacio";
+            e.nombre = "El nombre esta vacio";
             valido = false;
         }
         else if (nombre.length > 50) {
@@ -275,7 +275,7 @@ const ProductDetalle = () => {
 
         if (autor.toString().trim().length === 0)
         {
-            e.autor = "El autor esta Vacio";
+            e.autor = "El autor esta vacio";
             valido = false;
         }
         else if (autor.length > 50)
@@ -286,7 +286,7 @@ const ProductDetalle = () => {
 
         if (descripcion.toString().trim().length === 0)
         {
-            e.descripcion = "La descripcion esta vacio";
+            e.descripcion = "La descripcion esta vacia";
             valido = false;
         }
         else if (descripcion.length > 50)
@@ -302,7 +302,7 @@ const ProductDetalle = () => {
 
         if (tiempo.toString().trim().length === 0)
         {
-            e.tiempo = "El Tiempo esta Vacio";
+            e.tiempo = "El Tiempo esta vacio";
             valido = false;
         }
         else if (regex.test(tiempo) !== true)
@@ -315,9 +315,9 @@ const ProductDetalle = () => {
             e.tiempo = "El Tiempo debe ser mayor a cero";
             valido = false;
         }
-        
+
         return { ...e, valido };
-    };
+    };    
 
 
     //    -------------         Handlers de Producto      ------------------------
@@ -332,7 +332,7 @@ const ProductDetalle = () => {
         setErrores(
             ValidoProducto({
                 ...producto,
-                [e.target.name]: e.target.value,
+                [e.target.name]: e.target.value
             })
         );
     };
@@ -350,7 +350,6 @@ const ProductDetalle = () => {
         validar();
     };
 
-
     //    Aqui se edita el producto
     const handleSubmit = async (e) => {
         try
@@ -361,37 +360,49 @@ const ProductDetalle = () => {
 
             if (errores.valido)
             {
+                //setLoadingProducto(false);
                 let prod = await actualizaDocumento("productos", id, {
                     data: { ...producto, genero: addGeneros },
                 });
 
-                const extension = imagen.type.substring(6, imagen.type.length);
-                const extensionAudio = audio.type.substring(6, audio.type.length);
                 const extensionArchivo = archivo.map((archi) => {
                     return archi.type.substring(6, archi.type.length);
                 });
 
-                let ruta = `productos/${prod.result.id}/beat.${extension}`;
                 let rutaArchivo = extensionArchivo.map((archi, i) => {
                     return `productos/${prod.result.id}/${LicenCreadas[i].TipoLicencia}.${extensionArchivo[i]}`;
                 });
 
-                await subirArchivoMetodo(ruta, imagen, (url) => {
-                    //console.log("url imagen " + url);
-                    dataImagen = url;
-                });
-
-                let rutaAudio = `productos/${prod.result.id}/audio.${extensionAudio}`;
-                await subirArchivoMetodo(rutaAudio, audio, (url) => {
-                    //console.log("url audio " + url);
-                    dataAudio = url;
-                });
-
                 for (let i = 0; i < LicenCreadas.length; i++) {
                     await subirArchivoMetodo(rutaArchivo[i], archivo[i], (url) => {
-                        //console.log("url Archivo " + url);
-                        LicenCreadas[i].url = url; // [url1 , url2 ]
+                        LicenCreadas[i].url = url;
                     });
+                }
+
+                if(imagen)
+                {
+                    const extension = imagen.type.substring(6, imagen.type.length);
+                    let ruta = `productos/${prod.result.id}/beat.${extension}`;
+                    await subirArchivoMetodo(ruta, imagen, (url) => {
+                        dataImagen = url;
+                    });
+                }
+                else
+                {
+                    dataImagen = producto.imagen
+                }
+
+                if(audio)
+                {
+                    const extensionAudio = audio.type.substring(6, audio.type.length);
+                    let rutaAudio = `productos/${prod.result.id}/audio.${extensionAudio}`;
+                    await subirArchivoMetodo(rutaAudio, audio, (url) => {
+                        dataAudio = url;
+                    });
+                }
+                else 
+                {
+                    dataAudio = producto.audio;
                 }
 
                 await actualizaDocumento("productos", id, {
@@ -408,7 +419,9 @@ const ProductDetalle = () => {
         }
         catch (err)
         {
+            //setLoadingProducto(true);
             console.log("Error generado 2 :", err);
+            alert("ocurrio un error, revisa todo los campos");
         }
         console.log(errores);
     };
@@ -495,7 +508,7 @@ const ProductDetalle = () => {
                         </div>
                         <div className="form-group input-group input-group-text my-3 d-flex justify-content-between">
                             <Form.Label>Imagen producto :</Form.Label>
-                            <Form.Control type="file" accept="image/png, image/jpg, image/jpeg" onChange={ handleSubirImagen } />                            
+                            <Form.Control name="imagen" type="file" accept="image/png, image/jpg, image/jpeg" onChange={ handleSubirImagen } isInvalid={!!errores.imagen} />
                             <div className='form-group input-group input-group-text my-3 d-flex justify-content-between'>
                                 <img src={producto?.imagen} alt='' width="80px" height="80px" />
                             </div>
@@ -508,9 +521,6 @@ const ProductDetalle = () => {
                             <Form.Label>Audio Producto :</Form.Label>
                             <Form.Control type="file" accept="audio/mp3 , audio/wav" onChange={ handleAudio } />
                             <br />
-                            <Form.Control.Feedback type={"invalid"}>
-                                { errores.imagen }
-                            </Form.Control.Feedback>
                         </div>
                         {
                             // LISTA DE LICENCIAS ------- RONALDO ----------------------------------------------------------------------
@@ -547,12 +557,32 @@ const ProductDetalle = () => {
                             <Button className={`${style.button} text-center btn btn-primary`} type="submit" variant="primary" >
                                 Editar
                             </Button>
+                            {/*
+                                loadingPro ?
+                                (
+                                    <Button className={`${style.button} text-center btn btn-primary`} type="submit" variant="primary" >
+                                        Editar
+                                    </Button>
+                                ) : 
+                                (
+                                    <div>
+                                        <Button variant="primary" disabled>
+                                            <Spinner as="span" animation="border" size="sm" role="status" aria-hidden="true" />
+                                                <span className="visually-hidden">Creando...</span>
+                                        </Button>{" "}
+                                        <Button variant="primary" disabled>
+                                            <Spinner as="span" animation="grow" size="sm" role="status" aria-hidden="true" />
+                                                Creando...
+                                        </Button>
+                                    </div>
+                                )
+                            */}
                         </div>
                     </Form>
                 </Card>
             </Container>
             <Modal show={popUp.state}>
-                <ModalHeader>Incerta las Licencias</ModalHeader>
+                <ModalHeader>Inserta las Licencias</ModalHeader>
                 <ModalBody>
                     <Form>
                       <Form.Group className="mb-3">

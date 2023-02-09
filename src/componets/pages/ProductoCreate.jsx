@@ -1,18 +1,5 @@
 import React, { useState, useEffect } from "react";
-import {
-  Button,
-  Card,
-  Container,
-  Form,
-  Modal,
-  ModalBody,
-  ModalHeader,
-  ModalFooter,
-  InputGroup,
-  ListGroup,
-  ButtonGroup,
-  Spinner,
-} from "react-bootstrap";
+import { Button, Card, Container, Form, Modal, ModalBody, ModalHeader, ModalFooter, InputGroup, ListGroup, ButtonGroup, Spinner } from "react-bootstrap";
 import css from "../../css/detailproducto.module.css"; // import Ronaldo
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
@@ -20,11 +7,7 @@ import style from "../../css/productoCreate.module.css";
 import { unDocumentoCallback } from "../../utils/metodosFirebase";
 
 //      Subir imagenes    -   KUC
-import {
-  actualizaDocumento,
-  crearDocumento,
-  subirArchivoMetodo,
-} from "../../utils/metodosFirebase";
+import { actualizaDocumento, crearDocumento, subirArchivoMetodo } from "../../utils/metodosFirebase";
 import { wait } from "@testing-library/user-event/dist/utils";
 
 const ProductoCreate = () => {
