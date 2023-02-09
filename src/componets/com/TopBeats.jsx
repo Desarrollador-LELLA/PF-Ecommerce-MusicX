@@ -25,17 +25,17 @@ export default function TopBeats() {
             <Carousel.Item>
               <Image
                 className="d-block w-100"
-                src={productos[0].data().imagen}
+                src={productos[productos.length -1].data().imagen}
                 alt="First slide"
               />
               <Carousel.Caption>
-                <Link to={productos[0].id}>
+                <Link to={productos[[productos.length -1]].id}>
                   <h3 className={`display-1 ${s.title}`}>
-                    {productos[0].data().nombre}
+                    {productos[[productos.length -1]].data().nombre}
                   </h3>
                 </Link>
                   <span className={s.contby}>
-                    <p className="display-4">BY:{productos[0].data().autor}</p>
+                    <p className="display-4">BY:{productos[[productos.length -1]].data().autor}</p>
                   </span>
               </Carousel.Caption>
             </Carousel.Item>
@@ -43,30 +43,30 @@ export default function TopBeats() {
               <Image
                 fluid="true"
                 className="d-block w-100"
-                src={productos[1].data().imagen}
+                src={productos[[productos.length -2]].data().imagen}
                 alt="Third slide"
               />
 
               <Carousel.Caption>
-                <Link to={productos[1].id}>
-                  <h3 className="display-1">{productos[1].data().nombre}</h3>
+                <Link to={productos[[productos.length -2]].id}>
+                  <h3 className="display-1">{productos[[productos.length -2]].data().nombre}</h3>
                 </Link>
-                <p className="display-4">BY:{productos[1].data().autor}</p>
+                <p className="display-4">BY:{productos[[productos.length -2]].data().autor}</p>
               </Carousel.Caption>
             </Carousel.Item>
             <Carousel.Item>
               <Image
                 fluid="true"
                 className="d-block w-100"
-                src={productos[2].data().imagen}
+                src={productos[[productos.length -3]].data().imagen}
                 alt="Third slide"
               />
 
               <Carousel.Caption>
                 <Link to={productos[2].id}>
-                  <h3 className="display-1">{productos[2].data().nombre}</h3>
+                  <h3 className="display-1">{productos[[productos.length -3]].data().nombre}</h3>
                 </Link>
-                <p className="display-4">BY:{productos[2].data().autor}</p>
+                <p className="display-4">BY:{productos[[productos.length -3]].data().autor}</p>
               </Carousel.Caption>
             </Carousel.Item>
           </Carousel>
