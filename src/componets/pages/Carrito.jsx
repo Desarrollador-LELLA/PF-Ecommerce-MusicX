@@ -112,7 +112,6 @@ const Carrito = () => {
           <p>{infoTotal.join(" , ")}</p>
         </div>
         <div className={styleCarrito.paypalButton}>
-            <PayPalScriptProvider options={{ "client-id": "AViYeevPmBZP9zuIlYewQ3mT85uwwkbkwAlll9jDrEoFafYxRMI7o2omsscx3EbICY0fpkSE5VY0fXIO", "merchant-id": "WEMW3RY93ABLA" }}>
             <PaypalButton
               currency={"USD"}
               showSpinner={false}
@@ -121,7 +120,6 @@ const Carrito = () => {
               handleBiblioteca={handleBiblioteca}
               handleAlert={handleAlert}
             />
-        </PayPalScriptProvider> 
         </div>
       </div>
     </div>
