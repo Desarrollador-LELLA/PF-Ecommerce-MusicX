@@ -253,10 +253,8 @@ const ProductoCreate = () => {
     if (!tiempo) {
       e.tiempo = "El Tiempo esta Vacio";
       valido = false;
-    } else if (tiempo <= 60) {
-      e.tiempo = "Inserte un Tiempo mayor a 60 valido";
-      valido = false;
     }
+
     if (!generos.length) {
       e.generos = "Agrega porlomenos 1 genero";
       valido = false;

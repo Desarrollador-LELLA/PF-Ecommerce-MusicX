@@ -1,45 +1,74 @@
 import React, { useState, useEffect } from "react";
+
 import { Button, Card, Container, Form, Modal, ModalBody, ModalHeader, ModalFooter, InputGroup, ListGroup, ButtonGroup, Spinner } from "react-bootstrap";
+
 import css from "../../css/detailproducto.module.css"; // import Ronaldo
 import { useDispatch } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 import style from "../../css/productoCreate.module.css";
 import { unDocumentoCallback } from "../../utils/metodosFirebase";
-import { detalle_producto_admin } from '../../redux/actions/productoAction';
+import { detalle_producto_admin } from "../../redux/actions/productoAction";
 
 //      Subir imagenes    -   KUC
-import { actualizaDocumento, subirArchivoMetodo } from "../../utils/metodosFirebase";
+import {
+  actualizaDocumento,
+  subirArchivoMetodo,
+} from "../../utils/metodosFirebase";
 import { wait } from "@testing-library/user-event/dist/utils";
 
-
 const ProductDetalle = () => {
-  
-    //    -------------------------------     Estados de Ronaldo -----------------------------
-    const tipoLicencias = [
-        {
-          nombre: "Licencia Tipo 1",
-          descripcion: "Esta licencia entregará al usuario un archivo .mp3",
-        },
-        {
-          nombre: "Licencia Tipo 2",
-          descripcion: "Esta licencia entregará al usuario un archivo .wav",
-        },
+  //    -------------------------------     Estados de Ronaldo -----------------------------
+  const tipoLicencias = [
+    {
+      nombre: "Licencia Tipo 1",
+      descripcion: "Esta licencia entregará al usuario un archivo .mp3",
+    },
+    {
+      nombre: "Licencia Tipo 2",
+      descripcion: "Esta licencia entregará al usuario un archivo .wav",
+    },
 
-        {
-          nombre: "Licencia Tipo 3",
-          descripcion:
-            "Esta licencia entregará al usuario un archivo .zip o .rar descomprimible que contendrá la pista dividida en canales por stems",
-        },
-        {
-          nombre: "Licencia Tipo 4",
-          descripcion:
-            "Esta licencia te permitirá obtener todas las credenciales y derechos sobre el beat con todos sus niveles de archivo",
-        }
-    ];
+    {
+      nombre: "Licencia Tipo 3",
+      descripcion:
+        "Esta licencia entregará al usuario un archivo .zip o .rar descomprimible que contendrá la pista dividida en canales por stems",
+    },
+    {
+      nombre: "Licencia Tipo 4",
+      descripcion:
+        "Esta licencia te permitirá obtener todas las credenciales y derechos sobre el beat con todos sus niveles de archivo",
+    },
+  ];
 
-    const [EstadoTipoLi, setEstadoTipoLi] = useState(tipoLicencias);
-    const [licencia, setLicencia] = useState({});
-    const [LicenCreadas, setLicenCreadas] = useState([]);
+  const [EstadoTipoLi, setEstadoTipoLi] = useState(tipoLicencias);
+  const [licencia, setLicencia] = useState({});
+  const [LicenCreadas, setLicenCreadas] = useState([]);
+  const [loadingPro, setLoadingProducto] = useState(true);
+
+  const [popUp, setPopUp] = useState({
+    state: false,
+  });
+
+  const [addGeneros, setAddGeneros] = useState([]);
+  const [archivo, setArchivo] = useState([]);
+  const [audio, setAudio] = useState(null);
+  //    -------------------------------     Estados Ronaldo fin          -----------------------------
+
+  //    -------------------------------     Handlers Ronaldo comienza     -----------------------------
+
+  function validar() {
+    const lista = document.getElementById("ListaTipo");
+    const agregarArchivo = document.getElementById("AgregarArchivo");
+    const precio = document.getElementById("Precio");
+    const AgregarLicencia = document.getElementById("AgregarLicencia");
+    const selector = document.getElementById("opSelector");
+    AgregarLicencia.disabled = true;
+    let aux = false;
+    if (lista.value !== "Seleccionar") {
+      agregarArchivo.disabled = false;
+      selector?.remove();
+    }
+
 
     const [popUp, setPopUp] = useState({
         state: false,
@@ -52,7 +81,8 @@ const ProductDetalle = () => {
 
     //    -------------------------------     Estados Ronaldo fin          -----------------------------
 
-    //    -------------------------------     Handlers Ronaldo comienza     -----------------------------
+    return aux;
+  }
 
     function validar()
     {
@@ -70,78 +100,48 @@ const ProductDetalle = () => {
             selector?.remove();
         }
 
-        if (!agregarArchivo.value)
-        {
-            AgregarLicencia.disabled = true;
+    if (e.target.id === "ListaTipo") {
+      const parrafo = document.getElementById("ParrafoDescripcion");
+      tipoLicencias.forEach((element) => {
+        if (element.nombre === e.target.value) {
+          parrafo.innerHTML = element.descripcion;
         }
-        else if (!precio.value)
-        {
-            AgregarLicencia.disabled = true;
-        }
-        else
-        {
-            AgregarLicencia.disabled = false;
-            aux = true;
-        }
-
-        return aux;
+      });
     }
+  };
 
-    const handlePopUp = () => {
-        setPopUp({
-            state: !popUp.state,
-        });
-    };
+  const handlerAgregarLicen = (e) => {
+    if (!validar()) return alert("llene los campos");
 
-    const handlerLicencia = (e) => {
-        validar();
-        const { name, value } = e.target;
-        setLicencia({
-            ...licencia,
-            [name]: value,
-        });
+    const filtradoTipoLicencia = EstadoTipoLi.filter((licen) => {
+      return licen.nombre !== licencia.TipoLicencia;
+    });
 
-        if (e.target.id === "ListaTipo")
-        {
-            const parrafo = document.getElementById("ParrafoDescripcion");
-            tipoLicencias.forEach((element) => {
-                if (element.nombre === e.target.value)
-                {
-                    parrafo.innerHTML = element.descripcion;
-                }
-            });
-        }
-    };
+    setEstadoTipoLi(filtradoTipoLicencia);
+    setLicenCreadas([
+      ...LicenCreadas,
+      {
+        ...licencia,
+        descripcion: document.getElementById("ParrafoDescripcion").innerHTML,
+      },
+    ]);
 
-    const handlerAgregarLicen = (e) => {
-        if (!validar()) return alert("llene los campos");
+    setLicencia({});
+    handlePopUp();
+  };
 
-        const filtradoTipoLicencia = EstadoTipoLi.filter((licen) => {
-            return licen.nombre !== licencia.TipoLicencia;
-        });
+  const handlerEliminar = (e) => {
+    const eliArchivo = archivo.filter(
+      (obj, i) => i !== parseInt(e.target.value)
+    );
+    setArchivo(eliArchivo);
 
-        setEstadoTipoLi(filtradoTipoLicencia);
-        setLicenCreadas([
-            ...LicenCreadas,
-            {
-                ...licencia,
-                descripcion: document.getElementById("ParrafoDescripcion").innerHTML,
-            },
-        ]);
+    const filtrado = LicenCreadas.filter((licen) => {
+      return licen.TipoLicencia !== e.target.id;
+    });
 
-        setLicencia({});
-        handlePopUp();
-    };
-
-    const handlerEliminar = (e) => {
-        const eliArchivo = archivo.filter(
-            (obj, i) => i !== parseInt(e.target.value)
-        );
-        setArchivo(eliArchivo);
-
-        const filtrado = LicenCreadas.filter((licen) => {
-            return licen.TipoLicencia !== e.target.id;
-        });
+    setLicenCreadas(filtrado);
+    setEstadoTipoLi(EstadoTipoLi.filter((x) => x.nombre !== e.target.id));
 
         setLicenCreadas(filtrado);
         setEstadoTipoLi(EstadoTipoLi.filter( x => x.nombre !== e.target.id ));
@@ -187,68 +187,111 @@ const ProductDetalle = () => {
                 return;
             }
         }
-    };
-  
-    const handlerAgregarGenero = (e) => {
-        if (e.target.value === "All") return;
-        setAddGeneros([...addGeneros, e.target.value]);
-        setGeneros(generos.filter((gen) => gen.nombre !== e.target.value));
-    };
-    
-    const handlerEliminarGenero = (e) => {
-        setGeneros([...generos, { nombre: e.target.value }]);
-        setAddGeneros(addGeneros.filter((genero) => genero !== e.target.value));
-    };
-
-    //    -------------------------------     Handlers Ronaldo terminan       -----------------------------
-
-
-    //    -------------------------------     Codigo de Kenneth          ---------------------------------
-
-    const [producto, setProducto] = useState({
-        nombre: "",
-        autor: "",
-        descripcion: "",
-        key: "",
-        tiempo: 0,
-        licencias: [],
-        genero: [],
-        imagen: ""
-    });
-
-    
-    //  Aqui uso el ID traido para llenar los datos
-    const params = useParams();
-    const id = params.id.trim();
-
-    const detallado = async () => {
-        let ayuda = await detalle_producto_admin(id);
-        setProducto({ ...ayuda });
-        setLicenCreadas(ayuda.licencias);
-        setAddGeneros(ayuda.genero);
+      case tipoLicencias[3].nombre:
+        if (EstadoTipoLi.find((x) => x.nombre === tipoLicencias[3].nombre)) {
+          return setEstadoTipoLi([...EstadoTipoLi]);
+        } else {
+          return setEstadoTipoLi([tipoLicencias[3], ...EstadoTipoLi]);
+        }
+      default: {
+        return;
+      }
     }
-    
-    const navegar = useNavigate();
-    const [imagen, setImagen] = useState(null);
-    const [errores, setErrores] = useState({});
-    
-    //    Aqui traigo los keys
-    const [keys, setKeys] = useState([]);
+  };
 
-    const llenarKeys = async () => {
-        await unDocumentoCallback("keys", "dogKeys", (retorno) => {
-            setKeys(retorno.result.keys);
-        });
-    };
+  const handlerAgregarGenero = (e) => {
+    if (e.target.value === "All") return;
+    setAddGeneros([...addGeneros, e.target.value]);
+    setGeneros(generos.filter((gen) => gen.nombre !== e.target.value));
+  };
+
+  const handlerEliminarGenero = (e) => {
+    setGeneros([...generos, { nombre: e.target.value }]);
+    setAddGeneros(addGeneros.filter((genero) => genero !== e.target.value));
+  };
+
+  //    -------------------------------     Handlers Ronaldo terminan       -----------------------------
+
+  //    -------------------------------     Codigo de Kenneth          ---------------------------------
+
+  const [producto, setProducto] = useState({
+    nombre: "",
+    autor: "",
+    descripcion: "",
+    key: "",
+    tiempo: 0,
+    licencias: [],
+    genero: [],
+    imagen: "",
+  });
+
+  //  Aqui uso el ID traido para llenar los datos
+  const params = useParams();
+  const id = params.id.trim();
+
+  const detallado = async () => {
+    let ayuda = await detalle_producto_admin(id);
+    setProducto({ ...ayuda });
+    setLicenCreadas(ayuda.licencias);
+    setAddGeneros(ayuda.genero);
+  };
+
+  const navegar = useNavigate();
+  const [imagen, setImagen] = useState(null);
+  const [errores, setErrores] = useState({});
+
+  //    Aqui traigo los keys
+  const [keys, setKeys] = useState([]);
+
+  const llenarKeys = async () => {
+    await unDocumentoCallback("keys", "dogKeys", (retorno) => {
+      setKeys(retorno.result.keys);
+    });
+  };
+
+  //    Aqui traigo los generos
+  const [generos, setGeneros] = useState([]);
+
+  const llenarGeneros = async () => {
+    await unDocumentoCallback("generos", "docGenero", (retorno) => {
+      setGeneros(retorno.result.generos);
+    });
+  };
+
+  /*      Uso de useEffect para cargar el detalle y los select box         */
+  useEffect(() => {
+    detallado();
+    llenarGeneros();
+    llenarKeys();
+  }, []);
+
+  const ValidoProducto = ({
+    nombre,
+    autor,
+    descripcion,
+    precio,
+    key,
+    tiempo,
+  }) => {
+    const e = {};
+    let valido = true;
+    const regex = /^[0-9].*$/;
+
+    if (nombre.toString().trim().length === 0) {
+      e.nombre = "El nombre esta Vacio";
+      valido = false;
+    } else if (nombre.length > 50) {
+      e.nombre = "El nombre no puede tener mas de 50 Caracteres";
+      valido = false;
+    }
 
     //    Aqui traigo los generos
     const [generos, setGeneros] = useState([]);
 
-    const llenarGeneros = async () => {
-        await unDocumentoCallback("generos", "docGenero", (retorno) => {
-            setGeneros(retorno.result.generos);
-        });
-    };
+    if (!key) {
+      e.key = "El Key esta vacio";
+      valido = false;
+    }
 
     /*      Uso de useEffect para cargar el detalle y los select box         */
     useEffect(() => {
@@ -295,10 +338,10 @@ const ProductDetalle = () => {
             valido = false;
         }
 
-        if (!key) {
-            e.key = "El Key esta vacio";
-            valido = false;
-        }
+        let ruta = `productos/${prod.result.id}/beat.${extension}`;
+        let rutaArchivo = extensionArchivo.map((archi, i) => {
+          return `productos/${prod.result.id}/${LicenCreadas[i].TipoLicencia}.${extensionArchivo[i]}`;
+        });
 
         if (tiempo.toString().trim().length === 0)
         {
@@ -318,17 +361,27 @@ const ProductDetalle = () => {
 
         return { ...e, valido };
     };    
-
-
-    //    -------------         Handlers de Producto      ------------------------
-
-    const handleInputChange = (e) => {
-        const { name, value } = e.target;
-        setProducto({
-            ...producto,
-            [name]: value,
+        let rutaAudio = `productos/${prod.result.id}/audio.${extensionAudio}`;
+        await subirArchivoMetodo(rutaAudio, audio, (url) => {
+          //console.log("url audio " + url);
+          dataAudio = url;
         });
 
+        for (let i = 0; i < LicenCreadas.length; i++) {
+          await subirArchivoMetodo(rutaArchivo[i], archivo[i], (url) => {
+            //console.log("url Archivo " + url);
+            LicenCreadas[i].url = url; // [url1 , url2 ]
+          });
+        }
+
+        await actualizaDocumento("productos", id, {
+          data: {
+            imagen: dataImagen,
+            audio: dataAudio,
+            licencias: LicenCreadas,
+          },
+        });
+        
         setErrores(
             ValidoProducto({
                 ...producto,
@@ -618,17 +671,123 @@ const ProductDetalle = () => {
                           <Button id="AgregarLicencia" variant="primary" type="button" onClick={ handlerAgregarLicen } >
                               Agregar Licencia
                           </Button>
-                          <Button variant="primary" type="button" onClick={ handlePopUp }>
-                              Cerrar
-                          </Button>
-                      </div>
-                    </Form>
-                </ModalBody>
-                <ModalFooter></ModalFooter>
-            </Modal>
-        </div>
-    );
+                        </Card.Body>
+                      </Card>
+                    </div>
+                  ))}
+                </ListGroup>
+              </div>
+            </div>
+            {
+              // LISTA DE LICENCIAS ------- RONALDO ----------------------------------------------------------------------
+            }
+
+            <div className="form-group input-group input-group-text my-3">
+              {loadingPro ? (
+                <Button
+                  className={`${style.button} text-center btn btn-primary`}
+                  type="submit"
+                  variant="primary"
+                >
+                  Registrar
+                </Button>
+              ) : (
+                <div>
+                  <Button variant="primary" disabled>
+                    <Spinner
+                      as="span"
+                      animation="border"
+                      size="sm"
+                      role="status"
+                      aria-hidden="true"
+                    />
+                    <span className="visually-hidden">Creando...</span>
+                  </Button>{" "}
+                  <Button variant="primary" disabled>
+                    <Spinner
+                      as="span"
+                      animation="grow"
+                      size="sm"
+                      role="status"
+                      aria-hidden="true"
+                    />
+                    Creando...
+                  </Button>
+                </div>
+              )}
+            </div>
+          </Form>
+        </Card>
+      </Container>
+      <Modal show={popUp.state}>
+        <ModalHeader>Incerta las Licencias</ModalHeader>
+        <ModalBody>
+          <Form>
+            <Form.Group className="mb-3">
+              <Form.Label>Tipo Licencia</Form.Label>
+              <Form.Select
+                id="ListaTipo"
+                name="TipoLicencia"
+                onChange={handlerLicencia}
+              >
+                <option id="opSelector">Seleccionar</option>
+                {EstadoTipoLi.map((licen, i) => {
+                  if (
+                    LicenCreadas.find((x) => x.TipoLicencia === licen.nombre)
+                  ) {
+                    return;
+                  }
+                  return <option key={i}>{licen.nombre}</option>;
+                })}
+              </Form.Select>
+            </Form.Group>
+            <Form.Group className="mb-3">
+              <Form.Label>Sube el archivo para tu licencia</Form.Label>
+              <Form.Control
+                id="AgregarArchivo"
+                onChange={handlerSbubirArchivo}
+                name="archivo"
+                type="file"
+                size="sm"
+                disabled
+              />
+            </Form.Group>
+            <Form.Group className="mb-3">
+              <Form.Label>Precio Licencia</Form.Label>
+              <InputGroup className="mb-3">
+                <InputGroup.Text>$</InputGroup.Text>
+                <Form.Control
+                  id="Precio"
+                  onChange={handlerLicencia}
+                  name="precio"
+                  aria-label="Amount (to the nearest dollar)"
+                  type="number"
+                />
+                <InputGroup.Text>Col</InputGroup.Text>
+              </InputGroup>
+              <Form.Label>
+                <p id="ParrafoDescripcion"></p>
+              </Form.Label>
+            </Form.Group>
+            <div className="form-group input-group d-flex justify-content-center">
+              <Button
+                id="AgregarLicencia"
+                variant="primary"
+                type="button"
+                onClick={handlerAgregarLicen}
+              >
+                Agregar Licencia
+              </Button>
+              <Button variant="primary" type="button" onClick={handlePopUp}>
+                Cerrar
+              </Button>
+            </div>
+          </Form>
+        </ModalBody>
+        <ModalFooter></ModalFooter>
+      </Modal>
+    </div>
+  );
 };
 
 export default ProductDetalle;
-
