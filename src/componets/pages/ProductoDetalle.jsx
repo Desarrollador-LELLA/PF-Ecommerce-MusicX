@@ -403,230 +403,177 @@ const ProductDetalle = () => {
             <Container className="my-3">
                 <Card className={`${style.registroProducto} m-auto`}>
                   <Form className="card card-body" onSubmit={(e) => handleSubmit(e)}>
-                    <div className={style.productoCreate_title}>
-                      Detalle de Producto (Admin)
-                    </div>
-                    <div className="form-group input-group input-group-text my-3 d-flex justify-content-between">
-                      <Form.Label>Nombre producto :</Form.Label>
-                      <Form.Control name="nombre" type="text" value={producto?.nombre} className={`${style.textbox}`} placeholder="Ingrese nombre producto" onChange={handleInputChange} isInvalid={!!errores.nombre} />
-                      <Form.Control.Feedback type={"invalid"}>
-                          {errores.nombre}
-                      </Form.Control.Feedback>
-                    </div>
-                    <div className="form-group input-group input-group-text my-3 d-flex justify-content-between">
-                      <Form.Label>Autor producto :</Form.Label>
-                      <Form.Control
-                        name="autor"
-                        type="text"
-                        value={producto?.autor}
-                        className={`${style.textbox}`}
-                        placeholder="Ingrese autor producto"
-                        onChange={handleInputChange}
-                        isInvalid={!!errores.autor}
-                      />
-                      <Form.Control.Feedback type={"invalid"}>
-                        {errores.autor}
-                      </Form.Control.Feedback>
-                    </div>
-                    <div className="form-group input-group input-group-text my-3 d-flex justify-content-between">
-                      <Form.Label>Descripcion producto :</Form.Label>
-                      <Form.Control
-                        name="descripcion"
-                        type="text"
-                        value={producto?.descripcion}
-                        className={`${style.textbox}`}
-                        placeholder="Ingrese descripcion producto"
-                        onChange={handleInputChange}
-                        isInvalid={!!errores.descripcion}
-                      />
-                      <Form.Control.Feedback type={"invalid"}>
-                        {errores.descripcion}
-                      </Form.Control.Feedback>
-                    </div>
-                    <div className="form-group input-group input-group-text my-3 d-flex justify-content-between">
-                      <Form.Label>Genero producto :</Form.Label>
-                      <Form.Select
-                        name="genero"
-                        className={`${style.selectbox}`}
-                        onChange={handlerAgregarGenero}
-                        value={producto.genero}
-                      >
-                        <option hidden>Select genero</option>
-                        <option value="All">All</option>
-                        {generos.length
-                          ? generos.map((e) => (
-                              <option key={e.id} value={e.nombre}>
-                                {e.nombre}
-                              </option>
-                            ))
-                          : null}
-                      </Form.Select>
-                    </div>
-                    <div>
-                      <ButtonGroup aria-label="Basic example">
-                        {addGeneros?.map((genero, idx) => (
-                          <Button
-                            key={idx}
-                            value={genero}
-                            onClick={handlerEliminarGenero}
-                            variant="secondary"
-                          >
-                            {`${genero} X`}
-                          </Button>
-                        ))}
-                      </ButtonGroup>
-                    </div>
-                    <div className="form-group input-group input-group-text my-3 d-flex justify-content-between">
-                      <Form.Label>Key producto :</Form.Label>
-                      <Form.Select
-                        name="key"
-                        className={`${style.selectbox}`}
-                        onChange={handleInputChange}
-                        value={producto.key}
-                      >
-                        <option hidden>Select key</option>
-                        <option value="All">All</option>
-                        {keys.length
-                          ? keys.map((e) => (
-                              <option key={e.id} value={e.nombre}>
-                                {e.nombre}
-                              </option>
-                            ))
-                          : null}
-                      </Form.Select>
-                    </div>
-                    <div className="form-group input-group input-group-text my-3 d-flex justify-content-between">
-                      <Form.Label>Tiempo producto :</Form.Label>
-                      <Form.Control
-                        name="tiempo"
-                        type="number"
-                        value={producto?.tiempo}
-                        className={`${style.textbox}`}
-                        placeholder="Ingrese tiempo producto"
-                        onChange={handleInputChange}
-                        isInvalid={!!errores.tiempo}
-                      />
-                      <Form.Control.Feedback type={"invalid"}>
-                        {errores.tiempo}
-                      </Form.Control.Feedback>
-                    </div>
-                    <div className="form-group input-group input-group-text my-3 d-flex justify-content-between">
-                      <Form.Label>Imagen producto :</Form.Label>
-                      <Form.Control
-                        name="imagen"
-                        type="file"
-                        accept="image/png, image/jpg, image/jpeg"
-                        onChange={handleSubirImagen}
-                        isInvalid={!!errores.imagen}
-                      />
+                      <div className={style.productoCreate_title}>
+                          Detalle de Producto (Admin)
+                      </div>
                       <div className="form-group input-group input-group-text my-3 d-flex justify-content-between">
-                        <img src={producto?.imagen} alt="" width="80px" height="80px" />
+                          <Form.Label>Nombre producto :</Form.Label>
+                          <Form.Control name="nombre" type="text" value={producto?.nombre} className={`${style.textbox}`} placeholder="Ingrese nombre producto" onChange={handleInputChange} isInvalid={!!errores.nombre} />
+                          <Form.Control.Feedback type={"invalid"}>
+                              {errores.nombre}
+                          </Form.Control.Feedback>
                       </div>
-                      <br />
-                      <Form.Control.Feedback type={"invalid"}>
-                        {errores.imagen}
-                      </Form.Control.Feedback>
-                    </div>
-                    <div className="form-group input-group input-group-text my-3 d-flex justify-content-between">
-                      <Form.Label>Audio Producto :</Form.Label>
-                      <Form.Control
-                        type="file"
-                        accept="audio/mp3 , audio/wav"
-                        onChange={handleAudio}
-                      />
-                      <br />
-                    </div>
-                    {
-                      // LISTA DE LICENCIAS ------- RONALDO ----------------------------------------------------------------------
-                    }
-                    <div>
-                      <Button
-                        className={`btn btn-secondary mt-3`}
-                        onClick={handlePopUp}
-                      >
-                        Agregar Licencia
-                      </Button>
-                      <div className={`${css.divLicenciasCrear} shadow-sm `}>
-                        <ListGroup>
-                          {LicenCreadas?.map((obj, indx) => (
-                            <div key={indx}>
-                              <Card className={`${css.cardProductoCrear}`}>
-                                <Card.Body id={indx}>
-                                  <h4>{obj.TipoLicencia}</h4>
-                                  {`Descripcion: ${obj.descripcion} Valor: ${obj.precio}`}
-                                  <Button
-                                    name="boton"
-                                    className="float-end btn btn-primary"
-                                    id={obj.TipoLicencia}
-                                    onClick={handlerEliminar}
-                                    value={indx}
-                                  >
-                                    X
+                      <div className="form-group input-group input-group-text my-3 d-flex justify-content-between">
+                          <Form.Label>Autor producto :</Form.Label>
+                          <Form.Control name="autor" type="text" value={producto?.autor} className={`${style.textbox}`} placeholder="Ingrese autor producto" onChange={handleInputChange} isInvalid={!!errores.autor} />
+                          <Form.Control.Feedback type={"invalid"}>
+                              {errores.autor}
+                          </Form.Control.Feedback>
+                      </div>
+                      <div className="form-group input-group input-group-text my-3 d-flex justify-content-between">
+                          <Form.Label>Descripcion producto :</Form.Label>
+                          <Form.Control name="descripcion" type="text" value={producto?.descripcion} className={`${style.textbox}`} placeholder="Ingrese descripcion producto" onChange={handleInputChange} isInvalid={!!errores.descripcion} />
+                          <Form.Control.Feedback type={"invalid"}>
+                              {errores.descripcion}
+                          </Form.Control.Feedback>
+                      </div>
+                      <div className="form-group input-group input-group-text my-3 d-flex justify-content-between">
+                          <Form.Label>Genero producto :</Form.Label>
+                          <Form.Select name="genero" className={`${style.selectbox}`} onChange={handlerAgregarGenero} value={producto.genero} >
+                              <option hidden>Select genero</option>
+                              <option value="All">All</option>
+                              {
+                              generos.length ? 
+                                  generos.map((e) => (
+                                      <option key={e.id} value={e.nombre}>
+                                          {e.nombre}
+                                      </option>
+                                  ))
+                                  : null
+                              }
+                          </Form.Select>
+                      </div>
+                      <div>
+                          <ButtonGroup aria-label="Basic example">
+                              {
+                                addGeneros?.map((genero, idx) => (
+                                  <Button key={idx} value={genero} onClick={handlerEliminarGenero} variant="secondary" >
+                                    {`${genero} X`}
                                   </Button>
-                                </Card.Body>
-                              </Card>
-                            </div>
-                          ))}
-                        </ListGroup>
+                                ))
+                              }
+                          </ButtonGroup>
                       </div>
-                    </div>
-                    {
-                      // LISTA DE LICENCIAS ------- RONALDO ----------------------------------------------------------------------
-                    }
+                      <div className="form-group input-group input-group-text my-3 d-flex justify-content-between">
+                          <Form.Label>Key producto :</Form.Label>
+                          <Form.Select name="key" className={`${style.selectbox}`} onChange={handleInputChange} value={producto.key} >
+                              <option hidden>Select key</option>
+                              <option value="All">All</option>
+                              {
+                                  keys.length ?
+                                      keys.map((e) => (
+                                          <option key={e.id} value={e.nombre}>
+                                            {e.nombre}
+                                          </option>
+                                      ))
+                                  : null
+                              }
+                          </Form.Select>
+                      </div>
+                      <div className="form-group input-group input-group-text my-3 d-flex justify-content-between">
+                          <Form.Label>Tiempo producto :</Form.Label>
+                          <Form.Control name="tiempo" type="number" value={producto?.tiempo} className={`${style.textbox}`} placeholder="Ingrese tiempo producto" onChange={handleInputChange} isInvalid={!!errores.tiempo} />
+                          <Form.Control.Feedback type={"invalid"}>
+                              {errores.tiempo}
+                          </Form.Control.Feedback>
+                      </div>
+                      <div className="form-group input-group input-group-text my-3 d-flex justify-content-between">
+                          <Form.Label>Imagen producto :</Form.Label>
+                          <Form.Control name="imagen" type="file" accept="image/png, image/jpg, image/jpeg" onChange={handleSubirImagen} isInvalid={!!errores.imagen} />
+                          <div className="form-group input-group input-group-text my-3 d-flex justify-content-between">
+                              <img src={producto?.imagen} alt="" width="80px" height="80px" />
+                          </div>
+                          <br />
+                          <Form.Control.Feedback type={"invalid"}>
+                              {errores.imagen}
+                          </Form.Control.Feedback>
+                      </div>
+                      <div className="form-group input-group input-group-text my-3 d-flex justify-content-between">
+                          <Form.Label>Audio Producto :</Form.Label>
+                          <Form.Control type="file" accept="audio/mp3 , audio/wav" onChange={handleAudio} />
+                          <br />
+                      </div>
+                      {
+                        // LISTA DE LICENCIAS ------- RONALDO ----------------------------------------------------------------------
+                      }
+                      <div>
+                          <Button className={`btn btn-secondary mt-3`} onClick={handlePopUp} >
+                              Agregar Licencia
+                          </Button>
+                          <div className={`${css.divLicenciasCrear} shadow-sm `}>
+                              <ListGroup>
+                                {
+                                    LicenCreadas?.map((obj, indx) => (
+                                        <div key={indx}>
+                                            <Card className={`${css.cardProductoCrear}`}>
+                                                <Card.Body id={indx}>
+                                                    <h4>{obj.TipoLicencia}</h4>
+                                                    {`Descripcion: ${obj.descripcion} Valor: ${obj.precio}`}
+                                                    <Button name="boton" className="float-end btn btn-primary" id={obj.TipoLicencia} onClick={handlerEliminar} value={indx} >
+                                                        X
+                                                    </Button>
+                                                </Card.Body>
+                                            </Card>
+                                        </div>
+                                    ))
+                                }
+                              </ListGroup>
+                          </div>
+                      </div>
+                      {
+                        // LISTA DE LICENCIAS ------- RONALDO ----------------------------------------------------------------------
+                      }
 
                     <div className="form-group input-group input-group-text my-3">
-                      {loadingPro ? (
-                        <Button
-                          className={`${style.button} text-center btn btn-primary`}
-                          type="submit"
-                          variant="primary"
-                        >
-                          Editar
-                        </Button>
-                      ) : (
-                        <div>
-                          <Button variant="primary" disabled>
-                            <Spinner
-                              as="span"
-                              animation="border"
-                              size="sm"
-                              role="status"
-                              aria-hidden="true"
-                            />
-                            <span className="visually-hidden">Editando...</span>
-                          </Button>{" "}
-                          <Button variant="primary" disabled>
-                            <Spinner
-                              as="span"
-                              animation="grow"
-                              size="sm"
-                              role="status"
-                              aria-hidden="true"
-                            />
-                            Editando...
+                        {loadingPro ? (
+                          <Button className={`${style.button} text-center btn btn-primary`} type="submit" variant="primary" >
+                              Editar
                           </Button>
-                        </div>
-                      )}
-                      {/*
-                                        loadingPro ?
-                                        (
-                                            <Button className={`${style.button} text-center btn btn-primary`} type="submit" variant="primary" >
-                                                Editar
-                                            </Button>
-                                        ) : 
-                                        (
-                                            <div>
-                                                <Button variant="primary" disabled>
-                                                    <Spinner as="span" animation="border" size="sm" role="status" aria-hidden="true" />
-                                                        <span className="visually-hidden">Creando...</span>
-                                                </Button>{" "}
-                                                <Button variant="primary" disabled>
-                                                    <Spinner as="span" animation="grow" size="sm" role="status" aria-hidden="true" />
-                                                        Creando...
-                                                </Button>
-                                            </div>
-                                        )
-                                    */}
+                        ) : 
+                        (
+                            <div>
+                              <Button variant="primary" disabled>
+                                <Spinner
+                                  as="span"
+                                  animation="border"
+                                  size="sm"
+                                  role="status"
+                                  aria-hidden="true"
+                                />
+                                <span className="visually-hidden">Editando...</span>
+                              </Button>{" "}
+                              <Button variant="primary" disabled>
+                                <Spinner
+                                  as="span"
+                                  animation="grow"
+                                  size="sm"
+                                  role="status"
+                                  aria-hidden="true"
+                                />
+                                Editando...
+                              </Button>
+                            </div>
+                        )}
+                        {/*
+                            loadingPro ?
+                            (
+                                <Button className={`${style.button} text-center btn btn-primary`} type="submit" variant="primary" >
+                                    Editar
+                                </Button>
+                            ) : 
+                            (
+                                <div>
+                                    <Button variant="primary" disabled>
+                                        <Spinner as="span" animation="border" size="sm" role="status" aria-hidden="true" />
+                                            <span className="visually-hidden">Creando...</span>
+                                    </Button>{" "}
+                                    <Button variant="primary" disabled>
+                                        <Spinner as="span" animation="grow" size="sm" role="status" aria-hidden="true" />
+                                            Creando...
+                                    </Button>
+                                </div>
+                            )
+                      */}
                     </div>
                   </Form>
                 </Card>
@@ -634,67 +581,45 @@ const ProductDetalle = () => {
             <Modal show={popUp.state}>
                 <ModalHeader>Inserta las Licencias</ModalHeader>
                 <ModalBody>
-                  <Form>
-                    <Form.Group className="mb-3">
-                      <Form.Label>Tipo Licencia</Form.Label>
-                      <Form.Select
-                        id="ListaTipo"
-                        name="TipoLicencia"
-                        onChange={handlerLicencia}
-                      >
-                        <option id="opSelector">Seleccionar</option>
-                        {EstadoTipoLi.map((licen, i) => {
-                          if (
-                            LicenCreadas.find((x) => x.TipoLicencia === licen.nombre)
-                          ) {
-                            return;
-                          }
-                          return <option key={i}>{licen.nombre}</option>;
-                        })}
-                      </Form.Select>
-                    </Form.Group>
-                    <Form.Group className="mb-3">
-                      <Form.Label>Sube el archivo para tu licencia</Form.Label>
-                      <Form.Control
-                        id="AgregarArchivo"
-                        onChange={handlerSbubirArchivo}
-                        name="archivo"
-                        type="file"
-                        size="sm"
-                        disabled
-                      />
-                    </Form.Group>
-                    <Form.Group className="mb-3">
-                      <Form.Label>Precio Licencia</Form.Label>
-                      <InputGroup className="mb-3">
-                        <InputGroup.Text>$</InputGroup.Text>
-                        <Form.Control
-                          id="Precio"
-                          onChange={handlerLicencia}
-                          name="precio"
-                          aria-label="Amount (to the nearest dollar)"
-                          type="number"
-                        />
-                        <InputGroup.Text>Col</InputGroup.Text>
-                      </InputGroup>
-                      <Form.Label>
-                        <p id="ParrafoDescripcion"></p>
-                      </Form.Label>
-                    </Form.Group>
-                    <div className="form-group input-group d-flex justify-content-center">
-                      <Button
-                        id="AgregarLicencia"
-                        variant="primary"
-                        type="button"
-                        onClick={handlerAgregarLicen}
-                      >
-                        Agregar Licencia
-                      </Button>
-                      <Button variant="primary" type="button" onClick={handlePopUp}>
-                        Cerrar
-                      </Button>
-                    </div>
-                  </Form>
+                    <Form>
+                        <Form.Group className="mb-3">
+                            <Form.Label>Tipo Licencia</Form.Label>
+                            <Form.Select id="ListaTipo" name="TipoLicencia" onChange={handlerLicencia} >
+                              <option id="opSelector">Seleccionar</option>
+                              {EstadoTipoLi.map((licen, i) => {
+                                if (
+                                  LicenCreadas.find((x) => x.TipoLicencia === licen.nombre)
+                                ) {
+                                  return;
+                                }
+                                return <option key={i}>{licen.nombre}</option>;
+                              })}
+                            </Form.Select>
+                        </Form.Group>
+                        <Form.Group className="mb-3">
+                            <Form.Label>Sube el archivo para tu licencia</Form.Label>
+                            <Form.Control id="AgregarArchivo" onChange={handlerSbubirArchivo} name="archivo" type="file" size="sm" disabled />
+                        </Form.Group>
+                        <Form.Group className="mb-3">
+                            <Form.Label>Precio Licencia</Form.Label>
+                            <InputGroup className="mb-3">
+                                <InputGroup.Text>$</InputGroup.Text>
+                                <Form.Control id="Precio" onChange={handlerLicencia} name="precio" aria-label="Amount (to the nearest dollar)" type="number" />
+                                <InputGroup.Text>Col</InputGroup.Text>
+                            </InputGroup>
+                            <Form.Label>
+                                <p id="ParrafoDescripcion"></p>
+                            </Form.Label>
+                        </Form.Group>
+                        <div className="form-group input-group d-flex justify-content-center">
+                            <Button id="AgregarLicencia" variant="primary" type="button" onClick={handlerAgregarLicen} >
+                                Agregar Licencia
+                            </Button>
+                            <Button variant="primary" type="button" onClick={handlePopUp}>
+                                Cerrar
+                            </Button>
+                        </div>
+                    </Form>
                 </ModalBody>
                 <ModalFooter></ModalFooter>
             </Modal>
