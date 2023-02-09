@@ -31,7 +31,6 @@ const NavHeader = () => {
 
     return (
         <Navbar collapseOnSelect expand="lg" variant="dark" className={`${s.navbar}`} sticky="top">
-            {console.log(productos)}
             <Container fluid>
                 <Link to='/' className={`${s.navbar_brand} navbar-brand`}>
                     <img alt="" src={icLogo} width="50" height="50" className="d-inline-block align-top" />
@@ -108,8 +107,8 @@ const NavHeader = () => {
                             <div className={`${s.dropdown_contenedor}`}>
                                 {
                                     productos.length ?
-                                        productos.map(x => (
-                                            <Dropdown.ItemText key={x.id}>
+                                        productos.map((x, i) => (
+                                            <Dropdown.ItemText key={i}>
                                                 <Card>
                                                     <Card.Img alt="Card image" src={x.imagen} />
                                                     <Card.ImgOverlay className={`${s.card_overlay}`}>

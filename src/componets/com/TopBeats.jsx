@@ -58,15 +58,15 @@ export default function TopBeats() {
               <Image
                 fluid="true"
                 className="d-block w-100"
-                src={productos[[productos.length -3]].data().imagen}
+                src={productos[[productos.length -5]].data().imagen}
                 alt="Third slide"
               />
 
               <Carousel.Caption>
-                <Link to={productos[2].id}>
-                  <h3 className="display-1">{productos[[productos.length -3]].data().nombre}</h3>
+                <Link to={productos[productos.length -5].id}>
+                  <h3 className="display-1">{productos[[productos.length -5]].data().nombre}</h3>
                 </Link>
-                <p className="display-4">BY:{productos[[productos.length -3]].data().autor}</p>
+                <p className="display-4">BY:{productos[[productos.length -5]].data().autor}</p>
               </Carousel.Caption>
             </Carousel.Item>
           </Carousel>

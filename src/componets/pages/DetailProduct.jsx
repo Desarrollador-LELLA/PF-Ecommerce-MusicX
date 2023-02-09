@@ -137,6 +137,12 @@ export default function DetailProduct() {
                     </div>
                   </div>
                   <div className={css.divgeneros}>
+                    <h3 className={` ${css.generos} ${css.tituloProducto}`}>
+                      BPM: {productoUnoDetalle.tiempo}
+                    </h3>
+                    <h3 className={` ${css.generos} ${css.tituloProducto}`}>
+                      KEY: {productoUnoDetalle.key}
+                    </h3>
                     {productoUnoDetalle.genero?.map((e) => (
                       <h3 className={` ${css.generos} ${css.tituloProducto}`}>
                         {e}

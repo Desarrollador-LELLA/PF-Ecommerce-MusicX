@@ -210,10 +210,12 @@ const ProductoCreate = () => {
     nombre,
     autor,
     descripcion,
-    precio,
     key,
+    Imagen,
     tiempo,
-    imagen,
+    generos,
+    licencias,
+    audio,
   }) => {
     const e = {};
     let valido = true;
@@ -248,14 +250,26 @@ const ProductoCreate = () => {
       valido = false;
     }
 
-    if (tiempo.toString().trim().length === 0) {
+    if (!tiempo) {
       e.tiempo = "El Tiempo esta Vacio";
       valido = false;
-    } else if (regex.test(tiempo) !== true) {
-      e.tiempo = "El Tiempo debe ser un numero";
+    }
+
+    if (!generos.length) {
+      e.generos = "Agrega porlomenos 1 genero";
       valido = false;
-    } else if (tiempo.value === 0) {
-      e.tiempo = "El Tiempo debe ser mayor a cero";
+    }
+
+    if (!audio) {
+      e.audio = "Agrega audio de referencai";
+      valido = false;
+    }
+    if (!licencias.length) {
+      e.licencias = "Agrega por lo menos una Licencia";
+      valido = false;
+    }
+    if (!Imagen) {
+      e.imagen = "Inserta una Imagen";
       valido = false;
     }
 
@@ -293,8 +307,20 @@ const ProductoCreate = () => {
     validar();
   };
 
+  const metodoLuis = () => {
+    setErrores(
+      ValidoProducto({
+        ...producto,
+        generos: addGeneros,
+        licencias: LicenCreadas,
+        audio: audio,
+        Imagen: imagen,
+      })
+    );
+  };
   //    AQui se registra el producto
   const handleSubmit = async (e) => {
+    console.log("errores", errores);
     try {
       e.preventDefault();
       let dataImagen = "";
@@ -318,19 +344,16 @@ const ProductoCreate = () => {
         });
         console.log("rutas", rutaArchivo);
         await subirArchivoMetodo(ruta, imagen, (url) => {
-          console.log("url imagen " + url);
           dataImagen = url;
         });
 
         let rutaAudio = `productos/${prod.result.id}/audio.${extensionAudio}`;
         await subirArchivoMetodo(rutaAudio, audio, (url) => {
-          console.log("url audio " + url);
           dataAudio = url;
         });
 
         for (let i = 0; i < LicenCreadas.length; i++) {
           await subirArchivoMetodo(rutaArchivo[i], archivo[i], (url) => {
-            console.log("url Archivo " + url);
             LicenCreadas[i].url = url; // [url1 , url2 ]
           });
         }
@@ -409,14 +432,15 @@ const ProductoCreate = () => {
                 name="genero"
                 className={`${style.selectbox}`}
                 onChange={handlerAgregarGenero}
+                isInvalid={!!errores.generos}
               >
                 <option hidden>Select genero</option>
                 <option value="All">All</option>
                 {generos.length
-                  ? generos.map((e) => {
+                  ? generos.map((e, i) => {
                       if (e.habilitado) {
                         return (
-                          <option key={e.nombre} value={e.nombre}>
+                          <option key={i} value={e.nombre}>
                             {e.nombre}
                           </option>
                         );
@@ -425,11 +449,15 @@ const ProductoCreate = () => {
                     })
                   : null}
               </Form.Select>
+              <Form.Control.Feedback type={"invalid"}>
+                {errores.generos}
+              </Form.Control.Feedback>
             </div>
             <div>
               <ButtonGroup aria-label="Basic example">
-                {addGeneros?.map((genero) => (
+                {addGeneros?.map((genero, i) => (
                   <Button
+                    key={i}
                     value={genero}
                     onClick={handlerEliminarGenero}
                     variant="secondary"
@@ -445,14 +473,15 @@ const ProductoCreate = () => {
                 name="key"
                 className={`${style.selectbox}`}
                 onChange={handleInputChange}
+                isInvalid={!!errores.key}
               >
                 <option hidden>Select key</option>
                 <option value="All">All</option>
                 {keys.length
-                  ? keys.map((e) => {
+                  ? keys.map((e, i) => {
                       if (e.habilitado) {
                         return (
-                          <option key={e.nombre} value={e.nombre}>
+                          <option key={i} value={e.nombre}>
                             {e.nombre}
                           </option>
                         );
@@ -461,6 +490,9 @@ const ProductoCreate = () => {
                     })
                   : null}
               </Form.Select>
+              <Form.Control.Feedback type={"invalid"}>
+                {errores.key}
+              </Form.Control.Feedback>
             </div>
             <div className="form-group input-group input-group-text my-3 d-flex justify-content-between">
               <Form.Label>Tiempo producto :</Form.Label>
@@ -482,6 +514,7 @@ const ProductoCreate = () => {
                 type="file"
                 accept="image/png, image/jpg, image/jpeg"
                 onChange={handleSubirImagen}
+                isInvalid={!!errores.imagen}
               />
               <br />
               <Form.Control.Feedback type={"invalid"}>
@@ -494,11 +527,12 @@ const ProductoCreate = () => {
                 type="file"
                 accept="audio/mp3 , audio/wav"
                 onChange={handleAudio}
+                isInvalid={!!errores.audio}
               />
-              <br />
               <Form.Control.Feedback type={"invalid"}>
-                {errores.imagen}
+                {errores.audio}
               </Form.Control.Feedback>
+              <br />
             </div>
             {
               // LISTA DE LICENCIAS ------- RONALDO ----------------------------------------------------------------------
@@ -508,11 +542,11 @@ const ProductoCreate = () => {
                 Agregar Licencia
               </Button>
               <div className={`${css.divLicenciasCrear} shadow-sm `}>
-                <ListGroup>
+                <ListGroup isInvalid={!!errores.licencias}>
                   {LicenCreadas?.map((obj, indx) => (
                     <div key={indx}>
                       <Card className={`${css.cardProductoCrear}`}>
-                        <Card.Body id={indx}>
+                        <Card.Body>
                           <h4>{obj.TipoLicencia}</h4>
                           {`Descripcion: ${obj.descripcion} Valor: ${obj.precio}`}
                           <Button
@@ -529,6 +563,9 @@ const ProductoCreate = () => {
                     </div>
                   ))}
                 </ListGroup>
+                <Form.Control.Feedback type={"invalid"}>
+                  {errores.licencias}
+                </Form.Control.Feedback>
               </div>
             </div>
             {
@@ -541,6 +578,7 @@ const ProductoCreate = () => {
                   className={`${style.button} text-center btn btn-primary`}
                   type="submit"
                   variant="primary"
+                  onClick={metodoLuis}
                 >
                   Registrar
                 </Button>
