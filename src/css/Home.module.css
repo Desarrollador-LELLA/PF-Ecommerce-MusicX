@@ -12,8 +12,11 @@
 }
 
 .containerTopBeats{
+  display: flex;
   position: sticky;
   height: 30%;
+  flex-direction: column;
+  align-items: center;
 }
 .topbeats {
   display: flex;
@@ -28,13 +31,45 @@
 .topbeats h1{
   font-size: 200%;
   text-shadow: 0.4em 0.4em 0.2em black;
-  transition: 1s;
+  transition: 0.5s;
 }
 
 .topbeats h1:hover{
   position: absolute;
   font-size: 300%;
   text-shadow: 0.4em 0.4em 0.2em rgb(78, 37, 78);
+}
+
+
+.lastest{
+  color: #1f9999;
+  font-size: 300%;
+  text-shadow: 0.4em 0.4em 0.2em black;
+  transition: 0.5s;
+  font-family: 'Unbounded', cursive;
+}
+
+.lastest:hover{
+  font-size: 400%;
+  text-shadow: 0.4em 0.4em 0.2em rgb(78, 37, 78);
+}
+
+
+
+.last{
+  font-size: 200%;
+  text-shadow: 0.4em 0.4em 0.2em black;
+  transition: 1s;
+}
+
+.last:hover{
+  position: absolute;
+  font-size: 300%;
+  text-shadow: 0.4em 0.4em 0.2em rgb(78, 37, 78);
+}
+
+.topcar{
+
 }
 
 @media (min-width: 20em) {
