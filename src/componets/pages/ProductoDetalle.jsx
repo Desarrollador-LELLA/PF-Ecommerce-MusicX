@@ -129,7 +129,7 @@ const ProductDetalle = () => {
 
     const handlerEliminar = (e) => {
         const eliArchivo = archivo.filter(
-          (obj, i) => i !== parseInt(e.target.value)
+            (obj, i) => i !== parseInt(e.target.value)
         );
         setArchivo(eliArchivo);
 
@@ -142,31 +142,43 @@ const ProductDetalle = () => {
 
         switch (e.target.id) {
             case tipoLicencias[0].nombre:
-              if (EstadoTipoLi.find((x) => x.nombre === tipoLicencias[0].nombre)) {
-                return setEstadoTipoLi([...EstadoTipoLi]);
-              } else {
-                return setEstadoTipoLi([tipoLicencias[0], ...EstadoTipoLi]);
-              }
+                if (EstadoTipoLi.find((x) => x.nombre === tipoLicencias[0].nombre))
+                {
+                    return setEstadoTipoLi([...EstadoTipoLi]);
+                }
+                else
+                {
+                    return setEstadoTipoLi([tipoLicencias[0], ...EstadoTipoLi]);
+                }
             case tipoLicencias[1].nombre:
-              if (EstadoTipoLi.find((x) => x.nombre === tipoLicencias[1].nombre)) {
-                return setEstadoTipoLi([...EstadoTipoLi]);
-              } else {
-                return setEstadoTipoLi([tipoLicencias[1], ...EstadoTipoLi]);
-              }
+                if (EstadoTipoLi.find((x) => x.nombre === tipoLicencias[1].nombre))
+                {
+                    return setEstadoTipoLi([...EstadoTipoLi]);
+                }
+                else
+                {
+                    return setEstadoTipoLi([tipoLicencias[1], ...EstadoTipoLi]);
+                }
             case tipoLicencias[2].nombre:
-              if (EstadoTipoLi.find((x) => x.nombre === tipoLicencias[2].nombre)) {
-                return setEstadoTipoLi([...EstadoTipoLi]);
-              } else {
-                return setEstadoTipoLi([tipoLicencias[2], ...EstadoTipoLi]);
-              }
+                if (EstadoTipoLi.find((x) => x.nombre === tipoLicencias[2].nombre))
+                {
+                    return setEstadoTipoLi([...EstadoTipoLi]);
+                }
+                else
+                {
+                    return setEstadoTipoLi([tipoLicencias[2], ...EstadoTipoLi]);
+                }
             case tipoLicencias[3].nombre:
-              if (EstadoTipoLi.find((x) => x.nombre === tipoLicencias[3].nombre)) {
-                return setEstadoTipoLi([...EstadoTipoLi]);
-              } else {
-                return setEstadoTipoLi([tipoLicencias[3], ...EstadoTipoLi]);
-              }
+                if (EstadoTipoLi.find((x) => x.nombre === tipoLicencias[3].nombre))
+                {
+                    return setEstadoTipoLi([...EstadoTipoLi]);
+                }
+                else
+                {
+                    return setEstadoTipoLi([tipoLicencias[3], ...EstadoTipoLi]);
+                }
             default: {
-              return;
+                return;
             }
         }
     };
@@ -217,7 +229,7 @@ const ProductDetalle = () => {
 
     const llenarKeys = async () => {
         await unDocumentoCallback("keys", "dogKeys", (retorno) => {
-          setKeys(retorno.result.keys);
+            setKeys(retorno.result.keys);
         });
     };
 
@@ -226,7 +238,7 @@ const ProductDetalle = () => {
 
     const llenarGeneros = async () => {
         await unDocumentoCallback("generos", "docGenero", (retorno) => {
-          setGeneros(retorno.result.generos);
+            setGeneros(retorno.result.generos);
         });
     };
 
@@ -274,7 +286,8 @@ const ProductDetalle = () => {
             valido = false;
         }
 
-        if (!key) {
+        if (!key)
+        {
             e.key = "El Key esta vacio";
             valido = false;
         }
@@ -303,12 +316,12 @@ const ProductDetalle = () => {
     const handleInputChange = (e) => {
         const { name, value } = e.target;
         setProducto({
-          ...producto,
-          [name]: value,
-      });
+            ...producto,
+            [name]: value,
+        });
 
-      setErrores(
-          ValidoProducto({
+        setErrores(
+            ValidoProducto({
                 ...producto,
                 [e.target.name]: e.target.value,
             })
@@ -330,71 +343,75 @@ const ProductDetalle = () => {
 
     //    Aqui se edita el producto
     const handleSubmit = async (e) => {
-      try
-      {
-          e.preventDefault();
-          let dataImagen = "";
-          let dataAudio = "";
-          console.log("afuera", errores);
-          if (errores.valido)
-          {
-              setLoadingProducto(false);
-              let prod = await actualizaDocumento("productos", id, {
-                data: { ...producto, genero: addGeneros },
-              });
-
-              const extensionArchivo = archivo.map((archi) => {
-                return archi.type.substring(6, archi.type.length);
-              });
-
-              let rutaArchivo = extensionArchivo.map((archi, i) => {
-                return `productos/${prod.result.id}/${LicenCreadas[i].TipoLicencia}.${extensionArchivo[i]}`;
-              });
-
-              for (let i = 0; i < LicenCreadas.length; i++) {
-                await subirArchivoMetodo(rutaArchivo[i], archivo[i], (url) => {
-                  console.log("LA METO AQUI");
-                  LicenCreadas[i].url = url;
+        try
+        {
+            e.preventDefault();
+            let dataImagen = "";
+            let dataAudio = "";
+            console.log("afuera", errores);
+            if (errores.valido)
+            {
+                setLoadingProducto(false);
+                let prod = await actualizaDocumento("productos", id, {
+                    data: { ...producto, genero: addGeneros },
                 });
-              }
 
-              if (imagen) {
-                const extension = imagen.type.substring(6, imagen.type.length);
-                let ruta = `productos/${prod.result.id}/beat.${extension}`;
-                await subirArchivoMetodo(ruta, imagen, (url) => {
-                  dataImagen = url;
+                const extensionArchivo = archivo.map((archi) => {
+                    return archi.type.substring(6, archi.type.length);
                 });
-              } else {
-                dataImagen = producto.imagen;
-              }
 
-              if (audio) {
-                const extensionAudio = audio.type.substring(6, audio.type.length);
-                let rutaAudio = `productos/${prod.result.id}/audio.${extensionAudio}`;
-                await subirArchivoMetodo(rutaAudio, audio, (url) => {
-                  dataAudio = url;
+                let rutaArchivo = extensionArchivo.map((archi, i) => {
+                    return `productos/${prod.result.id}/${LicenCreadas[i].TipoLicencia}.${extensionArchivo[i]}`;
                 });
-              } else {
-                dataAudio = producto.audio;
-              }
 
-              await actualizaDocumento("productos", id, {
-                data: {
-                  imagen: dataImagen,
-                  audio: dataAudio,
-                  licencias: LicenCreadas,
-                },
-              });
+                for (let i = 0; i < LicenCreadas.length; i++) {
+                    await subirArchivoMetodo(rutaArchivo[i], archivo[i], (url) => {
+                        console.log("LA METO AQUI");
+                        LicenCreadas[i].url = url;
+                    });
+                }
 
-              alert("Producto editado !!!");
-              navegar("/producto_lista");
-          }
-      }
-      catch (err)
-      {
-          //setLoadingProducto(true);
-          alert("ocurrio un error, revisa todo los campos");
-      }
+                if (imagen) {
+                    const extension = imagen.type.substring(6, imagen.type.length);
+                    let ruta = `productos/${prod.result.id}/beat.${extension}`;
+                    await subirArchivoMetodo(ruta, imagen, (url) => {
+                        dataImagen = url;
+                    });
+                }
+                else
+                {
+                    dataImagen = producto.imagen;
+                }
+
+                if (audio) {
+                    const extensionAudio = audio.type.substring(6, audio.type.length);
+                    let rutaAudio = `productos/${prod.result.id}/audio.${extensionAudio}`;
+                    await subirArchivoMetodo(rutaAudio, audio, (url) => {
+                        dataAudio = url;
+                    });
+                }
+                else
+                {
+                    dataAudio = producto.audio;
+                }
+
+                await actualizaDocumento("productos", id, {
+                    data: {
+                        imagen: dataImagen,
+                        audio: dataAudio,
+                        licencias: LicenCreadas,
+                    },
+                });
+
+                alert("Producto editado !!!");
+                navegar("/producto_lista");
+            }
+        }
+        catch (err)
+        {
+            //setLoadingProducto(true);
+            alert("ocurrio un error, revisa todo los campos");
+        }
     };
 
     return (
@@ -447,9 +464,9 @@ const ProductDetalle = () => {
                           <ButtonGroup aria-label="Basic example">
                               {
                                 addGeneros?.map((genero, idx) => (
-                                  <Button key={idx} value={genero} onClick={handlerEliminarGenero} variant="secondary" >
-                                    {`${genero} X`}
-                                  </Button>
+                                    <Button key={idx} value={genero} onClick={handlerEliminarGenero} variant="secondary" >
+                                        {`${genero} X`}
+                                    </Button>
                                 ))
                               }
                           </ButtonGroup>
@@ -502,21 +519,21 @@ const ProductDetalle = () => {
                           </Button>
                           <div className={`${css.divLicenciasCrear} shadow-sm `}>
                               <ListGroup>
-                                {
-                                    LicenCreadas?.map((obj, indx) => (
-                                        <div key={indx}>
-                                            <Card className={`${css.cardProductoCrear}`}>
-                                                <Card.Body id={indx}>
-                                                    <h4>{obj.TipoLicencia}</h4>
-                                                    {`Descripcion: ${obj.descripcion} Valor: ${obj.precio}`}
-                                                    <Button name="boton" className="float-end btn btn-primary" id={obj.TipoLicencia} onClick={handlerEliminar} value={indx} >
-                                                        X
-                                                    </Button>
-                                                </Card.Body>
-                                            </Card>
-                                        </div>
-                                    ))
-                                }
+                                  {
+                                      LicenCreadas?.map((obj, indx) => (
+                                          <div key={indx}>
+                                              <Card className={`${css.cardProductoCrear}`}>
+                                                  <Card.Body id={indx}>
+                                                      <h4>{obj.TipoLicencia}</h4>
+                                                      {`Descripcion: ${obj.descripcion} Valor: ${obj.precio}`}
+                                                      <Button name="boton" className="float-end btn btn-primary" id={obj.TipoLicencia} onClick={handlerEliminar} value={indx} >
+                                                          X
+                                                      </Button>
+                                                  </Card.Body>
+                                              </Card>
+                                          </div>
+                                      ))
+                                  }
                               </ListGroup>
                           </div>
                       </div>
@@ -525,36 +542,7 @@ const ProductDetalle = () => {
                       }
 
                     <div className="form-group input-group input-group-text my-3">
-                        {loadingPro ? (
-                          <Button className={`${style.button} text-center btn btn-primary`} type="submit" variant="primary" >
-                              Editar
-                          </Button>
-                        ) : 
-                        (
-                            <div>
-                              <Button variant="primary" disabled>
-                                <Spinner
-                                  as="span"
-                                  animation="border"
-                                  size="sm"
-                                  role="status"
-                                  aria-hidden="true"
-                                />
-                                <span className="visually-hidden">Editando...</span>
-                              </Button>{" "}
-                              <Button variant="primary" disabled>
-                                <Spinner
-                                  as="span"
-                                  animation="grow"
-                                  size="sm"
-                                  role="status"
-                                  aria-hidden="true"
-                                />
-                                Editando...
-                              </Button>
-                            </div>
-                        )}
-                        {/*
+                        {
                             loadingPro ?
                             (
                                 <Button className={`${style.button} text-center btn btn-primary`} type="submit" variant="primary" >
@@ -565,15 +553,15 @@ const ProductDetalle = () => {
                                 <div>
                                     <Button variant="primary" disabled>
                                         <Spinner as="span" animation="border" size="sm" role="status" aria-hidden="true" />
-                                            <span className="visually-hidden">Creando...</span>
+                                        <span className="visually-hidden">Editando...</span>
                                     </Button>{" "}
                                     <Button variant="primary" disabled>
                                         <Spinner as="span" animation="grow" size="sm" role="status" aria-hidden="true" />
-                                            Creando...
+                                        Editando...
                                     </Button>
                                 </div>
                             )
-                      */}
+                        }
                     </div>
                   </Form>
                 </Card>
@@ -585,15 +573,18 @@ const ProductDetalle = () => {
                         <Form.Group className="mb-3">
                             <Form.Label>Tipo Licencia</Form.Label>
                             <Form.Select id="ListaTipo" name="TipoLicencia" onChange={handlerLicencia} >
-                              <option id="opSelector">Seleccionar</option>
-                              {EstadoTipoLi.map((licen, i) => {
-                                if (
-                                  LicenCreadas.find((x) => x.TipoLicencia === licen.nombre)
-                                ) {
-                                  return;
+                                <option id="opSelector">Seleccionar</option>
+                                {
+                                    EstadoTipoLi.map((licen, i) => {
+                                        if (
+                                            LicenCreadas.find((x) => x.TipoLicencia === licen.nombre)
+                                        )
+                                        {
+                                            return;
+                                        }
+                                        return <option key={i}>{licen.nombre}</option>;
+                                    })
                                 }
-                                return <option key={i}>{licen.nombre}</option>;
-                              })}
                             </Form.Select>
                         </Form.Group>
                         <Form.Group className="mb-3">
