@@ -72,16 +72,18 @@ const registraGoogleAction = (onError) => async (dispatch) => {
 
 //INICIO DE SESION DE USUARIOS
 const signInAction = ({ correo, contraseña }, onError) =>
-    async (dispatch) => {
-      try {
-        await allAuth.signInWithEmailAndPassword(auth, correo, contraseña);
-      } catch (err) {
-        onError();
-        dispatch({type: AUTH_SET_ERROR,
-          payload: catchInicio(err)});
-        
-      }
-    };
+  async (dispatch) => {
+    try {
+      await allAuth.signInWithEmailAndPassword(auth, correo, contraseña);
+    } catch (err) {
+      onError();
+      dispatch({
+        type: AUTH_SET_ERROR,
+        payload: catchInicio(err)
+      });
+
+    }
+  };
 
 // SETEO DE ERRORES ENVIADAS DESDE FIREBASE O ERRORES CREDOS
 const errorAction = (msg) => (dispatch) => {
@@ -128,7 +130,7 @@ const getUserById = (id) => async (dispatch) => {
     } else {
     }
   } catch (err) {
-    
+
   } finally {
     dispatch({
       type: AUTH_SET_LOADING,
